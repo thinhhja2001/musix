@@ -49,7 +49,7 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
               ),
               const Text(
-                "Free on Musix",
+                "Free on MusiX",
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
