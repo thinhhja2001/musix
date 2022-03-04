@@ -12,9 +12,7 @@ class SocialMediaLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: MediaQuery.of(context).size.width * 0.05,
-        right: MediaQuery.of(context).size.width * 0.05,
+      padding: const EdgeInsets.only(
         top: kButtonMarginTop,
       ),
       child: InkWell(

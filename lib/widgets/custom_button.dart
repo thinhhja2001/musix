@@ -13,11 +13,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.05,
-          right: MediaQuery.of(context).size.width * 0.05,
-          top: kButtonMarginTop * 2,
-          bottom: 10),
+      padding: const EdgeInsets.only(top: kButtonMarginTop * 2, bottom: 10),
       child: SizedBox(
         width: double.infinity,
         height: 52,
@@ -34,7 +30,7 @@ class CustomButton extends StatelessWidget {
                     MaterialStateProperty.all<Color>(kPrimaryColor),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(8),
                 )))),
       ),
     );
