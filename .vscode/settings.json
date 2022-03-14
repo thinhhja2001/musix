@@ -4,5 +4,6 @@
         "musix",
         "signin",
         "signup"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }

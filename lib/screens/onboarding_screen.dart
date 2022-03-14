@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/custom_button.dart';
 import 'package:musix/widgets/social_media_login_button.dart';
 
-class OnBoardingScreen extends StatelessWidget {
+class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
 
+  @override
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+}
+
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +74,7 @@ class OnBoardingScreen extends StatelessWidget {
                             builder: (context) => const SignUpScreen()));
                   },
                   content: 'Sign up free',
+                  isLoading: _isLoading,
                 ),
                 SocialMediaLoginButton(
                   socialLoginType: SocialLoginType.google,
@@ -79,7 +87,12 @@ class OnBoardingScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: kButtonMarginTop * 3),
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignInScreen()));
+                      },
                       child: const Text(
                         "Login",
                         style: TextStyle(

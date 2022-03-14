@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
+import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/custom_button.dart';
 import 'package:musix/widgets/custom_input_field.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,13 +122,15 @@ class SignInScreen extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          const CustomInputField(
+                          CustomInputField(
                             customInputFieldType: CustomInputFieldType.text,
                             label: "Email address",
+                            controller: _emailController,
                           ),
-                          const CustomInputField(
+                          CustomInputField(
                             customInputFieldType: CustomInputFieldType.password,
                             label: "Password",
+                            controller: _passwordController,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -126,7 +146,17 @@ class SignInScreen extends StatelessWidget {
                           Expanded(
                               child: Column(
                             children: [
-                              CustomButton(onPress: () {}, content: "Sign in"),
+                              CustomButton(
+                                onPress: () {
+                                  checkNullException() == true
+                                      ? loginUser()
+                                      : showSnackBar(
+                                          "Please enter all the field",
+                                          context);
+                                },
+                                content: "Sign in",
+                                isLoading: _isLoading,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -163,5 +193,24 @@ class SignInScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String result = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    showSnackBar(result, context);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  bool checkNullException() {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      return false;
+    }
+    return true;
   }
 }

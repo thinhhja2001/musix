@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "449603757021",
+    "project_id": "musix-dc275",
+    "storage_bucket": "musix-dc275.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449603757021:android:0e763dd605952318748c34",
+        "android_client_info": {
+          "package_name": "com.example.musix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449603757021-vi06t2n3g14i6jov0n3gs77cp7m8d5ou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.musix",
+            "certificate_hash": "491f1c92df5bf809ef9e5155bad222f6f1c51555"
+          }
+        },
+        {
+          "client_id": "449603757021-r1v2eoqjbn1o76kua9ls0jpicvb1ujge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKShQnpZ-1eMsrEpzXxDOlS5cLC1nO2nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449603757021-r1v2eoqjbn1o76kua9ls0jpicvb1ujge.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "449603757021-hg5erefv36ogu9am564c80278e5jbtao.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.musix"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

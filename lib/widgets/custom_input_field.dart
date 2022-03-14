@@ -6,9 +6,11 @@ class CustomInputField extends StatefulWidget {
     Key? key,
     required this.customInputFieldType,
     required this.label,
+    required this.controller,
   }) : super(key: key);
   final CustomInputFieldType customInputFieldType;
   final String label;
+  final TextEditingController controller;
   @override
   State<CustomInputField> createState() => _CustomInputFieldState();
 }
@@ -28,7 +30,8 @@ class _CustomInputFieldState extends State<CustomInputField> {
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: TextField(
+          child: TextFormField(
+            controller: widget.controller,
             obscureText:
                 widget.customInputFieldType == CustomInputFieldType.password
                     ? _isObscure
