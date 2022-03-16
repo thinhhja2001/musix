@@ -1,10 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:musix/providers/google_sign_in.dart';
+import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/custom_button.dart';
 import 'package:musix/widgets/social_media_login_button.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -78,11 +83,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
                 SocialMediaLoginButton(
                   socialLoginType: SocialLoginType.google,
-                  onPress: () {},
+                  onPress: loginWithGoogle,
                 ),
                 SocialMediaLoginButton(
                   socialLoginType: SocialLoginType.facebook,
-                  onPress: () {},
+                  onPress: loginWithFacebook,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: kButtonMarginTop * 3),
@@ -105,5 +110,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         )
       ],
     ));
+  }
+
+  void loginWithGoogle() async {
+    final UserCredential userCredential = await AuthMethods().loginWithGoogle();
+
+    print(userCredential.user!.email);
+  }
+
+  void loginWithFacebook() async {
+    final UserCredential userCredential =
+        await AuthMethods().loginWithFacebook();
+
+    print(userCredential.user!.displayName);
   }
 }

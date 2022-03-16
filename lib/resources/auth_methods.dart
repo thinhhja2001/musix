@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:musix/providers/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -42,6 +48,21 @@ class AuthMethods {
     return res;
   }
 
+  /// This function will be called in loginWithFacebook and loginWithGoogle methods.
+  /// If user chose to loginWithFacebook or Google without creating an account first, Firestore Database will create one account in FirestoreDatabase
+  Future<String> autoSignUpUser(UserCredential userCredential) async {
+    String result = "success";
+    User user = userCredential.user!;
+    await _firestore.collection("users").doc(user.uid).set({
+      'username': user.displayName,
+      'uid': user.uid,
+      'email': user.email,
+      'followers': [],
+      'following': []
+    });
+    return result;
+  }
+
   //login user
   Future<String> loginUser(
       {required String email, required String password}) async {
@@ -62,6 +83,51 @@ class AuthMethods {
         result = "Some error occurred, please try again later";
       }
     }
+    return result;
+  }
+
+  Future<UserCredential> loginWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+    UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
+    await checkUserExisted(userCredential);
+    return userCredential;
+  }
+
+  Future<UserCredential> loginWithFacebook() async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    UserCredential userCredential =
+        await _auth.signInWithCredential(facebookAuthCredential);
+    bool checkResult = await checkUserExisted(userCredential);
+    print("user is" + checkResult.toString());
+    return userCredential;
+  }
+
+  ///Check if the user currently logged in by using Google or Facebook
+  ///is already existed in FirestoreDatabase.
+  ///If it is already existed, return true, else, it will call autoSignUpUser method and return false
+  Future<bool> checkUserExisted(UserCredential userCredential) async {
+    bool result = true;
+    await _firestore
+        .collection("users")
+        .doc(userCredential.user!.uid)
+        .get()
+        .then((snapshot) => {
+              if (snapshot.exists)
+                {result = true}
+              else
+                {result = false, autoSignUpUser(userCredential)}
+            });
+
     return result;
   }
 }

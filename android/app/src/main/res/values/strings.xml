@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">263167542672615</string>
+    <string name="facebook_client_token">d559adf8b2a8423873036812eaca85b9</string>
+    <color name="com_facebook_button_background_color_focused_disabled">#3C5A99</color>
+    <color name="com_facebook_button_background_color_focused">#3C5A99</color>
+    <color name="com_facebook_button_border_color_focused">#3C5A99</color>
+</resources>
