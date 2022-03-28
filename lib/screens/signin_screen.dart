@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/resources/auth_methods.dart';
+import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
@@ -20,7 +22,6 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isLoading = false;
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -202,6 +203,11 @@ class _SignInScreenState extends State<SignInScreen> {
     String result = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
     showSnackBar(result, context);
+    final User user = FirebaseAuth.instance.currentUser!;
+    if (result == "Login success" && !user.emailVerified) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => EmailVerificationScreen()));
+    }
     setState(() {
       _isLoading = false;
     });
