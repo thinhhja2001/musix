@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/signin_screen.dart';
@@ -73,10 +74,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
                 CustomButton(
                   onPress: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignUpScreen()));
+                    Get.to(const SignUpScreen());
                   },
                   content: 'Sign up free',
                   isLoading: _isLoading,
@@ -93,10 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   padding: const EdgeInsets.only(top: kButtonMarginTop * 3),
                   child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignInScreen()));
+                        Get.to(const SignInScreen());
                       },
                       child: const Text(
                         "Login",

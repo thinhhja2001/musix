@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musix/firebase_options.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
+import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<EmailVerificationProvider>(
             create: (context) => EmailVerificationProvider())
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -44,6 +46,13 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0x000318b5),
         ),
         home: const SignUpScreen(),
+        routes: <String, WidgetBuilder>{
+          "/signin": (BuildContext context) => const SignInScreen(),
+          "/signup": (BuildContext context) => const SignUpScreen(),
+          "/onboarding": (BuildContext context) => const OnBoardingScreen(),
+          "/emailverification": (BuildContext context) =>
+              EmailVerificationScreen(),
+        },
       ),
     );
   }

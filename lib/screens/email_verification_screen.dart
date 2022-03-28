@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
@@ -17,16 +18,6 @@ class EmailVerificationScreen extends StatelessWidget {
     final emailVerificationProvider =
         Provider.of<EmailVerificationProvider>(context);
 
-    void sendEmailVerification() async {
-      if (!_user.emailVerified) {
-        emailVerificationProvider.setIsLoading(true);
-        await _user.sendEmailVerification();
-        emailVerificationProvider.setIsLoading(false);
-        showSnackBar("Email sent", context);
-      }
-    }
-
-    ;
     return Scaffold(
         backgroundColor: kBackgroundColor,
         body: SafeArea(
@@ -48,12 +39,12 @@ class EmailVerificationScreen extends StatelessWidget {
                       SvgPicture.asset("assets/images/Rating.svg"),
                       verticalSpaceTiny,
                       Text(
-                        "Just one more step",
+                        emailVerificationProvider.title,
                         style: kTextStyle.copyWith(fontSize: 22),
                       ),
                       verticalSpaceTiny,
                       Text(
-                        "We will send a verification link to this email",
+                        emailVerificationProvider.description,
                         style: kTextStyle.copyWith(
                             fontSize: 15, fontWeight: FontWeight.w400),
                       ),
@@ -76,8 +67,8 @@ class EmailVerificationScreen extends StatelessWidget {
                             horizontal:
                                 MediaQuery.of(context).size.width * 0.05),
                         child: CustomButton(
-                            onPress: sendEmailVerification,
-                            content: "Submit",
+                            onPress: emailVerificationProvider.onSubmitClick,
+                            content: emailVerificationProvider.buttonContent,
                             isLoading: emailVerificationProvider.isLoading),
                       ),
                       Row(
@@ -90,10 +81,7 @@ class EmailVerificationScreen extends StatelessWidget {
                           ),
                           TextButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignInScreen()));
+                                Get.to(const SignInScreen());
                               },
                               child: Text(
                                 "Login",
