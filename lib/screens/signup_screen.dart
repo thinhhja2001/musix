@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
@@ -7,7 +9,9 @@ import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/custom_button.dart';
+import 'package:musix/widgets/custom_error_box.dart';
 import 'package:musix/widgets/custom_input_field.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -19,7 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -31,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final signUpProvider = Provider.of<SignUpProvider>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -140,15 +144,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             label: "Password",
                             controller: _passwordController,
                           ),
+                          signUpProvider.isValid
+                              ? Container()
+                              : CustomErrorBox(
+                                  message: signUpProvider.errorMessage,
+                                ),
                           CustomButton(
-                            onPress: () {
-                              checkNullException() == true
-                                  ? signUpUser()
-                                  : showSnackBar(
-                                      "Please enter all the field", context);
+                            onPress: () async {
+                              String result = await signUpProvider.signUpUser(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                  username: _usernameController.text);
                             },
                             content: "Create account",
-                            isLoading: _isLoading,
+                            isLoading: signUpProvider.isLoading,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -161,11 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SignInScreen()));
+                                    Get.to(const SignInScreen());
                                   },
                                   child: const Text(
                                     "Sign in",
@@ -184,32 +189,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
-  }
-
-  void signUpUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String res = await AuthMethods().signUpUser(
-        email: _emailController.text,
-        password: _passwordController.text,
-        username: _usernameController.text);
-    if (res != 'success') {
-      showSnackBar(res, context);
-    }
-    setState(() {
-      _isLoading = false;
-    });
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => EmailVerificationScreen()));
-  }
-
-  bool checkNullException() {
-    if (_emailController.text.isEmpty ||
-        _passwordController.text.isEmpty ||
-        _usernameController.text.isEmpty) {
-      return false;
-    }
-    return true;
   }
 }
