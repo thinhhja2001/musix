@@ -25,12 +25,6 @@ class EmailVerificationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  )),
               Expanded(
                 flex: 3,
                 child: Center(
@@ -81,7 +75,7 @@ class EmailVerificationScreen extends StatelessWidget {
                           ),
                           TextButton(
                               onPressed: () {
-                                Get.to(const SignInScreen());
+                                Get.offAll(const SignInScreen());
                               },
                               child: Text(
                                 "Login",

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/email_verification_screen.dart';
@@ -68,15 +69,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                          ),
-                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,6 +149,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               CustomButton(
                                 onPress: () async {
+                                  Provider.of<EmailVerificationProvider>(
+                                          context,
+                                          listen: false)
+                                      .reset();
                                   String result =
                                       await signInProvider.signInUser(
                                           email: _emailController.text,
