@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:musix/providers/google_sign_in.dart';
-import 'package:provider/provider.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -18,7 +13,7 @@ class AuthMethods {
       required String username}) async {
     String res = "Some error occurred";
     try {
-      if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
+      if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty) {
         //register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
@@ -41,6 +36,8 @@ class AuthMethods {
         return 'The email is badly formatted';
       } else if (err.code == 'weak-password') {
         return 'Your password must be at least 6 characters';
+      } else if (err.code == "email-already-in-use") {
+        return 'Email already in use';
       }
     } catch (err) {
       res = err.toString();

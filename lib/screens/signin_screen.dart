@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
@@ -7,7 +8,9 @@ import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/custom_button.dart';
+import 'package:musix/widgets/custom_error_box.dart';
 import 'package:musix/widgets/custom_input_field.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -19,7 +22,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
   @override
   void dispose() {
     super.dispose();
@@ -29,6 +31,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final signInProvider = Provider.of<SignInProvider>(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -133,6 +137,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             label: "Password",
                             controller: _passwordController,
                           ),
+                          signInProvider.isValid
+                              ? Container()
+                              : CustomErrorBox(
+                                  message: signInProvider.errorMessage),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -148,15 +156,14 @@ class _SignInScreenState extends State<SignInScreen> {
                               child: Column(
                             children: [
                               CustomButton(
-                                onPress: () {
-                                  checkNullException() == true
-                                      ? loginUser()
-                                      : showSnackBar(
-                                          "Please enter all the field",
-                                          context);
+                                onPress: () async {
+                                  String result =
+                                      await signInProvider.signInUser(
+                                          email: _emailController.text,
+                                          password: _passwordController.text);
                                 },
                                 content: "Sign in",
-                                isLoading: _isLoading,
+                                isLoading: signInProvider.isLoading,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -194,29 +201,5 @@ class _SignInScreenState extends State<SignInScreen> {
         ],
       ),
     );
-  }
-
-  void loginUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String result = await AuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
-    showSnackBar(result, context);
-    final User user = FirebaseAuth.instance.currentUser!;
-    if (result == "Login success" && !user.emailVerified) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => EmailVerificationScreen()));
-    }
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  bool checkNullException() {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      return false;
-    }
-    return true;
   }
 }

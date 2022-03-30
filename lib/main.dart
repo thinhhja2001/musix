@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:musix/firebase_options.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/google_sign_in.dart';
+import 'package:musix/providers/sign_in_provider.dart';
+import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
@@ -28,7 +30,11 @@ class MyApp extends StatelessWidget {
           create: (context) => GoogleSignInProvider(),
         ),
         ChangeNotifierProvider<EmailVerificationProvider>(
-            create: (context) => EmailVerificationProvider())
+            create: (context) => EmailVerificationProvider()),
+        ChangeNotifierProvider<SignInProvider>(
+            create: (context) => SignInProvider()),
+        ChangeNotifierProvider<SignUpProvider>(
+            create: (context) => SignUpProvider())
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
