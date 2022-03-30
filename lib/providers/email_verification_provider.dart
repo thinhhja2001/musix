@@ -12,14 +12,21 @@ class EmailVerificationProvider extends ChangeNotifier {
   /// and it will is "true" if the user clicked the send email button
 
   bool _currentState = false;
-  get currentState => _currentState;
-  get isLoading => _isLoading;
   String title = "Just one more step";
   String description = "We will send a verification link to this email";
   String buttonContent = "Submit";
+  get currentState => _currentState;
+  get isLoading => _isLoading;
   void setIsLoading(value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+  void reset() {
+    _currentState = false;
+    title = "Just one more step";
+    description = "We will send a verification link to this email";
+    buttonContent = "Submit";
   }
 
   void onSubmitClick() async {
@@ -28,7 +35,7 @@ class EmailVerificationProvider extends ChangeNotifier {
       await sendEmailVerification();
       changeCurrentState();
     } else {
-      Get.to(const SignInScreen());
+      Get.offAll(const SignInScreen());
     }
   }
 
