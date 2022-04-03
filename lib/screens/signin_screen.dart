@@ -11,6 +11,7 @@ import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/custom_button.dart';
 import 'package:musix/widgets/custom_error_box.dart';
 import 'package:musix/widgets/custom_input_field.dart';
+import 'package:musix/widgets/forget_password_widget.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -137,7 +138,19 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                     showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => ForgetPassword(),
+                                      isScrollControlled: true,
+                                      backgroundColor: Color.fromRGBO(40, 51, 63, 1),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(30.0),
+                                            topRight: Radius.circular(30.0)),
+                                      ),
+                                    );
+                                  },
                                   child: const Text(
                                     "Forgot your password?",
                                     style: TextStyle(color: kPrimaryColor),
