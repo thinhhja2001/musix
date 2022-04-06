@@ -21,73 +21,78 @@ class EmailVerificationScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: kBackgroundColor,
         body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Center(
-                  child: Column(
-                    children: [
-                      SvgPicture.asset("assets/images/Rating.svg"),
-                      verticalSpaceTiny,
-                      Text(
-                        emailVerificationProvider.title,
-                        style: kTextStyle.copyWith(fontSize: 22),
-                      ),
-                      verticalSpaceTiny,
-                      Text(
-                        emailVerificationProvider.description,
-                        style: kTextStyle.copyWith(
-                            fontSize: 15, fontWeight: FontWeight.w400),
-                      ),
-                      verticalSpaceRegular,
-                      Text(
-                        _user.email!,
-                        style: kTextStyle.copyWith(fontSize: 15),
-                      )
-                    ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * 0.05,
+                horizontal: MediaQuery.of(context).size.width * 0.05),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SvgPicture.asset("assets/images/Rating.svg"),
+                        verticalSpaceTiny,
+                        Text(
+                          emailVerificationProvider.title,
+                          style: kTextStyle.copyWith(fontSize: 22),
+                        ),
+                        verticalSpaceTiny,
+                        Text(
+                          emailVerificationProvider.description,
+                          style: kTextStyle.copyWith(
+                              fontSize: 15, fontWeight: FontWeight.w400),
+                        ),
+                        verticalSpaceRegular,
+                        Text(
+                          _user.email!,
+                          style: kTextStyle.copyWith(fontSize: 15),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.05),
-                        child: CustomButton(
-                            onPress: emailVerificationProvider.onSubmitClick,
-                            content: emailVerificationProvider.buttonContent,
-                            isLoading: emailVerificationProvider.isLoading),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "You have an account?",
-                            style: kTextStyle.copyWith(
-                                fontWeight: FontWeight.w300, fontSize: 15),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Get.offAll(const SignInScreen());
-                              },
-                              child: Text(
-                                "Login",
-                                style: kTextStyle.copyWith(fontSize: 15),
-                              ))
-                        ],
-                      )
-                    ],
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.05),
+                          child: CustomButton(
+                              onPress: emailVerificationProvider.onSubmitClick,
+                              content: emailVerificationProvider.buttonContent,
+                              isLoading: emailVerificationProvider.isLoading),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "You have an account?",
+                              style: kTextStyle.copyWith(
+                                  fontWeight: FontWeight.w300, fontSize: 15),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Get.offAll(const SignInScreen());
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: kTextStyle.copyWith(fontSize: 15),
+                                ))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ));
   }
