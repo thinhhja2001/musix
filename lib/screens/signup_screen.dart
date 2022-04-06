@@ -65,6 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SafeArea(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height * 0.05,
                         horizontal: MediaQuery.of(context).size.width * 0.05),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
