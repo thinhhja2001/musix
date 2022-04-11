@@ -7,8 +7,9 @@ import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
-import 'package:musix/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/customs/custom_button.dart';
 
 class EmailVerificationScreen extends StatelessWidget {
   EmailVerificationScreen({Key? key}) : super(key: key);
@@ -38,18 +39,18 @@ class EmailVerificationScreen extends StatelessWidget {
                         verticalSpaceTiny,
                         Text(
                           emailVerificationProvider.title,
-                          style: kTextStyle.copyWith(fontSize: 22),
+                          style: kDefaultTextStyle.copyWith(fontSize: 22),
                         ),
                         verticalSpaceTiny,
                         Text(
                           emailVerificationProvider.description,
-                          style: kTextStyle.copyWith(
+                          style: kDefaultTextStyle.copyWith(
                               fontSize: 15, fontWeight: FontWeight.w400),
                         ),
                         verticalSpaceRegular,
                         Text(
                           _user.email!,
-                          style: kTextStyle.copyWith(fontSize: 15),
+                          style: kDefaultTextStyle.copyWith(fontSize: 15),
                         )
                       ],
                     ),
@@ -74,7 +75,7 @@ class EmailVerificationScreen extends StatelessWidget {
                           children: [
                             Text(
                               "You have an account?",
-                              style: kTextStyle.copyWith(
+                              style: kDefaultTextStyle.copyWith(
                                   fontWeight: FontWeight.w300, fontSize: 15),
                             ),
                             TextButton(
@@ -83,7 +84,8 @@ class EmailVerificationScreen extends StatelessWidget {
                                 },
                                 child: Text(
                                   "Login",
-                                  style: kTextStyle.copyWith(fontSize: 15),
+                                  style:
+                                      kDefaultTextStyle.copyWith(fontSize: 15),
                                 ))
                           ],
                         )

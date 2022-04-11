@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/email_verification_screen.dart';
-import 'package:musix/screens/signin_screen.dart';
-import 'package:provider/provider.dart';
 
 class SignInProvider extends ChangeNotifier {
   bool _isValid = true;

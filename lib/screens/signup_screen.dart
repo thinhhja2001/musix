@@ -8,10 +8,12 @@ import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
-import 'package:musix/widgets/custom_button.dart';
-import 'package:musix/widgets/custom_error_box.dart';
-import 'package:musix/widgets/custom_input_field.dart';
+
 import 'package:provider/provider.dart';
+
+import '../widgets/customs/custom_button.dart';
+import '../widgets/customs/custom_error_box.dart';
+import '../widgets/customs/custom_input_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
