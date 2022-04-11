@@ -11,29 +11,30 @@ class RecentMusicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-        child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const RotatedBox(
-            quarterTurns: 3,
-            child: Text(
-              "Recently Music",
-              style: kDefaultTitleStyle,
-            )),
-        Expanded(
-          child: Column(
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (context, position) => MusicSelectionWidget(
-                        index: position,
-                      )),
-            ],
-          ),
-        )
-      ],
+        child: SafeArea(
+      child: Row(
+        children: [
+          const RotatedBox(
+              quarterTurns: 3,
+              child: Text(
+                "Recently Music",
+                style: kDefaultTitleStyle,
+              )),
+          Expanded(
+            child: Column(
+              children: [
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 5,
+                    itemBuilder: (context, position) => MusicSelectionWidget(
+                          index: position,
+                        )),
+              ],
+            ),
+          )
+        ],
+      ),
     ));
   }
 }

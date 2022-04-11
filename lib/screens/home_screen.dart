@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       bottomNavigationBar: CustomBottomBar(
-          margin: const EdgeInsets.all(15),
           currentIndex: _currentIndex,
           onTap: (index) => setState(() => _currentIndex = index),
           items: bottomBarItems),
@@ -67,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 WeeklyMusicWidget(),
                 verticalSliverPaddingMedium,
                 RecentMusicList(),
+                verticalSliverPaddingMedium,
               ],
             ),
           )),
