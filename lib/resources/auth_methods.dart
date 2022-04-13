@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<bool> checkUserNameExisted({required String username}) async {
     bool isUserNameExisted = false;
     await _firestore
@@ -25,7 +26,8 @@ class AuthMethods {
   Future<String> signUpUser(
       {required String email,
       required String password,
-      required String username}) async {
+      required String username,
+      required DateTime? birthday}) async {
     String res = "Some error occurred";
     bool isUserNameExisted = await checkUserNameExisted(username: username);
     if (isUserNameExisted) {
@@ -34,7 +36,10 @@ class AuthMethods {
     }
 
     try {
-      if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty) {
+      if (email.isNotEmpty &&
+          password.isNotEmpty &&
+          username.isNotEmpty &&
+          birthday != null) {
         //register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
@@ -45,6 +50,7 @@ class AuthMethods {
           'username': username,
           'uid': cred.user!.uid,
           'email': email,
+          'birthday': birthday,
           'followers': [],
           'following': []
         });

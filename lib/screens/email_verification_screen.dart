@@ -20,7 +20,7 @@ class EmailVerificationScreen extends StatelessWidget {
         Provider.of<EmailVerificationProvider>(context);
 
     return Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: const Color(0xff28333F),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(

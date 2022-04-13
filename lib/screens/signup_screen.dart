@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/email_verification_screen.dart';
@@ -12,6 +13,7 @@ import 'package:musix/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/customs/custom_button.dart';
+import '../widgets/customs/custom_datepicker_field.dart';
 import '../widgets/customs/custom_error_box.dart';
 import '../widgets/customs/custom_input_field.dart';
 
@@ -37,11 +39,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final signUpProvider = Provider.of<SignUpProvider>(context);
+
     return Scaffold(
       body: Column(
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Stack(
               children: [
                 ShaderMask(
@@ -100,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Expanded(
-              flex: 1,
+              flex: 3,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(28),
@@ -138,6 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             label: "Password",
                             controller: _passwordController,
                           ),
+                          const CustomDatePickerField(),
                           signUpProvider.isValid
                               ? Container()
                               : CustomErrorBox(
@@ -164,6 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               TextButton(
                                   onPressed: () {
+                                    signUpProvider.reset();
                                     Get.to(const SignInScreen());
                                   },
                                   child: const Text(

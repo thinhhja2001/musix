@@ -9,7 +9,10 @@ const TextStyle kDefaultTextStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 const TextStyle kDefaultTitleStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 18);
-
+const TextStyle kDefaultHintStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: Color.fromARGB(48, 255, 255, 255));
 const Widget horizontalSpaceTiny = SizedBox(width: 5.0);
 const Widget horizontalSpaceSmall = SizedBox(width: 10.0);
 const Widget horizontalSpaceRegular = SizedBox(width: 18.0);
