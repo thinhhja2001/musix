@@ -7,6 +7,7 @@ import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/screens/email_verification_screen.dart';
+import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
@@ -51,13 +52,13 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           scaffoldBackgroundColor: const Color(0x000318b5),
         ),
-        home: const OnBoardingScreen(),
+        home: const SignUpScreen(),
         routes: <String, WidgetBuilder>{
-          "/signin": (BuildContext context) => const SignInScreen(),
-          "/signup": (BuildContext context) => const SignUpScreen(),
-          "/onboarding": (BuildContext context) => const OnBoardingScreen(),
-          "/emailverification": (BuildContext context) =>
-              EmailVerificationScreen(),
+          "/signin": (context) => const SignInScreen(),
+          "/signup": (context) => const SignUpScreen(),
+          "/onboarding": (context) => const OnBoardingScreen(),
+          "/emailverification": (context) => EmailVerificationScreen(),
+          "/home": (context) => const HomeScreen(),
         },
       ),
     );
