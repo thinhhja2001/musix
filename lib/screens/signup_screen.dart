@@ -153,6 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                   username: _usernameController.text);
+                              if (result == "success") {
+                                signUpProvider.reset();
+                              }
                             },
                             content: "Create account",
                             isLoading: signUpProvider.isLoading,

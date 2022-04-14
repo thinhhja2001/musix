@@ -50,7 +50,7 @@ class CustomDatePickerField extends StatelessWidget {
                 children: [
                   Text(
                     signUpProvider.birthDay == null
-                        ? "Select your birthday"
+                        ? "Enter your birthday"
                         : DateFormat('d/M/y').format(signUpProvider.birthDay!),
                     style: signUpProvider.birthDay == null
                         ? kDefaultHintStyle
