@@ -63,19 +63,21 @@ class CustomBottomBar extends StatelessWidget {
     return SafeArea(
       minimum: margin,
       child: Container(
-        height: 120,
+        height: 155,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: kBackgroundColorDarker),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CurrentMusicPlayer(
+            CurrentMusicPlayer(
               image:
                   'https://static.wikia.nocookie.net/producerviet/images/8/8d/Ariana_grande.jpeg/revision/latest?cb=20210525054327&path-prefix=vi',
               singer: 'Ariana Grande',
               song: 'thank u!next',
               borderColor: Colors.pink,
+              songUrl:
+                  "https://firebasestorage.googleapis.com/v0/b/learning-english-app-5f3fe.appspot.com/o/mp3test.mp3?alt=media&token=6cb07c65-1d05-4743-a20d-83de47ed4271",
             ),
             Container(
               decoration: BoxDecoration(
