@@ -6,6 +6,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   Duration position = Duration.zero;
   bool isPlaying = false;
   final AudioPlayer audioPlayer = AudioPlayer();
+  String songUrl =
+      "https://firebasestorage.googleapis.com/v0/b/learning-english-app-5f3fe.appspot.com/o/mp3test.mp3?alt=media&token=6cb07c65-1d05-4743-a20d-83de47ed4271";
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
@@ -25,6 +27,11 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateSongUrl(String newSongUrl) {
+    songUrl = newSongUrl;
+    notifyListeners();
+  }
+
   void seekToNewPosition(Duration position) async {
     await audioPlayer.seek(position);
     notifyListeners();
@@ -35,7 +42,8 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void playAudio(String songUrl) async {
+  void playAudio() async {
     await audioPlayer.play(songUrl);
+    notifyListeners();
   }
 }

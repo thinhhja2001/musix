@@ -53,7 +53,7 @@ class CurrentMusicPlayer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -68,53 +68,68 @@ class CurrentMusicPlayer extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w400),
                 ),
-                verticalSpaceTiny,
-                SliderTheme(
-                  data: const SliderThemeData(
-                      trackHeight: 2,
-                      thumbColor: kPrimaryColor,
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0)),
-                  child: Slider(
-                      activeColor: kPrimaryColor,
-                      min: 0,
-                      max: audioPlayerProvider.duration.inSeconds.toDouble(),
-                      value: audioPlayerProvider.position.inSeconds.toDouble(),
-                      onChanged: (value) async {
-                        final position = Duration(seconds: value.toInt());
-                        audioPlayerProvider.seekToNewPosition(position);
-                      }),
+                Container(
+                  transform: Matrix4.translationValues(-20, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SliderTheme(
+                        data: const SliderThemeData(
+                            trackHeight: 2,
+                            thumbColor: kPrimaryColor,
+                            thumbShape:
+                                RoundSliderThumbShape(enabledThumbRadius: 0)),
+                        child: Slider(
+                            activeColor: kPrimaryColor,
+                            min: 0,
+                            max: audioPlayerProvider.duration.inSeconds
+                                .toDouble(),
+                            value: audioPlayerProvider.position.inSeconds
+                                .toDouble(),
+                            onChanged: (value) async {
+                              final position = Duration(seconds: value.toInt());
+                              audioPlayerProvider.seekToNewPosition(position);
+                            }),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Icon(
+                            Icons.shuffle,
+                            color: Colors.white,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: InkWell(
+                              onTap: () async {
+                                if (audioPlayerProvider.isPlaying) {
+                                  audioPlayerProvider.pauseAudio();
+                                } else {
+                                  audioPlayerProvider.playAudio();
+                                }
+                                audioPlayerProvider.changePlayState();
+                              },
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    color: kPrimaryColor,
+                                    shape: BoxShape.circle),
+                                child: Icon(
+                                  audioPlayerProvider.isPlaying == false
+                                      ? Icons.play_arrow
+                                      : Icons.pause,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
           ),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(left: 14),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Icon(
-                  Icons.shuffle,
-                  color: Colors.white,
-                ),
-                RawMaterialButton(
-                  onPressed: () async {
-                    if (audioPlayerProvider.isPlaying) {
-                      audioPlayerProvider.pauseAudio();
-                    } else {
-                      audioPlayerProvider.playAudio(songUrl);
-                    }
-                    audioPlayerProvider.changePlayState();
-                  },
-                  fillColor: kPrimaryColor,
-                  child: Icon(audioPlayerProvider.isPlaying == false
-                      ? Icons.play_arrow
-                      : Icons.pause),
-                  shape: const CircleBorder(),
-                )
-              ],
-            ),
-          ))
         ],
       ),
     );

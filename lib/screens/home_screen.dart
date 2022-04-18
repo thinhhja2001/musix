@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget buildBlurredImage() => ClipRRect(
-      borderRadius: BorderRadius.circular(24),
+      // borderRadius: BorderRadius.circular(24),
       child: Stack(
         children: [
           Image.asset(
