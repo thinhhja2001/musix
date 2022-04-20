@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Column(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Stack(
               children: [
                 ShaderMask(
@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Expanded(
-              flex: 3,
+              flex: 6,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(28),
@@ -153,6 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   email: _emailController.text,
                                   password: _passwordController.text,
                                   username: _usernameController.text);
+                              if (result == "success") {
+                                signUpProvider.reset();
+                              }
                             },
                             content: "Create account",
                             isLoading: signUpProvider.isLoading,

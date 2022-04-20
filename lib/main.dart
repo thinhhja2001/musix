@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/firebase_options.dart';
+import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/providers/sign_in_provider.dart';
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SignInProvider>(
             create: (context) => SignInProvider()),
         ChangeNotifierProvider<SignUpProvider>(
-            create: (context) => SignUpProvider())
+            create: (context) => SignUpProvider()),
+        ChangeNotifierProvider<AudioPlayerProvider>(
+            create: (context) => AudioPlayerProvider()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -52,7 +55,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           scaffoldBackgroundColor: const Color(0x000318b5),
         ),
-        home: const SignUpScreen(),
+        home: const OnBoardingScreen(),
         routes: <String, WidgetBuilder>{
           "/signin": (context) => const SignInScreen(),
           "/signup": (context) => const SignUpScreen(),

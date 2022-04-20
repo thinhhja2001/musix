@@ -47,7 +47,6 @@ class EmailVerificationScreen extends StatelessWidget {
                           style: kDefaultTextStyle.copyWith(
                               fontSize: 15, fontWeight: FontWeight.w400),
                         ),
-                        verticalSpaceRegular,
                         Text(
                           _user.email!,
                           style: kDefaultTextStyle.copyWith(fontSize: 15),

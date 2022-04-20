@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/email_verification_screen.dart';
+import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
@@ -40,7 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
+            flex: 3,
             child: Stack(
               children: [
                 ShaderMask(
@@ -99,7 +101,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           ),
           Expanded(
-              flex: 1,
+              flex: 4,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(28),
@@ -173,6 +175,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                       await signInProvider.signInUser(
                                           email: _emailController.text,
                                           password: _passwordController.text);
+                                  if (result == "success") {
+                                    Get.offAll(const HomeScreen());
+                                  }
                                 },
                                 content: "Sign in",
                                 isLoading: signInProvider.isLoading,
@@ -188,11 +193,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const SignUpScreen()));
+                                        Get.to(const SignUpScreen());
                                       },
                                       child: const Text(
                                         "Sign up",

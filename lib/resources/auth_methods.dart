@@ -90,7 +90,7 @@ class AuthMethods {
   //login user
   Future<String> loginUser(
       {required String email, required String password}) async {
-    String result = "Login success";
+    String result = "success";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -103,6 +103,8 @@ class AuthMethods {
         result = "No user found for that email";
       } else if (e.code == "wrong-password") {
         result = "Incorrect password";
+      } else if (e.code == "invalid-email") {
+        result = "The email is badly formatted";
       } else {
         result = "Some error occurred, please try again later";
       }
