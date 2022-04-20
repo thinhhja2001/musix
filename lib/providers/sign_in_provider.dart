@@ -28,7 +28,7 @@ class SignInProvider extends ChangeNotifier {
     _errorMessage =
         await AuthMethods().loginUser(email: email, password: password);
     notifyListeners();
-    if (_errorMessage == "Login success") {
+    if (_errorMessage == "success") {
       _isValid = true;
       final User user = FirebaseAuth.instance.currentUser!;
       if (!user.emailVerified) {

@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           scaffoldBackgroundColor: const Color(0x000318b5),
         ),
-        home: const HomeScreen(),
+        home: const OnBoardingScreen(),
         routes: <String, WidgetBuilder>{
           "/signin": (context) => const SignInScreen(),
           "/signup": (context) => const SignUpScreen(),

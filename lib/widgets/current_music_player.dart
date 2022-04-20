@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -95,8 +96,9 @@ class CurrentMusicPlayer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const Icon(
-                            Icons.shuffle,
+                            FontAwesomeIcons.shuffle,
                             color: Colors.white,
+                            size: 20,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 15),
@@ -113,11 +115,14 @@ class CurrentMusicPlayer extends StatelessWidget {
                                 decoration: const BoxDecoration(
                                     color: kPrimaryColor,
                                     shape: BoxShape.circle),
-                                child: Icon(
-                                  audioPlayerProvider.isPlaying == false
-                                      ? Icons.play_arrow
-                                      : Icons.pause,
-                                  color: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    audioPlayerProvider.isPlaying == false
+                                        ? Icons.play_arrow
+                                        : Icons.pause,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),

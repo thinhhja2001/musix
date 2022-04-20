@@ -7,7 +7,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   bool isPlaying = false;
   final AudioPlayer audioPlayer = AudioPlayer();
   String songUrl =
-      "https://firebasestorage.googleapis.com/v0/b/learning-english-app-5f3fe.appspot.com/o/mp3test.mp3?alt=media&token=6cb07c65-1d05-4743-a20d-83de47ed4271";
+      "https://vnso-zn-23-tf-mp3-s1-m-zmp3.zmdcdn.me/7a409650d911304f6900/7704349691708005710?authen=exp=1650546921~acl=/7a409650d911304f6900/*~hmac=51185422deca26c4357d613ab3a1adae&fs=MTY1MDM3NDEyMTg2OHx3ZWJWNHwxMjUdUngMjM1LjIxNC4yMjmUsIC";
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;

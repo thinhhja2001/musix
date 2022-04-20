@@ -16,7 +16,8 @@ class AssetPlayerWidget extends StatefulWidget {
 
 class _AssetPlayerWidgetState extends State<AssetPlayerWidget> {
   late VideoPlayerController _controller;
-  late ChewieController _chewieController;
+  late ChewieController _chewieController =
+      ChewieController(videoPlayerController: _controller);
   @override
   void initState() {
     super.initState();
