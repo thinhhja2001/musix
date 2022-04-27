@@ -10,6 +10,8 @@ import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
+import 'package:musix/screens/profile_screen.dart';
+import 'package:musix/screens/setting_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           scaffoldBackgroundColor: const Color(0x000318b5),
         ),
-        home: const OnBoardingScreen(),
+        home: const Home(),
         routes: <String, WidgetBuilder>{
           "/signin": (context) => const SignInScreen(),
           "/signup": (context) => const SignUpScreen(),
