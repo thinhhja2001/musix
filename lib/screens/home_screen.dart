@@ -46,33 +46,56 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: _currentIndex,
           onTap: (index) => setState(() => _currentIndex = index),
           items: bottomBarItems),
-      body: Stack(
-        children: [
-          buildBlurredImage(),
-          verticalSpaceLarge,
-          SafeArea(
-              child: Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.05,
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.05,
+      body: _buildBody(context, _currentIndex),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, int currentIndex) {
+    return currentIndex == 0
+        ? BillboardWidget()
+        : Center(
+            child: Container(
+            child: Text(
+              "Explore screen",
+              style: TextStyle(color: Colors.white),
             ),
-            child: const CustomScrollView(
-              slivers: [
-                ProfileCard(name: "John Doe"),
-                verticalSliverPaddingMedium,
-                NewAlbumList(),
-                verticalSliverPaddingMedium,
-                WeeklyMusicWidget(),
-                verticalSliverPaddingMedium,
-                RecentMusicList(),
-                verticalSliverPaddingMedium,
-                verticalSliverPaddingMedium
-              ],
-            ),
-          )),
-        ],
-      ),
+          ));
+  }
+}
+
+class BillboardWidget extends StatelessWidget {
+  const BillboardWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        buildBlurredImage(),
+        verticalSpaceLarge,
+        SafeArea(
+            child: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.05,
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05,
+          ),
+          child: const CustomScrollView(
+            slivers: [
+              ProfileCard(name: "John Doe"),
+              verticalSliverPaddingMedium,
+              NewAlbumList(),
+              verticalSliverPaddingMedium,
+              WeeklyMusicWidget(),
+              verticalSliverPaddingMedium,
+              RecentMusicList(),
+              verticalSliverPaddingMedium,
+              verticalSliverPaddingMedium
+            ],
+          ),
+        )),
+      ],
     );
   }
 }
