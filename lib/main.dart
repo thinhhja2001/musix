@@ -10,6 +10,8 @@ import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
+import 'package:musix/screens/profile_screen.dart';
+import 'package:musix/screens/setting_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:provider/provider.dart';
