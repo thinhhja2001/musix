@@ -4,6 +4,9 @@ import 'package:web_scraper/web_scraper.dart';
 import 'package:http/http.dart' as http;
 
 class LastFmAPI {
+  ///Get all song Key by Artist name
+  ///
+  ///[artistName] is stand for artistName
   static Future<List<String>> _getAllSongKeyByArtistName(
       String artistName) async {
     List<String> songsKey = List.empty(growable: true);
@@ -27,6 +30,9 @@ class LastFmAPI {
     return songsKey;
   }
 
+  ///Get all album key by artistName
+  ///
+  ///[artistName] is stand for artistName
   static Future<List<String>> _getAllAlbumKeyByArtistName(
       String artistName) async {
     List<String> albumsKey = List.empty(growable: true);
