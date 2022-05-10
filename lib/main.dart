@@ -14,6 +14,7 @@ import 'package:musix/screens/profile_screen.dart';
 import 'package:musix/screens/setting_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
+import 'package:musix/widgets/profile/Profile_fix.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -25,6 +26,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           scaffoldBackgroundColor: const Color(0x000318b5),
         ),
-        home: const Home(),
+        home: const HomeScreen(),
         routes: <String, WidgetBuilder>{
           "/signin": (context) => const SignInScreen(),
           "/signup": (context) => const SignUpScreen(),

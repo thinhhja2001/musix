@@ -1,11 +1,14 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/list/recent_music_list.dart';
 import 'package:musix/widgets/playlist_card.dart';
 
+import '../models/users.dart';
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
 import '../widgets/home/profile_card.dart';
 import '../widgets/list/new_album_list.dart';
@@ -20,7 +23,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  
+  
   int _currentIndex = 0;
+
+  void getUser(){
+    Future<Users> user = AuthMethods().getCurrentUser();
+    print(user.toString());
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
   @override
   Widget build(BuildContext context) {
     List<CustomBottomBarItem> bottomBarItems = [
@@ -46,33 +63,56 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: _currentIndex,
           onTap: (index) => setState(() => _currentIndex = index),
           items: bottomBarItems),
-      body: Stack(
-        children: [
-          buildBlurredImage(),
-          verticalSpaceLarge,
-          SafeArea(
-              child: Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.05,
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.05,
+      body: _buildBody(context, _currentIndex),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, int currentIndex) {
+    return currentIndex == 0
+        ? BillboardWidget()
+        : Center(
+            child: Container(
+            child: Text(
+              "Explore screen",
+              style: TextStyle(color: Colors.white),
             ),
-            child: const CustomScrollView(
-              slivers: [
-                ProfileCard(name: "John Doe"),
-                verticalSliverPaddingMedium,
-                NewAlbumList(),
-                verticalSliverPaddingMedium,
-                WeeklyMusicWidget(),
-                verticalSliverPaddingMedium,
-                RecentMusicList(),
-                verticalSliverPaddingMedium,
-                verticalSliverPaddingMedium
-              ],
-            ),
-          )),
-        ],
-      ),
+          ));
+  }
+}
+
+class BillboardWidget extends StatelessWidget {
+  const BillboardWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        buildBlurredImage(),
+        verticalSpaceLarge,
+        SafeArea(
+            child: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.05,
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05,
+          ),
+          child: const CustomScrollView(
+            slivers: [
+              ProfileCard(name: "John Doe"),
+              verticalSliverPaddingMedium,
+              NewAlbumList(),
+              verticalSliverPaddingMedium,
+              WeeklyMusicWidget(),
+              verticalSliverPaddingMedium,
+              RecentMusicList(),
+              verticalSliverPaddingMedium,
+              verticalSliverPaddingMedium
+            ],
+          ),
+        )),
+      ],
     );
   }
 }

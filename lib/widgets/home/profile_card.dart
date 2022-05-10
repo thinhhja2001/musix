@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:musix/screens/setting_screen.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
@@ -25,8 +27,13 @@ class ProfileCard extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w400),
               ),
-              CircleAvatar(
-                backgroundColor: Colors.blue,
+              GestureDetector(
+                onTap: (){
+                  Get.to(ProfileSetting());
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                ),
               )
             ],
           ),

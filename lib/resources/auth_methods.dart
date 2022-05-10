@@ -1,11 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:musix/models/users.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+   User? user = FirebaseAuth.instance.currentUser;
+
+  Future<Users> getCurrentUser() async{
+    Users users;
+    final DocumentSnapshot userDoc = await _firestore.collection("users").doc(user!.uid).get();
+    users = new Users(email: userDoc.get('email'), username: userDoc.get('username'), uid: user!.uid, followers: userDoc.get('followers'), following: userDoc.get('following'), avatarUrl: userDoc.get('img_url'));
+    return users;
+  }
 
   Future<bool> checkUserNameExisted({required String username}) async {
     bool isUserNameExisted = false;
@@ -51,6 +61,7 @@ class AuthMethods {
           'uid': cred.user!.uid,
           'email': email,
           'birthday': birthday,
+          'img_url': "",
           'followers': [],
           'following': []
         });
@@ -81,11 +92,15 @@ class AuthMethods {
       'username': user.displayName,
       'uid': user.uid,
       'email': user.email,
+      'img_url': "",
       'followers': [],
       'following': []
     });
     return result;
   }
+
+
+
 
   //login user
   Future<String> loginUser(

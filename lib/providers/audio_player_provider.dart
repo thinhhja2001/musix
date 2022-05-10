@@ -7,7 +7,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   bool isPlaying = false;
   final AudioPlayer audioPlayer = AudioPlayer();
   String songUrl =
-      "https://vnso-zn-23-tf-mp3-s1-m-zmp3.zmdcdn.me/7a409650d911304f6900/7704349691708005710?authen=exp=1650546921~acl=/7a409650d911304f6900/*~hmac=51185422deca26c4357d613ab3a1adae&fs=MTY1MDM3NDEyMTg2OHx3ZWJWNHwxMjUdUngMjM1LjIxNC4yMjmUsIC";
+      "https://vnso-zn-15-tf-mp3-s1-m-zmp3.zmdcdn.me/ad72e5d09d9474ca2d85/4240633508708308556?authen=exp=1651324614~acl=/ad72e5d09d9474ca2d85/*~hmac=74f0e90ff13eeef96b5a327cd6b1c197&fs=MTY1MTE1MTgxNDM4M3x3ZWJWNHw0Mi4xMTYdUngMTE1Ljg3";
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
