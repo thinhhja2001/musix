@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:musix/screens/setting_screen.dart';
+
+import '../../models/users.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
     Key? key,
-    required this.name,
+    required this.user,
   }) : super(key: key);
-  final String name;
+  final Users user;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -19,14 +23,19 @@ class ProfileCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                name,
+                user.username,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w400),
               ),
-              CircleAvatar(
-                backgroundColor: Colors.blue,
+              GestureDetector(
+                onTap: (){
+                  Get.to(ProfileSetting(user: user));
+                },
+                child: CircleAvatar(
+                  child: Image.network(user.avatarUrl,fit: BoxFit.cover,),
+                ),
               )
             ],
           ),

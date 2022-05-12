@@ -1,11 +1,14 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/list/recent_music_list.dart';
 import 'package:musix/widgets/playlist_card.dart';
 
+import '../models/users.dart';
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
 import '../widgets/home/profile_card.dart';
 import '../widgets/list/new_album_list.dart';
@@ -20,14 +23,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool userLoaded = false;
   int _currentIndex = 0;
+
+  Users? users;
+  Future<void> getCurrentUser() async {
+    users = await AuthMethods().getCurrentUser();
+  }
+
+  void userLoad(){
+    setState(() {
+      userLoaded = true;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getCurrentUser().then((value) => {userLoad()});
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<CustomBottomBarItem> bottomBarItems = [
       CustomBottomBarItem(
           icon: const Icon(Icons.star_outline),
           title: const Text("Billboard"),
-          unselectedColor: Colors.white,
+          unselectedColor: Color.fromARGB(255, 95, 61, 61),
           selectedColor: Colors.black),
       CustomBottomBarItem(
           icon: const Icon(Icons.favorite_outline),
@@ -52,7 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildBody(BuildContext context, int currentIndex) {
     return currentIndex == 0
-        ? BillboardWidget()
+        ? (userLoaded
+            ? BillboardWidget(user: users!)
+            : const Center(child: CircularProgressIndicator()))
         : Center(
             child: Container(
             child: Text(
@@ -66,7 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
 class BillboardWidget extends StatelessWidget {
   const BillboardWidget({
     Key? key,
+    required this.user,
   }) : super(key: key);
+  final Users user;
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +109,10 @@ class BillboardWidget extends StatelessWidget {
             left: MediaQuery.of(context).size.width * 0.05,
             right: MediaQuery.of(context).size.width * 0.05,
           ),
-          child: const CustomScrollView(
+          child: CustomScrollView(
             slivers: [
-              ProfileCard(name: "John Doe"),
+              ProfileCard(user: user),
+
               verticalSliverPaddingMedium,
               NewAlbumList(),
               verticalSliverPaddingMedium,
