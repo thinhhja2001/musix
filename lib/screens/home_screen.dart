@@ -95,6 +95,7 @@ class BillboardWidget extends StatelessWidget {
   }) : super(key: key);
   final Users user;
 
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -111,6 +112,7 @@ class BillboardWidget extends StatelessWidget {
           child: CustomScrollView(
             slivers: [
               ProfileCard(user: user),
+
               verticalSliverPaddingMedium,
               NewAlbumList(),
               verticalSliverPaddingMedium,
