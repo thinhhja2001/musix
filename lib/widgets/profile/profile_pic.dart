@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
-    Key? key,required this.avatarUrl, this.OnTap,
+    Key? key,
+    required this.avatarUrl,
+    this.OnTap,
+    this.imagePicker,
   }) : super(key: key);
 
   final String avatarUrl;
   final Function? OnTap;
+  final File? imagePicker;
 
   @override
   Widget build(BuildContext context) {
@@ -16,33 +22,17 @@ class ProfilePic extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          avatarUrl == ""
+          imagePicker != null
               ? CircleAvatar(
-                  child: Icon(Icons.photo_camera),
+                  child: Image.file(imagePicker!),
                 )
-              : CircleAvatar(
-                  backgroundImage: NetworkImage(avatarUrl),
-                ),
-          // Positioned(
-          //   right: 5,
-          //   bottom: 0,
-          //   child: SizedBox(
-          //     height: 46,
-          //     width: 46,
-          //     child: DecoratedBox(
-          //         decoration: BoxDecoration(
-          //           color: Colors.black,
-          //           borderRadius: BorderRadius.circular(100),
-          //         ),
-          //         child: IconButton(
-          //           icon: const Icon(
-          //             Icons.camera_alt,
-          //             color: Colors.white,
-          //           ),
-          //           onPressed: () {},
-          //         )),
-          //   ),
-          // )
+              : avatarUrl == ""
+                  ? CircleAvatar(
+                      child: Icon(Icons.photo_camera),
+                    )
+                  : CircleAvatar(
+                      backgroundImage: NetworkImage(avatarUrl),
+                    ),
         ],
       ),
     );

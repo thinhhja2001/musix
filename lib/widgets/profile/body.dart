@@ -10,7 +10,8 @@ import 'package:musix/widgets/profile/setting_components.dart';
 import '../music_selection_widget.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key,required this.user}) : super(key: key);
+  final Users user;
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +21,22 @@ class Body extends StatelessWidget {
           width: double.infinity,
           height: 20,
         ),
-        ProfilePic(avatarUrl: "",),
+        ProfilePic(avatarUrl: user.avatarUrl,),
         SizedBox(
           width: double.infinity,
           height: 10,
         ),
         Text(
-          "Hoang Quoc Trong",
+          user.username,
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16),
         ),
         Text(
-          "19522408@gm.uit.edu.vn",
+          user.email,
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16),
         ),
-        TextButton(onPressed: () {Get.to(FixProfile());}, child: Text("Change your information",style: TextStyle(color: kPrimaryColor),)),
+        TextButton(onPressed: () {Get.to(FixProfile(user: user,));}, child: Text("Change your information",style: TextStyle(color: kPrimaryColor),)),
         SizedBox(
           height: 10,
         ),
