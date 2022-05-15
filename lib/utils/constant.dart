@@ -50,7 +50,7 @@ List<Song> fakeSongsData = [
           'https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_jpeg/cover/e/6/7/e/e67ea0b93182adbf44c6a019591834df.jpg'),
   Song(
       id: 'ZW6EOWE9',
-      name: 'In The End',
+      name: 'In The End (Album Version)',
       audioUrl:
           'https://vnso-zn-15-tf-mp3-s1-m-zmp3.zmdcdn.me/ad72e5d09d9474ca2d85/4240633508708308556?authen=exp=1652757663~acl=/ad72e5d09d9474ca2d85/*~hmac=ad71aed8c6a49f41d19095c1b268ce57&fs=MTY1MjU4NDg2MzE2OXx3ZWJWNHwxMTMdUngMTYxLjY2LjEwMA',
       lyricUrl:

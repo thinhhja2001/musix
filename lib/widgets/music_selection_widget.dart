@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:musix/apis/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,6 @@ class MusicSelectionWidget extends StatelessWidget {
   final Song song;
   @override
   Widget build(BuildContext context) {
-    final VideoPlayerController videoPlayerController;
     final AudioPlayerProvider audioPlayerProvider =
         Provider.of<AudioPlayerProvider>(context);
     return Padding(
@@ -43,40 +43,35 @@ class MusicSelectionWidget extends StatelessWidget {
             ),
             horizontalSpaceSmall,
             Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        song.name,
-                        overflow: TextOverflow.ellipsis,
-                        style: kDefaultTitleStyle.copyWith(
-                            fontSize: 16,
-                            color: song.id == audioPlayerProvider.currentSong.id
-                                ? kPrimaryColor
-                                : Colors.white),
-                      ),
-                      Text(
-                        song.artistName,
-                        style: kDefaultTitleStyle.copyWith(
-                            fontSize: 16, color: Colors.grey),
-                      )
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () => {},
-                    icon: const Icon(
-                      Icons.arrow_downward,
-                      color: kPrimaryColor,
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      song.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: kDefaultTitleStyle.copyWith(
+                          fontSize: 16,
+                          color: song.id == audioPlayerProvider.currentSong.id
+                              ? kPrimaryColor
+                              : Colors.white),
                     ),
-                  )
-                ],
+                    Text(
+                      song.artistName,
+                      style: kDefaultTitleStyle.copyWith(
+                          fontSize: 16, color: Colors.grey),
+                    )
+                  ],
+                )),
+            Expanded(
+                child: IconButton(
+              onPressed: () => {},
+              icon: const Icon(
+                Icons.arrow_downward,
+                color: kPrimaryColor,
               ),
-            )
+            ))
           ],
         ),
       ),
