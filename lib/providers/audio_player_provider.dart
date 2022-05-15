@@ -1,13 +1,22 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:musix/apis/song.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   bool isPlaying = false;
   final AudioPlayer audioPlayer = AudioPlayer();
-  String songUrl =
-      "https://vnso-zn-15-tf-mp3-s1-m-zmp3.zmdcdn.me/ad72e5d09d9474ca2d85/4240633508708308556?authen=exp=1651324614~acl=/ad72e5d09d9474ca2d85/*~hmac=74f0e90ff13eeef96b5a327cd6b1c197&fs=MTY1MTE1MTgxNDM4M3x3ZWJWNHw0Mi4xMTYdUngMTE1Ljg3";
+  Song currentSong = Song(
+      id: '',
+      name: '',
+      audioUrl: '',
+      lyricUrl: '',
+      artistName: '',
+      artistLink: '',
+      thumbnailUrl:
+          'https://2.bp.blogspot.com/-muVbmju-gkA/Vir94NirTeI/AAAAAAAAT9c/VoHzHZzQmR4/s1600/placeholder-image.jpg');
+
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
@@ -28,7 +37,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void updateSongUrl(String newSongUrl) {
-    songUrl = newSongUrl;
+    currentSong.audioUrl = newSongUrl;
     notifyListeners();
   }
 
@@ -37,13 +46,14 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void pauseAudio() async {
+  void pauseSong() async {
     await audioPlayer.pause();
     notifyListeners();
   }
 
-  void playAudio() async {
-    await audioPlayer.play(songUrl);
+  void playSong(Song song) async {
+    currentSong = song;
+    await audioPlayer.play(currentSong.audioUrl);
     notifyListeners();
   }
 }

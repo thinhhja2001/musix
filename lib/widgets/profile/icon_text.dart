@@ -13,8 +13,8 @@ class IconText extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon,color: kPrimaryColor,),
-        SizedBox(width: 10,),
-        Text(text,style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.w400),),
+        const SizedBox(width: 10,),
+        Text(text,style: const TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.w400),),
       ],
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:musix/apis/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 import '../utils/colors.dart';
 import '../utils/constant.dart';
@@ -9,22 +11,21 @@ class MusicSelectionWidget extends StatelessWidget {
   const MusicSelectionWidget({
     Key? key,
     required this.index,
+    required this.song,
   }) : super(key: key);
   final int index;
+  final Song song;
   @override
   Widget build(BuildContext context) {
+    final VideoPlayerController videoPlayerController;
     final AudioPlayerProvider audioPlayerProvider =
         Provider.of<AudioPlayerProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: InkWell(
-        // "https://firebasestorage.googleapis.com/v0/b/musix-dc275.appspot.com/o/YeuEmHonMoiNgay-Andiez-7136374.mp3?alt=media&token=2f6c8d7b-b7c8-4c56-a203-fd8a6478cbaf"
-        onTap: () => {
-          audioPlayerProvider.updateSongUrl(
-              "https://firebasestorage.googleapis.com/v0/b/musix-dc275.appspot.com/o/YeuEmHonMoiNgay-Andiez-7136374.mp3?alt=media&token=2f6c8d7b-b7c8-4c56-a203-fd8a6478cbaf"),
-          audioPlayerProvider.playAudio()
-        },
+        onTap: () => audioPlayerProvider.playSong(song),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "#${index + 1}",
@@ -36,26 +37,33 @@ class MusicSelectionWidget extends StatelessWidget {
               height: 32,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(3),
-                  image: const DecorationImage(
-                      image: AssetImage("assets/images/charlie_puth.jpg"),
+                  image: DecorationImage(
+                      image: NetworkImage(song.thumbnailUrl),
                       fit: BoxFit.cover)),
             ),
             horizontalSpaceSmall,
             Expanded(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Girl like you",
-                        style: kDefaultTitleStyle.copyWith(fontSize: 16),
+                        song.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: kDefaultTitleStyle.copyWith(
+                            fontSize: 16,
+                            color: song.id == audioPlayerProvider.currentSong.id
+                                ? kPrimaryColor
+                                : Colors.white),
                       ),
                       Text(
-                        "Avinci John",
+                        song.artistName,
                         style: kDefaultTitleStyle.copyWith(
-                            fontSize: 16, color: kPrimaryColor),
+                            fontSize: 16, color: Colors.grey),
                       )
                     ],
                   ),

@@ -28,6 +28,7 @@ class RecentMusicList extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 5,
                     itemBuilder: (context, position) => MusicSelectionWidget(
+                          song: fakeSongsData[position],
                           index: position,
                         )),
               ],

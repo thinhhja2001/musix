@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:musix/utils/colors.dart';
-import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/current_music_player.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class CustomBottomBar extends StatelessWidget {
   /// A bottom bar that faithfully follows the design by Aurélien Salomon
   ///
   /// https://dribbble.com/shots/5925052-Google-Bottom-Bar-Navigation-Pattern/
-  CustomBottomBar({
+  const CustomBottomBar({
     Key? key,
     required this.items,
     this.currentIndex = 0,
@@ -70,15 +68,7 @@ class CustomBottomBar extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CurrentMusicPlayer(
-              image:
-                  'https://static.wikia.nocookie.net/producerviet/images/8/8d/Ariana_grande.jpeg/revision/latest?cb=20210525054327&path-prefix=vi',
-              singer: 'Ariana Grande',
-              song: 'thank u!next',
-              borderColor: Colors.pink,
-              songUrl:
-                  "https://firebasestorage.googleapis.com/v0/b/learning-english-app-5f3fe.appspot.com/o/mp3test.mp3?alt=media&token=6cb07c65-1d05-4743-a20d-83de47ed4271",
-            ),
+            const CurrentMusicPlayer(),
             Container(
               decoration: BoxDecoration(
                   color: kBottomNavigationBarColor,
@@ -144,7 +134,7 @@ class CustomBottomBar extends StatelessWidget {
                                     /// best to find a way to make it respond only to padding.
                                     height: 30,
                                     child: Align(
-                                      alignment: Alignment(-0.2, 0.0),
+                                      alignment: const Alignment(-0.2, 0.0),
                                       widthFactor: t,
                                       child: Padding(
                                         padding: Directionality.of(context) ==

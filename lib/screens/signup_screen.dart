@@ -1,14 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:musix/providers/sign_up_provider.dart';
-import 'package:musix/resources/auth_methods.dart';
-import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
-import 'package:musix/utils/utils.dart';
 
 import 'package:provider/provider.dart';
 

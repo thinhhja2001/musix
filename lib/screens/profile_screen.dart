@@ -18,7 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: const Color(0xCC000000),
       extendBodyBehindAppBar: true,
-      appBar: new AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
       body: Material(
@@ -31,20 +31,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: <Widget>[
                     Image(
                       fit: BoxFit.cover,
-                      image: AssetImage("assets/images/profile-img.png"),
+                      image: const AssetImage("assets/images/profile-img.png"),
                       height: MediaQuery.of(context).size.width,
                       width: MediaQuery.of(context).size.width,
                     ),
                     Container(
                       height: MediaQuery.of(context).size.width,
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.center,
                           end: Alignment.bottomCenter,
                           colors: [
-                            const Color(0x00000000),
-                            const Color(0xCC000000),
+                            Color(0x00000000),
+                            Color(0xCC000000),
                           ],
                         ),
                       ),
@@ -54,24 +54,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "James Smith",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Text(
+                              const Text(
                                 "02 Jan 1992",
                                 style: TextStyle(
                                     color: kPrimaryColor, fontSize: 12),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               ElevatedButton(
                                 onPressed: () {},
-                                child: Text(
+                                child: const Text(
                                   "Setting",
                                   style: TextStyle(
                                       color: kPrimaryColor, fontSize: 16),
@@ -96,8 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 10),
                         child: Text(
                           "My library",
                           style: TextStyle(
@@ -106,14 +106,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               fontFamily: "SF Pro Text"),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       SizedBox(
                         width: double.infinity * 0.8,
                         child: TextButton(
                           onPressed: () {},
-                          child: Align(
+                          child: const Align(
                             alignment: Alignment.centerLeft,
                             child: IconText(
                               icon: Icons.music_note,
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: double.infinity * 0.8,
                         child: TextButton(
                           onPressed: () {},
-                          child: Align(
+                          child: const Align(
                             alignment: Alignment.centerLeft,
                             child: IconText(
                               icon: Icons.album,
@@ -139,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: double.infinity * 0.8,
                         child: TextButton(
                           onPressed: () {},
-                          child: Align(
+                          child: const Align(
                             alignment: Alignment.centerLeft,
                             child: IconText(
                               icon: Icons.person_outline,
@@ -151,12 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
-                      RotatedBox(
+                      const RotatedBox(
                         quarterTurns: -1,
                         child: Text(
                           "Recent Music",
@@ -175,6 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 itemCount: 5,
                                 itemBuilder: (context, position) =>
                                     MusicSelectionWidget(
+                                      song: fakeSongsData[position],
                                       index: position,
                                     )),
                           ],

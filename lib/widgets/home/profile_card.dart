@@ -30,11 +30,18 @@ class ProfileCard extends StatelessWidget {
                     fontWeight: FontWeight.w400),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(ProfileSetting(user: user));
                 },
                 child: CircleAvatar(
-                  child: Image.network(user.avatarUrl,fit: BoxFit.cover,),
+                  radius: 20,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(45),
+                    child: Image.network(
+                      user.avatarUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               )
             ],

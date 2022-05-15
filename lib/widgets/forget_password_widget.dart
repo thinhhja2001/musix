@@ -21,7 +21,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
         height: screenSize.height * 0.5, child: forgetPassword(context));
   }
 
@@ -46,22 +46,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    child: Text(
-                      "Forgot Password",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "DM Sans",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
+                  const Text(
+                    "Forgot Password",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "DM Sans",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
                     ),
                   ),
                   SizedBox(
                     height: screenSize.height * 0.01,
                   ),
                   Container(
-                    child: Text(
+                    child: const Text(
                       "Enter the email associated with your account and we’ll send an email instruction to reset your password.",
                       style: TextStyle(
                         color: Colors.white,
@@ -77,7 +75,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             SizedBox(
               height: screenSize.height * 0.03,
             ),
-            Text(
+            const Text(
               "Email Address",
               style: TextStyle(
                 color: Color.fromRGBO(143, 143, 143, 1),
@@ -86,25 +84,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 fontSize: 12,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
-                color: Color.fromRGBO(49, 62, 85, 1),
+                color: const Color.fromRGBO(49, 62, 85, 1),
                 child: Theme(
                   data: Theme.of(context).copyWith(
                     colorScheme: ThemeData().colorScheme.copyWith(
-                          primary: Color.fromRGBO(31, 223, 100, 1),
+                          primary: const Color.fromRGBO(31, 223, 100, 1),
                         ),
                   ),
                   child: TextFormField(
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     controller: _email,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       focusColor: Color.fromRGBO(31, 223, 100, 1),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
                             color: Color.fromRGBO(31, 223, 100, 1), width: 3.0),
                       ),
                       hintText: 'Email address',
@@ -126,12 +124,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             SizedBox(
               height: screenSize.height * 0.01,
             ),
-            Container(
+            SizedBox(
               width: screenSize.width,
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(31, 223, 100, 1)),
+                    primary: const Color.fromRGBO(31, 223, 100, 1)),
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     auth.sendPasswordResetEmail(email: _email.text);
@@ -144,7 +142,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     );
                   }
                 },
-                child: Text(
+                child: const Text(
                   "Request reset password link",
                   style: TextStyle(
                     color: Colors.white,
@@ -155,14 +153,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: screenSize.width,
               height: 50,
               child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text(
+                child: const Text(
                   "Cancel",
                   style: TextStyle(
                     color: Color.fromRGBO(31, 223, 100, 1),

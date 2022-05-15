@@ -1,27 +1,14 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'dart:math' as math;
 import '../utils/colors.dart';
 import '../utils/constant.dart';
 
 class CurrentMusicPlayer extends StatelessWidget {
-  CurrentMusicPlayer({
+  const CurrentMusicPlayer({
     Key? key,
-    required this.song,
-    required this.singer,
-    required this.image,
-    required this.borderColor,
-    required this.songUrl,
   }) : super(key: key);
-  final String song;
-  final String singer;
-  final String image;
-  final Color borderColor;
-  final String songUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +20,18 @@ class CurrentMusicPlayer extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  BoxShadow(color: borderColor, blurRadius: 4),
+                boxShadow: const [
+                  BoxShadow(color: kPrimaryColor, blurRadius: 4),
                 ]),
             child: CircleAvatar(
-                backgroundImage: NetworkImage(image),
+                backgroundImage:
+                    NetworkImage(audioPlayerProvider.currentSong.thumbnailUrl),
                 radius: 25,
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      boxShadow: [
-                        BoxShadow(color: borderColor, blurRadius: 4),
+                      boxShadow: const [
+                        BoxShadow(color: kPrimaryColor, blurRadius: 4),
                       ]),
                   child: const CircleAvatar(
                     radius: 10,
@@ -58,12 +46,12 @@ class CurrentMusicPlayer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  song,
+                  audioPlayerProvider.currentSong.name,
                   style: kDefaultTextStyle.copyWith(
                       fontSize: 16, fontWeight: FontWeight.w400),
                 ),
                 Text(
-                  singer,
+                  audioPlayerProvider.currentSong.artistName,
                   style: kDefaultTextStyle.copyWith(
                       color: kPrimaryColor,
                       fontSize: 14,
@@ -105,9 +93,10 @@ class CurrentMusicPlayer extends StatelessWidget {
                             child: InkWell(
                               onTap: () async {
                                 if (audioPlayerProvider.isPlaying) {
-                                  audioPlayerProvider.pauseAudio();
+                                  audioPlayerProvider.pauseSong();
                                 } else {
-                                  audioPlayerProvider.playAudio();
+                                  audioPlayerProvider.playSong(
+                                      audioPlayerProvider.currentSong);
                                 }
                                 audioPlayerProvider.changePlayState();
                               },
