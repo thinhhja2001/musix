@@ -45,3 +45,5 @@ List<String> fakeSongsData = [
   'ZWZCAAIE',
   'ZW6I00IA'
 ];
+
+const durationInfinity = Duration(days: 365);

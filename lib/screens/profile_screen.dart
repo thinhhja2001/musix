@@ -3,6 +3,7 @@ import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/profile/icon_text.dart';
 
+import '../resources/music_methods.dart';
 import '../widgets/music_selection_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -166,18 +167,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 5,
-                                itemBuilder: (context, position) =>
-                                    MusicSelectionWidget(
-                                      song: fakeSongsData[position],
-                                      index: position,
-                                    )),
-                          ],
+                        child: FutureBuilder(
+                          future:
+                              MusicMethods.getListSongDataByKeys(fakeSongsData),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            if (snapshot.hasData) {
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: 5,
+                                        itemBuilder: (context, position) =>
+                                            MusicSelectionWidget(
+                                              index: position,
+                                              song: snapshot.data[position],
+                                            )),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ),
+                              );
+                            }
+                          },
                         ),
                       )
                     ],

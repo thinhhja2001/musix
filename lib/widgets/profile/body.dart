@@ -102,13 +102,13 @@ class Body extends StatelessWidget {
                       fontWeight: FontWeight.w300),
                 ),
               ),
-              FutureBuilder(
-                future: MusicMethods.getListSongDataByKeys(fakeSongsData),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: Column(
+              Expanded(
+                child: FutureBuilder(
+                  future: MusicMethods.getListSongDataByKeys(fakeSongsData),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
                         children: [
                           ListView.builder(
                               shrinkWrap: true,
@@ -120,14 +120,16 @@ class Body extends StatelessWidget {
                                     song: snapshot.data[position],
                                   )),
                         ],
-                      ),
-                    );
-                  } else {
-                    return const CircularProgressIndicator(
-                      color: kPrimaryColor,
-                    );
-                  }
-                },
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: kPrimaryColor,
+                        ),
+                      );
+                    }
+                  },
+                ),
               )
             ],
           ),
