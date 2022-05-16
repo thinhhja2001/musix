@@ -113,7 +113,7 @@ class Body extends StatelessWidget {
                           ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 5,
+                              itemCount: snapshot.data.length,
                               itemBuilder: (context, position) =>
                                   MusicSelectionWidget(
                                     index: position,

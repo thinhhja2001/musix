@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/song.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 enum SocialLoginType { facebook, google }
 
@@ -39,11 +40,24 @@ const Widget verticalSliverPaddingLarge =
     SliverPadding(padding: EdgeInsets.only(top: 50.0));
 
 List<String> fakeSongsData = [
-  'ZWDW8I90',
-  'ZW9FU0FW',
-  'ZWZ9687B',
-  'ZWZCAAIE',
-  'ZW6I00IA'
+  'ZZA07BED',
+  'ZW6EOWE9',
+  'ZWZD0CIO',
+  'ZU9C6CC8',
+  'ZO89987B'
 ];
 
 const durationInfinity = Duration(days: 365);
+
+Widget defaultTextScrollWidget(String text) {
+  return TextScroll(
+    text,
+    mode: TextScrollMode.bouncing,
+    velocity: const Velocity(pixelsPerSecond: Offset(10, 0)),
+    delayBefore: const Duration(seconds: 5),
+    pauseBetween: const Duration(seconds: 3),
+    style:
+        kDefaultTextStyle.copyWith(fontSize: 15, fontWeight: FontWeight.w400),
+    textAlign: TextAlign.right,
+  );
+}

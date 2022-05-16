@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/utils/utils.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 import '../utils/colors.dart';
 import '../utils/constant.dart';
@@ -17,44 +19,41 @@ class CurrentMusicPlayer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: const [
-                  BoxShadow(color: kPrimaryColor, blurRadius: 4),
-                ]),
-            child: CircleAvatar(
-                backgroundImage:
-                    NetworkImage(audioPlayerProvider.currentSong.thumbnailUrl),
-                radius: 25,
-                child: Container(
+          FutureBuilder<PaletteGenerator>(
+              future: updatePaletteGenerator(
+                  audioPlayerProvider.currentSong.thumbnailUrl),
+              builder: (context, snapshot) {
+                return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      boxShadow: const [
-                        BoxShadow(color: kPrimaryColor, blurRadius: 4),
+                      boxShadow: [
+                        BoxShadow(
+                            color: snapshot.data!.dominantColor!.color,
+                            blurRadius: 10),
                       ]),
-                  child: const CircleAvatar(
-                    radius: 10,
-                    backgroundColor: kBackgroundColorDarker,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        audioPlayerProvider.currentSong.thumbnailUrl),
+                    radius: 26,
                   ),
-                )),
-          ),
+                );
+              }),
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  audioPlayerProvider.currentSong.name,
-                  style: kDefaultTextStyle.copyWith(
-                      fontSize: 16, fontWeight: FontWeight.w400),
-                ),
+                SizedBox(
+                    height: 20,
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: defaultTextScrollWidget(
+                        audioPlayerProvider.currentSong.name)),
                 Text(
                   audioPlayerProvider.currentSong.artistName,
                   style: kDefaultTextStyle.copyWith(
                       color: kPrimaryColor,
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w400),
                 ),
                 Container(

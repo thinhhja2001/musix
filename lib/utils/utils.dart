@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:musix/utils/constant.dart';
+import 'package:palette_generator/palette_generator.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 showSnackBar(String content, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(content)));
@@ -36,3 +39,22 @@ Widget buildBlurredImage() => ClipRRect(
         ],
       ),
     );
+Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
+  final paletteGenerator = await PaletteGenerator.fromImageProvider(
+    Image.network(imageUrl).image,
+  );
+  return paletteGenerator;
+}
+
+Widget defaultTextScrollWidget(String text) {
+  return TextScroll(
+    text,
+    mode: TextScrollMode.bouncing,
+    velocity: const Velocity(pixelsPerSecond: Offset(10, 0)),
+    delayBefore: const Duration(seconds: 5),
+    pauseBetween: const Duration(seconds: 3),
+    style:
+        kDefaultTextStyle.copyWith(fontSize: 15, fontWeight: FontWeight.w400),
+    textAlign: TextAlign.right,
+  );
+}

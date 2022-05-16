@@ -3,6 +3,7 @@ import 'package:marquee/marquee.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:text_scroll/text_scroll.dart';
 import 'package:video_player/video_player.dart';
 
 import '../utils/colors.dart';
@@ -60,7 +61,7 @@ class MusicSelectionWidget extends StatelessWidget {
                     Text(
                       song.artistName,
                       style: kDefaultTitleStyle.copyWith(
-                          fontSize: 16, color: Colors.grey),
+                          fontSize: 14, color: Colors.grey),
                     )
                   ],
                 )),
