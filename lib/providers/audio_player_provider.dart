@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:musix/apis/song.dart';
+import 'package:musix/models/song.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
   Duration duration = Duration.zero;

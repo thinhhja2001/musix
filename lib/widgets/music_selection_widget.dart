@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-import 'package:musix/apis/song.dart';
+import 'package:musix/models/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -25,7 +25,7 @@ class MusicSelectionWidget extends StatelessWidget {
       child: InkWell(
         onTap: () => audioPlayerProvider.playSong(song),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               "#${index + 1}",

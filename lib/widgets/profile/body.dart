@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/models/users.dart';
+import 'package:musix/resources/music_methods.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/profile/Profile_fix.dart';
@@ -9,9 +10,8 @@ import 'package:musix/widgets/profile/profile_pic.dart';
 import '../music_selection_widget.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key, required this.user}) : super(key: key);
+  Body({Key? key, required this.user}) : super(key: key);
   final Users user;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -102,20 +102,32 @@ class Body extends StatelessWidget {
                       fontWeight: FontWeight.w300),
                 ),
               ),
-              Expanded(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 5,
-                        itemBuilder: (context, position) =>
-                            MusicSelectionWidget(
-                              index: position,
-                              song: fakeSongsData[position],
-                            )),
-                  ],
-                ),
+              FutureBuilder(
+                future: MusicMethods.getListSongDataByKeys(fakeSongsData),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: 5,
+                              itemBuilder: (context, position) =>
+                                  MusicSelectionWidget(
+                                    index: position,
+                                    song: snapshot.data[position],
+                                  )),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    );
+                  }
+                },
               )
             ],
           ),
