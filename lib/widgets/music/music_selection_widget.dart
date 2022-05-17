@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:text_scroll/text_scroll.dart';
 import 'package:video_player/video_player.dart';
 
-import '../utils/colors.dart';
-import '../utils/constant.dart';
+import '../../utils/colors.dart';
+import '../../utils/constant.dart';
 
 class MusicSelectionWidget extends StatelessWidget {
   const MusicSelectionWidget({

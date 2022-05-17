@@ -7,7 +7,7 @@ import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/profile/Profile_fix.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
 
-import '../music_selection_widget.dart';
+import '../music/music_selection_widget.dart';
 
 class Body extends StatelessWidget {
   Body({Key? key, required this.user}) : super(key: key);

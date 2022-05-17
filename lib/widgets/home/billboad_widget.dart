@@ -6,7 +6,7 @@ import '../../utils/constant.dart';
 import '../../utils/utils.dart';
 import '../list/new_album_list.dart';
 import '../list/recent_music_list.dart';
-import '../video_player/weekly_music_widget.dart';
+import '../video_player/weekly_album_widget.dart';
 
 class BillboardWidget extends StatelessWidget {
   const BillboardWidget({
@@ -34,7 +34,7 @@ class BillboardWidget extends StatelessWidget {
               verticalSliverPaddingMedium,
               const NewAlbumList(),
               verticalSliverPaddingMedium,
-              const WeeklyMusicWidget(),
+              const WeeklyAlbumWidget(),
               verticalSliverPaddingMedium,
               const RecentMusicList(),
               verticalSliverPaddingMedium,

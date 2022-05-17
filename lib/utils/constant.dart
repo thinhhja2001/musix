@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/models/song.dart';
-import 'package:text_scroll/text_scroll.dart';
-
-enum SocialLoginType { facebook, google }
-
-enum CustomInputFieldType { text, password }
+import 'package:musix/models/album.dart';
 
 const double kButtonMarginTop = 16;
 const double kEdgeInset = 52;
@@ -43,21 +38,19 @@ List<String> fakeSongsData = [
   'ZZA07BED',
   'ZW6EOWE9',
   'ZWZD0CIO',
-  'ZU9C6CC8',
-  'ZO89987B'
+  'ZWZ99DDO',
+  'ZW67D67A'
 ];
 
 const durationInfinity = Duration(days: 365);
 
-Widget defaultTextScrollWidget(String text) {
-  return TextScroll(
-    text,
-    mode: TextScrollMode.bouncing,
-    velocity: const Velocity(pixelsPerSecond: Offset(10, 0)),
-    delayBefore: const Duration(seconds: 5),
-    pauseBetween: const Duration(seconds: 3),
-    style:
-        kDefaultTextStyle.copyWith(fontSize: 15, fontWeight: FontWeight.w400),
-    textAlign: TextAlign.right,
-  );
-}
+const noImageUrl =
+    "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg";
+
+final fakeAlbumData = Album(
+    id: 'vnvn',
+    songs: [],
+    title: 'Nice for what',
+    artistNames: 'Mother John',
+    artistLink: 'artistLink',
+    thumbnailUrl: noImageUrl);

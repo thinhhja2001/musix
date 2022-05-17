@@ -4,8 +4,9 @@ import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
-import '../utils/colors.dart';
-import '../utils/constant.dart';
+
+import '../../utils/colors.dart';
+import '../../utils/constant.dart';
 
 class CurrentMusicPlayer extends StatelessWidget {
   const CurrentMusicPlayer({

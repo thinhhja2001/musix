@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:musix/utils/colors.dart';
 
 import '../../utils/constant.dart';
-import '../playlist_card.dart';
+import '../music/album_card.dart';
 
 class NewAlbumList extends StatelessWidget {
   const NewAlbumList({
@@ -38,9 +38,8 @@ class NewAlbumList extends StatelessWidget {
                   child: Row(
                       children: List.generate(
                           19,
-                          (index) => const Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: PlaylistCard(),
+                          (index) => AlbumCard(
+                                album: fakeAlbumData,
                               ))),
                 ),
               )

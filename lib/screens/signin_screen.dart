@@ -9,6 +9,7 @@ import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/forget_password_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/enums.dart';
 import '../widgets/customs/custom_button.dart';
 import '../widgets/customs/custom_error_box.dart';
 import '../widgets/customs/custom_input_field.dart';
@@ -21,8 +22,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
@@ -143,7 +142,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   onPressed: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (context) => const ForgetPassword(),
+                                      builder: (context) =>
+                                          const ForgetPassword(),
                                       isScrollControlled: true,
                                       backgroundColor:
                                           const Color.fromRGBO(40, 51, 63, 1),

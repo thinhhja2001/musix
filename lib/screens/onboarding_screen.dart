@@ -8,6 +8,7 @@ import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/social_media_login_button.dart';
 
+import '../utils/enums.dart';
 import '../widgets/customs/custom_button.dart';
 
 class OnBoardingScreen extends StatefulWidget {

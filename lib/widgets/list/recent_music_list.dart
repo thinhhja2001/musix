@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/widgets/music_selection_widget.dart';
+import 'package:musix/widgets/music/music_selection_widget.dart';
 
 import '../../resources/music_methods.dart';
 import '../../utils/colors.dart';

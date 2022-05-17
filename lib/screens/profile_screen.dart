@@ -4,7 +4,8 @@ import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/profile/icon_text.dart';
 
 import '../resources/music_methods.dart';
-import '../widgets/music_selection_widget.dart';
+import '../widgets/music/music_selection_widget.dart';
+import '../widgets/music/music_selection_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

@@ -7,6 +7,7 @@ import 'package:musix/utils/constant.dart';
 
 import 'package:provider/provider.dart';
 
+import '../utils/enums.dart';
 import '../widgets/customs/custom_button.dart';
 import '../widgets/customs/custom_datepicker_field.dart';
 import '../widgets/customs/custom_error_box.dart';

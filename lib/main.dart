@@ -14,6 +14,8 @@ import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'apis/web_scraper_api.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
