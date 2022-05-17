@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:musix/models/users.dart';
@@ -19,7 +18,7 @@ class AuthMethods {
     print(user!.uid);
     final DocumentSnapshot userDoc =
         await _firestore.collection("users").doc(user!.uid).get();
-    users = new Users(
+    users = Users(
         email: userDoc['email'],
         username: userDoc['username'],
         uid: user!.uid,
@@ -82,9 +81,9 @@ class AuthMethods {
     return downloadURL;
   }
 
-  Future<void> setUserProfile(Users user, File? image, String username, String imageURL) async {
-    if(image != null)
-    {
+  Future<void> setUserProfile(
+      Users user, File? image, String username, String imageURL) async {
+    if (image != null) {
       imageURL = await uploadImage(image);
     }
     await _firestore.collection("users").doc(user.uid).set({
@@ -126,7 +125,8 @@ class AuthMethods {
           'uid': cred.user!.uid,
           'email': email,
           'birthday': birthday,
-          'img_url': "",
+          'img_url':
+              "https://tleliteracy.com/wp-content/uploads/2017/02/default-avatar.png",
           'followers': [],
           'following': []
         });

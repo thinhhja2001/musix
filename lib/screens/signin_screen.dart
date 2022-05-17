@@ -1,18 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/sign_in_provider.dart';
-import 'package:musix/resources/auth_methods.dart';
-import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
-import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/forget_password_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/enums.dart';
 import '../widgets/customs/custom_button.dart';
 import '../widgets/customs/custom_error_box.dart';
 import '../widgets/customs/custom_input_field.dart';
@@ -25,8 +22,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
@@ -147,10 +142,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                   onPressed: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (context) => ForgetPassword(),
+                                      builder: (context) =>
+                                          const ForgetPassword(),
                                       isScrollControlled: true,
                                       backgroundColor:
-                                          Color.fromRGBO(40, 51, 63, 1),
+                                          const Color.fromRGBO(40, 51, 63, 1),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(30.0),

@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musix/models/users.dart';
 import 'package:musix/resources/auth_methods.dart';
@@ -26,7 +24,7 @@ class _FixProfileState extends State<FixProfile> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = new TextEditingController(text: widget.user.username);
+    _controller = TextEditingController(text: widget.user.username);
     imageURL = widget.user.avatarUrl;
   }
 
@@ -45,7 +43,7 @@ class _FixProfileState extends State<FixProfile> {
   }
 
   void AfterSave() {
-    user = new Users(email: widget.user.email, username: _controller!.text, uid: widget.user.uid, followers: widget.user.followers, following: widget.user.following, avatarUrl: imageURL!);
+    user = Users(email: widget.user.email, username: _controller!.text, uid: widget.user.uid, followers: widget.user.followers, following: widget.user.following, avatarUrl: imageURL!);
     Restart.restartApp();
   }
 
@@ -59,7 +57,7 @@ class _FixProfileState extends State<FixProfile> {
         backgroundColor: kBackgroundColorDarker,
         elevation: 0,
         centerTitle: true,
-        title: Text("Profile Setting"),
+        title: const Text("Profile Setting"),
         actions: <Widget>[
           TextButton(
               onPressed: () {
@@ -67,7 +65,7 @@ class _FixProfileState extends State<FixProfile> {
                     image, _controller!.text,imageURL!).then((value) => AfterSave());
                 
               },
-              child: Text(
+              child: const Text(
                 "Save",
                 style: TextStyle(
                     fontSize: 18,
@@ -77,7 +75,7 @@ class _FixProfileState extends State<FixProfile> {
         ],
       ),
       body: Column(children: [
-        SizedBox(
+        const SizedBox(
           width: double.infinity,
           height: 20,
         ),
@@ -89,7 +87,7 @@ class _FixProfileState extends State<FixProfile> {
             onPressed: () {
               pickImage().then((value) => (setState(() {})));
             },
-            child: Text(
+            child: const Text(
               "Change your avatar",
               style: TextStyle(
                   fontSize: 18,
@@ -101,9 +99,9 @@ class _FixProfileState extends State<FixProfile> {
           child: TextFormField(
             controller: _controller,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-            decoration: InputDecoration(),
+            decoration: const InputDecoration(),
           ),
         ),
       ]),

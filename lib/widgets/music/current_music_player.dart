@@ -1,27 +1,17 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:musix/utils/utils.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
-import 'dart:math' as math;
-import '../utils/colors.dart';
-import '../utils/constant.dart';
+
+import '../../utils/colors.dart';
+import '../../utils/constant.dart';
 
 class CurrentMusicPlayer extends StatelessWidget {
-  CurrentMusicPlayer({
+  const CurrentMusicPlayer({
     Key? key,
-    required this.song,
-    required this.singer,
-    required this.image,
-    required this.borderColor,
-    required this.songUrl,
   }) : super(key: key);
-  final String song;
-  final String singer;
-  final String image;
-  final Color borderColor;
-  final String songUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -30,43 +20,41 @@ class CurrentMusicPlayer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  BoxShadow(color: borderColor, blurRadius: 4),
-                ]),
-            child: CircleAvatar(
-                backgroundImage: NetworkImage(image),
-                radius: 25,
-                child: Container(
+          FutureBuilder<PaletteGenerator>(
+              future: updatePaletteGenerator(
+                  audioPlayerProvider.currentSong.thumbnailUrl),
+              builder: (context, snapshot) {
+                return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       boxShadow: [
-                        BoxShadow(color: borderColor, blurRadius: 4),
+                        BoxShadow(
+                            color: snapshot.data!.dominantColor!.color,
+                            blurRadius: 10),
                       ]),
-                  child: const CircleAvatar(
-                    radius: 10,
-                    backgroundColor: kBackgroundColorDarker,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        audioPlayerProvider.currentSong.thumbnailUrl),
+                    radius: 26,
                   ),
-                )),
-          ),
+                );
+              }),
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                    height: 20,
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: defaultTextScrollWidget(
+                        audioPlayerProvider.currentSong.name)),
                 Text(
-                  song,
-                  style: kDefaultTextStyle.copyWith(
-                      fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  singer,
+                  audioPlayerProvider.currentSong.artistName,
                   style: kDefaultTextStyle.copyWith(
                       color: kPrimaryColor,
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w400),
                 ),
                 Container(
@@ -105,9 +93,10 @@ class CurrentMusicPlayer extends StatelessWidget {
                             child: InkWell(
                               onTap: () async {
                                 if (audioPlayerProvider.isPlaying) {
-                                  audioPlayerProvider.pauseAudio();
+                                  audioPlayerProvider.pauseSong();
                                 } else {
-                                  audioPlayerProvider.playAudio();
+                                  audioPlayerProvider.playSong(
+                                      audioPlayerProvider.currentSong);
                                 }
                                 audioPlayerProvider.changePlayState();
                               },

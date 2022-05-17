@@ -34,7 +34,7 @@ class UserInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "User info",
               style: TextStyle(
                   color: Colors.white,
@@ -42,26 +42,26 @@ class UserInfo extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontFamily: "SF Pro Text"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             InfoCard("Username", username),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             InfoCard("Email", email),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             InfoCard("Phone", phone),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "Change password",
                   style: TextStyle(color: kPrimaryColor),
                 ),

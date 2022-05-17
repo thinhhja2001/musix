@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musix/utils/constant.dart';
 
+import '../utils/enums.dart';
+
 class SocialMediaLoginButton extends StatelessWidget {
   const SocialMediaLoginButton({
     Key? key,

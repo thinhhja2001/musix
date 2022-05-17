@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/models/album.dart';
 
-enum SocialLoginType { facebook, google }
-enum CustomInputFieldType { text, password }
+import '../widgets/customs/custom_bottom_navigation_bar.dart';
+
 const double kButtonMarginTop = 16;
 const double kEdgeInset = 52;
 const TextStyle kDefaultTextStyle =
@@ -35,3 +35,50 @@ const Widget verticalSliverPaddingMedium =
     SliverPadding(padding: EdgeInsets.only(top: 25.0));
 const Widget verticalSliverPaddingLarge =
     SliverPadding(padding: EdgeInsets.only(top: 50.0));
+
+List<String> fakeSongsData = [
+  'ZZA07BED',
+  'ZW6EOWE9',
+  'ZWZD0CIO',
+  'ZWZ99DDO',
+  'ZW67D67A'
+];
+
+const durationInfinity = Duration(days: 365);
+
+const noImageUrl =
+    "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg";
+
+final fakeAlbumData = Album(
+    id: 'vnvn',
+    songs: [],
+    title: 'Nice for what',
+    artistNames: 'Mother John',
+    artistLink: 'artistLink',
+    thumbnailUrl: noImageUrl);
+final fakeFavoriteArtists = [
+  'Taylor Swift',
+  'Hoàng Dũng',
+  'Đen',
+  'Hồ Hạ',
+  'Thiều Bảo Trâm',
+  'Sơn Tùng'
+];
+
+List<CustomBottomBarItem> bottomBarItems = [
+  CustomBottomBarItem(
+      icon: const Icon(Icons.star_outline),
+      title: const Text("Billboard"),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.black),
+  CustomBottomBarItem(
+      icon: const Icon(Icons.favorite_outline),
+      title: const Text("Explore"),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.black),
+  CustomBottomBarItem(
+      icon: const Icon(Icons.search_outlined),
+      title: const Text("Search"),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.black),
+];

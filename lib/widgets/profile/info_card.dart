@@ -11,9 +11,9 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: Text(infoType,style: TextStyle(color: Colors.white,fontSize: 15),)),
+        Expanded(child: Text(infoType,style: const TextStyle(color: Colors.white,fontSize: 15),)),
         Expanded(child: Align(
-         alignment: Alignment.centerRight ,child: Text(info,style: TextStyle(color: kPrimaryColor,fontSize: 15)))),
+         alignment: Alignment.centerRight ,child: Text(info,style: const TextStyle(color: kPrimaryColor,fontSize: 15)))),
       ],
     );
   }

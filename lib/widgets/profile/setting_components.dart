@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:musix/screens/profile_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/widgets/profile/user_info.dart';
 
@@ -20,7 +19,7 @@ class SettingComponent extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: (){
-                Get.to(UserInfo(username: "deptrai",email: "19522408",phone: "0862751020",));  
+                Get.to(const UserInfo(username: "deptrai",email: "19522408",phone: "0862751020",));  
               },
               child: SizedBox(
                 height: 50,
@@ -32,13 +31,13 @@ class SettingComponent extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(settingIcon, size: 40, color: kPrimaryColorLighten),
-                          SizedBox(width: 10,),
-                          Text(settingText,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15),),
+                          const SizedBox(width: 10,),
+                          Text(settingText,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 15),),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 8.0),
                       child: Icon(Icons.keyboard_arrow_right, size: 30, color: Colors.grey),
                     ),
                   ],

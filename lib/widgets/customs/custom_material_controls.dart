@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 import 'dart:async';
 
 import 'package:chewie/src/center_play_button.dart';
@@ -20,12 +22,12 @@ class CustomMaterialControls extends StatefulWidget {
   const CustomMaterialControls({
     this.showPlayButton = true,
     Key? key,
-    required this.song,
+    required this.video,
     required this.singer,
   }) : super(key: key);
 
   final bool showPlayButton;
-  final String song;
+  final String video;
   final String singer;
   @override
   State<StatefulWidget> createState() {
@@ -613,7 +615,7 @@ class _buildSongInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.song,
+            widget.video,
             style: kDefaultTitleStyle,
           ),
           Text(

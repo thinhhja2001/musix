@@ -13,7 +13,7 @@ class ProfileSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: AppBar(centerTitle: true,title: Text("Profile"),backgroundColor: kBackgroundColorDarker,),
+      appBar: AppBar(centerTitle: true,title: const Text("Profile"),backgroundColor: kBackgroundColorDarker,),
       body: Body(user: user),
     );
   }
