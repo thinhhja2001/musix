@@ -4,6 +4,7 @@ import 'package:musix/models/album.dart';
 import 'package:musix/widgets/music/album_card.dart';
 
 import '../../utils/constant.dart';
+import '../../utils/utils.dart';
 
 class WeeklyAlbumWidget extends StatelessWidget {
   const WeeklyAlbumWidget({
@@ -35,7 +36,7 @@ class WeeklyAlbumWidget extends StatelessWidget {
                         album: snapshot.data,
                       );
                     } else {
-                      return _noAlbumData(context);
+                      return noAlbumData(context);
                     }
                   },
                 ),
@@ -48,7 +49,7 @@ class WeeklyAlbumWidget extends StatelessWidget {
                         album: snapshot.data,
                       );
                     } else {
-                      return _noAlbumData(context);
+                      return noAlbumData(context);
                     }
                   },
                 ),
@@ -61,7 +62,7 @@ class WeeklyAlbumWidget extends StatelessWidget {
                         album: snapshot.data,
                       );
                     } else {
-                      return _noAlbumData(context);
+                      return noAlbumData(context);
                     }
                   },
                 )
@@ -70,19 +71,6 @@ class WeeklyAlbumWidget extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  Widget _noAlbumData(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: Container(
-          width: MediaQuery.of(context).size.width / 2,
-          height: MediaQuery.of(context).size.width / 2,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                  fit: BoxFit.fill, image: NetworkImage(noImageUrl)))),
     );
   }
 }

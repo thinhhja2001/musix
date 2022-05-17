@@ -15,6 +15,15 @@ class Album {
       required this.artistNames,
       required this.artistLink,
       required this.thumbnailUrl});
+  static fromJson(Map<String, dynamic> albumData) {
+    return Album(
+        id: albumData['id'],
+        songs: albumData['songs'],
+        title: albumData['title'],
+        artistNames: albumData['artistNames'],
+        artistLink: albumData['artistLink'],
+        thumbnailUrl: albumData['thumbnailUrl']);
+  }
 
   static Future<Album> topSongVietnam() async {
     List<String> songs = await ZingMP3API.getAllTopVPOPSongKey();

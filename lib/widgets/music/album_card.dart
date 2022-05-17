@@ -44,11 +44,13 @@ class AlbumCard extends StatelessWidget {
                             children: [
                               Text(
                                 album.title,
+                                overflow: TextOverflow.ellipsis,
                                 style: kDefaultTextStyle.copyWith(
                                     fontWeight: FontWeight.w400, fontSize: 16),
                               ),
                               Text(
                                 album.artistNames,
+                                overflow: TextOverflow.ellipsis,
                                 style: kDefaultTextStyle.copyWith(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14,

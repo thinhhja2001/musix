@@ -58,3 +58,16 @@ Widget defaultTextScrollWidget(String text) {
     textAlign: TextAlign.right,
   );
 }
+
+Widget noAlbumData(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10.0),
+    child: Container(
+        width: MediaQuery.of(context).size.width / 2,
+        height: MediaQuery.of(context).size.width / 2,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: const DecorationImage(
+                fit: BoxFit.fill, image: NetworkImage(noImageUrl)))),
+  );
+}

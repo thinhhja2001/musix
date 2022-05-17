@@ -3,6 +3,7 @@ import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/utils/colors.dart';
 
 import '../models/users.dart';
+import '../utils/constant.dart';
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
 import '../widgets/home/billboad_widget.dart';
 
@@ -37,23 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<CustomBottomBarItem> bottomBarItems = [
-      CustomBottomBarItem(
-          icon: const Icon(Icons.star_outline),
-          title: const Text("Billboard"),
-          unselectedColor: Colors.white,
-          selectedColor: Colors.black),
-      CustomBottomBarItem(
-          icon: const Icon(Icons.favorite_outline),
-          title: const Text("Explore"),
-          unselectedColor: Colors.white,
-          selectedColor: Colors.black),
-      CustomBottomBarItem(
-          icon: const Icon(Icons.search_outlined),
-          title: const Text("Search"),
-          unselectedColor: Colors.white,
-          selectedColor: Colors.black),
-    ];
     return Scaffold(
       backgroundColor: kBackgroundColor,
       bottomNavigationBar: CustomBottomBar(
@@ -65,16 +49,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(BuildContext context, int currentIndex) {
-    return currentIndex == 0
-        ? (userLoaded
-            ? BillboardWidget(user: users!)
-            : const Center(child: CircularProgressIndicator()))
-        : Center(
-            child: Container(
-            child: const Text(
-              "Explore screen",
-              style: TextStyle(color: Colors.white),
+    List<Widget> bottomBarWidget = [
+      userLoaded
+          ? BillboardWidget(user: users!)
+          : const Center(
+              child: CircularProgressIndicator(),
             ),
-          ));
+      const Center(
+          child: Text(
+        "Explore screen",
+        style: TextStyle(color: Colors.white),
+      ))
+    ];
+    return IndexedStack(index: currentIndex, children: bottomBarWidget);
   }
 }

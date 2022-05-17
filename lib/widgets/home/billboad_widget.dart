@@ -4,7 +4,7 @@ import 'package:musix/widgets/home/profile_card.dart';
 import '../../models/users.dart';
 import '../../utils/constant.dart';
 import '../../utils/utils.dart';
-import '../list/new_album_list.dart';
+import '../list/you_may_love_list.dart';
 import '../list/recent_music_list.dart';
 import '../video_player/weekly_album_widget.dart';
 
@@ -32,7 +32,7 @@ class BillboardWidget extends StatelessWidget {
             slivers: [
               ProfileCard(user: user),
               verticalSliverPaddingMedium,
-              const NewAlbumList(),
+              const YouMayLoveList(),
               verticalSliverPaddingMedium,
               const WeeklyAlbumWidget(),
               verticalSliverPaddingMedium,

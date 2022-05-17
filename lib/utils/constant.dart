@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
 
+import '../widgets/customs/custom_bottom_navigation_bar.dart';
+
 const double kButtonMarginTop = 16;
 const double kEdgeInset = 52;
 const TextStyle kDefaultTextStyle =
@@ -54,3 +56,29 @@ final fakeAlbumData = Album(
     artistNames: 'Mother John',
     artistLink: 'artistLink',
     thumbnailUrl: noImageUrl);
+final fakeFavoriteArtists = [
+  'Taylor Swift',
+  'Hoàng Dũng',
+  'Đen',
+  'Hồ Hạ',
+  'Thiều Bảo Trâm',
+  'Sơn Tùng'
+];
+
+List<CustomBottomBarItem> bottomBarItems = [
+  CustomBottomBarItem(
+      icon: const Icon(Icons.star_outline),
+      title: const Text("Billboard"),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.black),
+  CustomBottomBarItem(
+      icon: const Icon(Icons.favorite_outline),
+      title: const Text("Explore"),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.black),
+  CustomBottomBarItem(
+      icon: const Icon(Icons.search_outlined),
+      title: const Text("Search"),
+      unselectedColor: Colors.white,
+      selectedColor: Colors.black),
+];
