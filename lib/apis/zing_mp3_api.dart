@@ -176,7 +176,7 @@ class ZingMP3API {
       'title': responseInJson['data']['info']['title'],
       'artistNames': responseInJson['data']['info']['artists_names'],
       'artistLink': artistLink,
-      'thumbnail': responseInJson['data']['info']['thumbnail_medium'],
+      'thumbnailUrl': responseInJson['data']['info']['thumbnail_medium'],
     };
   }
 

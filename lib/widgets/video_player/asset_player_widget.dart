@@ -1,7 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/utils/colors.dart';
-import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/customs/custom_material_controls.dart';
 import 'package:video_player/video_player.dart';
 
@@ -27,7 +26,7 @@ class _AssetPlayerWidgetState extends State<AssetPlayerWidget> {
             videoPlayerController: _controller,
             showControls: true,
             customControls: const CustomMaterialControls(
-              song: "Bước qua nhau",
+              video: "Bước qua nhau",
               singer: "Vũ",
             ),
             materialProgressColors: ChewieProgressColors(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musix/utils/constant.dart';
 
+import '../../utils/enums.dart';
+
 class CustomInputField extends StatefulWidget {
   const CustomInputField({
     Key? key,
