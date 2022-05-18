@@ -15,7 +15,6 @@ class AuthMethods {
 
   Future<Users> getCurrentUser() async {
     Users users;
-    print(user!.uid);
     final DocumentSnapshot userDoc =
         await _firestore.collection("users").doc(user!.uid).get();
     users = Users(
@@ -26,34 +25,6 @@ class AuthMethods {
         following: userDoc['following'],
         avatarUrl: userDoc['img_url']);
     return users;
-  }
-
-  void _changePassword(String Password, String newPassword) async {
-    String? email = user!.email;
-
-    //Create field for user to input old password
-
-    //pass the password here
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email!,
-        password: Password,
-      );
-
-      user?.updatePassword(newPassword).then((_) {
-        print("Successfully changed password");
-      }).catchError((error) {
-        print("Password can't be changed" + error.toString());
-        //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
   }
 
   Future<bool> checkUserNameExisted({required String username}) async {
@@ -70,32 +41,6 @@ class AuthMethods {
             });
     return isUserNameExisted;
   }
-
-  Future<String> uploadImage(File image) async {
-    String fileName = basename(image.path);
-    Reference storageRef =
-        FirebaseStorage.instance.ref().child('images/$fileName');
-    await storageRef.putFile(image);
-    String downloadURL = await storageRef.getDownloadURL();
-    print("Download url = " + downloadURL);
-    return downloadURL;
-  }
-
-  Future<void> setUserProfile(
-      Users user, File? image, String username, String imageURL) async {
-    if (image != null) {
-      imageURL = await uploadImage(image);
-    }
-    await _firestore.collection("users").doc(user.uid).set({
-      'username': username,
-      'uid': user.uid,
-      'email': user.email,
-      'img_url': imageURL,
-      'followers': [],
-      'following': []
-    });
-  }
-
   //sign up user
   Future<String> signUpUser(
       {required String email,
