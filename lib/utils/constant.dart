@@ -38,7 +38,7 @@ const Widget verticalSliverPaddingLarge =
 
 List<String> fakeSongsData = [
   'ZZA07BED',
-  'ZW6EOWE9',
+  'ZU00IU8D',
   'ZWZD0CIO',
   'ZWZ99DDO',
   'ZW67D67A'
