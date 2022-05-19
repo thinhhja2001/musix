@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/audio_player_provider.dart';
 import '../../utils/colors.dart';
 import '../../utils/constant.dart';
+import '../../utils/utils.dart';
 import 'duration_widget.dart';
 import 'music_controller_widget.dart';
 import 'music_slider_widget.dart';
@@ -19,73 +20,89 @@ class MainMusicPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
 
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: const BoxDecoration(color: Colors.black),
-      child: Padding(
-        padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
+    return FutureBuilder<PaletteGenerator>(
+      future:
+          updatePaletteGenerator(audioPlayerProvider.currentSong.thumbnailUrl),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  snapshot.data!.dominantColor!.color,
+                  Colors.black
+                ])),
+            child: Padding(
               padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.055),
-              child: const Align(
-                alignment: Alignment.topLeft,
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: Icon(
-                    Icons.arrow_forward_ios_sharp,
-                    color: Colors.white,
+                  top: MediaQuery.of(context).size.height * 0.05),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.055),
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        audioPlayerProvider.currentSong.thumbnailUrl),
+                    radius: 100,
+                  ),
+                  verticalSpaceRegular,
+                  Text(
+                    audioPlayerProvider.currentSong.name,
+                    style: kDefaultTextStyle,
+                  ),
+                  verticalSpaceRegular,
+                  Text(
+                    audioPlayerProvider.currentSong.artistName,
+                    style: kDefaultTextStyle.copyWith(color: kPrimaryColor),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset('assets/images/share.svg')),
+                      IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                              'assets/images/add_to_playlist.svg')),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.favorite,
+                            color: kPrimaryColor,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset('assets/images/download.svg')),
+                    ],
+                  ),
+                  const MusicSliderWidget(isSlidable: true),
+                  const DurationWidget(),
+                  const MusicControllerWidget()
+                ],
               ),
             ),
-            CircleAvatar(
-              backgroundImage:
-                  NetworkImage(audioPlayerProvider.currentSong.thumbnailUrl),
-              radius: 100,
-            ),
-            verticalSpaceRegular,
-            Text(
-              audioPlayerProvider.currentSong.name,
-              style: kDefaultTextStyle,
-            ),
-            verticalSpaceRegular,
-            Text(
-              audioPlayerProvider.currentSong.artistName,
-              style: kDefaultTextStyle.copyWith(color: kPrimaryColor),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset('assets/images/share.svg')),
-                IconButton(
-                    onPressed: () {},
-                    icon:
-                        SvgPicture.asset('assets/images/add_to_playlist.svg')),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite,
-                      color: kPrimaryColor,
-                    )),
-                IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset('assets/images/download.svg')),
-              ],
-            ),
-            const MusicSliderWidget(isSlidable: true),
-            const DurationWidget(),
-            const MusicControllerWidget()
-          ],
-        ),
-      ),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
