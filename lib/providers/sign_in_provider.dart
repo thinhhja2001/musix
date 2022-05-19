@@ -13,6 +13,12 @@ class SignInProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  void reset() {
+    _isValid = true;
+    _errorMessage = "";
+    _isLoading = false;
+    notifyListeners();
+  }
 
   Future<String> signInUser(
       {required String email, required String password}) async {
@@ -32,7 +38,9 @@ class SignInProvider extends ChangeNotifier {
       _isValid = true;
       final User user = FirebaseAuth.instance.currentUser!;
       if (!user.emailVerified) {
+        _isLoading = false;
         Get.offAll(EmailVerificationScreen());
+        return "failed";
       }
     } else {
       _isValid = false;

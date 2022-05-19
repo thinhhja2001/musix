@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:musix/providers/email_verification_provider.dart';
+import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
@@ -35,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final signUpProvider = Provider.of<SignUpProvider>(context);
+    final signInProvider = Provider.of<SignInProvider>(context);
 
     return Scaffold(
       body: Column(
@@ -168,6 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               TextButton(
                                   onPressed: () {
                                     signUpProvider.reset();
+                                    signInProvider.reset();
                                     Get.to(const SignInScreen());
                                   },
                                   child: const Text(

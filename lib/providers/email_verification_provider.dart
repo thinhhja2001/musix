@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/screens/signin_screen.dart';
 
 class EmailVerificationProvider extends ChangeNotifier {
@@ -35,6 +36,8 @@ class EmailVerificationProvider extends ChangeNotifier {
       await sendEmailVerification();
       changeCurrentState();
     } else {
+      reset();
+      SignInProvider().reset();
       Get.offAll(const SignInScreen());
     }
   }
