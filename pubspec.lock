@@ -258,6 +258,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_lyric:
+    dependency: "direct main"
+    description:
+      name: flutter_lyric
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -415,6 +422,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  lyrics_parser:
+    dependency: "direct main"
+    description:
+      name: lyrics_parser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-nullsafety.0"
   marquee:
     dependency: "direct main"
     description:

@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:text_scroll/text_scroll.dart';
+import 'package:http/http.dart' as http;
+import 'package:html/dom.dart' as dom;
 
 showSnackBar(String content, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(content)));
@@ -17,6 +20,12 @@ String formatDuration(int totalSeconds) {
   final minutesString = '$minutes'.padLeft(2, '0');
   final secondsString = '$seconds'.padLeft(2, '0');
   return '$minutesString:$secondsString';
+}
+
+Future<String> getLyricFromLrcLink(String lrcLink) async {
+  final response = await http.get(Uri.parse(lrcLink));
+  String lyric = utf8.decode(response.bodyBytes);
+  return lyric;
 }
 
 Widget buildBlurredImage() => ClipRRect(
