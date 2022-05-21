@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:text_scroll/text_scroll.dart';
@@ -79,4 +81,27 @@ Widget noAlbumData(BuildContext context) {
             image: const DecorationImage(
                 fit: BoxFit.fill, image: NetworkImage(noImageUrl)))),
   );
+}
+
+showCompleteNotification(
+    {required String title,
+    required String message,
+    required IconData icon,
+    Color? color}) {
+  Get.snackbar(title, message,
+      backgroundColor: kBackgroundColor,
+      colorText: Colors.white,
+      titleText: Text(
+        title,
+        style: kDefaultTitleStyle,
+      ),
+      messageText: Text(
+        message,
+        style: kDefaultHintStyle.copyWith(color: kPrimaryColor),
+      ),
+      shouldIconPulse: false,
+      icon: Icon(
+        icon,
+        color: color ?? Colors.white,
+      ));
 }

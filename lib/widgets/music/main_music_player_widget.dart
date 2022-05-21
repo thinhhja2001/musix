@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -7,6 +9,7 @@ import '../../providers/audio_player_provider.dart';
 import '../../utils/colors.dart';
 import '../../utils/constant.dart';
 import '../../utils/utils.dart';
+import 'album/all_album_of_current_user.dart';
 import 'duration_widget.dart';
 import 'music_controller_widget.dart';
 import 'music_slider_widget.dart';
@@ -19,7 +22,6 @@ class MainMusicPlayerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
-
     return FutureBuilder<PaletteGenerator>(
       future:
           updatePaletteGenerator(audioPlayerProvider.currentSong.thumbnailUrl),
@@ -79,11 +81,28 @@ class MainMusicPlayerWidget extends StatelessWidget {
                           onPressed: () {},
                           icon: SvgPicture.asset('assets/images/share.svg')),
                       IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                              'assets/images/add_to_playlist.svg')),
+                          onPressed: () => {
+                                showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (context) =>
+                                        const AllAlbumOfCurrentUser()),
+                                // showCompleteNotification(
+                                //     title: audioPlayerProvider.currentSong.name,
+                                //     message: "Added to your playlist",
+                                //     icon: Icons.playlist_add)
+                              },
+                          icon: const Icon(
+                            Icons.playlist_add,
+                            color: Colors.white,
+                          )),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () => {
+                                showCompleteNotification(
+                                    title: audioPlayerProvider.currentSong.name,
+                                    message: "Added to your favorite",
+                                    icon: Icons.favorite)
+                              },
                           icon: const Icon(
                             Icons.favorite,
                             color: kPrimaryColor,
