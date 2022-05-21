@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/models/users.dart';
@@ -137,7 +139,14 @@ class ProfileBody extends StatelessWidget {
               ],
             ),
           ),
-          TextButton(
+          ElevatedButton(
+            
+            style: ButtonStyle(
+              textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: Colors.red,fontWeight: FontWeight.bold)),
+              backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),))),
             onPressed: () async {
               await ProfileMethods()
                   .signOut()
