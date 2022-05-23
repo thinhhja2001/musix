@@ -1,7 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:musix/resources/firebase_handler.dart';
+import 'package:musix/widgets/music/button/favorite_icon_button.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -96,17 +96,7 @@ class MainMusicPlayerWidget extends StatelessWidget {
                             Icons.playlist_add,
                             color: Colors.white,
                           )),
-                      IconButton(
-                          onPressed: () => {
-                                showCompleteNotification(
-                                    title: audioPlayerProvider.currentSong.name,
-                                    message: "Added to your favorite",
-                                    icon: Icons.favorite)
-                              },
-                          icon: const Icon(
-                            Icons.favorite,
-                            color: kPrimaryColor,
-                          )),
+                      const FavoriteIconButton(),
                       IconButton(
                           onPressed: () {},
                           icon: SvgPicture.asset('assets/images/download.svg')),

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
 import 'package:musix/utils/colors.dart';
-import 'package:quds_popup_menu/quds_popup_menu.dart';
 
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
 
@@ -45,7 +44,7 @@ List<String> fakeSongsData = [
   'ZZ9AUFD7',
   'ZWZD0CIO',
   'ZWACDBZ6',
-  'ZW67D67A'
+  'ZZ909ZEI'
 ];
 
 const durationInfinity = Duration(days: 365);

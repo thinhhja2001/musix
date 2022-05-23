@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:musix/widgets/music/play_music_button.dart';
+import 'package:musix/widgets/music/button/play_music_button.dart';
+
+import 'button/repeat_icon_button.dart';
 
 class MusicControllerWidget extends StatelessWidget {
   const MusicControllerWidget({
@@ -31,11 +33,7 @@ class MusicControllerWidget extends StatelessWidget {
           icon: SvgPicture.asset('assets/images/next.svg'),
           color: Colors.white,
         ),
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset('assets/images/loop.svg'),
-          color: Colors.white,
-        ),
+        const RepeatIconButton(),
       ],
     );
   }
