@@ -58,8 +58,11 @@ class AllAlbumOfCurrentUser extends StatelessWidget {
               ),
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(color: kPrimaryColor),
+          return Container(
+            color: kBackgroundColor,
+            child: const Center(
+              child: CircularProgressIndicator(color: kPrimaryColor),
+            ),
           );
         });
   }
