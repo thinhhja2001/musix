@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
 
-import '../../utils/colors.dart';
-import '../../utils/constant.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/constant.dart';
 
 class AlbumCard extends StatelessWidget {
   const AlbumCard({

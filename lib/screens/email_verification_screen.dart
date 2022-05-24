@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:musix/providers/email_verification_provider.dart';
+import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class EmailVerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final emailVerificationProvider =
         Provider.of<EmailVerificationProvider>(context);
-
+    final signInProvider = Provider.of<SignInProvider>(context);
     return Scaffold(
         backgroundColor: const Color(0xff28333F),
         body: SafeArea(
@@ -77,6 +78,8 @@ class EmailVerificationScreen extends StatelessWidget {
                             ),
                             TextButton(
                                 onPressed: () {
+                                  signInProvider.reset();
+                                  emailVerificationProvider.reset();
                                   Get.offAll(const SignInScreen());
                                 },
                                 child: Text(

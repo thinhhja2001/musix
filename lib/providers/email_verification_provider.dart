@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/screens/signin_screen.dart';
+import 'package:musix/utils/colors.dart';
+import 'package:musix/utils/utils.dart';
 
 class EmailVerificationProvider extends ChangeNotifier {
   bool _isLoading = false;
@@ -35,6 +38,8 @@ class EmailVerificationProvider extends ChangeNotifier {
       await sendEmailVerification();
       changeCurrentState();
     } else {
+      reset();
+      SignInProvider().reset();
       Get.offAll(const SignInScreen());
     }
   }
@@ -53,7 +58,11 @@ class EmailVerificationProvider extends ChangeNotifier {
       setIsLoading(true);
       await _user.sendEmailVerification();
       setIsLoading(false);
-      Get.snackbar("Email sent", "An email has been sent to ${_user.email}");
+      showCompleteNotification(
+          title: "Email sent",
+          message: "An email has been sent to ${_user.email}",
+          icon: Icons.check,
+          color: kPrimaryColor);
       return "success";
     }
     return "failed";

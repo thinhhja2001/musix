@@ -3,7 +3,7 @@ import 'package:musix/resources/music_methods.dart';
 import 'package:musix/utils/colors.dart';
 
 import '../../utils/constant.dart';
-import '../music/album_card.dart';
+import '../music/album/album_card.dart';
 
 class YouMayLoveList extends StatelessWidget {
   const YouMayLoveList({

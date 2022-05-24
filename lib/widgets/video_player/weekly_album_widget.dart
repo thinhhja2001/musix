@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
-import 'package:musix/widgets/music/album_card.dart';
+import 'package:musix/widgets/music/album/album_card.dart';
 
 import '../../utils/constant.dart';
 import '../../utils/utils.dart';
