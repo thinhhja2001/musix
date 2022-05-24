@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musix/models/users.dart';
 import 'package:musix/resources/auth_methods.dart';
+import 'package:musix/resources/profile_methods.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
 import 'package:restart_app/restart_app.dart';
@@ -61,7 +62,7 @@ class _FixProfileState extends State<FixProfile> {
         actions: <Widget>[
           TextButton(
               onPressed: () {
-                AuthMethods().setUserProfile(widget.user,
+                ProfileMethods().setUserProfile(widget.user,
                     image, _controller!.text,imageURL!).then((value) => AfterSave());
                 
               },

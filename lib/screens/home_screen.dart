@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/resources/auth_methods.dart';
+import 'package:musix/screens/search_screen.dart';
 import 'package:musix/utils/colors.dart';
 
 import '../models/users.dart';
@@ -59,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(
         "Explore screen",
         style: TextStyle(color: Colors.white),
-      ))
+      )),
+      const SearchScreen(),
     ];
     return IndexedStack(index: currentIndex, children: bottomBarWidget);
   }
