@@ -16,15 +16,27 @@ class Album {
       required this.artistLink,
       required this.thumbnailUrl});
   static fromJson(Map<String, dynamic> albumData) {
+    List<String> songs = List.empty(growable: true);
+    for (var i = 0; i < albumData['songs'].length; i++) {
+      songs.add(albumData['songs'][i]);
+    }
     return Album(
         id: albumData['id'],
-        songs: albumData['songs'],
+        songs: songs,
         title: albumData['title'],
         artistNames: albumData['artistNames'],
         artistLink: albumData['artistLink'],
         thumbnailUrl: albumData['thumbnailUrl']);
   }
 
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "songs": songs,
+        "title": title,
+        "artistNames": artistNames,
+        "artistLink": artistLink,
+        "thumbnailUrl": thumbnailUrl,
+      };
   static Future<Album> topSongVietnam() async {
     List<String> songs = await ZingMP3API.getAllTopVPOPSongKey();
     String thumbnailUrl =
@@ -62,5 +74,10 @@ class Album {
         artistNames: 'Various Artist',
         artistLink: 'artistLink',
         thumbnailUrl: thumbnailUrl);
+  }
+
+  @override
+  String toString() {
+    return "$id $songs $title $artistNames $artistLink $thumbnailUrl";
   }
 }

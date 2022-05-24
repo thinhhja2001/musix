@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/utils/utils.dart';
-import 'package:flutter/material.dart';
 import '../models/song.dart';
 
-class FirebaseHandler {
+class PlaylistMethods {
   static Future<List> getAllFavoriteSong() async {
     final currentUser = FirebaseAuth.instance.currentUser!;
     try {
@@ -62,6 +63,51 @@ class FirebaseHandler {
     });
   }
 
+  static Future<String> createPlaylist(String name, Song song) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    String result = "";
+    try {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('customPlaylists')
+          .set({});
+      final document = FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('customPlaylists')
+          .collection('allCustomPlaylist')
+          .doc();
+      final album = Album(
+          id: document.id,
+          songs: [song.id],
+          title: name,
+          artistNames: 'artistNames',
+          artistLink: 'artistLink',
+          thumbnailUrl: song.thumbnailUrl);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('customPlaylists')
+          .collection('allCustomPlaylist')
+          .doc(document.id)
+          .set(album.toJson());
+      result = 'success';
+      showCompleteNotification(
+          title: song.name,
+          message: 'Has been added to $name',
+          icon: MdiIcons.check);
+    } catch (e) {
+      result = e.toString();
+    }
+
+    return result;
+  }
+
   static Future<String> onFavoriteClickHandler(Song song) async {
     String result = "";
     List allFavoriteSongs = await getAllFavoriteSong();
@@ -83,7 +129,27 @@ class FirebaseHandler {
         message: result == 'added'
             ? "Has been added to your favorite"
             : 'Has been removed from your favorite list',
-        icon: Icons.favorite);
+        icon: result == 'added' ? MdiIcons.heart : MdiIcons.heartBroken);
     return result;
+  }
+
+  static Future<List<Album>> getAllAlbumOfCurrentUser() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    List<Album> albums = List.empty(growable: true);
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('customPlaylists')
+        .collection('allCustomPlaylist')
+        .get();
+
+    for (var i = 0; i < snapshot.docs.length; i++) {
+      final data = snapshot.docs.elementAt(i).data();
+      final Album album = Album.fromJson(data);
+      albums.add(album);
+    }
+    return albums;
   }
 }

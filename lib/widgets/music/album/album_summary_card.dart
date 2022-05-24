@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../models/album.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constant.dart';
 
 class AlbumSummaryCard extends StatelessWidget {
   const AlbumSummaryCard({
     Key? key,
+    required this.album,
   }) : super(key: key);
-
+  final Album album;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,11 +20,8 @@ class AlbumSummaryCard extends StatelessWidget {
           width: 40,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(image: NetworkImage(album.thumbnailUrl)),
               color: kPrimaryColorLighten),
-          child: const Icon(
-            Icons.favorite_border,
-            color: Colors.white,
-          ),
         ),
         horizontalSpaceSmall,
         Expanded(
@@ -30,12 +29,12 @@ class AlbumSummaryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Love album',
+                album.title,
                 overflow: TextOverflow.ellipsis,
                 style: kDefaultHintStyle.copyWith(color: Colors.white),
               ),
               Text(
-                '12 songs',
+                '${album.songs.length} songs',
                 style: kDefaultHintStyle.copyWith(color: kPrimaryColor),
               )
             ],

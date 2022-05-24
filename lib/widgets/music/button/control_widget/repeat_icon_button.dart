@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/enums.dart';
@@ -17,31 +18,23 @@ class RepeatIconButton extends StatelessWidget {
     Widget _getSvgImage() {
       switch (audioPlayerProvider.loopType) {
         case LoopType.noLoop:
-          return SvgPicture.asset(
-            'assets/images/repeat.svg',
-            width: 16,
-            height: 16,
+          return const Icon(
+            MdiIcons.repeat,
             color: Colors.white,
           );
         case LoopType.loopList:
-          return SvgPicture.asset(
-            'assets/images/repeat.svg',
-            width: 16,
-            height: 16,
+          return const Icon(
+            MdiIcons.repeat,
             color: kPrimaryColor,
           );
         case LoopType.loop1:
-          return SvgPicture.asset(
-            'assets/images/repeat-1.svg',
-            width: 16,
-            height: 16,
+          return const Icon(
+            MdiIcons.repeatOnce,
             color: kPrimaryColor,
           );
         default:
-          return SvgPicture.asset(
-            'assets/images/repeat.svg',
-            width: 16,
-            height: 16,
+          return const Icon(
+            MdiIcons.repeat,
             color: Colors.white,
           );
       }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/audio_player_provider.dart';
-import '../../../utils/colors.dart';
+import '../../../../providers/audio_player_provider.dart';
+import '../../../../utils/colors.dart';
 
 class PlayMusicButton extends StatelessWidget {
   const PlayMusicButton({

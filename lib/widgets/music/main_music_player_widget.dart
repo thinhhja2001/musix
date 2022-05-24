@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:musix/resources/firebase_handler.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/resources/playlist_methods.dart';
+import 'package:musix/widgets/music/button/add_song_to_playlist_icon_button.dart';
+import 'package:musix/widgets/music/button/download_icon_button.dart';
 import 'package:musix/widgets/music/button/favorite_icon_button.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
@@ -80,26 +83,9 @@ class MainMusicPlayerWidget extends StatelessWidget {
                       IconButton(
                           onPressed: () {},
                           icon: SvgPicture.asset('assets/images/share.svg')),
-                      IconButton(
-                          onPressed: () => {
-                                showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) =>
-                                        const AllAlbumOfCurrentUser()),
-                                // showCompleteNotification(
-                                //     title: audioPlayerProvider.currentSong.name,
-                                //     message: "Added to your playlist",
-                                //     icon: Icons.playlist_add)
-                              },
-                          icon: const Icon(
-                            Icons.playlist_add,
-                            color: Colors.white,
-                          )),
+                      const AddSongToPlaylistIconButton(),
                       const FavoriteIconButton(),
-                      IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset('assets/images/download.svg')),
+                      const DownloadIconButton(),
                     ],
                   ),
                   const MusicSliderWidget(isSlidable: true),
