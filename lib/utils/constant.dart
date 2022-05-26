@@ -50,7 +50,7 @@ List<String> fakeSongsData = [
 Song songWithNoData = Song(
     id: '',
     name: '',
-    audioUrl: '',
+    audioUrl: 'no',
     lyricUrl: '',
     artistName: '',
     artistLink: '',

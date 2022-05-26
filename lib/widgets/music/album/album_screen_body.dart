@@ -3,7 +3,7 @@ import 'package:musix/models/song.dart';
 import 'package:musix/providers/album_provider.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/widgets/music/album/control_widget/album_controller_widget.dart';
-import 'package:musix/widgets/music/music_selection_widget.dart';
+import 'package:musix/widgets/music/song/music_selection_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 

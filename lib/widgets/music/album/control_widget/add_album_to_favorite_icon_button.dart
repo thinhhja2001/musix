@@ -35,6 +35,7 @@ class AddAlbumToFavoriteIconButton extends StatelessWidget {
                       : Colors.white),
             );
           }
+
           return Container();
         });
   }

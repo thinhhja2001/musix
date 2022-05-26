@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:musix/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/audio_player_provider.dart';
-import '../../utils/colors.dart';
+import '../../../utils/colors.dart';
 
 class MusicSliderWidget extends StatelessWidget {
   const MusicSliderWidget({

@@ -11,8 +11,15 @@ import 'package:text_scroll/text_scroll.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 
-showSnackBar(String content, BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(content)));
+showSnackBar(String content, BuildContext context, Color color) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(content),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+    backgroundColor: color,
+    behavior: SnackBarBehavior.floating,
+  ));
 }
 
 Widget goBackButton() {

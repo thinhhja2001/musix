@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/widgets/music/button/control_widget/play_music_button.dart';
+import 'package:musix/widgets/music/button/control_widget/repeat_icon_button.dart';
 
-import 'button/control_widget/play_music_button.dart';
-import 'button/control_widget/repeat_icon_button.dart';
-import 'button/control_widget/shuffle_icon_button.dart';
+import '../button/control_widget/shuffle_icon_button.dart';
 
 class MusicControllerWidget extends StatelessWidget {
   const MusicControllerWidget({

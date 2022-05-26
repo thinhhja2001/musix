@@ -9,9 +9,8 @@ import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/screens/Profile_fix_screen.dart';
+import 'package:musix/widgets/music/song/music_selection_widget.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
-
-import '../music/music_selection_widget.dart';
 
 class ProfileBody extends StatelessWidget {
   ProfileBody({Key? key, required this.user}) : super(key: key);

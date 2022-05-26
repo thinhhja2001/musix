@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
-import 'package:musix/widgets/music/music_player_widget.dart';
-import 'package:musix/widgets/music/music_slider_widget.dart';
+import 'package:musix/widgets/music/button/control_widget/play_music_button.dart';
+import 'package:musix/widgets/music/song/music_player_widget.dart';
+import 'package:musix/widgets/music/song/music_slider_widget.dart';
+
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/colors.dart';
-import '../../utils/constant.dart';
-import 'button/control_widget/play_music_button.dart';
+import '../../../utils/colors.dart';
 
 class CurrentMusicPlayer extends StatelessWidget {
   const CurrentMusicPlayer({
