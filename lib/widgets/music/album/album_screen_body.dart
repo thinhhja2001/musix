@@ -49,7 +49,7 @@ class AlbumScreenBody extends StatelessWidget {
                     thumbnailUrl: albumProvider.currentAlbum.thumbnailUrl,
                   ),
                   verticalSpaceSmall,
-                  AlbumControllerWidget(),
+                  const AlbumControllerWidget(),
                   verticalSpaceSmall,
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

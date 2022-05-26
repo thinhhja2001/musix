@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/resources/general_music_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:provider/provider.dart';
 
@@ -15,23 +17,21 @@ class FavoriteIconButton extends StatelessWidget {
     final AudioPlayerProvider audioPlayerProvider =
         Provider.of<AudioPlayerProvider>(context);
 
-    return FutureBuilder<List>(
-        future: SongMethods.getAllFavoriteSong(),
+    return StreamBuilder<DocumentSnapshot>(
+        stream: GeneralMusicMethods.getAllFavoriteObject(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            final songs = snapshot.data!.get('songs');
             return IconButton(
                 onPressed: () => {
                       SongMethods.onFavoriteSongClickHandler(
                           audioPlayerProvider.currentSong),
-                      print(snapshot.data!
-                          .contains(audioPlayerProvider.currentSong.id))
                     },
                 icon: Icon(
-                  snapshot.data!.contains(audioPlayerProvider.currentSong.id)
+                  songs.contains(audioPlayerProvider.currentSong.id)
                       ? Icons.favorite
                       : Icons.favorite_border,
-                  color: snapshot.data!
-                          .contains(audioPlayerProvider.currentSong.id)
+                  color: songs.contains(audioPlayerProvider.currentSong.id)
                       ? kPrimaryColor
                       : Colors.white,
                 ));
