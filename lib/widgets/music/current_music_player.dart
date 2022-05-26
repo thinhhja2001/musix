@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/constant.dart';
-import '../forget_password_widget.dart';
 import 'button/control_widget/play_music_button.dart';
 
 class CurrentMusicPlayer extends StatelessWidget {

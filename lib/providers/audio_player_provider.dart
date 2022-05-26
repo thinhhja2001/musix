@@ -1,7 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:musix/models/song.dart';
+import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/enums.dart';
+
+import '../models/album.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
   Duration duration = Duration.zero;
@@ -9,16 +12,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   bool isPlaying = false;
   final AudioPlayer audioPlayer = AudioPlayer();
   LoopType loopType = LoopType.noLoop;
-  Song currentSong = Song(
-      id: '',
-      name: '',
-      audioUrl: '',
-      lyricUrl: '',
-      artistName: '',
-      artistLink: '',
-      thumbnailUrl:
-          'https://2.bp.blogspot.com/-muVbmju-gkA/Vir94NirTeI/AAAAAAAAT9c/VoHzHZzQmR4/s1600/placeholder-image.jpg');
-
+  Song currentSong = songWithNoData;
+  Album? currentAlbum;
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
@@ -51,6 +46,11 @@ class AudioPlayerProvider extends ChangeNotifier {
         break;
       default:
     }
+    notifyListeners();
+  }
+
+  void updateCurrentAlbum(Album newAlbum) {
+    currentAlbum = newAlbum;
     notifyListeners();
   }
 

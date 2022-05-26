@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musix/widgets/music/music_selection_widget.dart';
 
-import '../../resources/music_methods.dart';
+import '../../resources/song_methods.dart';
 import '../../utils/colors.dart';
 import '../../utils/constant.dart';
 
@@ -24,7 +24,7 @@ class RecentMusicList extends StatelessWidget {
               )),
           Expanded(
             child: FutureBuilder(
-              future: MusicMethods.getListSongDataByKeys(fakeSongsData),
+              future: SongMethods.getListSongDataByKeys(fakeSongsData),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   return Column(

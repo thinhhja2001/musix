@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/models/users.dart';
-import 'package:musix/resources/music_methods.dart';
+import 'package:musix/resources/song_methods.dart';
 import 'package:musix/resources/profile_methods.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
@@ -109,7 +109,7 @@ class ProfileBody extends StatelessWidget {
                 ),
                 Expanded(
                   child: FutureBuilder(
-                    future: MusicMethods.getListSongDataByKeys(fakeSongsData),
+                    future: SongMethods.getListSongDataByKeys(fakeSongsData),
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
                       if (snapshot.hasData) {
@@ -140,13 +140,15 @@ class ProfileBody extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            
             style: ButtonStyle(
-              textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: Colors.red,fontWeight: FontWeight.bold)),
-              backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
+                textStyle: MaterialStateProperty.all<TextStyle>(
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(kPrimaryColor),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),))),
+                  borderRadius: BorderRadius.circular(18.0),
+                ))),
             onPressed: () async {
               await ProfileMethods()
                   .signOut()

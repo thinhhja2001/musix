@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:musix/resources/song_methods.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/audio_player_provider.dart';
-import '../../../resources/playlist_methods.dart';
 import '../../../utils/colors.dart';
 
 class FavoriteIconButton extends StatelessWidget {
@@ -16,13 +16,15 @@ class FavoriteIconButton extends StatelessWidget {
         Provider.of<AudioPlayerProvider>(context);
 
     return FutureBuilder<List>(
-        future: PlaylistMethods.getAllFavoriteSong(),
+        future: SongMethods.getAllFavoriteSong(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return IconButton(
                 onPressed: () => {
-                      PlaylistMethods.onFavoriteClickHandler(
-                          audioPlayerProvider.currentSong)
+                      SongMethods.onFavoriteSongClickHandler(
+                          audioPlayerProvider.currentSong),
+                      print(snapshot.data!
+                          .contains(audioPlayerProvider.currentSong.id))
                     },
                 icon: Icon(
                   snapshot.data!.contains(audioPlayerProvider.currentSong.id)

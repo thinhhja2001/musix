@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/resources/playlist_methods.dart';
+import 'package:musix/utils/enums.dart';
 import 'package:musix/widgets/customs/custom_button.dart';
 import 'package:musix/widgets/music/album/album_summary_card.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/constant.dart';
@@ -76,10 +79,13 @@ class _AllAlbum extends StatelessWidget {
   final AsyncSnapshot<List<Album>> snapshot;
   @override
   Widget build(BuildContext context) {
+    final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
     return Column(
       children: List.generate(
           snapshot.data!.length,
           (index) => AlbumSummaryCard(
+                albumSummaryFunction: AlbumSummaryFunction.add,
+                selectedSong: audioPlayerProvider.currentSong,
                 album: snapshot.data![index],
               )),
     );

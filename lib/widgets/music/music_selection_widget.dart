@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,10 @@ class MusicSelectionWidget extends StatelessWidget {
   final Song song;
   @override
   Widget build(BuildContext context) {
+    String _getIndexInString(int index) {
+      return index <= 8 ? "#0${index + 1}" : "#${index + 1}";
+    }
+
     final AudioPlayerProvider audioPlayerProvider =
         Provider.of<AudioPlayerProvider>(context);
     return Padding(
@@ -25,9 +30,11 @@ class MusicSelectionWidget extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "#${index + 1}",
-              style: kDefaultTitleStyle.copyWith(fontSize: 16),
+            Center(
+              child: Text(
+                _getIndexInString(index),
+                style: kDefaultTitleStyle.copyWith(fontSize: 16),
+              ),
             ),
             horizontalSpaceSmall,
             Container(
@@ -66,7 +73,7 @@ class MusicSelectionWidget extends StatelessWidget {
                 child: IconButton(
               onPressed: () => {},
               icon: const Icon(
-                Icons.arrow_downward,
+                MdiIcons.dotsHorizontal,
                 color: kPrimaryColor,
               ),
             ))

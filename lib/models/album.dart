@@ -3,7 +3,7 @@ import 'package:musix/apis/zing_mp3_api.dart';
 
 class Album {
   String id;
-  List<String> songs;
+  List songs;
   String title;
   String artistNames;
   String artistLink;
@@ -16,13 +16,9 @@ class Album {
       required this.artistLink,
       required this.thumbnailUrl});
   static fromJson(Map<String, dynamic> albumData) {
-    List<String> songs = List.empty(growable: true);
-    for (var i = 0; i < albumData['songs'].length; i++) {
-      songs.add(albumData['songs'][i]);
-    }
     return Album(
         id: albumData['id'],
-        songs: songs,
+        songs: albumData['songs'],
         title: albumData['title'],
         artistNames: albumData['artistNames'],
         artistLink: albumData['artistLink'],
@@ -44,7 +40,7 @@ class Album {
     return Album(
         id: 'vn',
         songs: songs,
-        title: 'Top 100 V-POP',
+        title: 'Top V-POP',
         artistNames: 'Various Artist',
         artistLink: 'artistLink',
         thumbnailUrl: thumbnailUrl);
@@ -57,7 +53,7 @@ class Album {
     return Album(
         id: 'usuk',
         songs: songs,
-        title: 'Top 100 USUK',
+        title: 'Top USUK',
         artistNames: 'Various Artist',
         artistLink: 'artistLink',
         thumbnailUrl: thumbnailUrl);
@@ -70,7 +66,7 @@ class Album {
     return Album(
         id: 'kpop',
         songs: songs,
-        title: 'Top 100 KPOP',
+        title: 'Top KPOP',
         artistNames: 'Various Artist',
         artistLink: 'artistLink',
         thumbnailUrl: thumbnailUrl);
