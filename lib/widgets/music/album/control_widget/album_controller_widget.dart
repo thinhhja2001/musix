@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/models/album.dart';
-import 'package:musix/resources/playlist_methods.dart';
+import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/widgets/music/album/control_widget/play_album_icon_button.dart';
+import 'package:musix/widgets/music/album/control_widget/play_shuffle_icon_button.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../utils/colors.dart';
 import 'add_album_to_favorite_icon_button.dart';
@@ -9,7 +12,9 @@ import 'add_album_to_favorite_icon_button.dart';
 class AlbumControllerWidget extends StatelessWidget {
   const AlbumControllerWidget({
     Key? key,
+    required this.album,
   }) : super(key: key);
+  final Album album;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,7 +22,7 @@ class AlbumControllerWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            const AddAlbumToFavoriteIconButton(),
+            AddAlbumToFavoriteIconButton(album: album),
             IconButton(
               icon: const Icon(
                 MdiIcons.trayArrowDown,
@@ -29,24 +34,8 @@ class AlbumControllerWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            IconButton(
-              icon: const Icon(
-                MdiIcons.shuffle,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
-            Container(
-              height: 35,
-              width: 35,
-              decoration: const BoxDecoration(
-                  color: kPrimaryColor, shape: BoxShape.circle),
-              child: const Icon(
-                Icons.play_arrow,
-                color: Colors.white,
-                size: 15,
-              ),
-            ),
+            PlayShuffleIconButton(album: album),
+            PlayAlbumIconButton(album: album),
           ],
         )
       ],

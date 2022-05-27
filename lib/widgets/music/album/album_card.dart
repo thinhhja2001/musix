@@ -16,14 +16,13 @@ class AlbumCard extends StatelessWidget {
   final Album album;
   @override
   Widget build(BuildContext context) {
-    final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
-
     return Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: InkWell(
         onTap: () {
-          audioPlayerProvider.setCurrentAlbum(album);
-          Get.to(const AlbumScreen());
+          Get.to(AlbumScreen(
+            album: album,
+          ));
         },
         child: Container(
             width: MediaQuery.of(context).size.width / 2,

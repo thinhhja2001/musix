@@ -20,7 +20,8 @@ class PlayMusicButton extends StatelessWidget {
         if (audioPlayerProvider.isPlaying) {
           audioPlayerProvider.pauseSong();
         } else {
-          audioPlayerProvider.playSong(audioPlayerProvider.currentSong);
+          audioPlayerProvider.playSong(
+              audioPlayerProvider.currentSong, context);
         }
         audioPlayerProvider.changePlayState();
       },

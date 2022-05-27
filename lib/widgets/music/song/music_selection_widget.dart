@@ -54,7 +54,7 @@ class _PlayableSongWidget extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: () => audioPlayerProvider.playSong(song),
+      onTap: () => audioPlayerProvider.playSong(song, context),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
-import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/widgets/music/album/control_widget/album_controller_widget.dart';
 import 'package:musix/widgets/music/song/music_selection_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:provider/provider.dart';
 
 import '../../../utils/constant.dart';
 import '../../../utils/utils.dart';
@@ -14,13 +13,12 @@ class AlbumScreenBody extends StatelessWidget {
   const AlbumScreenBody({
     Key? key,
     required this.snapshot,
+    required this.album,
   }) : super(key: key);
-
+  final Album album;
   final PaletteGenerator snapshot;
   @override
   Widget build(BuildContext context) {
-    final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
-
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -40,16 +38,16 @@ class AlbumScreenBody extends StatelessWidget {
                   goBackButton(),
                   verticalSpaceSmall,
                   Text(
-                    audioPlayerProvider.currentAlbum.title,
+                    album.title,
                     style: kDefaultTextStyle.copyWith(
                         fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                   verticalSpaceSmall,
                   _AlbumThumbnail(
-                    thumbnailUrl: audioPlayerProvider.currentAlbum.thumbnailUrl,
+                    thumbnailUrl: album.thumbnailUrl,
                   ),
                   verticalSpaceSmall,
-                  const AlbumControllerWidget(),
+                  AlbumControllerWidget(album: album),
                   verticalSpaceSmall,
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,11 +62,10 @@ class AlbumScreenBody extends StatelessWidget {
                       Expanded(
                         child: Column(
                           children: List.generate(
-                              audioPlayerProvider.currentAlbum.songs.length,
+                              album.songs.length,
                               (index) => FutureBuilder(
                                   future: SongMethods.getSongDataByKey(
-                                      audioPlayerProvider
-                                          .currentAlbum.songs[index]),
+                                      album.songs[index]),
                                   builder:
                                       (context, AsyncSnapshot<Song> snapshot) {
                                     if (snapshot.hasData) {
