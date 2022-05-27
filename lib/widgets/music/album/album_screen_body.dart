@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/song.dart';
-import 'package:musix/providers/album_provider.dart';
+import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/widgets/music/album/control_widget/album_controller_widget.dart';
 import 'package:musix/widgets/music/song/music_selection_widget.dart';
@@ -19,7 +19,7 @@ class AlbumScreenBody extends StatelessWidget {
   final PaletteGenerator snapshot;
   @override
   Widget build(BuildContext context) {
-    final albumProvider = Provider.of<AlbumProvider>(context);
+    final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -40,13 +40,13 @@ class AlbumScreenBody extends StatelessWidget {
                   goBackButton(),
                   verticalSpaceSmall,
                   Text(
-                    albumProvider.currentAlbum.title,
+                    audioPlayerProvider.currentAlbum.title,
                     style: kDefaultTextStyle.copyWith(
                         fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                   verticalSpaceSmall,
                   _AlbumThumbnail(
-                    thumbnailUrl: albumProvider.currentAlbum.thumbnailUrl,
+                    thumbnailUrl: audioPlayerProvider.currentAlbum.thumbnailUrl,
                   ),
                   verticalSpaceSmall,
                   const AlbumControllerWidget(),
@@ -64,10 +64,11 @@ class AlbumScreenBody extends StatelessWidget {
                       Expanded(
                         child: Column(
                           children: List.generate(
-                              albumProvider.currentAlbum.songs.length,
+                              audioPlayerProvider.currentAlbum.songs.length,
                               (index) => FutureBuilder(
                                   future: SongMethods.getSongDataByKey(
-                                      albumProvider.currentAlbum.songs[index]),
+                                      audioPlayerProvider
+                                          .currentAlbum.songs[index]),
                                   builder:
                                       (context, AsyncSnapshot<Song> snapshot) {
                                     if (snapshot.hasData) {

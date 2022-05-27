@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/models/album.dart';
-import 'package:musix/providers/album_provider.dart';
+import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/screens/album_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -16,13 +16,13 @@ class AlbumCard extends StatelessWidget {
   final Album album;
   @override
   Widget build(BuildContext context) {
-    final albumProvider = Provider.of<AlbumProvider>(context);
+    final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.only(left: 10.0),
       child: InkWell(
         onTap: () {
-          albumProvider.setCurrentAlbum(album);
+          audioPlayerProvider.setCurrentAlbum(album);
           Get.to(const AlbumScreen());
         },
         child: Container(

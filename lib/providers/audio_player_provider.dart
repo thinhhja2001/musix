@@ -13,7 +13,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   final AudioPlayer audioPlayer = AudioPlayer();
   LoopType loopType = LoopType.noLoop;
   Song currentSong = songWithNoData;
-  Album? currentAlbum;
+  Album currentAlbum = albumWithNoData;
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
@@ -94,6 +94,11 @@ class AudioPlayerProvider extends ChangeNotifier {
   void playSong(Song song) async {
     currentSong = song;
     await audioPlayer.play(currentSong.audioUrl);
+    notifyListeners();
+  }
+
+  void setCurrentAlbum(Album newAlbum) {
+    currentAlbum = newAlbum;
     notifyListeners();
   }
 }
