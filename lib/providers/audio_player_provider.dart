@@ -201,7 +201,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
     int randomIndex = random.nextInt(currentAlbum.songs.length);
     if (_playedIndexOfAlbum.contains(randomIndex)) {
-      _generateRandomIndex();
+      return _generateRandomIndex();
     }
     return randomIndex;
   }
