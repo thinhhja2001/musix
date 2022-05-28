@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:musix/resources/playlist_methods.dart';
+import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/music/button/add_song_to_playlist_icon_button.dart';
 import 'package:musix/widgets/music/button/download_icon_button.dart';
 import 'package:musix/widgets/music/button/favorite_icon_button.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/audio_player_provider.dart';
-import '../../utils/colors.dart';
-import '../../utils/constant.dart';
-import '../../utils/utils.dart';
-import 'album/all_album_of_current_user.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/constant.dart';
 import 'duration_widget.dart';
 import 'music_controller_widget.dart';
 import 'music_slider_widget.dart';

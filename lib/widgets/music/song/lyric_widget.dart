@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:musix/models/custom_lyric_ui.dart';
 import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/utils.dart';
-import 'package:musix/widgets/music/duration_widget.dart';
-import 'package:musix/widgets/music/music_controller_widget.dart';
-import 'package:musix/widgets/music/music_slider_widget.dart';
+import 'package:musix/widgets/music/song/duration_widget.dart';
+import 'package:musix/widgets/music/song/music_controller_widget.dart';
+import 'package:musix/widgets/music/song/music_slider_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -62,11 +63,21 @@ class LyricsWidget extends StatelessWidget {
                     ),
                   );
                 }
-                return Container();
+                return Container(
+                  color: kBackgroundColor,
+                  child: const Center(
+                    child: CircularProgressIndicator(color: kPrimaryColor),
+                  ),
+                );
               },
             );
           }
-          return Container();
+          return Container(
+            color: kBackgroundColor,
+            child: const Center(
+              child: CircularProgressIndicator(color: kPrimaryColor),
+            ),
+          );
         });
   }
 }

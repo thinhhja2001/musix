@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musix/models/users.dart';
-import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/resources/profile_methods.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
 import 'package:restart_app/restart_app.dart';
+
 class FixProfile extends StatefulWidget {
   const FixProfile({Key? key, required this.user}) : super(key: key);
   final Users user;
@@ -44,11 +44,15 @@ class _FixProfileState extends State<FixProfile> {
   }
 
   void AfterSave() {
-    user = Users(email: widget.user.email, username: _controller!.text, uid: widget.user.uid, followers: widget.user.followers, following: widget.user.following, avatarUrl: imageURL!);
+    user = Users(
+        email: widget.user.email,
+        username: _controller!.text,
+        uid: widget.user.uid,
+        followers: widget.user.followers,
+        following: widget.user.following,
+        avatarUrl: imageURL!);
     Restart.restartApp();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +66,10 @@ class _FixProfileState extends State<FixProfile> {
         actions: <Widget>[
           TextButton(
               onPressed: () {
-                ProfileMethods().setUserProfile(widget.user,
-                    image, _controller!.text,imageURL!).then((value) => AfterSave());
-                
+                ProfileMethods()
+                    .setUserProfile(
+                        widget.user, image, _controller!.text, imageURL!)
+                    .then((value) => AfterSave());
               },
               child: const Text(
                 "Save",

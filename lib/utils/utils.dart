@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -10,8 +11,21 @@ import 'package:text_scroll/text_scroll.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 
-showSnackBar(String content, BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(content)));
+showSnackBar(String content, BuildContext context, Color color) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(content),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+    backgroundColor: color,
+    behavior: SnackBarBehavior.floating,
+  ));
+}
+
+Widget goBackButton() {
+  return GestureDetector(
+      onTap: () => Get.back(),
+      child: const Icon(MdiIcons.arrowLeft, color: Colors.white));
 }
 
 String formatDuration(int totalSeconds) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/utils/colors.dart';
-import 'package:musix/widgets/music/current_music_player.dart';
+import 'package:musix/widgets/music/song/current_music_player.dart';
 
 class CustomBottomBar extends StatelessWidget {
   /// A bottom bar that faithfully follows the design by Aurélien Salomon

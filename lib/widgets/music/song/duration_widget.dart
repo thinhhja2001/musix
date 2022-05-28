@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/audio_player_provider.dart';
-import '../../utils/constant.dart';
-import '../../utils/utils.dart';
+import '../../../utils/constant.dart';
 
 class DurationWidget extends StatelessWidget {
   const DurationWidget({

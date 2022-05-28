@@ -6,63 +6,6 @@ import 'package:musix/utils/utils.dart';
 import '../models/song.dart';
 
 class PlaylistMethods {
-  static Future<List> getAllFavoriteSong() async {
-    final currentUser = FirebaseAuth.instance.currentUser!;
-    try {
-      final music = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('playlists')
-          .doc('favorites')
-          .get();
-      return music['songs'];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  ///This method is only use when user have no favorite song.
-  static void _createFavoriteList(String songId) async {
-    final currentUser = FirebaseAuth.instance.currentUser!;
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser.uid)
-        .collection('playlists')
-        .doc('favorites')
-        .set({
-      'songs': [songId]
-    });
-  }
-
-  static void _removeSongFromFavorite(String songId) async {
-    final currentUser = FirebaseAuth.instance.currentUser!;
-
-    List allFavoriteSongs = await getAllFavoriteSong();
-    allFavoriteSongs.remove(songId);
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser.uid)
-        .collection('playlists')
-        .doc('favorites')
-        .set({'songs': allFavoriteSongs});
-  }
-
-  static void _addSongToFavorite(String songId) async {
-    final currentUser = FirebaseAuth.instance.currentUser!;
-
-    List allFavoriteSongs = await getAllFavoriteSong();
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser.uid)
-        .collection('playlists')
-        .doc('favorites')
-        .update({
-      'songs': [...allFavoriteSongs, songId]
-    });
-  }
-
   static Future<String> createPlaylist(String name, Song song) async {
     final currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -108,24 +51,92 @@ class PlaylistMethods {
     return result;
   }
 
-  static Future<String> onFavoriteClickHandler(Song song) async {
+  static Future<String> addSongToExistedPlaylist(Song song, Album album) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
     String result = "";
-    List allFavoriteSongs = await getAllFavoriteSong();
-    if (allFavoriteSongs.isEmpty) {
-      _createFavoriteList(song.id);
-      result = 'added';
-    } else {
-      if (allFavoriteSongs.contains(song.id)) {
-        _removeSongFromFavorite(song.id);
-        result = 'remove';
-      } else {
-        _addSongToFavorite(song.id);
-        result = 'added';
-      }
-    }
+    final albumData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('customPlaylists')
+        .collection('allCustomPlaylist')
+        .doc(album.id)
+        .get();
+    List songs = albumData['songs'];
+    songs.add(song.id);
+    songs = songs.toSet().toList();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('customPlaylists')
+        .collection('allCustomPlaylist')
+        .doc(album.id)
+        .update({'songs': songs});
 
     showCompleteNotification(
         title: song.name,
+        message: 'Has been added to ${album.title}',
+        icon: MdiIcons.check);
+    return result;
+  }
+
+  static Future<List> getAllFavoriteAlbumOfCurrentUser() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    try {
+      final music = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('favorites')
+          .get();
+      return music['albums'];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  static void _removeAlbumFromFavorite(String albumId) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    List allFavoriteAlbums = await getAllFavoriteAlbumOfCurrentUser();
+    allFavoriteAlbums.remove(albumId);
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('favorites')
+        .update({'albums': allFavoriteAlbums});
+  }
+
+  static void _addAlbumToFavorite(String albumId) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    List allFavoriteAlbums = await getAllFavoriteAlbumOfCurrentUser();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('favorites')
+        .update({
+      'albums': [...allFavoriteAlbums, albumId]
+    });
+  }
+
+  static Future<String> onFavoriteAlbumClickHandler(Album album) async {
+    String result = "";
+    List allFavoriteAlbums = await getAllFavoriteAlbumOfCurrentUser();
+    if (allFavoriteAlbums.contains(album.id)) {
+      _removeAlbumFromFavorite(album.id);
+      result = 'removed';
+    } else {
+      _addAlbumToFavorite(album.id);
+      result = 'added';
+    }
+    showCompleteNotification(
+        title: album.title,
         message: result == 'added'
             ? "Has been added to your favorite"
             : 'Has been removed from your favorite list',
