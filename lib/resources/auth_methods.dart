@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:musix/models/users.dart';
-import 'package:path/path.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -41,6 +37,7 @@ class AuthMethods {
             });
     return isUserNameExisted;
   }
+
   //sign up user
   Future<String> signUpUser(
       {required String email,
@@ -75,7 +72,12 @@ class AuthMethods {
           'followers': [],
           'following': []
         });
-
+        await _firestore
+            .collection('users')
+            .doc(cred.user!.uid)
+            .collection('playlists')
+            .doc('favorites')
+            .set({'songs': [], 'albums': [], 'artists': [], 'videos': []});
         res = "success";
       }
     } on FirebaseAuthException catch (err) {

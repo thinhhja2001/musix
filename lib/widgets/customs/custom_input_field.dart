@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 
 import '../../utils/enums.dart';
@@ -33,6 +34,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5),
           child: TextFormField(
+            cursorColor: kPrimaryColor,
             controller: widget.controller,
             obscureText:
                 widget.customInputFieldType == CustomInputFieldType.password

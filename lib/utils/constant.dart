@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/models/song.dart';
+import 'package:musix/utils/colors.dart';
 
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
 
@@ -38,13 +42,28 @@ const Widget verticalSliverPaddingLarge =
 
 List<String> fakeSongsData = [
   'ZZA07BED',
-  'ZW6EOWE9',
+  'ZZ9AUFD7',
   'ZWZD0CIO',
-  'ZWZ99DDO',
-  'ZW67D67A'
+  'ZWACDBZ6',
+  'ZZ909ZEI'
 ];
-
-const durationInfinity = Duration(days: 365);
+Song songWithNoData = Song(
+    id: '',
+    name: '',
+    audioUrl: 'no',
+    lyricUrl: '',
+    artistName: '',
+    artistLink: '',
+    thumbnailUrl:
+        'https://2.bp.blogspot.com/-muVbmju-gkA/Vir94NirTeI/AAAAAAAAT9c/VoHzHZzQmR4/s1600/placeholder-image.jpg');
+Album albumWithNoData = Album(
+    id: '',
+    songs: [],
+    title: '',
+    artistNames: '',
+    artistLink: '',
+    thumbnailUrl:
+        'https://2.bp.blogspot.com/-muVbmju-gkA/Vir94NirTeI/AAAAAAAAT9c/VoHzHZzQmR4/s1600/placeholder-image.jpg');
 
 const noImageUrl =
     "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg";

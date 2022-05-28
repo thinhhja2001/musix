@@ -1,12 +1,31 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:text_scroll/text_scroll.dart';
+import 'package:http/http.dart' as http;
+import 'package:html/dom.dart' as dom;
 
-showSnackBar(String content, BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(content)));
+showSnackBar(String content, BuildContext context, Color color) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(content),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+    backgroundColor: color,
+    behavior: SnackBarBehavior.floating,
+  ));
+}
+
+Widget goBackButton() {
+  return GestureDetector(
+      onTap: () => Get.back(),
+      child: const Icon(MdiIcons.arrowLeft, color: Colors.white));
 }
 
 String formatDuration(int totalSeconds) {
@@ -17,6 +36,12 @@ String formatDuration(int totalSeconds) {
   final minutesString = '$minutes'.padLeft(2, '0');
   final secondsString = '$seconds'.padLeft(2, '0');
   return '$minutesString:$secondsString';
+}
+
+Future<String> getLyricFromLrcLink(String lrcLink) async {
+  final response = await http.get(Uri.parse(lrcLink));
+  String lyric = utf8.decode(response.bodyBytes);
+  return lyric;
 }
 
 Widget buildBlurredImage() => ClipRRect(
@@ -70,4 +95,27 @@ Widget noAlbumData(BuildContext context) {
             image: const DecorationImage(
                 fit: BoxFit.fill, image: NetworkImage(noImageUrl)))),
   );
+}
+
+showCompleteNotification(
+    {required String title,
+    required String message,
+    required IconData icon,
+    Color? color}) {
+  Get.snackbar(title, message,
+      backgroundColor: kBackgroundColor,
+      colorText: Colors.white,
+      titleText: Text(
+        title,
+        style: kDefaultTitleStyle,
+      ),
+      messageText: Text(
+        message,
+        style: kDefaultHintStyle.copyWith(color: kPrimaryColor),
+      ),
+      shouldIconPulse: false,
+      icon: Icon(
+        icon,
+        color: color ?? Colors.white,
+      ));
 }
