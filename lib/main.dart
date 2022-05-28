@@ -3,9 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/firebase_options.dart';
+import 'package:musix/providers/artist_provider.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/google_sign_in.dart';
+import 'package:musix/providers/search_provider.dart';
 import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/providers/sign_up_provider.dart';
 import 'package:musix/screens/email_verification_screen.dart';
@@ -46,6 +48,10 @@ class MyApp extends StatelessWidget {
             create: (context) => SignUpProvider()),
         ChangeNotifierProvider<AudioPlayerProvider>(
             create: (context) => AudioPlayerProvider()),
+        ChangeNotifierProvider<SearchProvider>(
+            create: (context) => SearchProvider()),
+        ChangeNotifierProvider<ArtistProvider>(
+            create: (context) => ArtistProvider()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

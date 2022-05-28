@@ -1,19 +1,9 @@
-import 'dart:ui';
-
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/utils/colors.dart';
-import 'package:musix/utils/constant.dart';
 
-class SearchComponent extends StatelessWidget {
-  const SearchComponent(
-      {Key? key,
-      required this.title,
-      required this.artist,
-      required this.imgLink})
-      : super(key: key);
-  final String title;
+import '../../utils/colors.dart';
+
+class ArtistComponent extends StatelessWidget {
+  const ArtistComponent({Key? key, required this.artist, required this.imgLink}) : super(key: key);
   final String artist;
   final String imgLink;
 
@@ -43,17 +33,11 @@ class SearchComponent extends StatelessWidget {
               flex: 10,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    title,
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                  SizedBox(
-                    height: 7,
-                  ),
-                  Text(
                     artist,
-                    style: TextStyle(color: kPrimaryColor, fontSize: 15),
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ],
               ),
@@ -61,7 +45,7 @@ class SearchComponent extends StatelessWidget {
             Flexible(
                 flex: 1,
                 child: Icon(
-                  Icons.play_arrow,
+                  Icons.person,
                   color: kPrimaryColor,
                 ))
           ],

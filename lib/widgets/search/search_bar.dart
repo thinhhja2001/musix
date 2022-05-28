@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/search_provider.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -10,10 +13,11 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
+    return Container(
+      padding: const EdgeInsets.all(20.0),
       child: Container(
         height: 100,
         decoration: BoxDecoration(
@@ -21,7 +25,7 @@ class _SearchBarState extends State<SearchBar> {
           color: Color.fromRGBO(56, 54, 118, 1),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(15.0),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -34,9 +38,10 @@ class _SearchBarState extends State<SearchBar> {
                 child: Row(
                   children: [
                     Flexible(
-                      flex: 7,
+                      flex: 5,
                       fit: FlexFit.tight,
                       child: TextField(
+                        controller: textController,
                         style: kDefaultTextStyle,
                         decoration: new InputDecoration.collapsed(
                             hintText: "Search by name",
@@ -53,7 +58,9 @@ class _SearchBarState extends State<SearchBar> {
                           color: kPrimaryColorLighten,
                         ),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<SearchProvider>().getSongByAll(textController.text);
+                          },
                           icon: Icon(Icons.search),
                         ),
                       ),
