@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
@@ -75,13 +76,18 @@ class CurrentMusicPlayer extends StatelessWidget {
                         const MusicSliderWidget(isSlidable: false),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            Icon(
-                              FontAwesomeIcons.shuffle,
-                              color: Colors.white,
-                              size: 20,
+                          children: [
+                            InkWell(
+                              onTap: audioPlayerProvider.toggleIsPlayShuffle,
+                              child: Icon(
+                                MdiIcons.shuffle,
+                                color: audioPlayerProvider.isPlayShuffle
+                                    ? kPrimaryColor
+                                    : Colors.white,
+                                size: 20,
+                              ),
                             ),
-                            Padding(
+                            const Padding(
                                 padding: EdgeInsets.only(left: 15),
                                 child: PlayMusicButton(
                                     buttonSize: 36, iconSize: 24))

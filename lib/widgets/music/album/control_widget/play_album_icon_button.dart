@@ -20,8 +20,9 @@ class PlayAlbumIconButton extends StatelessWidget {
       decoration:
           const BoxDecoration(color: kPrimaryColor, shape: BoxShape.circle),
       child: IconButton(
-        onPressed: () => audioPlayerProvider.playAlbum(album, context),
-        icon: const Icon(Icons.play_arrow, color: Colors.white, size: 25),
+        onPressed: () =>
+            audioPlayerProvider.playAlbum(album: album, context: context),
+        icon: const Icon(Icons.play_arrow, color: Colors.white, size: 20),
       ),
     );
   }

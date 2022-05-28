@@ -22,7 +22,9 @@ class MusicControllerWidget extends StatelessWidget {
       children: [
         const ShuffleIconButton(),
         IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            audioPlayerProvider.playBackward(context);
+          },
           icon: const Icon(MdiIcons.skipPreviousOutline),
           color: Colors.white,
         ),
@@ -31,7 +33,9 @@ class MusicControllerWidget extends StatelessWidget {
           iconSize: 40,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            audioPlayerProvider.playForward(context);
+          },
           icon: const Icon(MdiIcons.skipNextOutline),
           color: Colors.white,
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/constant.dart';
@@ -13,9 +14,11 @@ class MusicSelectionWidget extends StatelessWidget {
     Key? key,
     required this.index,
     required this.song,
+    this.album,
   }) : super(key: key);
   final int index;
   final Song song;
+  final Album? album;
   @override
   Widget build(BuildContext context) {
     final AudioPlayerProvider audioPlayerProvider =
@@ -26,6 +29,7 @@ class MusicSelectionWidget extends StatelessWidget {
           ? _PlayableSongWidget(
               audioPlayerProvider: audioPlayerProvider,
               song: song,
+              album: album,
               index: index)
           : _UnplayableSongWidget(
               audioPlayerProvider: audioPlayerProvider,
@@ -41,7 +45,9 @@ class _PlayableSongWidget extends StatelessWidget {
     required this.audioPlayerProvider,
     required this.song,
     required this.index,
+    this.album,
   }) : super(key: key);
+  final Album? album;
 
   final AudioPlayerProvider audioPlayerProvider;
   final Song song;
@@ -53,8 +59,18 @@ class _PlayableSongWidget extends StatelessWidget {
       return index <= 8 ? "#0${index + 1}" : "#${index + 1}";
     }
 
+    _playAlbum() {
+      audioPlayerProvider.playAlbum(
+          album: album!, context: context, index: index);
+    }
+
+    _playSong() {
+      audioPlayerProvider.playSong(song, context);
+      audioPlayerProvider.removeCurrentAlbum();
+    }
+
     return InkWell(
-      onTap: () => audioPlayerProvider.playSong(song, context),
+      onTap: () => album != null ? _playAlbum() : _playSong(),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

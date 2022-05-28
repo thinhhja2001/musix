@@ -70,7 +70,10 @@ class AlbumScreenBody extends StatelessWidget {
                                       (context, AsyncSnapshot<Song> snapshot) {
                                     if (snapshot.hasData) {
                                       return MusicSelectionWidget(
-                                          index: index, song: snapshot.data!);
+                                        index: index,
+                                        song: snapshot.data!,
+                                        album: album,
+                                      );
                                     }
                                     return MusicSelectionWidget(
                                         index: index, song: songWithNoData);
