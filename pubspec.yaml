@@ -57,6 +57,7 @@ dependencies:
   restart_app: ^1.1.0
   simple_animations: ^4.0.2
   text_scroll: ^0.0.4
+  toast: ^0.3.0
   video_player: ^2.3.0
   web_scraper: ^0.1.4
 

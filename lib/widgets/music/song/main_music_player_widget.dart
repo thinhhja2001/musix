@@ -45,49 +45,60 @@ class MainMusicPlayerWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.055),
-                    child: const Align(
-                      alignment: Alignment.topLeft,
-                      child: RotatedBox(
-                        quarterTurns: 1,
-                        child: Icon(
-                          Icons.arrow_forward_ios_sharp,
-                          color: Colors.white,
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.055),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: RotatedBox(
+                              quarterTurns: 1,
+                              child: GestureDetector(
+                                onTap: () => Navigator.pop(context),
+                                child: const Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              audioPlayerProvider.currentSong.thumbnailUrl),
+                          radius: 100,
+                        ),
+                        Text(
+                          audioPlayerProvider.currentSong.name,
+                          style: kDefaultTextStyle,
+                        ),
+                        Text(
+                          audioPlayerProvider.currentSong.artistName,
+                          style:
+                              kDefaultTextStyle.copyWith(color: kPrimaryColor),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                                onPressed: () {},
+                                icon: SvgPicture.asset(
+                                    'assets/images/share.svg')),
+                            const AddSongToPlaylistIconButton(),
+                            const FavoriteIconButton(),
+                            const DownloadIconButton(),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        audioPlayerProvider.currentSong.thumbnailUrl),
-                    radius: 100,
-                  ),
-                  verticalSpaceRegular,
-                  Text(
-                    audioPlayerProvider.currentSong.name,
-                    style: kDefaultTextStyle,
-                  ),
-                  verticalSpaceRegular,
-                  Text(
-                    audioPlayerProvider.currentSong.artistName,
-                    style: kDefaultTextStyle.copyWith(color: kPrimaryColor),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset('assets/images/share.svg')),
-                      const AddSongToPlaylistIconButton(),
-                      const FavoriteIconButton(),
-                      const DownloadIconButton(),
-                    ],
                   ),
                   const MusicSliderWidget(isSlidable: true),
                   const DurationWidget(),
-                  const MusicControllerWidget()
+                  const MusicControllerWidget(),
+                  verticalSpaceLarge
                 ],
               ),
             ),

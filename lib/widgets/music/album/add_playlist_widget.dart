@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:provider/provider.dart';
 
