@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/utils.dart';
 import '../models/song.dart';
 
@@ -161,6 +163,32 @@ class PlaylistMethods {
       final Album album = Album.fromJson(data);
       albums.add(album);
     }
+    return albums;
+  }
+
+  static Album getFavoriteSongPlaylist(DocumentSnapshot snapshot) {
+    final album = Album(
+        id: 'favoriteSongs',
+        songs: snapshot.get('songs'),
+        title: 'Favorite songs',
+        artistNames: 'Various Artists',
+        artistLink: '',
+        thumbnailUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI6f-ExylkpwX5V7FbtITtoiJyWk-8-jfKB-O1BBz_2fPEOg6a_ywGHfZaIvFdlDvCNfY&usqp=CAU');
+    return album;
+  }
+
+  ///Get all list album by favorite artist of current user
+  static Future<List<Album>> getListAlbumByArtists(List<String> artists) async {
+    List<Album> albums = List.empty(growable: true);
+    for (var artist in artists) {
+      List<Map<String, dynamic>> albumsData =
+          await ZingMP3API.getListAlbumDataByName(artist, 1);
+      Map<String, dynamic> albumData = albumsData[0];
+      Album album = Album.fromJson(albumData);
+      albums.add(album);
+    }
+    albums = albums.toSet().toList();
     return albums;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/colors.dart';
 
@@ -35,8 +36,8 @@ class YouMayLoveList extends StatelessWidget {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future:
-                      SongMethods.getListAlbumByArtists(fakeFavoriteArtists),
+                  future: PlaylistMethods.getListAlbumByArtists(
+                      fakeFavoriteArtists),
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
+import 'package:musix/models/song_types.dart';
 import 'package:musix/utils/colors.dart';
 
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
@@ -100,4 +101,19 @@ List<CustomBottomBarItem> bottomBarItems = [
       title: const Text("Search"),
       unselectedColor: Colors.white,
       selectedColor: Colors.black),
+];
+
+final songTypes = [
+  SongType(type: 'EDM', imageUrl: 'assets/images/edm_bg.jpg'),
+  SongType(type: 'Remix', imageUrl: 'assets/images/remix_bg.jpg'),
+  SongType(type: 'Hip-hop', imageUrl: 'assets/images/hip_hop_bg.jpg'),
+  SongType(type: 'R&B', imageUrl: 'assets/images/r&b_bg.jpg'),
+  SongType(type: 'Rock', imageUrl: 'assets/images/rock_bg.jpg'),
+  SongType(type: 'Instrumental', imageUrl: 'assets/images/instrumental_bg.jpg'),
+  SongType(type: 'US-UK', imageUrl: 'assets/images/usuk_bg.jpg'),
+  SongType(type: 'Piano', imageUrl: 'assets/images/piano_bg.jpg'),
+  SongType(type: 'V-POP', imageUrl: 'assets/images/v-pop_bg.png'),
+  SongType(type: 'Indie', imageUrl: 'assets/images/indie_bg.jpg'),
+  SongType(type: 'Acoustic', imageUrl: 'assets/images/acoustic_bg.jpg'),
+  SongType(type: 'Jazz', imageUrl: 'assets/images/jazz_bg.jpg'),
 ];

@@ -23,20 +23,6 @@ class SongMethods {
     return songs;
   }
 
-  ///Get all list album by favorite artist of current user
-  static Future<List<Album>> getListAlbumByArtists(List<String> artists) async {
-    List<Album> albums = List.empty(growable: true);
-    for (var artist in artists) {
-      List<Map<String, dynamic>> albumsData =
-          await ZingMP3API.getListAlbumDataByName(artist, 1);
-      Map<String, dynamic> albumData = albumsData[0];
-      Album album = Album.fromJson(albumData);
-      albums.add(album);
-    }
-    albums = albums.toSet().toList();
-    return albums;
-  }
-
   static Future<List> getAllFavoriteSong() async {
     final currentUser = FirebaseAuth.instance.currentUser!;
     try {
