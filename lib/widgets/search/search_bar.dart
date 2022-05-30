@@ -43,6 +43,7 @@ class _SearchBarState extends State<SearchBar> {
                       child: TextField(
                         controller: textController,
                         style: kDefaultTextStyle,
+                        cursorColor: kPrimaryColor,
                         decoration: new InputDecoration.collapsed(
                             hintText: "Search by name",
                             hintStyle: kDefaultHintStyle,
