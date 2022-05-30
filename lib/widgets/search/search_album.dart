@@ -11,32 +11,35 @@ class SearchAlbum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const RotatedBox(
-          quarterTurns: -1,
-          child: Text(
-            "Albums",
-            style: kDefaultTitleStyle,
+    return Padding(
+      padding: const EdgeInsets.only(left:15.0, right: 15.0),
+      child: Row(
+        children: [
+          const RotatedBox(
+            quarterTurns: -1,
+            child: Text(
+              "Albums",
+              style: kDefaultTitleStyle,
+            ),
           ),
-        ),
-        Expanded(
-            child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-              children: List.generate(
-                  albumList.length,
-                  (index) => AlbumCard(
-                        album: new Album(
-                            id: albumList[index]['id'],
-                            songs: albumList[index]['songs'],
-                            title: albumList[index]['title'],
-                            artistNames: albumList[index]['artistNames'],
-                            artistLink: albumList[index]['artistLink'],
-                            thumbnailUrl: albumList[index]['thumbnailUrl']),
-                      ))),
-        )),
-      ],
+          Expanded(
+              child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+                children: List.generate(
+                    albumList.length,
+                    (index) => AlbumCard(
+                          album: new Album(
+                              id: albumList[index]['id'],
+                              songs: albumList[index]['songs'],
+                              title: albumList[index]['title'],
+                              artistNames: albumList[index]['artistNames'],
+                              artistLink: albumList[index]['artistLink'],
+                              thumbnailUrl: albumList[index]['thumbnailUrl']),
+                        ))),
+          )),
+        ],
+      ),
     );
   }
 }

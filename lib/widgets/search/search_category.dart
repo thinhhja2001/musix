@@ -4,6 +4,7 @@ import 'package:musix/models/song.dart';
 import 'package:musix/providers/artist_provider.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/screens/artist_screen.dart';
+import 'package:musix/widgets/music/song/music_selection_widget.dart';
 import 'package:musix/widgets/search/search_component.dart';
 import 'package:provider/provider.dart';
 
@@ -50,17 +51,17 @@ class SearchCateGory extends StatelessWidget {
               flex: 9,
               child: componentList.length == 0
                   ? Container(
-                    height: 60,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                      height: 60,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
                             Text(
                               "No data",
                               style: TextStyle(color: Colors.white),
                             ),
                           ]),
-                  )
+                    )
                   : MediaQuery.removePadding(
                       context: context,
                       removeTop: true,
@@ -73,22 +74,10 @@ class SearchCateGory extends StatelessWidget {
                               onTap: () {
                                 switch (searchType) {
                                   case 1:
-                                    Song song = new Song(
-                                        id: componentList[index]['id'],
-                                        name: componentList[index]['name'],
-                                        audioUrl: componentList[index]
-                                            ['audioUrl'],
-                                        lyricUrl: componentList[index]
-                                            ['lyricUrl'],
-                                        artistName: componentList[index]
-                                            ['artistName'],
-                                        artistLink: componentList[index]
-                                            ['artistLink'],
-                                        thumbnailUrl: componentList[index]
-                                            ['thumbnailUrl']);
                                     context
                                         .read<AudioPlayerProvider>()
-                                        .playSong(song, context);
+                                        .playSong(searchProvider.songs[index],
+                                            context);
                                     break;
                                   default:
                                     context
@@ -100,13 +89,15 @@ class SearchCateGory extends StatelessWidget {
                                 }
                               },
                               child: searchType == 1
-                                  ? SearchComponent(
-                                      artist: componentList[index]
-                                          ['artistName'],
-                                      title: componentList[index]['name'],
-                                      imgLink: componentList[index]
-                                          ['thumbnailUrl'],
-                                    )
+                                  ? MusicSelectionWidget(
+                                      index: index, song: searchProvider.songs[index])
+                                  //  SearchComponent(
+                                  //     artist: componentList[index]
+                                  //         ['artistName'],
+                                  //     title: componentList[index]['name'],
+                                  //     imgLink: componentList[index]
+                                  //         ['thumbnailUrl'],
+                                  //   )
                                   : ArtistComponent(
                                       artist: componentList[index]['name'],
                                       imgLink: componentList[index]
