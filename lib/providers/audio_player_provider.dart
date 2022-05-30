@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -6,7 +7,7 @@ import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/enums.dart';
 import 'package:musix/utils/utils.dart';
-
+import 'package:http/http.dart' as http;
 import '../models/album.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
@@ -20,6 +21,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   bool isPlayShuffle = false;
   List<int> _playedIndexOfAlbum = List.empty(growable: true);
   int _currentIndex = 0;
+  String lyric = "";
   AudioPlayerProvider() {
     audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
@@ -32,44 +34,6 @@ class AudioPlayerProvider extends ChangeNotifier {
     audioPlayer.onAudioPositionChanged.listen((newPosition) {
       position = newPosition;
       notifyListeners();
-    });
-  }
-  void _playAudioAccordingToLoopStyle(BuildContext context) {
-    switch (loopType) {
-      case LoopType.noLoop:
-        if (currentAlbum == albumWithNoData ||
-            _playedIndexOfAlbum.length == currentAlbum.songs.length) {
-          audioPlayer.onPlayerCompletion.listen((event) {
-            position = duration;
-            isPlaying = false;
-            audioPlayer.stop();
-          });
-        } else {
-          playForward(context);
-        }
-
-        break;
-      case LoopType.loop1:
-        _loopCurrentSong();
-        break;
-      case LoopType.loopList:
-        if (currentAlbum == albumWithNoData) {
-          _loopCurrentSong();
-        }
-        if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
-          playAlbum(album: currentAlbum, context: context);
-        }
-        break;
-      default:
-    }
-    notifyListeners();
-  }
-
-  void _loopCurrentSong() {
-    audioPlayer.onPlayerCompletion.listen((event) {
-      position = Duration.zero;
-      isPlaying = true;
-      audioPlayer.play(currentSong.audioUrl);
     });
   }
 
@@ -128,6 +92,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   void playSong(Song song, BuildContext context) async {
     currentSong = song;
     if (currentSong.audioUrl.isNotEmpty) {
+      _getLyricFromLrcLink(currentSong.lyricUrl);
       await audioPlayer.play(currentSong.audioUrl);
     } else {
       showSnackBar('This song is not available right now', context, Colors.red);
@@ -175,6 +140,47 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _playAudioAccordingToLoopStyle(BuildContext context) {
+    switch (loopType) {
+      case LoopType.noLoop:
+        if (currentAlbum == albumWithNoData ||
+            _playedIndexOfAlbum.length == currentAlbum.songs.length) {
+          audioPlayer.onPlayerCompletion.listen((event) {
+            position = duration;
+            isPlaying = false;
+            audioPlayer.stop();
+          });
+        } else {
+          playForward(context);
+        }
+
+        break;
+      case LoopType.loop1:
+        _loopCurrentSong();
+        break;
+      case LoopType.loopList:
+        if (currentAlbum == albumWithNoData) {
+          _loopCurrentSong();
+        }
+        if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
+          playAlbum(album: currentAlbum, context: context);
+        }
+        break;
+      default:
+    }
+    notifyListeners();
+  }
+
+  void _getLyricFromLrcLink(String lrcLink) async {
+    try {
+      final response = await http.get(Uri.parse(lrcLink));
+      lyric = utf8.decode(response.bodyBytes);
+    } catch (e) {
+      lyric = "";
+    }
+    notifyListeners();
+  }
+
   void _playPreviousSongInCurrentAlbum(BuildContext context) async {
     _playedIndexOfAlbum.removeLast();
     _currentIndex = _playedIndexOfAlbum[_playedIndexOfAlbum.length - 1];
@@ -191,9 +197,21 @@ class AudioPlayerProvider extends ChangeNotifier {
     }
     Song song =
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
+    if (song.audioUrl.isEmpty) {
+      showSnackBar('This song is not available right now', context, Colors.red);
+      _playNextSongInCurrentAlbum(context);
+    }
     playSong(song, context);
     _playedIndexOfAlbum.add(_currentIndex);
     notifyListeners();
+  }
+
+  void _loopCurrentSong() {
+    audioPlayer.onPlayerCompletion.listen((event) {
+      position = Duration.zero;
+      isPlaying = true;
+      audioPlayer.play(currentSong.audioUrl);
+    });
   }
 
   int _generateRandomIndex() {
@@ -201,7 +219,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
     int randomIndex = random.nextInt(currentAlbum.songs.length);
     if (_playedIndexOfAlbum.contains(randomIndex)) {
-      _generateRandomIndex();
+      return _generateRandomIndex();
     }
     return randomIndex;
   }

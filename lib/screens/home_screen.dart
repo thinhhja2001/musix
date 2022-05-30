@@ -1,67 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:musix/resources/auth_methods.dart';
-import 'package:musix/screens/search_screen.dart';
+import 'package:musix/providers/custom_bottom_bar_provider.dart';
 import 'package:musix/utils/colors.dart';
+import 'package:provider/provider.dart';
 
-import '../models/users.dart';
-import '../utils/constant.dart';
-import '../widgets/customs/custom_bottom_navigation_bar.dart';
-import '../widgets/home/billboad_widget.dart';
-
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  bool userLoaded = false;
-  int _currentIndex = 0;
-
-  Users? users;
-  Future<void> getCurrentUser() async {
-    users = await AuthMethods().getCurrentUser();
-  }
-
-  void userLoad() {
-    setState(() {
-      userLoaded = true;
-    });
-  }
-
-  @override
-  void initState() {
-    getCurrentUser().then((value) => {userLoad()});
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    CustomBottomBarProvider customBottomBarProvider =
+        Provider.of<CustomBottomBarProvider>(context);
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      bottomNavigationBar: CustomBottomBar(
-          currentIndex: _currentIndex,
-          onTap: (index) => setState(() => _currentIndex = index),
-          items: bottomBarItems),
-      body: _buildBody(context, _currentIndex),
+      bottomNavigationBar: customBottomBarProvider.customBottomBar,
+      body: customBottomBarProvider.buildBody(),
     );
-  }
-
-  Widget _buildBody(BuildContext context, int currentIndex) {
-    List<Widget> bottomBarWidget = [
-      userLoaded
-          ? BillboardWidget(user: users!)
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
-      const Center(
-          child: Text(
-        "Explore screen",
-        style: TextStyle(color: Colors.white),
-      )),
-      const SearchScreen(),
-    ];
-    return IndexedStack(index: currentIndex, children: bottomBarWidget);
   }
 }

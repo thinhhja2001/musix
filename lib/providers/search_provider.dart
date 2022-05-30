@@ -53,8 +53,6 @@ class SearchProvider with ChangeNotifier {
       _videoList = value['videos'];
       _albumList = value['albums'];
 
-      print(_artistList);
-
       _Loading = false;
       notifyListeners();
     });
