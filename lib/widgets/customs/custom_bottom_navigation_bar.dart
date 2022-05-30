@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/providers/custom_bottom_bar_provider.dart';
 import 'package:musix/utils/colors.dart';
+import 'package:musix/utils/constant.dart';
 import 'package:musix/widgets/music/song/current_music_player.dart';
+import 'package:provider/provider.dart';
 
 class CustomBottomBar extends StatelessWidget {
   /// A bottom bar that faithfully follows the design by Aurélien Salomon
@@ -9,7 +13,6 @@ class CustomBottomBar extends StatelessWidget {
   const CustomBottomBar({
     Key? key,
     required this.items,
-    this.currentIndex = 0,
     this.onTap,
     this.selectedItemColor,
     this.unselectedItemColor,
@@ -23,9 +26,6 @@ class CustomBottomBar extends StatelessWidget {
 
   /// A list of tabs to display, ie `Home`, `Likes`, etc
   final List<CustomBottomBarItem> items;
-
-  /// The tab to display.
-  final int currentIndex;
 
   /// Returns the index of the tab that was tapped.
   final Function(int)? onTap;
@@ -57,18 +57,23 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    CustomBottomBarProvider customBottomBarProvider =
+        Provider.of<CustomBottomBarProvider>(context);
+    AudioPlayerProvider audioPlayerProvider =
+        Provider.of<AudioPlayerProvider>(context);
     return SafeArea(
       minimum: margin,
       child: Container(
-        height: 155,
+        height: audioPlayerProvider.currentSong != songWithNoData ? 155 : 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: kBackgroundColorDarker),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CurrentMusicPlayer(),
+            audioPlayerProvider.currentSong != songWithNoData
+                ? const CurrentMusicPlayer()
+                : Container(),
             Container(
               decoration: BoxDecoration(
                   color: kBottomNavigationBarColor,
@@ -83,7 +88,10 @@ class CustomBottomBar extends StatelessWidget {
                   for (final item in items)
                     TweenAnimationBuilder<double>(
                       tween: Tween(
-                        end: items.indexOf(item) == currentIndex ? 1.0 : 0.0,
+                        end: items.indexOf(item) ==
+                                customBottomBarProvider.currentIndex
+                            ? 1.0
+                            : 0.0,
                       ),
                       curve: curve,
                       duration: duration,
@@ -123,7 +131,8 @@ class CustomBottomBar extends StatelessWidget {
                                           _unselectedColor, _selectedColor, t),
                                       size: 24,
                                     ),
-                                    child: items.indexOf(item) == currentIndex
+                                    child: items.indexOf(item) ==
+                                            customBottomBarProvider.currentIndex
                                         ? item.activeIcon ?? item.icon
                                         : item.icon,
                                   ),

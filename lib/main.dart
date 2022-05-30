@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:musix/firebase_options.dart';
 import 'package:musix/providers/artist_provider.dart';
 import 'package:musix/providers/audio_player_provider.dart';
+import 'package:musix/providers/custom_bottom_bar_provider.dart';
 import 'package:musix/providers/email_verification_provider.dart';
 import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/providers/search_provider.dart';
@@ -52,6 +53,8 @@ class MyApp extends StatelessWidget {
             create: (context) => SearchProvider()),
         ChangeNotifierProvider<ArtistProvider>(
             create: (context) => ArtistProvider()),
+        ChangeNotifierProvider<CustomBottomBarProvider>(
+            create: (context) => CustomBottomBarProvider()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
