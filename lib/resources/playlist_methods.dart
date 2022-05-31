@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/resources/general_music_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/utils.dart';
 import '../models/song.dart';
@@ -190,5 +191,64 @@ class PlaylistMethods {
     }
     albums = albums.toSet().toList();
     return albums;
+  }
+
+  static Future getAllListenedAlbums() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final albums = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .get();
+    return albums;
+  }
+
+  static Future<void> addAlbumToListenHistory(Album currentAlbum) async {
+    final albums = await getAllListenedAlbums();
+    for (var doc in albums.docs) {
+      if (doc.id == currentAlbum.id) {
+        _updateListenTime(currentAlbum);
+        return;
+      }
+    }
+    _setNewAlbumToListenHistory(currentAlbum);
+  }
+
+  static Future<void> _setNewAlbumToListenHistory(Album currentAlbum) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .doc(currentAlbum.id)
+        .set({'listenTime': 1});
+  }
+
+  static Future<void> _updateListenTime(Album currentAlbum) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final album = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .doc(currentAlbum.id)
+        .get();
+    int listenTime = album.data()!['listenTime'];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .doc(currentAlbum.id)
+        .update({'listenTime': ++listenTime});
   }
 }

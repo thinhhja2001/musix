@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:musix/models/song.dart';
+import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/enums.dart';
@@ -100,9 +101,15 @@ class AudioPlayerProvider extends ChangeNotifier {
     if (currentSong.audioUrl.isNotEmpty) {
       _getLyricFromLrcLink(currentSong.lyricUrl);
       await audioPlayer.play(currentSong.audioUrl);
+      await SongMethods.addSongToListenHistory(currentSong);
     } else {
       showSnackBar('This song is not available right now', context, Colors.red);
     }
+    notifyListeners();
+  }
+
+  void resume() {
+    audioPlayer.resume();
     notifyListeners();
   }
 
@@ -120,6 +127,9 @@ class AudioPlayerProvider extends ChangeNotifier {
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
     playSong(song, context);
     _playedIndexOfAlbum.add(_currentIndex);
+    if (isOfficialAlbum(currentAlbum)) {
+      await PlaylistMethods.addAlbumToListenHistory(currentAlbum);
+    }
     notifyListeners();
   }
 

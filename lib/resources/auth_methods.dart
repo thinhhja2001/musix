@@ -72,12 +72,20 @@ class AuthMethods {
           'followers': [],
           'following': []
         });
+        //Create empty favorite list
         await _firestore
             .collection('users')
             .doc(cred.user!.uid)
             .collection('playlists')
             .doc('favorites')
             .set({'songs': [], 'albums': [], 'artists': [], 'videos': []});
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(cred.user!.uid)
+            .collection('playlists')
+            .doc('listenHistory')
+            .set({});
         res = "success";
       }
     } on FirebaseAuthException catch (err) {

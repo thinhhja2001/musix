@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/music/album/control_widget/play_album_icon_button.dart';
 import 'package:musix/widgets/music/album/control_widget/play_shuffle_icon_button.dart';
 
@@ -19,7 +20,9 @@ class AlbumControllerWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            AddAlbumToFavoriteIconButton(album: album),
+            isOfficialAlbum(album)
+                ? AddAlbumToFavoriteIconButton(album: album)
+                : Container(),
             IconButton(
               icon: const Icon(
                 MdiIcons.trayArrowDown,

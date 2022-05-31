@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
-import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/utils/utils.dart';
 
@@ -85,5 +84,64 @@ class SongMethods {
             : 'Has been removed from your favorite list',
         icon: result == 'added' ? MdiIcons.heart : MdiIcons.heartBroken);
     return result;
+  }
+
+  static Future getAllListenedSong() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final songs = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .get();
+    return songs;
+  }
+
+  static Future<void> addSongToListenHistory(Song currentSong) async {
+    final songs = await getAllListenedSong();
+    for (var doc in songs.docs) {
+      if (doc.id == currentSong.id) {
+        _updateListenTime(currentSong);
+        return;
+      }
+    }
+    _setNewSongToListenHistory(currentSong);
+  }
+
+  static Future<void> _setNewSongToListenHistory(Song currentSong) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .doc(currentSong.id)
+        .set({'listenTime': 1});
+  }
+
+  static Future<void> _updateListenTime(Song currentSong) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final song = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .doc(currentSong.id)
+        .get();
+    int listenTime = song.data()!['listenTime'];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .doc(currentSong.id)
+        .update({'listenTime': ++listenTime});
   }
 }

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -87,6 +88,13 @@ Widget noAlbumData(BuildContext context) {
             image: const DecorationImage(
                 fit: BoxFit.fill, image: NetworkImage(noImageUrl)))),
   );
+}
+
+bool isOfficialAlbum(Album album) {
+  if (album.id.startsWith('Z') && album.id.length <= 10) {
+    return true;
+  }
+  return false;
 }
 
 showCompleteNotification(
