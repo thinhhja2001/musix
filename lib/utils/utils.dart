@@ -63,14 +63,14 @@ Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
   return paletteGenerator;
 }
 
-Widget defaultTextScrollWidget(String text) {
+Widget defaultTextScrollWidget({required String text, TextStyle? textStyle}) {
   return TextScroll(
     text,
     mode: TextScrollMode.bouncing,
     velocity: const Velocity(pixelsPerSecond: Offset(10, 0)),
     delayBefore: const Duration(seconds: 5),
     pauseBetween: const Duration(seconds: 3),
-    style:
+    style: textStyle ??
         kDefaultTextStyle.copyWith(fontSize: 15, fontWeight: FontWeight.w400),
     textAlign: TextAlign.right,
   );

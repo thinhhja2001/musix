@@ -28,6 +28,7 @@ class AudioPlayerProvider extends ChangeNotifier {
       notifyListeners();
     });
     audioPlayer.onDurationChanged.listen((newDuration) {
+      position = Duration.zero;
       duration = newDuration;
       notifyListeners();
     });
@@ -55,7 +56,12 @@ class AudioPlayerProvider extends ChangeNotifier {
         break;
       default:
     }
-    _playAudioAccordingToLoopStyle(context);
+    audioPlayer.onPlayerCompletion.listen(
+      (event) {
+        _playAudioAccordingToLoopStyle(context);
+      },
+    );
+
     notifyListeners();
   }
 
@@ -141,29 +147,36 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void _playAudioAccordingToLoopStyle(BuildContext context) {
+    position = Duration.zero;
+    notifyListeners();
     switch (loopType) {
       case LoopType.noLoop:
-        if (currentAlbum == albumWithNoData ||
-            _playedIndexOfAlbum.length == currentAlbum.songs.length) {
-          audioPlayer.onPlayerCompletion.listen((event) {
-            position = duration;
-            isPlaying = false;
-            audioPlayer.stop();
-          });
-        } else {
-          playForward(context);
-        }
-
+        // if (currentAlbum == albumWithNoData) {
+        //   isPlaying = true;
+        //   playSong(currentSong, context);
+        // } else if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
+        //   playAlbum(album: currentAlbum, context: context);
+        // } else if (_playedIndexOfAlbum.length < currentAlbum.songs.length) {
+        //   playForward(context);
+        // } else {
+        //   pauseSong();
+        // }
+        pauseSong();
         break;
       case LoopType.loop1:
-        _loopCurrentSong();
+        isPlaying = true;
+        playSong(currentSong, context);
         break;
       case LoopType.loopList:
         if (currentAlbum == albumWithNoData) {
-          _loopCurrentSong();
-        }
-        if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
+          isPlaying = true;
+          playSong(currentSong, context);
+        } else if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
           playAlbum(album: currentAlbum, context: context);
+        } else if (_playedIndexOfAlbum.length < currentAlbum.songs.length) {
+          playForward(context);
+        } else {
+          pauseSong();
         }
         break;
       default:

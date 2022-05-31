@@ -74,7 +74,7 @@ class CurrentMusicPlayer extends StatelessWidget {
                       height: 20,
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: defaultTextScrollWidget(
-                          audioPlayerProvider.currentSong.name)),
+                          text: audioPlayerProvider.currentSong.name)),
                   Text(
                     audioPlayerProvider.currentSong.artistName,
                     style: kDefaultTextStyle.copyWith(

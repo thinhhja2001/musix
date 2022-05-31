@@ -71,9 +71,12 @@ class MainMusicPlayerWidget extends StatelessWidget {
                               audioPlayerProvider.currentSong.thumbnailUrl),
                           radius: 100,
                         ),
-                        Text(
-                          audioPlayerProvider.currentSong.name,
-                          style: kDefaultTextStyle,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: defaultTextScrollWidget(
+                            text: audioPlayerProvider.currentSong.name,
+                            textStyle: kDefaultTextStyle,
+                          ),
                         ),
                         Text(
                           audioPlayerProvider.currentSong.artistName,

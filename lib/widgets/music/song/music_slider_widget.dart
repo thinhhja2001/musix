@@ -26,10 +26,12 @@ class MusicSliderWidget extends StatelessWidget {
           thumbShape:
               RoundSliderThumbShape(enabledThumbRadius: isSlidable ? 5 : 0)),
       child: Slider(
+          //Because some song will have its actual duration greater than its duration.
+          //So that we will set the max value of the Slider widget to be its position + 5 to avoid assertion
           thumbColor: kPrimaryColor,
           activeColor: kPrimaryColor,
           min: 0,
-          max: audioPlayerProvider.duration.inSeconds.toDouble(),
+          max: audioPlayerProvider.duration.inSeconds.toDouble() + 5,
           value: audioPlayerProvider.position.inSeconds.toDouble(),
           onChanged: (value) async {
             isSlidable ? _onDurationChanged(value) : null;
