@@ -11,7 +11,7 @@ class SongMethods {
     return Song.fromJson(songData);
   }
 
-  static Future<List<Song>> getListSongDataByKeys(List<String> songKeys) async {
+  static Future<List<Song>> getListSongDataByKeys(List songKeys) async {
     List<Song> songs = List.empty(growable: true);
     for (var i = 0; i < songKeys.length; i++) {
       Map<String, dynamic> songData =
@@ -35,6 +35,25 @@ class SongMethods {
     } catch (e) {
       return [];
     }
+  }
+
+  static Future<List<String>> getRecentListenedSong(
+      {required int quantity}) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    List<String> songKeys = List.empty(growable: true);
+    final songsData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .orderBy('lastHear', descending: true)
+        .limit(quantity)
+        .get();
+    for (var songData in songsData.docs) {
+      songKeys.add(songData.id);
+    }
+    return songKeys;
   }
 
   static Future<List<dynamic>> getTopListenedSongOrderByListenTime(

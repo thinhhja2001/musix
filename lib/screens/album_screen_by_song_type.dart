@@ -8,10 +8,14 @@ import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/music/album/album_card/album_card_from_json.dart';
 import 'package:provider/provider.dart';
 
-class AlbumScreenBySongType extends StatelessWidget {
-  const AlbumScreenBySongType({Key? key, required this.songType})
-      : super(key: key);
-  final SongType songType;
+class AllAlbumByNameScreen extends StatelessWidget {
+  const AllAlbumByNameScreen({
+    Key? key,
+    required this.name,
+    required this.quantity,
+  }) : super(key: key);
+  final String name;
+  final int quantity;
   @override
   Widget build(BuildContext context) {
     CustomBottomBarProvider customBottomBarProvider =
@@ -34,11 +38,14 @@ class AlbumScreenBySongType extends StatelessWidget {
                 goBackButton(),
                 verticalSpaceSmall,
                 Text(
-                  songType.type,
+                  name,
                   style: kDefaultTextStyle,
                 ),
                 verticalSpaceSmall,
-                _ListAlbumByTypeWidget(songType: songType)
+                _ListAlbumWidget(
+                  name: name,
+                  quantity: quantity,
+                )
               ],
             ),
           ),
@@ -48,18 +55,20 @@ class AlbumScreenBySongType extends StatelessWidget {
   }
 }
 
-class _ListAlbumByTypeWidget extends StatelessWidget {
-  const _ListAlbumByTypeWidget({
+class _ListAlbumWidget extends StatelessWidget {
+  const _ListAlbumWidget({
     Key? key,
-    required this.songType,
+    required this.name,
+    required this.quantity,
   }) : super(key: key);
 
-  final SongType songType;
-
+  final String name;
+  final int quantity;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-        future: ZingMP3API.getAllAlbumKeyByName(songType.type, 50),
+        future: ZingMP3API.getAllAlbumKeyByName(
+            name == 'Immortalize' ? "Bất hủ" : name, quantity),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return GridView.count(
