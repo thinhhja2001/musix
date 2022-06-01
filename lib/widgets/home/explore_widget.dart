@@ -1,16 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/apis/zing_mp3_api.dart';
-import 'package:musix/models/album.dart';
 import 'package:musix/models/users.dart';
-import 'package:musix/resources/general_music_methods.dart';
-import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/home/profile_card.dart';
-import 'package:musix/widgets/list/your_favorite_list.dart';
-import 'package:musix/widgets/music/album/album_card.dart';
-import 'package:musix/widgets/music/other/music_type_seclection_widget.dart';
+import 'package:musix/widgets/music/other/keep_play_back_widget.dart';
+import 'package:musix/widgets/music/other/music_type_selection_widget.dart';
+import 'package:musix/widgets/music/other/your_favorite_widget.dart';
 
 class ExploreWidget extends StatelessWidget {
   const ExploreWidget({
@@ -36,19 +31,11 @@ class ExploreWidget extends StatelessWidget {
               verticalSliverPaddingMedium,
               const MusicTypeSelectionWidget(),
               verticalSliverPaddingMedium,
-              SliverToBoxAdapter(
-                child: Row(
-                  children: const [
-                    RotatedBox(
-                        quarterTurns: 3,
-                        child: Text(
-                          'Your Favorite',
-                          style: kDefaultTitleStyle,
-                        )),
-                    YourFavoriteListWidget(),
-                  ],
-                ),
-              )
+              const YourFavoriteWidget(),
+              verticalSliverPaddingMedium,
+              const KeepPlaybackWidget(),
+              verticalSliverPaddingMedium,
+              verticalSliverPaddingMedium,
             ],
           ),
         ),

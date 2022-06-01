@@ -127,7 +127,7 @@ class AudioPlayerProvider extends ChangeNotifier {
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
     playSong(song, context);
     _playedIndexOfAlbum.add(_currentIndex);
-    if (isOfficialAlbum(currentAlbum)) {
+    if (currentAlbum.id != unfavorable) {
       await PlaylistMethods.addAlbumToListenHistory(currentAlbum);
     }
     notifyListeners();

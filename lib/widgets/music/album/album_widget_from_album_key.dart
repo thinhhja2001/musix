@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
 import 'package:musix/utils/constant.dart';
-import 'package:musix/widgets/music/album/album_card.dart';
+import 'package:musix/widgets/music/album/album_card/album_card_from_album_data.dart';
 
 class AlbumWidgetFromAlbumKey extends StatelessWidget {
   const AlbumWidgetFromAlbumKey({
@@ -19,9 +19,9 @@ class AlbumWidgetFromAlbumKey extends StatelessWidget {
       builder: (context, albumSnapshot) {
         if (albumSnapshot.hasData) {
           final album = Album.fromJson(albumSnapshot.data!);
-          return AlbumCard(album: album);
+          return AlbumCardFromAlbumData(album: album);
         }
-        return AlbumCard(album: albumWithNoData);
+        return AlbumCardFromAlbumData(album: albumWithNoData);
       },
     );
   }

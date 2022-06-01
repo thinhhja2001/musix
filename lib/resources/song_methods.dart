@@ -37,6 +37,25 @@ class SongMethods {
     }
   }
 
+  static Future<List<dynamic>> getTopListenedSongOrderByListenTime(
+      {required int quantity}) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    List songKeys = List.empty(growable: true);
+    final songsData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .orderBy('listenTime', descending: true)
+        .limit(quantity)
+        .get();
+    for (var songData in songsData.docs) {
+      songKeys.add(songData.id);
+    }
+    return songKeys;
+  }
+
   static void _removeSongFromFavorite(String songId) async {
     final currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -100,6 +119,14 @@ class SongMethods {
   }
 
   static Future<void> addSongToListenHistory(Song currentSong) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .set({});
     final songs = await getAllListenedSong();
     for (var doc in songs.docs) {
       if (doc.id == currentSong.id) {
@@ -120,7 +147,7 @@ class SongMethods {
         .doc('listenHistory')
         .collection('songs')
         .doc(currentSong.id)
-        .set({'listenTime': 1});
+        .set({'listenTime': 1, 'lastHear': DateTime.now()});
   }
 
   static Future<void> _updateListenTime(Song currentSong) async {
@@ -142,6 +169,6 @@ class SongMethods {
         .doc('listenHistory')
         .collection('songs')
         .doc(currentSong.id)
-        .update({'listenTime': ++listenTime});
+        .update({'listenTime': ++listenTime, 'lastHear': DateTime.now()});
   }
 }

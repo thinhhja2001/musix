@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:musix/models/custom_lyric_ui.dart';
 import 'package:musix/providers/audio_player_provider.dart';
-import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/music/song/duration_widget.dart';

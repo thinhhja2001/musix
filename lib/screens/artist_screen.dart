@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:musix/providers/artist_provider.dart';
 import 'package:musix/widgets/artist/artist_info.dart';
 import 'package:musix/widgets/artist/artist_songs.dart';
-import 'package:musix/widgets/search/artist_component.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/colors.dart';
@@ -37,10 +34,10 @@ class _ArtistScreenState extends State<ArtistScreen> {
               thumbnailUrl: widget.artist['thumbnailUrl'],
               alias: widget.artist['alias'],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Center(
+            const Center(
               child: Text(
                 "All songs",
                 style: TextStyle(
@@ -49,11 +46,11 @@ class _ArtistScreenState extends State<ArtistScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             artistProvider.loading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : ArtistSongs(componentList: artistProvider.songList),
           ],
         ),

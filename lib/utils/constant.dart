@@ -48,6 +48,7 @@ List<String> fakeSongsData = [
   'ZWACDBZ6',
   'ZZ909ZEI'
 ];
+String unfavorable = 'unfavorable';
 Song songWithNoData = Song(
     id: '',
     name: '',

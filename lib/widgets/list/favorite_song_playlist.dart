@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:musix/resources/general_music_methods.dart';
 import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/utils/constant.dart';
-import 'package:musix/widgets/music/album/album_card.dart';
+import 'package:musix/widgets/music/album/album_card/album_card_from_album_data.dart';
 
 class ListFavoriteSongsWidget extends StatelessWidget {
   const ListFavoriteSongsWidget({
@@ -17,9 +17,9 @@ class ListFavoriteSongsWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final album = PlaylistMethods.getFavoriteSongPlaylist(snapshot.data!);
-          return AlbumCard(album: album);
+          return AlbumCardFromAlbumData(album: album);
         }
-        return AlbumCard(album: albumWithNoData);
+        return AlbumCardFromAlbumData(album: albumWithNoData);
       },
     );
   }

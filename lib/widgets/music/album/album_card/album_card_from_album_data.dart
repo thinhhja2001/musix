@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/models/album.dart';
-import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/screens/album_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:musix/utils/colors.dart';
+import 'package:musix/utils/constant.dart';
 
-import '../../../utils/colors.dart';
-import '../../../utils/constant.dart';
-
-class AlbumCard extends StatelessWidget {
-  const AlbumCard({
+class AlbumCardFromAlbumData extends StatelessWidget {
+  const AlbumCardFromAlbumData({
     Key? key,
     required this.album,
   }) : super(key: key);
@@ -20,9 +17,11 @@ class AlbumCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10.0),
       child: InkWell(
         onTap: () {
-          Get.to(AlbumScreen(
-            album: album,
-          ));
+          if (album.thumbnailUrl != albumWithNoData.thumbnailUrl) {
+            Get.to(AlbumScreen(
+              album: album,
+            ));
+          }
         },
         child: Container(
             width: MediaQuery.of(context).size.width / 2,

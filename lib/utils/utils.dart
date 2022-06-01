@@ -90,10 +90,11 @@ Widget noAlbumData(BuildContext context) {
   );
 }
 
-bool isOfficialAlbum(Album album) {
-  if (album.id.startsWith('Z') && album.id.length <= 10) {
+bool isOfficialAlbum(String albumKey) {
+  if (albumKey.startsWith('Z') && albumKey.length <= 10) {
     return true;
   }
+
   return false;
 }
 

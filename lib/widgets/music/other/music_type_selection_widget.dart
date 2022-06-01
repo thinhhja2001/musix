@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musix/models/song_types.dart';
+import 'package:musix/screens/album_screen_by_song_type.dart';
 import 'package:musix/utils/constant.dart';
 
 class MusicTypeSelectionWidget extends StatelessWidget {
@@ -47,16 +49,21 @@ class _MusicTypeSelectionCard extends StatelessWidget {
   final SongType songType;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage(songType.imageUrl))),
-      child: Center(
-          child: Text(
-        songType.type,
-        style: kDefaultHintStyle.copyWith(color: Colors.white, fontSize: 14),
-      )),
+    return InkWell(
+      onTap: () => Get.to(
+        AlbumScreenBySongType(songType: songType),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            image: DecorationImage(
+                fit: BoxFit.fill, image: AssetImage(songType.imageUrl))),
+        child: Center(
+            child: Text(
+          songType.type,
+          style: kDefaultHintStyle.copyWith(color: Colors.white, fontSize: 14),
+        )),
+      ),
     );
   }
 }

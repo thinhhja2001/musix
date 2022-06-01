@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/widgets/music/album/album_card/album_card_from_album_data.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/constant.dart';
-import '../music/album/album_card.dart';
 
 class SearchAlbum extends StatelessWidget {
   const SearchAlbum({Key? key, required this.albumList}) : super(key: key);
@@ -12,7 +12,7 @@ class SearchAlbum extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left:15.0, right: 15.0),
+      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
       child: Row(
         children: [
           const RotatedBox(
@@ -28,7 +28,7 @@ class SearchAlbum extends StatelessWidget {
             child: Row(
                 children: List.generate(
                     albumList.length,
-                    (index) => AlbumCard(
+                    (index) => AlbumCardFromAlbumData(
                           album: new Album(
                               id: albumList[index]['id'],
                               songs: albumList[index]['songs'],
