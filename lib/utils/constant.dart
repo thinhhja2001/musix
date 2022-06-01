@@ -52,7 +52,7 @@ String unfavorable = 'unfavorable';
 Song songWithNoData = Song(
     id: '',
     name: '',
-    audioUrl: 'no',
+    audioUrl: '',
     lyricUrl: '',
     artistName: '',
     artistLink: '',
