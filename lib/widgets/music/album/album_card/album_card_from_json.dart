@@ -52,7 +52,7 @@ class AlbumCardFromJSon extends StatelessWidget {
                                     fontWeight: FontWeight.w400, fontSize: 16),
                               ),
                               Text(
-                                'Various Artist',
+                                albumData['artist'],
                                 overflow: TextOverflow.ellipsis,
                                 style: kDefaultTextStyle.copyWith(
                                     fontWeight: FontWeight.w400,

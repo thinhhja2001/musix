@@ -51,7 +51,10 @@ class _MusicTypeSelectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.to(
-        AlbumScreenBySongType(songType: songType),
+        AllAlbumByNameScreen(
+          name: songType.type,
+          quantity: 50,
+        ),
       ),
       child: Container(
         decoration: BoxDecoration(

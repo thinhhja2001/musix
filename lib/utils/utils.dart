@@ -91,7 +91,7 @@ Widget noAlbumData(BuildContext context) {
 }
 
 bool isOfficialAlbum(String albumKey) {
-  if (albumKey.startsWith('Z') && albumKey.length <= 10) {
+  if (albumKey.length <= 8) {
     return true;
   }
 

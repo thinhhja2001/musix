@@ -7,6 +7,7 @@ import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/screens/Profile_fix_screen.dart';
+import 'package:musix/widgets/music/song/list_song_widget.dart';
 import 'package:musix/widgets/music/song/music_selection_widget.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
 
@@ -95,43 +96,22 @@ class ProfileBody extends StatelessWidget {
             child: Row(
               children: [
                 const RotatedBox(
-                  quarterTurns: -1,
-                  child: Text(
-                    "Recent Music",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ),
+                    quarterTurns: 3,
+                    child: Text(
+                      "Recently Music",
+                      style: kDefaultTitleStyle,
+                    )),
                 Expanded(
-                  child: FutureBuilder(
-                    future: SongMethods.getListSongDataByKeys(fakeSongsData),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, position) =>
-                                    MusicSelectionWidget(
-                                      index: position,
-                                      song: snapshot.data[position],
-                                    )),
-                          ],
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryColor,
-                          ),
-                        );
-                      }
-                    },
-                  ),
+                  child: FutureBuilder<List<String>>(
+                      future: SongMethods.getRecentListenedSong(quantity: 5),
+                      builder: (context, songData) {
+                        if (songData.hasData) {
+                          return ListSongWidget(
+                            songsKey: songData.data!,
+                          );
+                        }
+                        return Container();
+                      }),
                 )
               ],
             ),
