@@ -215,6 +215,24 @@ class ZingMP3API {
     return albumsData;
   }
 
+  /// Get all album key by name.
+  /// Return the first 10 album that match the name by default.
+  ///
+  /// [albumName] represent for the name of the album you want to find
+  /// [quantity] represent for the number of album you want to find. Its default value is 5
+  ///
+  /// Please note that the returned List's length might be < [quantity] depends on the returned JSon Array
+
+  static Future<List> getAllAlbumKeyByName(String albumName,
+      [int quantity = 10]) async {
+    String query =
+        "http://ac.mp3.zing.vn/complete?type=album&num=$quantity&query=$albumName";
+    final response = await http.get(Uri.parse(query));
+    final Map<String, dynamic> responseInJson = json.decode(response.body);
+    final albumsData = responseInJson['data'][0]['album'];
+    return albumsData;
+  }
+
   ///Get ZingMP3 video data by [videoKey]. [videoKey] is required otherwise it can't be get.
   ///
   ///For example https://zingmp3.vn/video-clip/Kill-This-Love-BLACKPINK/ZWACDBZ6.html then 'ZWACDBZ6' is [videoKey]

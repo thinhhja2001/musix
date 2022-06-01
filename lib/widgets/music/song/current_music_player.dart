@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/constant.dart';
@@ -35,13 +34,27 @@ class CurrentMusicPlayer extends StatelessWidget {
                 future: updatePaletteGenerator(
                     audioPlayerProvider.currentSong.thumbnailUrl),
                 builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                                color: snapshot.data!.dominantColor!.color,
+                                blurRadius: 10),
+                          ]),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            audioPlayerProvider.currentSong.thumbnailUrl),
+                        radius: 26,
+                      ),
+                    );
+                  }
                   return Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                              color: snapshot.data!.dominantColor!.color,
-                              blurRadius: 10),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black, blurRadius: 10),
                         ]),
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
@@ -60,7 +73,7 @@ class CurrentMusicPlayer extends StatelessWidget {
                       height: 20,
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: defaultTextScrollWidget(
-                          audioPlayerProvider.currentSong.name)),
+                          text: audioPlayerProvider.currentSong.name)),
                   Text(
                     audioPlayerProvider.currentSong.artistName,
                     style: kDefaultTextStyle.copyWith(

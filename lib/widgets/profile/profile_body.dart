@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/models/users.dart';
@@ -13,7 +11,7 @@ import 'package:musix/widgets/music/song/music_selection_widget.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
 
 class ProfileBody extends StatelessWidget {
-  ProfileBody({Key? key, required this.user}) : super(key: key);
+  const ProfileBody({Key? key, required this.user}) : super(key: key);
   final Users user;
   @override
   Widget build(BuildContext context) {
@@ -140,8 +138,8 @@ class ProfileBody extends StatelessWidget {
           ),
           ElevatedButton(
             style: ButtonStyle(
-                textStyle: MaterialStateProperty.all<TextStyle>(
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
+                    color: Colors.red, fontWeight: FontWeight.bold)),
                 backgroundColor:
                     MaterialStateProperty.all<Color>(kPrimaryColor),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -151,9 +149,9 @@ class ProfileBody extends StatelessWidget {
             onPressed: () async {
               await ProfileMethods()
                   .signOut()
-                  .then((value) => Get.offAll(SignInScreen()));
+                  .then((value) => Get.offAll(const SignInScreen()));
             },
-            child: Text("Log out"),
+            child: const Text("Log out"),
           )
         ],
       ),

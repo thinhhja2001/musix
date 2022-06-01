@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -63,14 +64,14 @@ Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
   return paletteGenerator;
 }
 
-Widget defaultTextScrollWidget(String text) {
+Widget defaultTextScrollWidget({required String text, TextStyle? textStyle}) {
   return TextScroll(
     text,
     mode: TextScrollMode.bouncing,
     velocity: const Velocity(pixelsPerSecond: Offset(10, 0)),
     delayBefore: const Duration(seconds: 5),
     pauseBetween: const Duration(seconds: 3),
-    style:
+    style: textStyle ??
         kDefaultTextStyle.copyWith(fontSize: 15, fontWeight: FontWeight.w400),
     textAlign: TextAlign.right,
   );
@@ -87,6 +88,14 @@ Widget noAlbumData(BuildContext context) {
             image: const DecorationImage(
                 fit: BoxFit.fill, image: NetworkImage(noImageUrl)))),
   );
+}
+
+bool isOfficialAlbum(String albumKey) {
+  if (albumKey.startsWith('Z') && albumKey.length <= 10) {
+    return true;
+  }
+
+  return false;
 }
 
 showCompleteNotification(

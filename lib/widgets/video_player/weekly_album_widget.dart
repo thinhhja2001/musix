@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
-import 'package:musix/widgets/music/album/album_card.dart';
+import 'package:musix/widgets/music/album/album_card/album_card_from_album_data.dart';
 
 import '../../utils/constant.dart';
 import '../../utils/utils.dart';
@@ -32,7 +32,7 @@ class WeeklyAlbumWidget extends StatelessWidget {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
-                      return AlbumCard(
+                      return AlbumCardFromAlbumData(
                         album: snapshot.data,
                       );
                     } else {
@@ -45,7 +45,7 @@ class WeeklyAlbumWidget extends StatelessWidget {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
-                      return AlbumCard(
+                      return AlbumCardFromAlbumData(
                         album: snapshot.data,
                       );
                     } else {
@@ -58,7 +58,7 @@ class WeeklyAlbumWidget extends StatelessWidget {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
-                      return AlbumCard(
+                      return AlbumCardFromAlbumData(
                         album: snapshot.data,
                       );
                     } else {

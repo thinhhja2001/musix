@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
-import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/utils/utils.dart';
 
@@ -23,20 +22,6 @@ class SongMethods {
     return songs;
   }
 
-  ///Get all list album by favorite artist of current user
-  static Future<List<Album>> getListAlbumByArtists(List<String> artists) async {
-    List<Album> albums = List.empty(growable: true);
-    for (var artist in artists) {
-      List<Map<String, dynamic>> albumsData =
-          await ZingMP3API.getListAlbumDataByName(artist, 1);
-      Map<String, dynamic> albumData = albumsData[0];
-      Album album = Album.fromJson(albumData);
-      albums.add(album);
-    }
-    albums = albums.toSet().toList();
-    return albums;
-  }
-
   static Future<List> getAllFavoriteSong() async {
     final currentUser = FirebaseAuth.instance.currentUser!;
     try {
@@ -50,6 +35,25 @@ class SongMethods {
     } catch (e) {
       return [];
     }
+  }
+
+  static Future<List<dynamic>> getTopListenedSongOrderByListenTime(
+      {required int quantity}) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    List songKeys = List.empty(growable: true);
+    final songsData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .orderBy('listenTime', descending: true)
+        .limit(quantity)
+        .get();
+    for (var songData in songsData.docs) {
+      songKeys.add(songData.id);
+    }
+    return songKeys;
   }
 
   static void _removeSongFromFavorite(String songId) async {
@@ -99,5 +103,72 @@ class SongMethods {
             : 'Has been removed from your favorite list',
         icon: result == 'added' ? MdiIcons.heart : MdiIcons.heartBroken);
     return result;
+  }
+
+  static Future getAllListenedSong() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final songs = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .get();
+    return songs;
+  }
+
+  static Future<void> addSongToListenHistory(Song currentSong) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .set({});
+    final songs = await getAllListenedSong();
+    for (var doc in songs.docs) {
+      if (doc.id == currentSong.id) {
+        _updateListenTime(currentSong);
+        return;
+      }
+    }
+    _setNewSongToListenHistory(currentSong);
+  }
+
+  static Future<void> _setNewSongToListenHistory(Song currentSong) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .doc(currentSong.id)
+        .set({'listenTime': 1, 'lastHear': DateTime.now()});
+  }
+
+  static Future<void> _updateListenTime(Song currentSong) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final song = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .doc(currentSong.id)
+        .get();
+    int listenTime = song.data()!['listenTime'];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('songs')
+        .doc(currentSong.id)
+        .update({'listenTime': ++listenTime, 'lastHear': DateTime.now()});
   }
 }

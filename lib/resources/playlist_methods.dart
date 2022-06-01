@@ -1,11 +1,48 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/resources/song_methods.dart';
+import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
 import '../models/song.dart';
 
 class PlaylistMethods {
+  static Future<Album> getAlbumDataByKey(String albumKey) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    late Map<String, dynamic> albumData;
+    if (isOfficialAlbum(albumKey)) {
+      albumData = await ZingMP3API.getAlbumDataByKey(albumKey);
+    } else {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('customPlaylists')
+          .collection('allCustomPlaylist')
+          .doc(albumKey)
+          .get();
+      albumData = snapshot.data()!;
+    }
+    return Album.fromJson(albumData);
+  }
+
+  static Future<Album> getTopListenTimeSongPlaylist(
+      {required int quantity}) async {
+    List songs = await SongMethods.getTopListenedSongOrderByListenTime(
+        quantity: quantity);
+    return Album(
+        id: unfavorable,
+        songs: songs,
+        title: 'Never Enough',
+        artistNames: 'Various Artists',
+        artistLink: '',
+        thumbnailUrl:
+            'https://play-lh.googleusercontent.com/gGHaWnV9n3EK0jpJ_yessWA1PF6mcL7Ys41mBPTCTXtusf13Yr2zVpVYAOI69ZX2Gjc');
+  }
+
   static Future<String> createPlaylist(String name, Song song) async {
     final currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -28,8 +65,8 @@ class PlaylistMethods {
           id: document.id,
           songs: [song.id],
           title: name,
-          artistNames: 'artistNames',
-          artistLink: 'artistLink',
+          artistNames: 'Various Artists',
+          artistLink: '',
           thumbnailUrl: song.thumbnailUrl);
       await FirebaseFirestore.instance
           .collection('users')
@@ -162,5 +199,119 @@ class PlaylistMethods {
       albums.add(album);
     }
     return albums;
+  }
+
+  static Album getFavoriteSongPlaylist(DocumentSnapshot snapshot) {
+    final album = Album(
+        id: unfavorable,
+        songs: snapshot.get('songs'),
+        title: 'Favorite songs',
+        artistNames: 'Various Artists',
+        artistLink: '',
+        thumbnailUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI6f-ExylkpwX5V7FbtITtoiJyWk-8-jfKB-O1BBz_2fPEOg6a_ywGHfZaIvFdlDvCNfY&usqp=CAU');
+    return album;
+  }
+
+  ///Get all list album by favorite artist of current user
+  static Future<List<Album>> getListAlbumByArtists(List<String> artists) async {
+    List<Album> albums = List.empty(growable: true);
+    for (var artist in artists) {
+      List<Map<String, dynamic>> albumsData =
+          await ZingMP3API.getListAlbumDataByName(artist, 1);
+      Map<String, dynamic> albumData = albumsData[0];
+      Album album = Album.fromJson(albumData);
+      albums.add(album);
+    }
+    albums = albums.toSet().toList();
+    return albums;
+  }
+
+  static Future<QuerySnapshot<Map<String, dynamic>>>
+      getAllListenedAlbums() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final albums = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .get();
+
+    return albums;
+  }
+
+  static Future<List<dynamic>> getTopListenedAlbumOrderByListenTime(
+      {required int quantity}) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    List albumKeys = List.empty(growable: true);
+    final albumsData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .orderBy('listenTime', descending: true)
+        .limit(quantity)
+        .get();
+    for (var albumData in albumsData.docs) {
+      albumKeys.add(albumData.id);
+    }
+    return albumKeys;
+  }
+
+  static Future<void> addAlbumToListenHistory(Album currentAlbum) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .set({});
+    final albums = await getAllListenedAlbums();
+    for (var doc in albums.docs) {
+      if (doc.id == currentAlbum.id) {
+        _updateListenTime(currentAlbum);
+        return;
+      }
+    }
+    _setNewAlbumToListenHistory(currentAlbum);
+  }
+
+  static Future<void> _setNewAlbumToListenHistory(Album currentAlbum) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .doc(currentAlbum.id)
+        .set({'listenTime': 1, 'lastHear': DateTime.now()});
+  }
+
+  static Future<void> _updateListenTime(Album currentAlbum) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    final album = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .doc(currentAlbum.id)
+        .get();
+    int listenTime = album.data()!['listenTime'];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('listenHistory')
+        .collection('albums')
+        .doc(currentAlbum.id)
+        .update({'listenTime': ++listenTime, 'lastHear': DateTime.now()});
   }
 }

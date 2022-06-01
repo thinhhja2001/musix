@@ -3,7 +3,9 @@ import 'package:musix/models/users.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/home/profile_card.dart';
-import 'package:musix/widgets/music/other/music_type_seclection_widget.dart';
+import 'package:musix/widgets/music/other/keep_play_back_widget.dart';
+import 'package:musix/widgets/music/other/music_type_selection_widget.dart';
+import 'package:musix/widgets/music/other/your_favorite_widget.dart';
 
 class ExploreWidget extends StatelessWidget {
   const ExploreWidget({
@@ -27,33 +29,13 @@ class ExploreWidget extends StatelessWidget {
             slivers: [
               ProfileCard(user: user),
               verticalSliverPaddingMedium,
-              SliverToBoxAdapter(
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const RotatedBox(
-                          quarterTurns: 3,
-                          child: Text(
-                            'Topics',
-                            style: kDefaultTitleStyle,
-                          )),
-                      Expanded(
-                        child: SizedBox(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            child: GridView.count(
-                                scrollDirection: Axis.horizontal,
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.5,
-                                mainAxisSpacing: 16.0,
-                                crossAxisSpacing: 16.0,
-                                children: List.generate(
-                                    6,
-                                    (index) =>
-                                        const MusicTypeSelectionWidget()))),
-                      ),
-                    ]),
-              ),
+              const MusicTypeSelectionWidget(),
+              verticalSliverPaddingMedium,
+              const YourFavoriteWidget(),
+              verticalSliverPaddingMedium,
+              const KeepPlaybackWidget(),
+              verticalSliverPaddingMedium,
+              verticalSliverPaddingMedium,
             ],
           ),
         ),
