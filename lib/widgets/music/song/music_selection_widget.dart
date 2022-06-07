@@ -60,12 +60,11 @@ class _PlayableSongWidget extends StatelessWidget {
     }
 
     _playAlbum() {
-      audioPlayerProvider.playAlbum(
-          album: album!, context: context, index: index);
+      audioPlayerProvider.playAlbum(album: album!, index: index);
     }
 
     _playSong() {
-      audioPlayerProvider.playSong(song, context);
+      audioPlayerProvider.playSong(song);
       audioPlayerProvider.removeCurrentAlbum();
     }
 

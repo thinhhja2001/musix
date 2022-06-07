@@ -16,6 +16,7 @@ import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
+import 'package:musix/services/audio_handler.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,6 @@ import 'package:flutter/services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
   runApp(const MyApp());
 }
 

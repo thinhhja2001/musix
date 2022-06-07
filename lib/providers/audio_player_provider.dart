@@ -11,7 +11,7 @@ import 'package:musix/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import '../models/album.dart';
 
-class AudioPlayerProvider extends ChangeNotifier {
+class AudioPlayerProvider with ChangeNotifier {
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   bool isPlaying = false;
@@ -44,7 +44,12 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeLoopStyle(BuildContext context) {
+  @override
+  Future<void> seek(Duration position) async {
+    await audioPlayer.seek(position);
+  }
+
+  void changeLoopStyle() {
     switch (loopType) {
       case LoopType.noLoop:
         loopType = LoopType.loopList;
@@ -59,7 +64,7 @@ class AudioPlayerProvider extends ChangeNotifier {
     }
     audioPlayer.onPlayerCompletion.listen(
       (event) {
-        _playAudioAccordingToLoopStyle(context);
+        _playAudioAccordingToLoopStyle();
       },
     );
 
@@ -96,15 +101,12 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void playSong(Song song, BuildContext context) async {
+  void playSong(Song song) async {
     currentSong = song;
-    if (currentSong.audioUrl.isNotEmpty) {
-      _getLyricFromLrcLink(currentSong.lyricUrl);
-      await audioPlayer.play(currentSong.audioUrl);
-      await SongMethods.addSongToListenHistory(currentSong);
-    } else {
-      showSnackBar('This song is not available right now', context, Colors.red);
-    }
+    _getLyricFromLrcLink(currentSong.lyricUrl);
+    await audioPlayer.play(currentSong.audioUrl);
+    await SongMethods.addSongToListenHistory(currentSong);
+
     notifyListeners();
   }
 
@@ -113,8 +115,7 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void playAlbum(
-      {required Album album, required BuildContext context, int? index}) async {
+  void playAlbum({required Album album, int? index}) async {
     setCurrentAlbum(album);
     _playedIndexOfAlbum = List.empty(growable: true);
     if (isPlayShuffle) {
@@ -125,7 +126,7 @@ class AudioPlayerProvider extends ChangeNotifier {
     }
     Song song =
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
-    playSong(song, context);
+    playSong(song);
     _playedIndexOfAlbum.add(_currentIndex);
     if (currentAlbum.id != unfavorable) {
       await PlaylistMethods.addAlbumToListenHistory(currentAlbum);
@@ -133,17 +134,17 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void playForward(BuildContext context) async {
+  void playForward() async {
     if (currentAlbum != albumWithNoData) {
-      _playNextSongInCurrentAlbum(context);
+      _playNextSongInCurrentAlbum();
     } else {
       seekToNewPosition(Duration(seconds: duration.inSeconds - 5));
     }
   }
 
-  void playBackward(BuildContext context) async {
+  void playBackward() async {
     if (_playedIndexOfAlbum.length > 1) {
-      _playPreviousSongInCurrentAlbum(context);
+      _playPreviousSongInCurrentAlbum();
     } else {
       seekToNewPosition(Duration.zero);
     }
@@ -156,7 +157,7 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _playAudioAccordingToLoopStyle(BuildContext context) {
+  void _playAudioAccordingToLoopStyle() {
     position = Duration.zero;
     notifyListeners();
     switch (loopType) {
@@ -175,16 +176,16 @@ class AudioPlayerProvider extends ChangeNotifier {
         break;
       case LoopType.loop1:
         isPlaying = true;
-        playSong(currentSong, context);
+        playSong(currentSong);
         break;
       case LoopType.loopList:
         if (currentAlbum == albumWithNoData) {
           isPlaying = true;
-          playSong(currentSong, context);
+          playSong(currentSong);
         } else if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
-          playAlbum(album: currentAlbum, context: context);
+          playAlbum(album: currentAlbum);
         } else if (_playedIndexOfAlbum.length < currentAlbum.songs.length) {
-          playForward(context);
+          playForward();
         } else {
           pauseSong();
         }
@@ -204,15 +205,15 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _playPreviousSongInCurrentAlbum(BuildContext context) async {
+  void _playPreviousSongInCurrentAlbum() async {
     _playedIndexOfAlbum.removeLast();
     _currentIndex = _playedIndexOfAlbum[_playedIndexOfAlbum.length - 1];
     Song song =
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
-    playSong(song, context);
+    playSong(song);
   }
 
-  void _playNextSongInCurrentAlbum(BuildContext context) async {
+  void _playNextSongInCurrentAlbum() async {
     if (isPlayShuffle) {
       _currentIndex = _generateRandomIndex();
     } else {
@@ -221,10 +222,9 @@ class AudioPlayerProvider extends ChangeNotifier {
     Song song =
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
     if (song.audioUrl.isEmpty) {
-      showSnackBar('This song is not available right now', context, Colors.red);
-      _playNextSongInCurrentAlbum(context);
+      _playNextSongInCurrentAlbum();
     }
-    playSong(song, context);
+    playSong(song);
     _playedIndexOfAlbum.add(_currentIndex);
     notifyListeners();
   }
