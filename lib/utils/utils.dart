@@ -4,12 +4,23 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/common.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:text_scroll/text_scroll.dart';
+import 'package:rxdart/rxdart.dart' as rx;
 
+Stream<PositionData> positionDataStream(
+        AudioPlayerProvider audioPlayerProvider) =>
+    rx.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+        audioPlayerProvider.audioPlayer.positionStream,
+        audioPlayerProvider.audioPlayer.bufferedPositionStream,
+        audioPlayerProvider.audioPlayer.durationStream,
+        (position, bufferedPosition, duration) => PositionData(
+            position, bufferedPosition, duration ?? Duration.zero));
 showSnackBar(String content, BuildContext context, Color color) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(content),

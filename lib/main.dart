@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
-import 'package:musix/services/audio_handler.dart';
 import 'package:musix/utils/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';

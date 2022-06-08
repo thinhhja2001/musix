@@ -15,28 +15,47 @@ class PlayMusicButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
-    return InkWell(
-      onTap: () async {
-        if (audioPlayerProvider.isPlaying) {
-          audioPlayerProvider.pauseSong();
-        } else {
-          audioPlayerProvider.resume();
-        }
-        audioPlayerProvider.changePlayState();
-      },
-      child: Container(
-        height: buttonSize,
-        width: buttonSize,
-        decoration:
-            const BoxDecoration(color: kPrimaryColor, shape: BoxShape.circle),
-        child: Icon(
-          audioPlayerProvider.isPlaying == false
-              ? Icons.play_arrow
-              : Icons.pause,
-          color: Colors.white,
-          size: iconSize,
-        ),
-      ),
-    );
+    return StreamBuilder<bool>(
+        stream: audioPlayerProvider.audioPlayer.playingStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final isPlaying = snapshot.data!;
+            return InkWell(
+              onTap: () async {
+                if (isPlaying) {
+                  audioPlayerProvider.pauseSong();
+                } else {
+                  audioPlayerProvider.resume();
+                }
+              },
+              child: Container(
+                height: buttonSize,
+                width: buttonSize,
+                decoration: const BoxDecoration(
+                    color: kPrimaryColor, shape: BoxShape.circle),
+                child: Icon(
+                  !isPlaying ? Icons.play_arrow : Icons.pause,
+                  color: Colors.white,
+                  size: iconSize,
+                ),
+              ),
+            );
+          }
+
+          return InkWell(
+            onTap: () async {},
+            child: Container(
+              height: buttonSize,
+              width: buttonSize,
+              decoration: const BoxDecoration(
+                  color: kPrimaryColor, shape: BoxShape.circle),
+              child: Icon(
+                Icons.play_arrow,
+                color: Colors.white,
+                size: iconSize,
+              ),
+            ),
+          );
+        });
   }
 }
