@@ -83,6 +83,7 @@ class SearchCateGory extends StatelessWidget {
                                     context
                                         .read<ArtistProvider>()
                                         .getData(componentList[index]['name']);
+                                    print(componentList[index]);
                                     Get.to(ArtistScreen(
                                         artist: componentList[index]));
                                     break;
@@ -90,7 +91,8 @@ class SearchCateGory extends StatelessWidget {
                               },
                               child: searchType == 1
                                   ? MusicSelectionWidget(
-                                      index: index, song: searchProvider.songs[index])
+                                      index: index,
+                                      song: searchProvider.songs[index])
                                   //  SearchComponent(
                                   //     artist: componentList[index]
                                   //         ['artistName'],

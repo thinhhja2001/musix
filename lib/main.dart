@@ -11,6 +11,7 @@ import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/providers/search_provider.dart';
 import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/providers/sign_up_provider.dart';
+import 'package:musix/screens/artist_screen.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Musix',
         theme: ThemeData(
             // This is the theme of your application.
             //
