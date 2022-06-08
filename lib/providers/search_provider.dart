@@ -52,6 +52,7 @@ class SearchProvider with ChangeNotifier {
 
   Future<void> getSongByAll(String search) async {
     _Loading = true;
+    _songs = List.empty(growable: true);
     notifyListeners();
     await ZingMP3API.getAllDataByName(search).then((value) {
       _songList = value['songs'];
@@ -70,6 +71,7 @@ class SearchProvider with ChangeNotifier {
             thumbnailUrl: _songList[i]['thumbnailUrl']);
         _songs.add(song);
       }
+      print(_artistList);
       _Loading = false;
       notifyListeners();
     });

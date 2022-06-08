@@ -387,6 +387,7 @@ class ZingMP3API {
         await getListAlbumDataByName(name, quantityForEach);
     List<Map<String, dynamic>> artistData =
         await getAllArtistSummaryDataByName(name, quantityForEach);
+        print(artistData);
     return {
       'songs': songsData,
       'videos': videosData,
