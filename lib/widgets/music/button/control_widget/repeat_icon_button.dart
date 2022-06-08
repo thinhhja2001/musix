@@ -41,7 +41,7 @@ class RepeatIconButton extends StatelessWidget {
     }
 
     return IconButton(
-      onPressed: () => audioPlayerProvider.changeLoopStyle(context),
+      onPressed: () => audioPlayerProvider.changeLoopStyle(),
       icon: _getSvgImage(),
       color: Colors.white,
     );

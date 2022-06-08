@@ -39,7 +39,7 @@ class ArtistListSong extends StatelessWidget {
                     onTap: () {
                       context
                           .read<AudioPlayerProvider>()
-                          .playSong(artistProvider.artistSongs[index], context);
+                          .playSong(artistProvider.artistSongs[index]);
                     },
                     child: MusicSelectionWidget(
                       index: index,

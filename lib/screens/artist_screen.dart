@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musix/providers/artist_provider.dart';
+import 'package:musix/providers/custom_bottom_bar_provider.dart';
 import 'package:musix/screens/album_screen_by_song_type.dart';
 import 'package:musix/widgets/artist/artist_description.dart';
 import 'package:musix/widgets/artist/artist_info.dart';
@@ -27,7 +28,10 @@ class _ArtistScreenState extends State<ArtistScreen> {
   @override
   Widget build(BuildContext context) {
     ArtistProvider artistProvider = Provider.of<ArtistProvider>(context);
+    CustomBottomBarProvider customBottomBarProvider =
+        Provider.of<CustomBottomBarProvider>(context);
     return Scaffold(
+      bottomNavigationBar: customBottomBarProvider.customBottomBar,
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
         backgroundColor: kBackgroundColorDarker,
@@ -47,7 +51,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                 ArtistListSong(),
+                  ArtistListSong(),
                   const SizedBox(
                     height: 20,
                   ),

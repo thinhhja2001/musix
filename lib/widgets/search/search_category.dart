@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:musix/models/song.dart';
 import 'package:musix/providers/artist_provider.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/screens/artist_screen.dart';
 import 'package:musix/widgets/music/song/music_selection_widget.dart';
-import 'package:musix/widgets/search/search_component.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/search_provider.dart';
@@ -76,8 +74,9 @@ class SearchCateGory extends StatelessWidget {
                                   case 1:
                                     context
                                         .read<AudioPlayerProvider>()
-                                        .playSong(searchProvider.songs[index],
-                                            context);
+                                        .playSong(
+                                          searchProvider.songs[index],
+                                        );
                                     break;
                                   default:
                                     context
