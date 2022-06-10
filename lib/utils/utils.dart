@@ -13,14 +13,6 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:text_scroll/text_scroll.dart';
 import 'package:rxdart/rxdart.dart' as rx;
 
-Stream<PositionData> positionDataStream(
-        AudioPlayerProvider audioPlayerProvider) =>
-    rx.Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
-        audioPlayerProvider.audioPlayer.positionStream,
-        audioPlayerProvider.audioPlayer.bufferedPositionStream,
-        audioPlayerProvider.audioPlayer.durationStream,
-        (position, bufferedPosition, duration) => PositionData(
-            position, bufferedPosition, duration ?? Duration.zero));
 showSnackBar(String content, BuildContext context, Color color) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(content),

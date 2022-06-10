@@ -13,27 +13,27 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.36),
-            borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                user.username,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.to(ProfileSetting(user: user));
-                },
-                child: CircleAvatar(
+      child: GestureDetector(
+        onTap: () {
+          Get.to(ProfileSetting(user: user));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.36),
+              borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  user.username,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400),
+                ),
+                CircleAvatar(
                   radius: 20,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(45),
@@ -42,9 +42,9 @@ class ProfileCard extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

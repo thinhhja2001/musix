@@ -16,41 +16,20 @@ class DurationWidget extends StatelessWidget {
     final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.055),
-      child: StreamBuilder<PositionData>(
-          stream: positionDataStream(audioPlayerProvider),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final positionData = snapshot.data!;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    formatDuration(positionData.position.inSeconds),
-                    style: kDefaultTextStyle,
-                  ),
-                  Text(
-                    formatDuration(positionData.duration.inSeconds),
-                    style: kDefaultTextStyle,
-                  )
-                ],
-              );
-            }
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  formatDuration(0),
-                  style: kDefaultTextStyle,
-                ),
-                Text(
-                  formatDuration(0),
-                  style: kDefaultTextStyle,
-                )
-              ],
-            );
-          }),
-    );
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.055),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              formatDuration(audioPlayerProvider.position.inSeconds),
+              style: kDefaultTextStyle,
+            ),
+            Text(
+              formatDuration(audioPlayerProvider.duration.inSeconds),
+              style: kDefaultTextStyle,
+            )
+          ],
+        ));
   }
 }

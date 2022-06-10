@@ -1,31 +1,70 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:audio_service/audio_service.dart';
+import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/enums.dart';
 import 'package:http/http.dart' as http;
-import '../models/album.dart';
 
-class AudioPlayerProvider with ChangeNotifier {
-  final audioPlayer = AudioPlayer();
+class AudioPlayerProvider extends ChangeNotifier {
   LoopType loopType = LoopType.noLoop;
   Song currentSong = songWithNoData;
   Album currentAlbum = albumWithNoData;
+  bool isPlaying = false;
+  Duration position = Duration.zero;
+  Duration duration = Duration.zero;
   bool isPlayShuffle = false;
   List<int> _playedIndexOfAlbum = List.empty(growable: true);
   int _currentIndex = 0;
   String lyric = "";
-  AudioPlayerProvider() {
-    audioPlayer.playerStateStream.listen((event) async {
-      if (event.processingState == ProcessingState.completed) {
-        await _playAudioAccordingToLoopStyle();
+
+  void setAudioManagerEvent() {
+    AudioManager.instance.onEvents((events, args) {
+      switch (events) {
+        case AudioManagerEvents.timeupdate:
+          duration = AudioManager.instance.duration;
+          position = AudioManager.instance.position;
+          notifyListeners();
+          break;
+        case AudioManagerEvents.ready:
+          duration = AudioManager.instance.duration;
+          position = AudioManager.instance.position;
+          notifyListeners();
+
+          break;
+        case AudioManagerEvents.start:
+          duration = AudioManager.instance.duration;
+          position = AudioManager.instance.position;
+          notifyListeners();
+
+          break;
+        case AudioManagerEvents.playstatus:
+          isPlaying = AudioManager.instance.isPlaying;
+          notifyListeners();
+          break;
+        case AudioManagerEvents.ended:
+          _playAudioAccordingToLoopStyle();
+          notifyListeners();
+          break;
+        case AudioManagerEvents.next:
+          playForward();
+          notifyListeners();
+          break;
+        default:
       }
     });
+    notifyListeners();
+  }
+
+  AudioPlayerProvider() {
+    setAudioManagerEvent();
+  }
+  changeIsPlayingState() {
+    isPlaying = !isPlaying;
     notifyListeners();
   }
 
@@ -38,20 +77,23 @@ class AudioPlayerProvider with ChangeNotifier {
     switch (loopType) {
       case LoopType.noLoop:
         loopType = LoopType.loopList;
+        notifyListeners();
+
         break;
       case LoopType.loopList:
         loopType = LoopType.loop1;
+        notifyListeners();
+
         break;
       case LoopType.loop1:
         loopType = LoopType.noLoop;
+        notifyListeners();
+
         break;
       default:
     }
-    audioPlayer.playerStateStream.listen((event) async {
-      if (event.processingState == ProcessingState.completed) {
-        await _playAudioAccordingToLoopStyle();
-      }
-    });
+    setAudioManagerEvent();
+
     notifyListeners();
   }
 
@@ -61,12 +103,12 @@ class AudioPlayerProvider with ChangeNotifier {
   }
 
   Future<void> seekToNewPosition(Duration position) async {
-    await audioPlayer.seek(position);
+    AudioManager.instance.seekTo(position);
     notifyListeners();
   }
 
   Future<void> pauseSong() async {
-    await audioPlayer.pause();
+    AudioManager.instance.toPause();
     notifyListeners();
   }
 
@@ -83,15 +125,15 @@ class AudioPlayerProvider with ChangeNotifier {
   Future<void> playSong(Song song) async {
     currentSong = song;
     _getLyricFromLrcLink(currentSong.lyricUrl);
-    await audioPlayer.setUrl(currentSong.audioUrl);
-    await audioPlayer.play();
+    AudioManager.instance.start(song.audioUrl, song.name,
+        desc: song.artistName, cover: song.thumbnailUrl);
     await SongMethods.addSongToListenHistory(currentSong);
 
     notifyListeners();
   }
 
   Future<void> resume() async {
-    await audioPlayer.play();
+    AudioManager.instance.toPlay();
     notifyListeners();
   }
 
@@ -118,9 +160,9 @@ class AudioPlayerProvider with ChangeNotifier {
     if (currentAlbum != albumWithNoData) {
       await _playNextSongInCurrentAlbum();
     } else {
-      await seekToNewPosition(
-          Duration(seconds: audioPlayer.duration!.inSeconds - 5));
+      await seekToNewPosition(Duration(seconds: duration.inSeconds - 5));
     }
+    notifyListeners();
   }
 
   Future<void> playBackward() async {
@@ -139,8 +181,7 @@ class AudioPlayerProvider with ChangeNotifier {
   }
 
   Future<void> _playAudioAccordingToLoopStyle() async {
-    audioPlayer.seek(Duration.zero);
-    notifyListeners();
+    await seekToNewPosition(Duration.zero);
     switch (loopType) {
       case LoopType.noLoop:
         if (currentAlbum == albumWithNoData ||
@@ -159,10 +200,10 @@ class AudioPlayerProvider with ChangeNotifier {
       case LoopType.loopList:
         if (currentAlbum == albumWithNoData) {
           await playSong(currentSong);
-        } else if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
-          await playAlbum(album: currentAlbum);
         } else if (_playedIndexOfAlbum.length < currentAlbum.songs.length) {
           await playForward();
+        } else if (_playedIndexOfAlbum.length == currentAlbum.songs.length) {
+          await playAlbum(album: currentAlbum, index: 0);
         } else {
           await pauseSong();
         }
@@ -187,22 +228,46 @@ class AudioPlayerProvider with ChangeNotifier {
     _currentIndex = _playedIndexOfAlbum[_playedIndexOfAlbum.length - 1];
     Song song =
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
+    if (song.audioUrl.isEmpty) {
+      _playPreviousSongInCurrentAlbum();
+    }
     await playSong(song);
+    notifyListeners();
   }
 
   Future<void> _playNextSongInCurrentAlbum() async {
     if (isPlayShuffle) {
-      _currentIndex = _generateRandomIndex();
+      ///If all songs in current album has been played,
+      ///then auto play current album at index of 0,
+      ///else, play at random index which has never been played
+      ///The code below was made to avoid Stack overflow
+      if (_playedIndexOfAlbum.length < currentAlbum.songs.length) {
+        _currentIndex = _generateRandomIndex();
+      } else {
+        if (loopType == LoopType.loopList) {
+          playAlbum(album: currentAlbum, index: 1);
+          return;
+        }
+      }
     } else {
       _currentIndex++;
     }
-    Song song =
-        await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
-    if (song.audioUrl.isEmpty) {
-      await _playNextSongInCurrentAlbum();
+    if (_playedIndexOfAlbum.length == currentAlbum.songs.length ||
+        _currentIndex >= currentAlbum.songs.length) {
+      if (loopType == LoopType.loopList) {
+        playAlbum(album: currentAlbum, index: 0);
+        notifyListeners();
+      }
+    } else {
+      Song song =
+          await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
+      if (song.audioUrl.isEmpty) {
+        _playNextSongInCurrentAlbum();
+      }
+      await playSong(song);
+      _playedIndexOfAlbum.add(_currentIndex);
     }
-    await playSong(song);
-    _playedIndexOfAlbum.add(_currentIndex);
+
     notifyListeners();
   }
 

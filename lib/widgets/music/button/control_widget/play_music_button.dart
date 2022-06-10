@@ -1,3 +1,4 @@
+import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,47 +16,25 @@ class PlayMusicButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
-    return StreamBuilder<bool>(
-        stream: audioPlayerProvider.audioPlayer.playingStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final isPlaying = snapshot.data!;
-            return InkWell(
-              onTap: () async {
-                if (isPlaying) {
-                  audioPlayerProvider.pauseSong();
-                } else {
-                  audioPlayerProvider.resume();
-                }
-              },
-              child: Container(
-                height: buttonSize,
-                width: buttonSize,
-                decoration: const BoxDecoration(
-                    color: kPrimaryColor, shape: BoxShape.circle),
-                child: Icon(
-                  !isPlaying ? Icons.play_arrow : Icons.pause,
-                  color: Colors.white,
-                  size: iconSize,
-                ),
-              ),
-            );
-          }
 
-          return InkWell(
-            onTap: () async {},
-            child: Container(
-              height: buttonSize,
-              width: buttonSize,
-              decoration: const BoxDecoration(
-                  color: kPrimaryColor, shape: BoxShape.circle),
-              child: Icon(
-                Icons.play_arrow,
-                color: Colors.white,
-                size: iconSize,
-              ),
-            ),
-          );
-        });
+    return InkWell(
+      onTap: () async {
+        !audioPlayerProvider.isPlaying
+            ? audioPlayerProvider.playSong(audioPlayerProvider.currentSong)
+            : audioPlayerProvider.pauseSong();
+        audioPlayerProvider.changeIsPlayingState();
+      },
+      child: Container(
+        height: buttonSize,
+        width: buttonSize,
+        decoration:
+            const BoxDecoration(color: kPrimaryColor, shape: BoxShape.circle),
+        child: Icon(
+          !audioPlayerProvider.isPlaying ? Icons.play_arrow : Icons.pause,
+          color: Colors.white,
+          size: iconSize,
+        ),
+      ),
+    );
   }
 }
