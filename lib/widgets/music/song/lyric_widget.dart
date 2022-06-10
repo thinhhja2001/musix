@@ -37,47 +37,22 @@ class LyricsWidget extends StatelessWidget {
             child: Column(
               children: [
                 audioPlayerProvider.lyric.isNotEmpty
-                    ? StreamBuilder<Duration>(
-                        stream: audioPlayerProvider.audioPlayer.positionStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return LyricsReader(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 40.0),
-                              model: LyricsModelBuilder.create()
-                                  .bindLyricToMain(audioPlayerProvider.lyric)
-                                  .getModel(),
-                              position: snapshot.data!.inMilliseconds,
-                              lyricUi: lyricUI,
-                              size: Size(double.infinity,
-                                  MediaQuery.of(context).size.height * 0.7),
-                              emptyBuilder: () => Center(
-                                child: Text(
-                                  "No lyrics",
-                                  style: lyricUI.getOtherMainTextStyle(),
-                                ),
-                              ),
-                            );
-                          }
-                          return LyricsReader(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 40.0),
-                            model: LyricsModelBuilder.create()
-                                .bindLyricToMain(audioPlayerProvider.lyric)
-                                .getModel(),
-                            position: audioPlayerProvider
-                                .audioPlayer.position.inMilliseconds,
-                            lyricUi: lyricUI,
-                            size: Size(double.infinity,
-                                MediaQuery.of(context).size.height * 0.7),
-                            emptyBuilder: () => Center(
-                              child: Text(
-                                "No lyrics",
-                                style: lyricUI.getOtherMainTextStyle(),
-                              ),
-                            ),
-                          );
-                        })
+                    ? LyricsReader(
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                        model: LyricsModelBuilder.create()
+                            .bindLyricToMain(audioPlayerProvider.lyric)
+                            .getModel(),
+                        position: audioPlayerProvider.position.inMilliseconds,
+                        lyricUi: lyricUI,
+                        size: Size(double.infinity,
+                            MediaQuery.of(context).size.height * 0.7),
+                        emptyBuilder: () => Center(
+                          child: Text(
+                            "No lyrics",
+                            style: lyricUI.getOtherMainTextStyle(),
+                          ),
+                        ),
+                      )
                     : SizedBox(
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: const Center(

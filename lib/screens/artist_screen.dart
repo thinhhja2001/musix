@@ -58,7 +58,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                   SearchAlbum(albumList: artistProvider.albumList),
                   TextButton(
                       onPressed: () => Get.to(AllAlbumByNameScreen(
-                          name: widget.artist['name'], quantity: 20)),
+                          name: widget.artist['name'], quantity: 50)),
                       child: const Text(
                         "View all album",
                         style: TextStyle(

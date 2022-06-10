@@ -11,7 +11,7 @@ class LastFmAPI {
       String artistName) async {
     List<String> songsKey = List.empty(growable: true);
     String query =
-        "http://ac.mp3.zing.vn/complete?type=song&num=500&query=$artistName";
+        "http://ac.mp3.zing.vn/complete?type=song&num=5&query=$artistName";
     final response = await http.get(Uri.parse(query));
     Map<String, dynamic> responseInJson = json.decode(response.body);
     int responseLength = 0;
@@ -37,7 +37,7 @@ class LastFmAPI {
       String artistName) async {
     List<String> albumsKey = List.empty(growable: true);
     String query =
-        "http://ac.mp3.zing.vn/complete?type=album&num=500&query=$artistName";
+        "http://ac.mp3.zing.vn/complete?type=album&num=10&query=$artistName";
     final response = await http.get(Uri.parse(query));
     Map<String, dynamic> responseInJson = json.decode(response.body);
     int responseLength = 0;
