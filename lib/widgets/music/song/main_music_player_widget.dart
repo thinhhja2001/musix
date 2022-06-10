@@ -90,7 +90,9 @@ class MainMusicPlayerWidget extends StatelessWidget {
                                 onPressed: () {},
                                 icon: SvgPicture.asset(
                                     'assets/images/share.svg')),
-                            const AddSongToPlaylistIconButton(),
+                            AddSongToPlaylistIconButton(
+                              song: audioPlayerProvider.currentSong,
+                            ),
                             const FavoriteIconButton(),
                             const DownloadIconButton(),
                           ],

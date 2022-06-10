@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/models/song.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +13,9 @@ import '../../customs/custom_input_field.dart';
 class AddPlaylistWidget extends StatefulWidget {
   const AddPlaylistWidget({
     Key? key,
+    required this.song,
   }) : super(key: key);
-
+  final Song song;
   @override
   State<AddPlaylistWidget> createState() => _AddPlaylistWidgetState();
 }
@@ -41,7 +43,7 @@ class _AddPlaylistWidgetState extends State<AddPlaylistWidget> {
       });
 
       String result = await PlaylistMethods.createPlaylist(
-          playlistTextController.text, audioPlayerProvider.currentSong);
+          playlistTextController.text, widget.song);
 
       setState(() {
         isLoading = false;

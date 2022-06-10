@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/enums.dart';
 import 'package:http/http.dart' as http;
-import '../models/album.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
   LoopType loopType = LoopType.noLoop;
@@ -229,12 +228,19 @@ class AudioPlayerProvider extends ChangeNotifier {
     _currentIndex = _playedIndexOfAlbum[_playedIndexOfAlbum.length - 1];
     Song song =
         await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
+    if (song.audioUrl.isEmpty) {
+      _playPreviousSongInCurrentAlbum();
+    }
     await playSong(song);
     notifyListeners();
   }
 
   Future<void> _playNextSongInCurrentAlbum() async {
     if (isPlayShuffle) {
+      ///If all songs in current album has been played,
+      ///then auto play current album at index of 0,
+      ///else, play at random index which has never been played
+      ///The code below was made to avoid Stack overflow
       if (_playedIndexOfAlbum.length < currentAlbum.songs.length) {
         _currentIndex = _generateRandomIndex();
       } else {
