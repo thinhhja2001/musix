@@ -19,23 +19,24 @@ class MusicSelectionWidget extends StatelessWidget {
   final int index;
   final Song song;
   final Album? album;
+
   @override
   Widget build(BuildContext context) {
     final AudioPlayerProvider audioPlayerProvider =
         Provider.of<AudioPlayerProvider>(context);
+
     return Padding(
-      padding: const EdgeInsets.only(left: 10, bottom: 5),
-      child: song.audioUrl.isNotEmpty
-          ? _PlayableSongWidget(
-              audioPlayerProvider: audioPlayerProvider,
-              song: song,
-              album: album,
-              index: index)
-          : _UnplayableSongWidget(
-              audioPlayerProvider: audioPlayerProvider,
-              song: song,
-              index: index),
-    );
+        padding: const EdgeInsets.only(left: 10, bottom: 5),
+        child: song.audioUrl.isNotEmpty
+            ? _PlayableSongWidget(
+                audioPlayerProvider: audioPlayerProvider,
+                song: song,
+                album: album,
+                index: index)
+            : _UnplayableSongWidget(
+                audioPlayerProvider: audioPlayerProvider,
+                song: song,
+                index: index));
   }
 }
 

@@ -259,12 +259,17 @@ class AudioPlayerProvider extends ChangeNotifier {
         notifyListeners();
       }
     } else {
-      Song song =
-          await SongMethods.getSongDataByKey(currentAlbum.songs[_currentIndex]);
-      if (song.audioUrl.isEmpty) {
+      try {
+        Song song = await SongMethods.getSongDataByKey(
+            currentAlbum.songs[_currentIndex]);
+        await playSong(song);
+        if (song.audioUrl.isEmpty) {
+          _playNextSongInCurrentAlbum();
+        }
+      } catch (e) {
         _playNextSongInCurrentAlbum();
       }
-      await playSong(song);
+
       _playedIndexOfAlbum.add(_currentIndex);
     }
 
