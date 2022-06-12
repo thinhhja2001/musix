@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:musix/apis/last_fm_api.dart';
 import 'package:musix/apis/zing_mp3_api.dart';

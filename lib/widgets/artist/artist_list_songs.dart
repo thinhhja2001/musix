@@ -22,7 +22,7 @@ class ArtistListSong extends StatelessWidget {
           const RotatedBox(
             quarterTurns: 3,
             child: Text(
-              "Songs",
+              "Top Songs",
               style: kDefaultTitleStyle,
             ),
           ),

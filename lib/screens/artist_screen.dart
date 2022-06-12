@@ -34,12 +34,15 @@ class _ArtistScreenState extends State<ArtistScreen> {
       bottomNavigationBar: customBottomBarProvider.customBottomBar,
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
-        backgroundColor: kBackgroundColorDarker,
+        backgroundColor: kBackgroundColor,
         title: Text("Artist information"),
       ),
       body: SingleChildScrollView(
         child: artistProvider.loading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: kPrimaryColor,
+              ))
             : Column(
                 children: [
                   ArtistInfo(

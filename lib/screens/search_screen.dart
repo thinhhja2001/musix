@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/providers/search_provider.dart';
+import 'package:musix/utils/colors.dart';
 import 'package:musix/widgets/search/search_album.dart';
 import 'package:musix/widgets/search/search_bar.dart';
 import 'package:musix/widgets/search/search_category.dart';
@@ -21,7 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           SearchBar(),
@@ -62,7 +63,9 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           if (searchProvider.Loading) ...[
-            CircularProgressIndicator(),
+            const CircularProgressIndicator(
+              color: kPrimaryColor,
+            ),
           ] else ...{
             if (searchProvider.classify_index == 0) ...[
               SearchCateGory(

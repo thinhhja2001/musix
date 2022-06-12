@@ -214,14 +214,19 @@ class PlaylistMethods {
   }
 
   ///Get all list album by favorite artist of current user
-  static Future<List<Album>> getListAlbumByArtists(List<String> artists) async {
+  static Future<List<Album>> getListAlbumByArtists(List artists) async {
+    const maxAlbumToBeGet = 10;
     List<Album> albums = List.empty(growable: true);
+    int quantity = (maxAlbumToBeGet / artists.length).round();
     for (var artist in artists) {
       List<Map<String, dynamic>> albumsData =
-          await ZingMP3API.getListAlbumDataByName(artist, 1);
-      Map<String, dynamic> albumData = albumsData[0];
-      Album album = Album.fromJson(albumData);
-      albums.add(album);
+          await ZingMP3API.getListAlbumDataByName(artist, quantity);
+
+      for (var i = 0; i < albumsData.length; i++) {
+        Map<String, dynamic> albumData = albumsData.elementAt(i);
+        Album album = Album.fromJson(albumData);
+        albums.add(album);
+      }
     }
     albums = albums.toSet().toList();
     return albums;

@@ -1,6 +1,5 @@
 import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/common.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:provider/provider.dart';
