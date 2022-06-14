@@ -30,7 +30,6 @@ class ArtistProvider with ChangeNotifier {
       _artist = value;
       notifyListeners();
       getArtistSongs().then((value) {
-        print(value);
         _songList = value;
         if (_albumList.isNotEmpty) {
           _loading = false;
@@ -51,18 +50,24 @@ class ArtistProvider with ChangeNotifier {
     List<Map<String, dynamic>> songs = List.empty(growable: true);
     _artistSongs = List.empty(growable: true);
     for (int i = 0; i < 5; i++) {
-      await ZingMP3API.getSongDataByKey(_artist['songsKey'][i]).then((value) {
-        songs.add(value);
-        Song song = Song(
-            id: songs[i]['id'],
-            name: songs[i]['name'],
-            audioUrl: songs[i]['audioUrl'],
-            lyricUrl: songs[i]['lyricUrl'],
-            artistName: songs[i]['artistName'],
-            artistLink: songs[i]['artistLink'],
-            thumbnailUrl: songs[i]['thumbnailUrl']);
-        _artistSongs.add(song);
-      });
+      try {
+        await ZingMP3API.getSongDataByKey(_artist['songsKey'][i]).then((value) {
+          songs.add(value);
+          Song song = Song(
+              id: songs[i]['id'],
+              name: songs[i]['name'],
+              audioUrl: songs[i]['audioUrl'],
+              lyricUrl: songs[i]['lyricUrl'],
+              artistName: songs[i]['artistName'],
+              artistLink: songs[i]['artistLink'],
+              thumbnailUrl: songs[i]['thumbnailUrl']);
+          _artistSongs.add(song);
+        });
+      } catch (e) {
+        _loading = false;
+        notifyListeners();
+        break;
+      }
     }
     return songs;
   }
