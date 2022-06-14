@@ -15,10 +15,7 @@ import '../widgets/search/search_album.dart';
 class ArtistScreen extends StatefulWidget {
   const ArtistScreen({
     Key? key,
-    required this.artist,
   }) : super(key: key);
-
-  final Map<String, dynamic> artist;
 
   @override
   State<ArtistScreen> createState() => _ArtistScreenState();
@@ -46,8 +43,8 @@ class _ArtistScreenState extends State<ArtistScreen> {
             : Column(
                 children: [
                   ArtistInfo(
-                    artistName: widget.artist['name'],
-                    thumbnailUrl: widget.artist['thumbnailUrl'],
+                    artistName: artistProvider.artist['name'],
+                    thumbnailUrl: artistProvider.artist['imageUrl'],
                     birthDay: artistProvider.artist['birthDay'],
                   ),
                   ArtistDesc(description: artistProvider.artist['biography']),
@@ -61,7 +58,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                   SearchAlbum(albumList: artistProvider.albumList),
                   TextButton(
                       onPressed: () => Get.to(AllAlbumByNameScreen(
-                          name: widget.artist['name'], quantity: 50)),
+                          name: artistProvider.artist['name'], quantity: 50)),
                       child: const Text(
                         "View all album",
                         style: TextStyle(

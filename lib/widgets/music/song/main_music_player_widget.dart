@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/music/button/add_song_to_playlist_icon_button.dart';
-import 'package:musix/widgets/music/button/download_icon_button.dart';
+import 'package:musix/widgets/music/button/timer_icon_button.dart';
 import 'package:musix/widgets/music/button/favorite_icon_button.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +94,7 @@ class MainMusicPlayerWidget extends StatelessWidget {
                               song: audioPlayerProvider.currentSong,
                             ),
                             const FavoriteIconButton(),
-                            const DownloadIconButton(),
+                            const TimerIconButton(),
                           ],
                         ),
                       ],
