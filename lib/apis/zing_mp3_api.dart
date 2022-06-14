@@ -67,13 +67,14 @@ class ZingMP3API {
     String thumbnailUrl = "";
     String songId = "";
     String artistLink = "";
-
     songName = musicData['data']['name'];
     songId = musicData['data']['id'];
     lyricUrl = musicData['data']['lyric'];
     thumbnailUrl = musicData['data']['thumbnail'];
-    artistName = musicData['data']['artist']['name'];
-    artistLink = "https://mp3.zing.vn" + musicData['data']['artist']['link'];
+    artistName = musicData['data']['artists'][0]['name'];
+    artistLink =
+        "https://mp3.zing.vn" + musicData['data']['artists'][0]['link'];
+
     audioUrl = musicData['data']['source']['128'] ?? "";
 
     return {
@@ -115,7 +116,6 @@ class ZingMP3API {
         break;
       }
     }
-
     for (var i = 0; i < responseLength; i++) {
       String songKey = responseInJson['data'][0]['song'][i]['id'];
       Map<String, dynamic> songData = await getSongDataByKey(songKey);
@@ -387,7 +387,6 @@ class ZingMP3API {
         await getListAlbumDataByName(name, quantityForEach);
     List<Map<String, dynamic>> artistData =
         await getAllArtistSummaryDataByName(name, quantityForEach);
-        print(artistData);
     return {
       'songs': songsData,
       'videos': videosData,
