@@ -19,7 +19,7 @@ class TimerIconButton extends StatefulWidget {
 }
 
 class _TimerIconButtonState extends State<TimerIconButton> {
-  Timer? timer;
+  Timer timer = Timer(Duration(seconds: 0), (() {}));
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +56,8 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (timer!.isActive) {
-                            timer!.cancel();
+                          if (timer.isActive) {
+                            timer.cancel();
                           }
                           timer = Timer(Duration(seconds: 5), () {
                             showCompleteNotification(
@@ -67,9 +67,9 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                             audioPlayerProvider.pauseSong();
                           });
                           showCompleteNotification(
-                                title: "Set sleep timer",
-                                message: "Set pause song succesfully",
-                                icon: Icons.timer);
+                              title: "Set sleep timer",
+                              message: "Set pause song succesfully",
+                              icon: Icons.timer);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -86,8 +86,8 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (timer!.isActive) {
-                            timer!.cancel();
+                          if (timer.isActive) {
+                            timer.cancel();
                           }
                           timer = Timer(Duration(minutes: 10), () {
                             showCompleteNotification(
@@ -97,9 +97,9 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                             audioPlayerProvider.pauseSong();
                           });
                           showCompleteNotification(
-                                title: "Set sleep timer",
-                                message: "Set pause song succesfully",
-                                icon: Icons.timer);
+                              title: "Set sleep timer",
+                              message: "Set pause song succesfully",
+                              icon: Icons.timer);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -116,8 +116,8 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (timer!.isActive) {
-                            timer!.cancel();
+                          if (timer.isActive) {
+                            timer.cancel();
                           }
                           timer = Timer(Duration(minutes: 15), () {
                             showCompleteNotification(
@@ -127,9 +127,9 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                             audioPlayerProvider.pauseSong();
                           });
                           showCompleteNotification(
-                                title: "Set sleep timer",
-                                message: "Set pause song succesfully",
-                                icon: Icons.timer);
+                              title: "Set sleep timer",
+                              message: "Set pause song succesfully",
+                              icon: Icons.timer);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -146,8 +146,8 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (timer!.isActive) {
-                            timer!.cancel();
+                          if (timer.isActive) {
+                            timer.cancel();
                           }
                           timer = Timer(Duration(minutes: 30), () {
                             showCompleteNotification(
@@ -157,9 +157,9 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                             audioPlayerProvider.pauseSong();
                           });
                           showCompleteNotification(
-                                title: "Set sleep timer",
-                                message: "Set pause song succesfully",
-                                icon: Icons.timer);
+                              title: "Set sleep timer",
+                              message: "Set pause song succesfully",
+                              icon: Icons.timer);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -176,8 +176,8 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (timer!.isActive) {
-                            timer!.cancel();
+                          if (timer.isActive) {
+                            timer.cancel();
                           }
                           timer = Timer(Duration(hours: 1), () {
                             showCompleteNotification(
@@ -187,9 +187,9 @@ class _TimerIconButtonState extends State<TimerIconButton> {
                             audioPlayerProvider.pauseSong();
                           });
                           showCompleteNotification(
-                                title: "Set sleep timer",
-                                message: "Set pause song succesfully",
-                                icon: Icons.timer);
+                              title: "Set sleep timer",
+                              message: "Set pause song succesfully",
+                              icon: Icons.timer);
                           Navigator.pop(context);
                         },
                         child: Container(
