@@ -32,14 +32,14 @@ class ArtistProvider with ChangeNotifier {
       getArtistSongs().then((value) {
         print(value);
         _songList = value;
-        if (!_albumList.isEmpty) {
+        if (_albumList.isNotEmpty) {
           _loading = false;
           notifyListeners();
         }
       });
       getArtistAlbums().then((value) {
         _albumList = value;
-        if (!_songList.isEmpty) {
+        if (_songList.isNotEmpty) {
           _loading = false;
           notifyListeners();
         }

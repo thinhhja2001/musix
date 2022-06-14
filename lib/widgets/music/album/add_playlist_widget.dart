@@ -34,7 +34,6 @@ class _AddPlaylistWidgetState extends State<AddPlaylistWidget> {
         setState(() {
           isValid = false;
           invalidMessage = "Playlist name must contains at least one character";
-          print(invalidMessage);
         });
         return;
       }
