@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/resources/profile_methods.dart';
 import 'package:musix/resources/song_methods.dart';
 import 'package:musix/utils/constant.dart';
 import 'package:musix/utils/utils.dart';
@@ -41,6 +44,23 @@ class PlaylistMethods {
         artistLink: '',
         thumbnailUrl:
             'https://play-lh.googleusercontent.com/gGHaWnV9n3EK0jpJ_yessWA1PF6mcL7Ys41mBPTCTXtusf13Yr2zVpVYAOI69ZX2Gjc');
+  }
+
+  static Future<void> deleteCustomPlaylist(Album album) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('playlists')
+        .doc('customPlaylists')
+        .collection('allCustomPlaylist')
+        .doc(album.id)
+        .delete();
+    showCompleteNotification(
+        title: 'Playlist ${album.title}',
+        message: 'Has been successfully deleted',
+        icon: MdiIcons.trashCan);
   }
 
   static Future<String> createPlaylist(String name, Song song) async {
@@ -296,6 +316,38 @@ class PlaylistMethods {
         .collection('albums')
         .doc(currentAlbum.id)
         .set({'listenTime': 1, 'lastHear': DateTime.now()});
+  }
+
+  static Future<void> updateCustomAlbumData(
+      {required Album album,
+      required File? newThumbnail,
+      required String newName}) async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    if (newThumbnail != null) {
+      final newThumbnailUrl = await ProfileMethods().uploadImage(newThumbnail);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('customPlaylists')
+          .collection('allCustomPlaylist')
+          .doc(album.id)
+          .update({'thumbnailUrl': newThumbnailUrl, 'title': newName});
+    } else {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('playlists')
+          .doc('customPlaylists')
+          .collection('allCustomPlaylist')
+          .doc(album.id)
+          .update({'title': newName});
+    }
+    showCompleteNotification(
+        title: 'Edit successfully',
+        message: 'Playlist has been renamed to $newName',
+        icon: MdiIcons.check);
   }
 
   static Future<void> _updateListenTime(Album currentAlbum) async {
