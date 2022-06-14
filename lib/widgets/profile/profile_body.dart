@@ -51,44 +51,6 @@ class ProfileBody extends StatelessWidget {
                 style: TextStyle(color: kPrimaryColor),
               )),
           const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: const [
-                  Text(
-                    "5",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                  Text(
-                    "Follower",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Column(
-                children: const [
-                  Text(
-                    "20",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                  Text(
-                    "Following",
-                    style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
             height: 40,
           ),
           Container(

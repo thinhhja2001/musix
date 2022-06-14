@@ -8,6 +8,7 @@ import 'package:musix/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/colors.dart';
+import 'music_selection_modal_widget.dart';
 
 class MusicSelectionWidget extends StatelessWidget {
   const MusicSelectionWidget({
@@ -114,7 +115,15 @@ class _PlayableSongWidget extends StatelessWidget {
               )),
           Expanded(
               child: IconButton(
-            onPressed: () => {},
+            onPressed: () => {
+              showModalBottomSheet<void>(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (BuildContext context) {
+                    return MusicSelectionModal(song: song,);
+                  },
+                )
+            },
             icon: const Icon(
               MdiIcons.dotsHorizontal,
               color: kPrimaryColor,

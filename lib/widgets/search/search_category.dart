@@ -83,8 +83,7 @@ class SearchCateGory extends StatelessWidget {
                                         .read<ArtistProvider>()
                                         .getData(componentList[index]['name']);
                                     print(componentList[index]);
-                                    Get.to(ArtistScreen(
-                                        artist: componentList[index]));
+                                    Get.to(ArtistScreen());
                                     break;
                                 }
                               },
