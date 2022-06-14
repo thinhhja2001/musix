@@ -24,13 +24,6 @@ class AlbumControllerWidget extends StatelessWidget {
             album.id != unfavorable
                 ? AddAlbumToFavoriteIconButton(album: album)
                 : Container(),
-            IconButton(
-              icon: const Icon(
-                MdiIcons.trayArrowDown,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
           ],
         ),
         Row(

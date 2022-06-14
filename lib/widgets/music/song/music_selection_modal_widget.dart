@@ -50,9 +50,11 @@ class _MusicSelectionModalState extends State<MusicSelectionModal> {
           SizedBox(
             height: 10,
           ),
-          Text(
-            widget.song.name,
-            style: kDefaultTitleStyle,
+          Center(
+            child: Text(
+              widget.song.name,
+              style: kDefaultTitleStyle,
+            ),
           ),
           SizedBox(
             height: 5,

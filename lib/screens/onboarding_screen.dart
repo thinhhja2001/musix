@@ -78,14 +78,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   content: 'Sign up free',
                   isLoading: _isLoading,
                 ),
-                SocialMediaLoginButton(
-                  socialLoginType: SocialLoginType.google,
-                  onPress: loginWithGoogle,
-                ),
-                SocialMediaLoginButton(
-                  socialLoginType: SocialLoginType.facebook,
-                  onPress: loginWithFacebook,
-                ),
                 Padding(
                   padding: const EdgeInsets.only(top: kButtonMarginTop * 3),
                   child: TextButton(

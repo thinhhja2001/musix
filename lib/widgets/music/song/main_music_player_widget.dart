@@ -86,10 +86,6 @@ class MainMusicPlayerWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: SvgPicture.asset(
-                                    'assets/images/share.svg')),
                             AddSongToPlaylistIconButton(
                               song: audioPlayerProvider.currentSong,
                             ),
