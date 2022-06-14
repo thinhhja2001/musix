@@ -1,13 +1,20 @@
-import 'dart:ui';
-
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
 import 'package:musix/models/song.dart';
 import 'package:musix/models/song_types.dart';
-import 'package:musix/utils/colors.dart';
 
 import '../widgets/customs/custom_bottom_navigation_bar.dart';
 
+var item = MediaItem(
+  id: 'https://vnso-zn-24-tf-mp3-s1-m-zmp3.zmdcdn.me/ca01cdf46eb587ebdea4/2657604383839489786?authen=exp=1654851335~acl=/ca01cdf46eb587ebdea4/*~hmac=58d9fa283afec970d391138564849822&fs=MTY1NDY3ODUzNTE2OXx3ZWJWNHwxMTMdUngMTYxLjmUsICzLjIzNg',
+  album: 'Album name',
+  title: 'Track title',
+  artist: 'Artist name',
+  duration: const Duration(milliseconds: 123456),
+  artUri: Uri.parse(
+      'https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_jpeg/cover/1/b/e/1/1be1db31444db22dead50799f93ba57d.jpg'),
+);
 const double kButtonMarginTop = 16;
 const double kEdgeInset = 52;
 const TextStyle kDefaultTextStyle =
@@ -52,7 +59,7 @@ String unfavorable = 'unfavorable';
 Song songWithNoData = Song(
     id: '',
     name: '',
-    audioUrl: 'no',
+    audioUrl: '',
     lyricUrl: '',
     artistName: '',
     artistLink: '',

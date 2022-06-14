@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:musix/apis/last_fm_api.dart';
 import 'package:musix/apis/zing_mp3_api.dart';
@@ -34,14 +32,14 @@ class ArtistProvider with ChangeNotifier {
       getArtistSongs().then((value) {
         print(value);
         _songList = value;
-        if (!_albumList.isEmpty) {
+        if (_albumList.isNotEmpty) {
           _loading = false;
           notifyListeners();
         }
       });
       getArtistAlbums().then((value) {
         _albumList = value;
-        if (!_songList.isEmpty) {
+        if (_songList.isNotEmpty) {
           _loading = false;
           notifyListeners();
         }

@@ -11,7 +11,6 @@ import 'package:musix/providers/google_sign_in.dart';
 import 'package:musix/providers/search_provider.dart';
 import 'package:musix/providers/sign_in_provider.dart';
 import 'package:musix/providers/sign_up_provider.dart';
-import 'package:musix/screens/artist_screen.dart';
 import 'package:musix/screens/email_verification_screen.dart';
 import 'package:musix/screens/home_screen.dart';
 import 'package:musix/screens/onboarding_screen.dart';
@@ -24,7 +23,6 @@ import 'package:flutter/services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
   runApp(const MyApp());
 }
 

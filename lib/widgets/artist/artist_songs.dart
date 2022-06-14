@@ -31,7 +31,7 @@ class ArtistSongs extends StatelessWidget {
                   artistName: componentList[index]['artistName'],
                   artistLink: componentList[index]['artistLink'],
                   thumbnailUrl: componentList[index]['thumbnailUrl']);
-              context.read<AudioPlayerProvider>().playSong(song, context);
+              context.read<AudioPlayerProvider>().playSong(song);
             },
             child: SearchComponent(
               artist: componentList[index]['artistName'],

@@ -22,7 +22,7 @@ class ArtistListSong extends StatelessWidget {
           const RotatedBox(
             quarterTurns: 3,
             child: Text(
-              "Songs",
+              "Top Songs",
               style: kDefaultTitleStyle,
             ),
           ),
@@ -39,7 +39,7 @@ class ArtistListSong extends StatelessWidget {
                     onTap: () {
                       context
                           .read<AudioPlayerProvider>()
-                          .playSong(artistProvider.artistSongs[index], context);
+                          .playSong(artistProvider.artistSongs[index]);
                     },
                     child: MusicSelectionWidget(
                       index: index,

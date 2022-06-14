@@ -1,3 +1,4 @@
+import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,14 +16,13 @@ class PlayMusicButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audioPlayerProvider = Provider.of<AudioPlayerProvider>(context);
+
     return InkWell(
       onTap: () async {
-        if (audioPlayerProvider.isPlaying) {
-          audioPlayerProvider.pauseSong();
-        } else {
-          audioPlayerProvider.resume();
-        }
-        audioPlayerProvider.changePlayState();
+        !audioPlayerProvider.isPlaying
+            ? audioPlayerProvider.playSong(audioPlayerProvider.currentSong)
+            : audioPlayerProvider.pauseSong();
+        audioPlayerProvider.changeIsPlayingState();
       },
       child: Container(
         height: buttonSize,
@@ -30,9 +30,7 @@ class PlayMusicButton extends StatelessWidget {
         decoration:
             const BoxDecoration(color: kPrimaryColor, shape: BoxShape.circle),
         child: Icon(
-          audioPlayerProvider.isPlaying == false
-              ? Icons.play_arrow
-              : Icons.pause,
+          !audioPlayerProvider.isPlaying ? Icons.play_arrow : Icons.pause,
           color: Colors.white,
           size: iconSize,
         ),

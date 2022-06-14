@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/models/album.dart';
+import 'package:musix/models/song.dart';
 import 'package:musix/providers/audio_player_provider.dart';
 import 'package:musix/resources/playlist_methods.dart';
 import 'package:musix/utils/enums.dart';
@@ -14,8 +15,9 @@ import 'add_playlist_widget.dart';
 class AllAlbumOfCurrentUser extends StatelessWidget {
   const AllAlbumOfCurrentUser({
     Key? key,
+    required this.song,
   }) : super(key: key);
-
+  final Song song;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Album>>(
@@ -50,8 +52,9 @@ class AllAlbumOfCurrentUser extends StatelessWidget {
                             showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
-                                builder: (context) =>
-                                    const AddPlaylistWidget());
+                                builder: (context) => AddPlaylistWidget(
+                                      song: song,
+                                    ));
                           },
                           content: "Add new Playlist",
                           isLoading: false)

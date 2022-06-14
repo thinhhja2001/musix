@@ -46,7 +46,6 @@ class LyricsWidget extends StatelessWidget {
                         lyricUi: lyricUI,
                         size: Size(double.infinity,
                             MediaQuery.of(context).size.height * 0.7),
-                        playing: audioPlayerProvider.isPlaying,
                         emptyBuilder: () => Center(
                           child: Text(
                             "No lyrics",

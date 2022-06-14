@@ -22,7 +22,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return SizedBox(
-        height: screenSize.height * 0.5, child: forgetPassword(context));
+        height: screenSize.height * 0.7, child: forgetPassword(context));
   }
 
   Widget forgetPassword(BuildContext context) {
@@ -52,7 +52,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       color: Colors.white,
                       fontFamily: "DM Sans",
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 25,
                     ),
                   ),
                   SizedBox(
@@ -65,7 +65,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         color: Colors.white,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.normal,
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
                     ),
                   ),

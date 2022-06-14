@@ -8,6 +8,7 @@ import 'package:musix/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/colors.dart';
+import 'music_selection_modal_widget.dart';
 
 class MusicSelectionWidget extends StatelessWidget {
   const MusicSelectionWidget({
@@ -19,23 +20,24 @@ class MusicSelectionWidget extends StatelessWidget {
   final int index;
   final Song song;
   final Album? album;
+
   @override
   Widget build(BuildContext context) {
     final AudioPlayerProvider audioPlayerProvider =
         Provider.of<AudioPlayerProvider>(context);
+
     return Padding(
-      padding: const EdgeInsets.only(left: 10, bottom: 5),
-      child: song.audioUrl.isNotEmpty
-          ? _PlayableSongWidget(
-              audioPlayerProvider: audioPlayerProvider,
-              song: song,
-              album: album,
-              index: index)
-          : _UnplayableSongWidget(
-              audioPlayerProvider: audioPlayerProvider,
-              song: song,
-              index: index),
-    );
+        padding: const EdgeInsets.only(left: 10, bottom: 5),
+        child: song.audioUrl.isNotEmpty
+            ? _PlayableSongWidget(
+                audioPlayerProvider: audioPlayerProvider,
+                song: song,
+                album: album,
+                index: index)
+            : _UnplayableSongWidget(
+                audioPlayerProvider: audioPlayerProvider,
+                song: song,
+                index: index));
   }
 }
 
@@ -60,12 +62,11 @@ class _PlayableSongWidget extends StatelessWidget {
     }
 
     _playAlbum() {
-      audioPlayerProvider.playAlbum(
-          album: album!, context: context, index: index);
+      audioPlayerProvider.playAlbum(album: album!, index: index);
     }
 
     _playSong() {
-      audioPlayerProvider.playSong(song, context);
+      audioPlayerProvider.playSong(song);
       audioPlayerProvider.removeCurrentAlbum();
     }
 
@@ -114,7 +115,15 @@ class _PlayableSongWidget extends StatelessWidget {
               )),
           Expanded(
               child: IconButton(
-            onPressed: () => {},
+            onPressed: () => {
+              showModalBottomSheet<void>(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (BuildContext context) {
+                    return MusicSelectionModal(song: song,);
+                  },
+                )
+            },
             icon: const Icon(
               MdiIcons.dotsHorizontal,
               color: kPrimaryColor,
