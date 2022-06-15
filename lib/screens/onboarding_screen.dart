@@ -6,9 +6,7 @@ import 'package:musix/resources/auth_methods.dart';
 import 'package:musix/screens/signin_screen.dart';
 import 'package:musix/screens/signup_screen.dart';
 import 'package:musix/utils/constant.dart';
-import 'package:musix/widgets/social_media_login_button.dart';
 
-import '../utils/enums.dart';
 import '../widgets/customs/custom_button.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -71,6 +69,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       fontWeight: FontWeight.w600,
                       fontSize: 28),
                 ),
+                verticalSpaceRegular,
                 CustomButton(
                   onPress: () {
                     Get.to(const SignUpScreen());
