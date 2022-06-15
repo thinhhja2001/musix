@@ -35,12 +35,8 @@ class ProfileCard extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 20,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(45),
-                    child: Image.network(
-                      user.avatarUrl,
-                      fit: BoxFit.cover,
-                    ),
+                  backgroundImage: NetworkImage(
+                    user.avatarUrl,
                   ),
                 )
               ],

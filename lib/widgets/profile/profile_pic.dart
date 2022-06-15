@@ -24,7 +24,10 @@ class ProfilePic extends StatelessWidget {
         children: [
           imagePicker != null
               ? CircleAvatar(
-                  child: Image.file(imagePicker!),
+                  backgroundImage: FileImage(
+                    imagePicker!,
+                  ),
+                  radius: 100,
                 )
               : avatarUrl == ""
                   ? const CircleAvatar(

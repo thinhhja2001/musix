@@ -27,12 +27,20 @@ class YourPlaylistWidget extends StatelessWidget {
                 future: PlaylistMethods.getAllAlbumOfCurrentUser(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Row(
-                      children: List.generate(
-                          snapshot.data!.length,
-                          (index) => AlbumCardFromAlbumData(
-                              album: snapshot.data!.elementAt(index))),
-                    );
+                    return snapshot.data!.isNotEmpty
+                        ? Row(
+                            children: List.generate(
+                                snapshot.data!.length,
+                                (index) => AlbumCardFromAlbumData(
+                                    album: snapshot.data!.elementAt(index))),
+                          )
+                        : const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              'You don\'t have any list',
+                              style: kDefaultTextStyle,
+                            ),
+                          );
                   }
                   return Container();
                 },
