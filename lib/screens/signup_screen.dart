@@ -146,6 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               : CustomErrorBox(
                                   message: signUpProvider.errorMessage,
                                 ),
+                          verticalSpaceSmall,
                           CustomButton(
                             onPress: () async {
                               String result = await signUpProvider.signUpUser(

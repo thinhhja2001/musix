@@ -14,33 +14,29 @@ class CustomButton extends StatelessWidget {
   final bool isLoading;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: kButtonMarginTop * 2, bottom: 10),
-      child: SizedBox(
-        width: double.infinity,
-        height: 52,
-        child: ElevatedButton(
-            onPressed: onPress,
-            child: isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    content,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: ElevatedButton(
+          onPressed: onPress,
+          child: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
                   ),
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(kPrimaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                )))),
-      ),
+                )
+              : Text(
+                  content,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(kPrimaryColor),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              )))),
     );
   }
 }

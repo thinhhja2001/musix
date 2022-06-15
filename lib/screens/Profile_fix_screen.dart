@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/models/users.dart';
 import 'package:musix/resources/profile_methods.dart';
 import 'package:musix/utils/colors.dart';
+import 'package:musix/utils/utils.dart';
 import 'package:musix/widgets/profile/profile_pic.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -43,7 +45,7 @@ class _FixProfileState extends State<FixProfile> {
     }
   }
 
-  void AfterSave() {
+  void AfterSave(BuildContext context) {
     user = Users(
         email: widget.user.email,
         username: _controller!.text,
@@ -51,7 +53,11 @@ class _FixProfileState extends State<FixProfile> {
         followers: widget.user.followers,
         following: widget.user.following,
         avatarUrl: imageURL!);
-    Restart.restartApp();
+    showCompleteNotification(
+        title: 'User information updated',
+        message: 'Please restart the app to see changes',
+        icon: MdiIcons.check);
+    Navigator.pop(context);
   }
 
   @override
@@ -69,7 +75,7 @@ class _FixProfileState extends State<FixProfile> {
                 ProfileMethods()
                     .setUserProfile(
                         widget.user, image, _controller!.text, imageURL!)
-                    .then((value) => AfterSave());
+                    .then((value) => AfterSave(context));
               },
               child: const Text(
                 "Save",

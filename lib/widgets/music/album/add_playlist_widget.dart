@@ -88,6 +88,7 @@ class _AddPlaylistWidgetState extends State<AddPlaylistWidget> {
                         style: kDefaultTextStyle.copyWith(color: Colors.red),
                       )
                     : Container(),
+                verticalSpaceSmall,
                 CustomButton(
                     onPress: _createPlaylist,
                     content: 'Create',

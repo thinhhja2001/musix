@@ -47,6 +47,7 @@ class AllAlbumOfCurrentUser extends StatelessWidget {
                               "You don't have any playlist. Create one now",
                               style: kDefaultTextStyle,
                             ),
+                      verticalSpaceSmall,
                       CustomButton(
                           onPress: () {
                             showModalBottomSheet(

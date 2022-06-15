@@ -276,14 +276,6 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _loopCurrentSong() {
-    // audioPlayer.onPlayerCompletion.listen((event) {
-    //   position = Duration.zero;
-    //   isPlaying = true;
-    //   audioPlayer.play(currentSong.audioUrl);
-    // });
-  }
-
   int _generateRandomIndex() {
     Random random = Random();
 

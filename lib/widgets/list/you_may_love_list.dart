@@ -17,14 +17,6 @@ class YouMayLoveList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "View all",
-                style: kDefaultTitleStyle.copyWith(
-                  color: kPrimaryColor,
-                ),
-              )),
           Row(
             children: [
               const RotatedBox(
