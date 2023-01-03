@@ -1,6 +1,6 @@
 # musix
 
-A new Flutter project.
+Music App
 
 ## Getting Started
 
