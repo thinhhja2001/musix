@@ -17,9 +17,12 @@ dependencies:
   cupertino_icons: ^1.0.5
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
-  logger: ^1.1.0
   email_validator: ^2.1.17
   intl: ^0.18.0
+  palette_generator: ^0.3.3+2
+  logging: ^1.1.0
+  cached_network_image: ^3.2.3
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

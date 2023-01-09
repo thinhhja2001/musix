@@ -2,9 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/domain_user/views/sign_in_screen/utils/text_path.dart';
 import 'package:musix/routing/routing_path.dart';
-import 'package:musix/utils/asset_path.dart';
 
 import '../../../theme/theme.dart';
+import '../../../utils/utils.dart';
 import '../widgets.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -114,6 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   CustomButtonWidget(
                     onPress: () async {
                       if (_formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, RoutingPath.home);
                         // String result =
                         //     await signInProvider.signInUser(
                         //         email: _emailController.text,

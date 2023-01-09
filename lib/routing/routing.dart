@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_global/views/screens.dart';
 import 'package:musix/domain_user/views/screens.dart';
 import 'package:musix/routing/routing_path.dart';
-
-Map<String, WidgetBuilder> mapRoutingMusixApp = {
-  RoutingPath.signIn: (BuildContext context) => const SignInScreen(),
-  RoutingPath.signUp: (BuildContext context) => const SignUpScreen(),
-  RoutingPath.forgetPassword: (BuildContext context) =>
-      const ForgetPasswordScreen(),
-};
 
 Route<dynamic> routeController(RouteSettings settings) {
   final routingPath = settings.name;
@@ -27,6 +21,16 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => const ForgetPasswordScreen(),
+      );
+    case RoutingPath.profile:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const ProfileScreen(),
+      );
+    case RoutingPath.home:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const HomeScreen(),
       );
     default:
       return MaterialPageRoute(
