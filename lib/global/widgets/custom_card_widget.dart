@@ -27,38 +27,47 @@ class CustomCardWidget extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CachedNetworkImage(
-            imageUrl: image,
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              width: width,
+              height: height,
+              fit: BoxFit.fill,
+              imageUrl: image,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              width: width,
-              height: height,
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyleTheme.ts15.copyWith(
-                        fontWeight: FontWeight.w400, color: Colors.white),
-                  ),
-                  Text(
-                    subTitle,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyleTheme.ts12.copyWith(
-                        fontWeight: FontWeight.w400, color: Colors.white),
-                  )
-                ],
+              child: Container(
+                width: width * 0.8,
+                height: height * 0.32,
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleTheme.ts15.copyWith(
+                          fontWeight: FontWeight.w700, color: Colors.white),
+                    ),
+                    Text(
+                      subTitle,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleTheme.ts12.copyWith(
+                          fontWeight: FontWeight.w400, color: Colors.white),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

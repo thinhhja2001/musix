@@ -21,13 +21,13 @@ class BillboardPageWidget extends StatelessWidget {
                 top: DistinctConstant.small,
               ),
             ),
-            YouMayLoveAlbumWidget(),
+            NewAlbumWidget(),
             Padding(
               padding: EdgeInsets.only(
                 top: DistinctConstant.small,
               ),
             ),
-            WeeklyAlbumWidget(),
+            WeeklyMusicWidget(),
             Padding(
               padding: EdgeInsets.only(
                 top: DistinctConstant.small,
