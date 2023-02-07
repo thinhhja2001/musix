@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../global/widgets/widgets.dart';
 
-class WeeklyMusicWidget extends StatelessWidget {
-  const WeeklyMusicWidget({Key? key}) : super(key: key);
+class WeeklySongWidget extends StatelessWidget {
+  const WeeklySongWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -12,9 +12,10 @@ class ExplorePageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return HomeTemplateWidget(
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: const [
-            MusicTypeSelectionWidget(),
+            SongTypeSelectionWidget(),
             Padding(
               padding: EdgeInsets.only(
                 top: DistinctConstant.small,

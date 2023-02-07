@@ -61,12 +61,13 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
+      physics: const BouncingScrollPhysics(),
       controller: _scrollController,
       headerSliverBuilder: (context, value) {
         return [
           SliverToBoxAdapter(
             child: SearchBarWidget(
-              hintText: widget.homeTextPath.searchByName,
+              hintText: widget.homeTextPath.searchBarHintText,
             ),
           ),
           const SliverPadding(

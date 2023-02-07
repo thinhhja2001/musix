@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MusicTypeSelectionWidget extends StatelessWidget {
-  const MusicTypeSelectionWidget({Key? key}) : super(key: key);
+class SongTypeSelectionWidget extends StatelessWidget {
+  const SongTypeSelectionWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
