@@ -27,6 +27,7 @@ dependencies:
   video_player: ^2.4.10
   material_design_icons_flutter: ^6.0.7096
   just_audio: ^0.9.31
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:

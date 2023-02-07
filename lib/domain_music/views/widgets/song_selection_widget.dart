@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/utils/constant/color_constant.dart';
-import 'package:musix/utils/constant/text_constant.dart';
+import 'package:musix/theme/theme.dart';
+
 import 'package:musix/utils/utils.dart';
 
 class SongSelectionWidget extends StatelessWidget {
@@ -19,14 +19,10 @@ class SongSelectionWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Center(
+          Center(
             child: Text(
               '1',
-              style: TextStyle(
-                fontWeight: FontWeight.w300,
-                fontSize: FontSizeConstant.kts18,
-                color: ColorConstant.kWhite,
-              ),
+              style: TextStyleTheme.ts18.copyWith(fontWeight: FontWeight.w300),
             ),
           ),
           const Padding(
@@ -62,19 +58,27 @@ class SongSelectionWidget extends StatelessWidget {
                 Text(
                   song.name,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: FontSizeConstant.kts16,
-                      color: ColorConstant.kPrimaryColor,
-                      fontWeight: FontWeight.w300),
+                  style: TextStyleTheme.ts16.copyWith(
+                    color: ColorTheme.primary,
+                    fontWeight: FontWeight.w300,
+                  ),
+                  // style: const TextStyle(
+                  //     fontSize: FontSizeConstant.kts16,
+                  //     color: ColorConstant.kPrimaryColor,
+                  //     fontWeight: FontWeight.w300),
                 ),
                 Text(
                   song.artistName,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: FontSizeConstant.kts14,
-                    color: ColorConstant.kGrey,
+                  style: TextStyleTheme.ts14.copyWith(
                     fontWeight: FontWeight.w300,
+                    color: ColorTheme.grey,
                   ),
+                  // style: const TextStyle(
+                  //   fontSize: FontSizeConstant.kts14,
+                  //   color: ColorConstant.kGrey,
+                  //   fontWeight: FontWeight.w300,
+                  // ),
                 ),
               ],
             ),
@@ -84,7 +88,7 @@ class SongSelectionWidget extends StatelessWidget {
               onPressed: () {},
               icon: const Icon(
                 Icons.more_horiz,
-                color: ColorConstant.kPrimaryColor,
+                color: ColorTheme.primary,
               ),
             ),
           )

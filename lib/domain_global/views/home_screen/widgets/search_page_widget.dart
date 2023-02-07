@@ -79,7 +79,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
             child: TabBar(
               controller: _tabController,
               labelColor: ColorTheme.white,
-              unselectedLabelColor: ColorTheme.gray100,
+              unselectedLabelColor: ColorTheme.grey100,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: ColorTheme.primary,

@@ -27,7 +27,7 @@ class Song {
   }
 }
 
-Song exampleSong = Song(
+Song sampleSong = Song(
     id: 'id',
     name: 'Nguoi nhu anh',
     audioUrl:

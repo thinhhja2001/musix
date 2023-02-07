@@ -56,7 +56,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                     decoration: InputDecoration.collapsed(
                         hintText: widget.hintText,
                         hintStyle: TextStyleTheme.ts15.copyWith(
-                          color: ColorTheme.gray100,
+                          color: ColorTheme.grey100,
                           fontWeight: FontWeight.w400,
                         ),
                         fillColor: Colors.blue),

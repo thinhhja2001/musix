@@ -1,10 +1,11 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class ColorTheme {
   static const primaryLighten = Color(0xff69E897);
   static const primary = Color(0xff1FDF64);
 
-  static const gray100 = Color(0xffEEEEEE);
+  static const grey100 = Color(0xffEEEEEE);
+  static const grey = Colors.grey;
   static const white = Color(0xffFFFFFF);
 
   static const bottomNavigationBar = Color(0xff383676);

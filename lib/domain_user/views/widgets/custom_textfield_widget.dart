@@ -87,7 +87,7 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
               widget.label,
               style: TextStyleTheme.ts15.copyWith(
                 fontWeight: FontWeight.w400,
-                color: ColorTheme.gray100,
+                color: ColorTheme.grey100,
               ),
             ),
           ),

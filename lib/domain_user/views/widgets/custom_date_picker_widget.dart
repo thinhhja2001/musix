@@ -72,7 +72,7 @@ class CustomDatePickerWidget extends StatelessWidget {
                           : DateFormat('d/M/y').format(datePicker!),
                       style: datePicker == null
                           ? TextStyleTheme.ts15.copyWith(
-                              color: ColorTheme.gray100,
+                              color: ColorTheme.grey100,
                               fontWeight: FontWeight.w400,
                             )
                           : TextStyleTheme.ts15.copyWith(

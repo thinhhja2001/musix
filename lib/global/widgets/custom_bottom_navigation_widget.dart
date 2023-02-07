@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_music/models/models.dart';
+import 'package:musix/domain_music/views/widgets.dart';
 
 import '../../theme/theme.dart';
 
@@ -53,102 +55,117 @@ class CustomBottomBarWidget extends StatelessWidget {
     return SafeArea(
       minimum: margin,
       child: Container(
-        height: 72,
+        height: 160,
         decoration: BoxDecoration(
-            color: ColorTheme.bottomNavigationBar,
-            borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          /// Using a different alignment when there are 2 items or less
-          /// so it behaves the same as BottomNavigationBar.
-          mainAxisAlignment: items.length <= 2
-              ? MainAxisAlignment.spaceEvenly
-              : MainAxisAlignment.spaceBetween,
+          borderRadius: BorderRadius.circular(16),
+          color: ColorTheme.backgroundDarker,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            for (final item in items)
-              TweenAnimationBuilder<double>(
-                tween: Tween(
-                  end: items.indexOf(item) == index ? 1.0 : 0.0,
-                ),
-                curve: curve,
-                duration: duration,
-                builder: (context, t, _) {
-                  final selectedColor = item.selectedColor ??
-                      selectedItemColor ??
-                      ColorTheme.primary;
+            CurrentSongPlayerWidget(song: sampleSong),
+            Container(
+              height: 72,
+              decoration: BoxDecoration(
+                  color: ColorTheme.bottomNavigationBar,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                /// Using a different alignment when there are 2 items or less
+                /// so it behaves the same as BottomNavigationBar.
+                mainAxisAlignment: items.length <= 2
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.spaceBetween,
+                children: [
+                  for (final item in items)
+                    TweenAnimationBuilder<double>(
+                      tween: Tween(
+                        end: items.indexOf(item) == index ? 1.0 : 0.0,
+                      ),
+                      curve: curve,
+                      duration: duration,
+                      builder: (context, t, _) {
+                        final selectedColor = item.selectedColor ??
+                            selectedItemColor ??
+                            ColorTheme.primary;
 
-                  final unselectedColor = item.unselectedColor ??
-                      unselectedItemColor ??
-                      Colors.black;
+                        final unselectedColor = item.unselectedColor ??
+                            unselectedItemColor ??
+                            Colors.black;
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Material(
-                      color: Color.lerp(selectedColor.withOpacity(0.0),
-                          ColorTheme.primaryLighten, t),
-                      borderRadius: BorderRadius.circular(12),
-                      child: InkWell(
-                        onTap: () => onTap?.call(items.indexOf(item)),
-                        focusColor: ColorTheme.primaryLighten,
-                        highlightColor: ColorTheme.primaryLighten,
-                        splashColor: ColorTheme.primaryLighten,
-                        hoverColor: ColorTheme.primaryLighten,
-                        borderRadius: BorderRadius.circular(12),
-                        child: Padding(
-                          padding: itemPadding -
-                              (Directionality.of(context) == TextDirection.ltr
-                                  ? EdgeInsets.only(
-                                      right: itemPadding.right * t)
-                                  : EdgeInsets.only(
-                                      left: itemPadding.left * t)),
-                          child: Row(
-                            children: [
-                              IconTheme(
-                                data: IconThemeData(
-                                  color: Color.lerp(
-                                      unselectedColor, selectedColor, t),
-                                  size: 24,
-                                ),
-                                child: items.indexOf(item) == index
-                                    ? item.activeIcon ?? item.icon
-                                    : item.icon,
-                              ),
-                              SizedBox(
-                                /// The Align property appears to make these full height, would be
-                                /// best to find a way to make it respond only to padding.
-                                height: 36,
-                                child: Align(
-                                  alignment: const Alignment(-0.2, 0.0),
-                                  widthFactor: t,
-                                  child: Padding(
-                                    padding: Directionality.of(context) ==
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Material(
+                            color: Color.lerp(selectedColor.withOpacity(0.0),
+                                ColorTheme.primaryLighten, t),
+                            borderRadius: BorderRadius.circular(12),
+                            child: InkWell(
+                              onTap: () => onTap?.call(items.indexOf(item)),
+                              focusColor: ColorTheme.primaryLighten,
+                              highlightColor: ColorTheme.primaryLighten,
+                              splashColor: ColorTheme.primaryLighten,
+                              hoverColor: ColorTheme.primaryLighten,
+                              borderRadius: BorderRadius.circular(12),
+                              child: Padding(
+                                padding: itemPadding -
+                                    (Directionality.of(context) ==
                                             TextDirection.ltr
                                         ? EdgeInsets.only(
-                                            left: itemPadding.left / 2,
-                                            right: itemPadding.right)
+                                            right: itemPadding.right * t)
                                         : EdgeInsets.only(
-                                            left: itemPadding.left,
-                                            right: itemPadding.right / 2),
-                                    child: DefaultTextStyle(
-                                      style: TextStyle(
+                                            left: itemPadding.left * t)),
+                                child: Row(
+                                  children: [
+                                    IconTheme(
+                                      data: IconThemeData(
                                         color: Color.lerp(
-                                            selectedColor.withOpacity(0.0),
-                                            selectedColor,
-                                            t),
-                                        fontWeight: FontWeight.w400,
+                                            unselectedColor, selectedColor, t),
+                                        size: 24,
                                       ),
-                                      child: item.title,
+                                      child: items.indexOf(item) == index
+                                          ? item.activeIcon ?? item.icon
+                                          : item.icon,
                                     ),
-                                  ),
+                                    SizedBox(
+                                      /// The Align property appears to make these full height, would be
+                                      /// best to find a way to make it respond only to padding.
+                                      height: 36,
+                                      child: Align(
+                                        alignment: const Alignment(-0.2, 0.0),
+                                        widthFactor: t,
+                                        child: Padding(
+                                          padding: Directionality.of(context) ==
+                                                  TextDirection.ltr
+                                              ? EdgeInsets.only(
+                                                  left: itemPadding.left / 2,
+                                                  right: itemPadding.right)
+                                              : EdgeInsets.only(
+                                                  left: itemPadding.left,
+                                                  right: itemPadding.right / 2),
+                                          child: DefaultTextStyle(
+                                            style: TextStyle(
+                                              color: Color.lerp(
+                                                  selectedColor
+                                                      .withOpacity(0.0),
+                                                  selectedColor,
+                                                  t),
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                            child: item.title,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
+                ],
               ),
+            ),
           ],
         ),
       ),

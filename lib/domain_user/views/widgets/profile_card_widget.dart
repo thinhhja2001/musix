@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/routing/routing_path.dart';
-import 'package:musix/utils/constant/text_constant.dart';
+import 'package:musix/theme/text_style.dart';
 
 import '../../../utils/utils.dart';
 
@@ -26,10 +26,14 @@ class ProfileCardWidget extends StatelessWidget {
             children: [
               Text(
                 userName,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: FontSizeConstant.kts20,
-                    fontWeight: FontWeight.w400),
+                style: TextStyleTheme.ts20.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                ),
+                // style: const TextStyle(
+                //     color: Colors.white,
+                //     fontSize: F,
+                //     fontWeight: FontWeight.w400),
               ),
               CircleAvatar(
                 radius: 20,
