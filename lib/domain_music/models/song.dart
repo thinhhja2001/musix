@@ -31,7 +31,7 @@ Song sampleSong = Song(
     id: 'id',
     name: 'Nguoi nhu anh',
     audioUrl:
-        'https://vnno-pt-2-tf-mp3-s1-zmp3.zmdcdn.me/f0a1e85be91b0045590a/589361203805054074?authen=exp=1675930089~acl=/f0a1e85be91b0045590a/*~hmac=aad4f47b72ba13ef739bc3cb67bc836a&fs=MTY3NTmUsIC1NzI4OTY1Mnx3ZWJWNHwxODMdUngODAdUngMjE1LjmUsIC3',
+        'https://s1.mp3.aka.zdn.vn/a63b11400c07e559bc16/6706952041522412104?authen=exp=1676096598~acl=/a63b11400c07e559bc16/*~hmac=6887051dba8c7acf84f405b83ee5f581&fs=MTY3NTkyMzmUsIC5ODIwNnx3ZWJWNHwxMTYdUngOTYdUngNDQdUngMTQz',
     lyricUrl:
         'https://static-zmp3.zmdcdn.me/lyrics/d/f/9/9/df99fc219774148ef4719acabfd67dd4.lrc',
     artistName: 'Mai Tien Dung',

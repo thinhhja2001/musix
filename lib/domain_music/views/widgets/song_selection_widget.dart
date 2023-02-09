@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:musix/domain_music/models/models.dart';
 import 'package:musix/theme/theme.dart';
 
@@ -12,8 +14,17 @@ class SongSelectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final player = AudioPlayer();
-        player.setUrl(song.audioUrl);
+        final player = GetIt.I.get<AudioPlayer>();
+        player.setAudioSource(
+          AudioSource.uri(
+            Uri.parse(song.audioUrl),
+            tag: MediaItem(
+                id: song.id,
+                title: song.name,
+                artist: song.artistName,
+                artUri: Uri.parse(song.thumbnailUrl)),
+          ),
+        );
         await player.play();
       },
       child: Row(
