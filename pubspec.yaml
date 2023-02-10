@@ -28,6 +28,8 @@ dependencies:
   material_design_icons_flutter: ^6.0.7096
   just_audio: ^0.9.31
   percent_indicator: ^4.2.2
+  get_it: ^7.2.0
+  audio_service: ^0.18.9
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:musix/domain_music/models/models.dart';
+import 'package:musix/domain_music/services/musix_audio_hander.dart';
 import 'package:musix/theme/theme.dart';
 
 import 'package:musix/utils/utils.dart';
@@ -12,8 +13,8 @@ class SongSelectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final player = AudioPlayer();
-        player.setUrl(song.audioUrl);
+        final player = GetIt.I.get<MusixAudioHandler>();
+        player.setSong(song);
         await player.play();
       },
       child: Row(
