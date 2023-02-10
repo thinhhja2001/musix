@@ -18,6 +18,8 @@ class WeeklySongWidget extends StatelessWidget {
           alignment: Alignment.center,
           child: VideoPlayerWidget(
             videoUrl: url,
+            authorVideo: r'One Blue',
+            titleVideo: r'Pay for the love',
           ),
         ))
       ],

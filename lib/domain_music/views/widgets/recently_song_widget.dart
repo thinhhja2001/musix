@@ -18,18 +18,23 @@ class RecentlySongWidget extends StatelessWidget {
           child: Column(
             children: [
               SongSelectionWidget(
+                index: 1,
                 song: sampleSong,
               ),
               SongSelectionWidget(
+                index: 1,
                 song: sampleSong,
               ),
               SongSelectionWidget(
+                index: 1,
                 song: sampleSong,
               ),
               SongSelectionWidget(
+                index: 1,
                 song: sampleSong,
               ),
               SongSelectionWidget(
+                index: 20,
                 song: sampleSong,
               ),
             ],

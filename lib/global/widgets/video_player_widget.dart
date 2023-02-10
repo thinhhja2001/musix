@@ -1,18 +1,25 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../theme/theme.dart';
+import '../../theme/color.dart';
+import '../../theme/text_style.dart';
 
-enum VideoStatus { idle, play, pause, increase, decrease, retry }
+enum VideoStatus { idle, play, pause, end }
 
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
   final double height;
+  final String titleVideo;
+  final String authorVideo;
+
   const VideoPlayerWidget({
     Key? key,
     required this.videoUrl,
-    this.height = 240,
+    required this.authorVideo,
+    required this.titleVideo,
+    this.height = 360,
   }) : super(key: key);
 
   @override
@@ -22,7 +29,7 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
     with WidgetsBindingObserver {
   VideoPlayerController? _videoController;
-  VideoStatus _status = VideoStatus.idle;
+  VideoStatus _status = VideoStatus.pause;
 
   @override
   void initState() {
@@ -65,119 +72,166 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
       padding: const EdgeInsets.all(8),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: GestureDetector(
-          onTap: _pauseVideo,
-          child: SizedBox(
-            height: widget.height,
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  VideoPlayer(_videoController!),
-                  VideoProgressIndicator(
-                    _videoController!,
-                    allowScrubbing: true,
-                    colors: VideoProgressColors(
-                      playedColor: ColorTheme.primaryLighten.withOpacity(0.8),
-                      backgroundColor: ColorTheme.grey100.withOpacity(0.6),
-                    ),
-                    padding: EdgeInsets.only(
-                      top: 256 / 320 * widget.height,
-                      bottom: 60 / 320 * widget.height,
-                      left: 16,
-                      right: 16,
+        child: ValueListenableBuilder(
+            valueListenable: _videoController!,
+            builder: (context, VideoPlayerValue value, child) {
+              if (value.position == value.duration) {
+                _status = VideoStatus.end;
+              }
+              return GestureDetector(
+                onTap: _pauseVideo,
+                onDoubleTapDown: (TapDownDetails? details) {
+                  var position = details?.globalPosition;
+                  if (position == null) {
+                    return;
+                  }
+                  // you can also check out details.localPosition;
+
+                  if (position.dx < MediaQuery.of(context).size.width / 2) {
+                    _decrease(value);
+                  } else {
+                    // tap right size
+                    _increase(value);
+                  }
+                },
+                child: SizedBox(
+                  height: widget.height,
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        VideoPlayer(_videoController!),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.titleVideo,
+                                  style: TextStyleTheme.ts14.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                    letterSpacing: 0.1,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  widget.authorVideo,
+                                  style: TextStyleTheme.ts12.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorTheme.primary,
+                                    letterSpacing: 0.2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // VideoProgressIndicator(
+                        //   _videoController!,
+                        //   allowScrubbing: true,
+                        //   colors: VideoProgressColors(
+                        //     playedColor: ColorTheme.primaryLighten.withOpacity(0.8),
+                        //     backgroundColor: ColorTheme.grey100.withOpacity(0.6),
+                        //   ),
+                        //   padding: EdgeInsets.only(
+                        //     top: 256 / 320 * widget.height,
+                        //     bottom: 60 / 320 * widget.height,
+                        //     left: 16,
+                        //     right: 16,
+                        //   ),
+                        // ),
+                        if (_status == VideoStatus.pause) ...[
+                          Center(
+                            child: InkWell(
+                              onTap: _playVideo,
+                              child: Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(180),
+                                  border: Border.all(
+                                    width: 0.8,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: Colors.white,
+                                    size: 32,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        if (value.position == value.duration) ...[
+                          Center(
+                            child: InkWell(
+                              onTap: _resetVideo,
+                              child: Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(180),
+                                  border: Border.all(
+                                    width: 0.8,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.refresh,
+                                    color: Colors.white,
+                                    size: 32,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            child: ProgressBar(
+                              progress: value.position,
+                              total: value.duration,
+                              progressBarColor: ColorTheme.primary,
+                              baseBarColor: Colors.white30,
+                              bufferedBarColor: Colors.white54,
+                              thumbColor: Colors.white,
+                              barHeight: 2,
+                              thumbRadius: 6,
+                              timeLabelTextStyle: TextStyleTheme.ts12.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                              timeLabelPadding: 8,
+                              onSeek: (duration) {
+                                _videoController
+                                    ?.seekTo(duration)
+                                    .then((value) => setState(() {}));
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: SizedBox(
-                        height: 36,
-                        child: ValueListenableBuilder(
-                            valueListenable: _videoController!,
-                            builder: (context, VideoPlayerValue value, child) {
-                              if (value.position.compareTo(value.duration) >=
-                                      0 &&
-                                  _status != VideoStatus.retry) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((timeStamp) {
-                                  _resetVideo();
-                                });
-                              }
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    printDuration(value.position),
-                                    style: TextStyleTheme.ts10.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  GestureDetector(
-                                    onTap: _checkCanDecrease(value)
-                                        ? () => _decrease(value)
-                                        : null,
-                                    child: const Icon(
-                                      Icons.fast_rewind_outlined,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  GestureDetector(
-                                    onTap: _status == VideoStatus.idle ||
-                                            _status == VideoStatus.retry ||
-                                            _status == VideoStatus.pause
-                                        ? _playVideo
-                                        : _pauseVideo,
-                                    child: Icon(
-                                      _iconBaseOnVideoStatus[_status],
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  GestureDetector(
-                                    onTap: _checkCanIncrease(value)
-                                        ? () => _increase(value)
-                                        : null,
-                                    child: const Icon(
-                                      Icons.fast_forward_outlined,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    printDuration(value.duration),
-                                    style: TextStyleTheme.ts10.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }
@@ -221,7 +275,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
   void _pauseVideo() {
     DebugLogger().log('Call Pause Method');
     final validVideo = _checkIsVideoValid();
-    if (validVideo) {
+    if (validVideo && _status != VideoStatus.end) {
       setState(() {
         _status = VideoStatus.pause;
         _videoController?.pause();
@@ -236,17 +290,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
     final validVideo = _checkIsVideoValid();
     if (validVideo) {
       setState(() {
-        _status = VideoStatus.retry;
+        _videoController?.play();
+        _status = VideoStatus.play;
       });
     } else {
       return;
     }
-  }
-
-  bool _checkCanIncrease(VideoPlayerValue value) {
-    return value.position
-            .compareTo(value.duration - const Duration(seconds: 5)) <
-        0;
   }
 
   void _increase(VideoPlayerValue value) {
@@ -256,23 +305,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
         .then((value) => setState(() {}));
   }
 
-  bool _checkCanDecrease(VideoPlayerValue value) {
-    return (value.position - const Duration(seconds: 5))
-            .compareTo(Duration.zero) >=
-        0;
-  }
-
   void _decrease(VideoPlayerValue value) {
     DebugLogger().log('Call Decrease Method');
     _videoController
-        ?.seekTo(value.position - const Duration(seconds: 5))
+        ?.seekTo(value.position < const Duration(seconds: 5)
+            ? value.position - const Duration(seconds: 5)
+            : Duration.zero)
         .then((value) => setState(() {}));
   }
-
-  final Map<VideoStatus, IconData> _iconBaseOnVideoStatus = {
-    VideoStatus.idle: Icons.play_arrow_outlined,
-    VideoStatus.play: Icons.pause,
-    VideoStatus.pause: Icons.play_arrow_outlined,
-    VideoStatus.retry: Icons.refresh,
-  };
 }
