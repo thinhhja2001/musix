@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_music/models/models.dart';
 import 'package:musix/theme/theme.dart';
+import 'package:musix/utils/functions/function_utils.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 class CurrentSongPlayerWidget extends StatelessWidget {
   const CurrentSongPlayerWidget({super.key, required this.song});
@@ -12,17 +14,37 @@ class CurrentSongPlayerWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: const [
-                  BoxShadow(color: Colors.black, blurRadius: 10),
-                ]),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(song.thumbnailUrl),
-              radius: 26,
-            ),
-          ),
+          FutureBuilder<PaletteGenerator>(
+              future: updatePaletteGenerator(song.thumbnailUrl),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                            color: snapshot.data!.dominantColor!.color,
+                            blurRadius: 10),
+                      ],
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(song.thumbnailUrl),
+                      radius: 26,
+                    ),
+                  );
+                }
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black, blurRadius: 10),
+                      ]),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(song.thumbnailUrl),
+                    radius: 26,
+                  ),
+                );
+              }),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0),
