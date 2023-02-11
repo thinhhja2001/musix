@@ -34,7 +34,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
           _scrollController.jumpTo(0);
         }
       });
-    _tabController = TabController(length: 4, vsync: this)
+    _tabController = TabController(length: 5, vsync: this)
       ..addListener(() {
         _scrollController.animateTo(
           0,
@@ -60,6 +60,13 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
 
   @override
   Widget build(BuildContext context) {
+    List<String?> recommends = [
+      'Chairlie Puth',
+      'Fall Out Boy',
+      'Fall Out Lucky Boy',
+      'Happy',
+    ];
+    recommends.sort((a, b) => a!.length.compareTo(b!.length));
     return NestedScrollView(
       physics: const BouncingScrollPhysics(),
       controller: _scrollController,
@@ -68,6 +75,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
           SliverToBoxAdapter(
             child: SearchBarWidget(
               hintText: widget.homeTextPath.searchBarHintText,
+              recommends: recommends,
             ),
           ),
           const SliverPadding(
@@ -84,26 +92,112 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                 borderRadius: BorderRadius.circular(10),
                 color: ColorTheme.primary,
               ),
+              isScrollable: true,
               tabs: [
                 Tab(
-                  text: widget.homeTextPath.all,
-                  icon: const Icon(Icons.star_border),
-                  iconMargin: const EdgeInsets.all(8),
+                  icon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_tabController.index == 0) ...[
+                        const Icon(Icons.star_border),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                      ],
+                      Text(
+                        'All',
+                        style: TextStyleTheme.ts15.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  iconMargin: const EdgeInsets.all(4),
                 ),
                 Tab(
-                  text: widget.homeTextPath.song,
-                  icon: const Icon(Icons.music_note),
-                  iconMargin: const EdgeInsets.all(8),
+                  icon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_tabController.index == 1) ...[
+                        const Icon(Icons.music_note),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                      ],
+                      Text(
+                        'Songs',
+                        style: TextStyleTheme.ts15.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  iconMargin: const EdgeInsets.all(4),
                 ),
                 Tab(
-                  text: widget.homeTextPath.artist,
-                  icon: const Icon(Icons.person),
-                  iconMargin: const EdgeInsets.all(8),
+                  icon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_tabController.index == 2) ...[
+                        const Icon(Icons.play_arrow_rounded),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                      ],
+                      Text(
+                        'Videos',
+                        style: TextStyleTheme.ts15.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  iconMargin: const EdgeInsets.all(4),
                 ),
                 Tab(
-                  text: widget.homeTextPath.album,
-                  icon: const Icon(Icons.album_outlined),
-                  iconMargin: const EdgeInsets.all(8),
+                  icon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_tabController.index == 3) ...[
+                        const Icon(Icons.person),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                      ],
+                      Text(
+                        'Artist',
+                        style: TextStyleTheme.ts15.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  iconMargin: const EdgeInsets.all(4),
+                ),
+                Tab(
+                  icon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_tabController.index == 4) ...[
+                        const Icon(Icons.album_outlined),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                      ],
+                      Text(
+                        'Albums',
+                        style: TextStyleTheme.ts15.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  iconMargin: const EdgeInsets.all(4),
                 ),
               ],
             ),
@@ -112,12 +206,16 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
       },
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: TabBarView(controller: _tabController, children: const [
-          SearchAllWidget(),
-          SearchMusicWidget(),
-          SearchArtistWidget(),
-          SearchAlbumWidget(),
-        ]),
+        child: TabBarView(
+          controller: _tabController,
+          children: const [
+            SearchAllWidget(),
+            SearchMusicWidget(),
+            SearchVideoWidget(),
+            SearchArtistWidget(),
+            SearchAlbumWidget(),
+          ],
+        ),
       ),
     );
   }

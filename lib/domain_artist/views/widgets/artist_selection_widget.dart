@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:musix/domain_music/models/models.dart';
+import 'package:musix/domain_artist/models/models.dart';
 import 'package:musix/theme/theme.dart';
 
-class SongSelectionWidget extends StatelessWidget {
-  const SongSelectionWidget({
+class ArtistSelectionWidget extends StatelessWidget {
+  const ArtistSelectionWidget({
     Key? key,
-    required this.song,
+    required this.artist,
     required this.index,
     this.padding = 16,
     this.isRequestIndex = true,
   }) : super(key: key);
 
-  final Song song;
+  final Artist artist;
   final int index;
   final double padding;
   final bool isRequestIndex;
@@ -24,11 +23,7 @@ class SongSelectionWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-        onTap: () async {
-          final player = AudioPlayer();
-          player.setUrl(song.audioUrl);
-          await player.play();
-        },
+        onTap: () async {},
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Row(
@@ -58,7 +53,7 @@ class SongSelectionWidget extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      song.thumbnailUrl,
+                      artist.imageUrl,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -68,27 +63,13 @@ class SongSelectionWidget extends StatelessWidget {
                 width: 20,
               ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      song.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: ColorTheme.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Text(
-                      song.artistName,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleTheme.ts12.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: ColorTheme.primary,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  artist.name,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyleTheme.ts14.copyWith(
+                    color: ColorTheme.white,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               InkWell(

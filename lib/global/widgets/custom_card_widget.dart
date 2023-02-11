@@ -34,8 +34,10 @@ class CustomCardWidget extends StatelessWidget {
               height: height,
               fit: BoxFit.fill,
               imageUrl: image,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
             ),
           ),
           Align(

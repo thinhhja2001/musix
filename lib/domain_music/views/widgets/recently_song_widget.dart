@@ -8,6 +8,7 @@ class RecentlySongWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const itemCount = 10;
     return Row(
       children: [
         const RotatedTextWidget(text: "Recently Music"),
@@ -15,29 +16,17 @@ class RecentlySongWidget extends StatelessWidget {
           width: 8,
         ),
         Expanded(
-          child: Column(
-            children: [
-              SongSelectionWidget(
-                index: 1,
+          child: SizedBox(
+            height: itemCount * 56,
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: itemCount,
+              itemBuilder: (context, index) => SongSelectionWidget(
+                index: index + 1,
                 song: sampleSong,
               ),
-              SongSelectionWidget(
-                index: 1,
-                song: sampleSong,
-              ),
-              SongSelectionWidget(
-                index: 1,
-                song: sampleSong,
-              ),
-              SongSelectionWidget(
-                index: 1,
-                song: sampleSong,
-              ),
-              SongSelectionWidget(
-                index: 20,
-                song: sampleSong,
-              ),
-            ],
+            ),
           ),
         ),
       ],

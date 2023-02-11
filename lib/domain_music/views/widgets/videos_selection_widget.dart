@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:musix/domain_music/models/models.dart';
 import 'package:musix/theme/theme.dart';
 
-class SongSelectionWidget extends StatelessWidget {
-  const SongSelectionWidget({
+class VideosSelectionWidget extends StatelessWidget {
+  const VideosSelectionWidget({
     Key? key,
-    required this.song,
+    required this.video,
     required this.index,
     this.padding = 16,
     this.isRequestIndex = true,
   }) : super(key: key);
 
-  final Song song;
+  final Video video;
   final int index;
   final double padding;
   final bool isRequestIndex;
@@ -24,11 +23,7 @@ class SongSelectionWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-        onTap: () async {
-          final player = AudioPlayer();
-          player.setUrl(song.audioUrl);
-          await player.play();
-        },
+        onTap: () async {},
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Row(
@@ -50,17 +45,37 @@ class SongSelectionWidget extends StatelessWidget {
                 ),
               ],
               Container(
-                width: 32,
-                height: 32,
+                width: 100,
+                height: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     3,
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      song.thumbnailUrl,
+                      video.thumbnailUrl,
                     ),
                     fit: BoxFit.cover,
+                  ),
+                ),
+                child: Center(
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(180),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 0.8,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        size: 24,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -73,7 +88,7 @@ class SongSelectionWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      song.name,
+                      video.name,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts14.copyWith(
                         color: ColorTheme.white,
@@ -81,7 +96,7 @@ class SongSelectionWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      song.artistName,
+                      video.artistName,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts12.copyWith(
                         fontWeight: FontWeight.w400,
