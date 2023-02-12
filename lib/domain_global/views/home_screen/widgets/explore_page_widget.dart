@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_global/views/widgets.dart';
-import 'package:musix/domain_music/views/widgets.dart';
+import 'package:musix/domain_music/models/models.dart';
 
+import '../../../../domain_album/models/models.dart';
+import '../../../../domain_album/views/widgets.dart';
+import '../../../../domain_music/views/widgets.dart';
+import '../../../../domain_user/views/widgets.dart';
 import '../../../../utils/utils.dart';
 import 'widgets.dart';
 
@@ -13,33 +16,38 @@ class ExplorePageWidget extends StatelessWidget {
     return HomeTemplateWidget(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: const [
-            SongTypeSelectionWidget(),
-            Padding(
-              padding: EdgeInsets.only(
-                top: DistinctConstant.small,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(
+                  top: DistinctConstant.regular,
+                ),
               ),
-            ),
-            FavoriteWidget(),
-            Padding(
-              padding: EdgeInsets.only(
-                top: DistinctConstant.small,
+              const ProfileCardWidget(),
+              const SizedBox(
+                height: 40,
               ),
-            ),
-            KeepPlaybackWidget(),
-            Padding(
-              padding: EdgeInsets.only(
-                top: DistinctConstant.small,
+              const TopicCollectionsWidget(),
+              const SizedBox(
+                height: 60,
               ),
-            ),
-            YourPlaylistWidget(),
-            Padding(
-              padding: EdgeInsets.only(
-                top: DistinctConstant.small,
+              AlbumListWidget(
+                title: 'Recent Album',
+                albums: sampleListAlbum,
+                isShowAll: false,
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 60,
+              ),
+              SongListWidget(
+                title: 'All Song',
+                songs: sampleListSong,
+                isShowIndex: true,
+              ),
+            ],
+          ),
         ),
       ),
     );

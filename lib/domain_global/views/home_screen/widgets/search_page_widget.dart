@@ -4,6 +4,7 @@ import 'package:musix/domain_global/views/widgets.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 
 import '../../../../domain_album/views/widgets.dart';
+import '../../../../domain_music/models/models.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';
 import '../utils/text_path.dart';
@@ -208,12 +209,16 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: TabBarView(
           controller: _tabController,
-          children: const [
-            SearchAllWidget(),
-            SearchMusicWidget(),
-            SearchVideoWidget(),
-            SearchArtistWidget(),
-            SearchAlbumWidget(),
+          children: [
+            const SearchAllWidget(),
+            SongListWidget(
+              title: 'Top Songs',
+              songs: sampleListSong,
+              isShowIndex: false,
+            ),
+            const SearchVideoWidget(),
+            const SearchArtistWidget(),
+            const SearchAlbumWidget(),
           ],
         ),
       ),

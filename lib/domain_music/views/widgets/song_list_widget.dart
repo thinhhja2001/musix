@@ -3,28 +3,37 @@ import 'package:musix/domain_music/models/song.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/global/widgets/rotated_text_widget.dart';
 
-class RecentlySongWidget extends StatelessWidget {
-  const RecentlySongWidget({Key? key}) : super(key: key);
+class SongListWidget extends StatelessWidget {
+  final String title;
+  final List<Song?> songs;
+  final bool isShowIndex;
+
+  const SongListWidget({
+    Key? key,
+    required this.title,
+    required this.songs,
+    this.isShowIndex = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const itemCount = 10;
     return Row(
       children: [
-        const RotatedTextWidget(text: "Recently Music"),
+        RotatedTextWidget(text: title),
         const SizedBox(
           width: 8,
         ),
         Expanded(
           child: SizedBox(
-            height: itemCount * 56,
+            height: songs.length * 56,
             child: ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: itemCount,
+              itemCount: songs.length,
               itemBuilder: (context, index) => SongSelectionWidget(
                 index: index + 1,
-                song: sampleSong,
+                isRequestIndex: isShowIndex,
+                song: songs[index] ?? sampleSong,
               ),
             ),
           ),

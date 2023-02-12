@@ -3,6 +3,9 @@ import 'package:musix/domain_global/views/screens.dart';
 import 'package:musix/domain_user/views/screens.dart';
 import 'package:musix/routing/routing_path.dart';
 
+import '../domain_album/models/models.dart';
+import '../domain_album/views/screens.dart';
+
 Route<dynamic> routeController(RouteSettings settings) {
   final routingPath = settings.name;
 
@@ -31,6 +34,14 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => const HomeScreen(),
+      );
+    case RoutingPath.topicSelection:
+      final topic = settings.arguments as Topic;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => TopicSelectionScreen(
+          topic: topic,
+        ),
       );
     default:
       return MaterialPageRoute(
