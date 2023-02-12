@@ -5,13 +5,15 @@ import 'package:musix/theme/text_style.dart';
 
 class TopicCardWidget extends StatelessWidget {
   final Topic topic;
-  final Size? size;
+  final double? width;
+  final double? height;
   final int? index;
   final VoidCallback? onTap;
   const TopicCardWidget({
     Key? key,
     required this.topic,
-    this.size,
+    this.width,
+    this.height,
     this.index,
     this.onTap,
   }) : super(key: key);
@@ -21,8 +23,8 @@ class TopicCardWidget extends StatelessWidget {
     return CustomCardWidget(
       image: topic.image,
       onTap: onTap,
-      width: size?.width ?? 100,
-      height: size?.height ?? 60,
+      width: width ?? 100,
+      height: height ?? 60,
       title: topic.title,
       titleAlignment: Alignment.center,
       titleTextStyle: TextStyleTheme.ts18.copyWith(

@@ -23,3 +23,16 @@ Video sampleVideo = Video(
   url:
       'https://vnno-pt-2-tf-mp3-s1-zmp3.zmdcdn.me/f0a1e85be91b0045590a/589361203805054074?authen=exp=1675930089~acl=/f0a1e85be91b0045590a/*~hmac=aad4f47b72ba13ef739bc3cb67bc836a&fs=MTY3NTmUsIC1NzI4OTY1Mnx3ZWJWNHwxODMdUngODAdUngMjE1LjmUsIC3',
 );
+
+List<Video> sampleVideoList = [
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+  sampleVideo,
+];

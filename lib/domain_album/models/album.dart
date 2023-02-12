@@ -25,4 +25,8 @@ List<Album> sampleListAlbum = [
   sampleAlbum,
   sampleAlbum,
   sampleAlbum,
+  sampleAlbum,
+  sampleAlbum,
+  sampleAlbum,
+  sampleAlbum,
 ];

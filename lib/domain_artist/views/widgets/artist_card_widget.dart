@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:musix/domain_artist/models/models.dart';
 import 'package:musix/theme/theme.dart';
 
-class ArtistSelectionWidget extends StatelessWidget {
-  const ArtistSelectionWidget({
+class ArtistCardWidget extends StatelessWidget {
+  const ArtistCardWidget({
     Key? key,
     required this.artist,
     required this.index,

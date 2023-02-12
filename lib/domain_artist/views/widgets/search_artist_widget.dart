@@ -5,13 +5,21 @@ import '../../../global/widgets/widgets.dart';
 import '../widgets.dart';
 
 class SearchArtistWidget extends StatelessWidget {
-  const SearchArtistWidget({Key? key}) : super(key: key);
+  final String title;
+  final List<Artist?> artists;
+  final bool isShowIndex;
+  const SearchArtistWidget({
+    Key? key,
+    required this.title,
+    required this.artists,
+    this.isShowIndex = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const RotatedTextWidget(text: 'Top Artist'),
+        RotatedTextWidget(text: title),
         const SizedBox(
           width: 8,
         ),
@@ -21,12 +29,12 @@ class SearchArtistWidget extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: 10,
+                itemCount: artists.length,
                 itemBuilder: (context, index) {
-                  return ArtistSelectionWidget(
-                    artist: sampleArtist,
+                  return ArtistCardWidget(
+                    artist: artists[index] ?? sampleArtist,
                     index: index + 1,
-                    isRequestIndex: false,
+                    isRequestIndex: isShowIndex,
                   );
                 }),
           ),

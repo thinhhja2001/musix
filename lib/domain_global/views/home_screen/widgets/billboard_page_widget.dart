@@ -24,7 +24,7 @@ class BillboardPageWidget extends StatelessWidget {
               ),
               const ProfileCardWidget(),
               const SizedBox(
-                height: 40,
+                height: 20,
               ),
               AlbumListWidget(
                 title: 'New Album',

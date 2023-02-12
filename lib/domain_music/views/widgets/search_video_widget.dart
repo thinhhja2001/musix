@@ -4,29 +4,37 @@ import '../../../global/widgets/widgets.dart';
 import '../../models/models.dart';
 import '../widgets.dart';
 
-class SearchVideoWidget extends StatelessWidget {
-  const SearchVideoWidget({Key? key}) : super(key: key);
+class VideoListWidget extends StatelessWidget {
+  final String title;
+  final List<Video?> videos;
+  final bool isShowIndex;
+  const VideoListWidget({
+    Key? key,
+    required this.title,
+    required this.videos,
+    this.isShowIndex = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const RotatedTextWidget(text: 'Top Videos'),
+        RotatedTextWidget(text: title),
         const SizedBox(
           width: 8,
         ),
         Expanded(
           child: SizedBox(
-            height: 10 * 56,
+            height: videos.length * 56,
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: 10,
+                itemCount: videos.length,
                 itemBuilder: (context, index) {
                   return VideosSelectionWidget(
-                    video: sampleVideo,
+                    video: videos[index] ?? sampleVideo,
                     index: index + 1,
-                    isRequestIndex: false,
+                    isRequestIndex: isShowIndex,
                   );
                 }),
           ),

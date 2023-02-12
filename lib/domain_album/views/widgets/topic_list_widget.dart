@@ -5,8 +5,14 @@ import 'package:musix/routing/routing_path.dart';
 
 import '../../../global/widgets/widgets.dart';
 
-class TopicCollectionsWidget extends StatelessWidget {
-  const TopicCollectionsWidget({Key? key}) : super(key: key);
+class TopicListWidget extends StatelessWidget {
+  final String title;
+  final List<Topic?> topics;
+  const TopicListWidget({
+    Key? key,
+    required this.title,
+    required this.topics,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,7 @@ class TopicCollectionsWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12),
       child: Row(
         children: [
-          const RotatedTextWidget(text: 'Topics'),
+          RotatedTextWidget(text: title),
           const SizedBox(
             width: 8,
           ),
@@ -31,14 +37,14 @@ class TopicCollectionsWidget extends StatelessWidget {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                 ),
-                itemCount: 10,
+                itemCount: topics.length,
                 itemBuilder: (context, index) {
                   return TopicCardWidget(
-                    topic: sampleTopic,
+                    topic: topics[index] ?? sampleTopic,
                     index: index,
                     onTap: () => Navigator.of(context).pushNamed(
                       RoutingPath.topicSelection,
-                      arguments: sampleTopic,
+                      arguments: topics[index] ?? sampleTopic,
                     ),
                   );
                 },

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_album/models/album.dart';
+import 'package:musix/domain_artist/models/artist.dart';
 import 'package:musix/domain_artist/views/widgets.dart';
 import 'package:musix/domain_global/views/widgets.dart';
 import 'package:musix/domain_music/views/widgets.dart';
@@ -216,9 +218,22 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
               songs: sampleListSong,
               isShowIndex: false,
             ),
-            const SearchVideoWidget(),
-            const SearchArtistWidget(),
-            const SearchAlbumWidget(),
+            VideoListWidget(
+              title: 'Top Videos',
+              videos: sampleVideoList,
+              isShowIndex: false,
+            ),
+            SearchArtistWidget(
+              title: 'Top Artists',
+              artists: sampleArtistList,
+              isShowIndex: false,
+            ),
+            AlbumListWidget(
+              title: 'Top Albums',
+              albums: sampleListAlbum,
+              isShowAll: false,
+              isArrangeByGrid: true,
+            ),
           ],
         ),
       ),

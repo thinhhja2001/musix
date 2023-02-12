@@ -29,9 +29,12 @@ class ExplorePageWidget extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const TopicCollectionsWidget(),
+              TopicListWidget(
+                title: 'Topics',
+                topics: sampleTopicList,
+              ),
               const SizedBox(
-                height: 60,
+                height: 40,
               ),
               AlbumListWidget(
                 title: 'Recent Album',
