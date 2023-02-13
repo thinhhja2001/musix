@@ -1,5 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:musix/domain_music/services/musix_audio_handler.dart';
 import 'package:musix/theme/color.dart';
 import 'package:musix/theme/text_style.dart';
 
@@ -17,7 +19,7 @@ class CustomSlider extends StatelessWidget {
 }
 
 class _NonDraggableSlider extends StatelessWidget {
-  const _NonDraggableSlider({super.key});
+  const _NonDraggableSlider();
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,11 @@ class _NonDraggableSlider extends StatelessWidget {
 }
 
 class _DraggableSlider extends StatelessWidget {
-  const _DraggableSlider({super.key});
+  const _DraggableSlider();
 
   @override
   Widget build(BuildContext context) {
+    final musixAudioHandler = GetIt.I.get<MusixAudioHandler>();
     return ProgressBar(
       thumbColor: Colors.white,
       progressBarColor: ColorTheme.primary,
@@ -51,9 +54,10 @@ class _DraggableSlider extends StatelessWidget {
       timeLabelTextStyle: TextStyleTheme.ts14.copyWith(
         fontWeight: FontWeight.w500,
       ),
+      onSeek: (position) => musixAudioHandler.seek(position),
       thumbRadius: 8.0,
-      progress: const Duration(seconds: 50),
-      total: const Duration(seconds: 100),
+      progress: musixAudioHandler.player.position,
+      total: musixAudioHandler.player.duration ?? const Duration(seconds: 0),
     );
   }
 }

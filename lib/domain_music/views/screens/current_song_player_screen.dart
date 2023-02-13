@@ -1,5 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:musix/domain_music/services/musix_audio_handler.dart';
+import 'package:musix/domain_music/views/screens/lyric_screen.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/domain_music/views/widgets/custom_slider.dart';
 import 'package:musix/theme/color.dart';
@@ -8,12 +11,28 @@ import 'package:musix/utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../models/models.dart';
-import '../../services/musix_audio_hander.dart';
 
 class CurrentSongPlayerScreen extends StatelessWidget {
-  const CurrentSongPlayerScreen({
-    super.key,
-  });
+  const CurrentSongPlayerScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      items: const [
+        _CurrentSongPlayerWidget(),
+        LyricScreen(),
+      ],
+      options: CarouselOptions(
+        height: double.infinity,
+        enableInfiniteScroll: false,
+        viewportFraction: 1,
+      ),
+    );
+  }
+}
+
+class _CurrentSongPlayerWidget extends StatelessWidget {
+  const _CurrentSongPlayerWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +59,7 @@ class CurrentSongPlayerScreen extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -52,7 +71,6 @@ class CurrentSongPlayerScreen extends StatelessWidget {
                     ),
                   ),
                   _SongInformationWidget(song: song),
-
                   // Music control field (Add to favorites, Add to playlists, ...)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -121,9 +139,7 @@ class CurrentSongPlayerScreen extends StatelessWidget {
 }
 
 class _CloseButtonWidget extends StatelessWidget {
-  const _CloseButtonWidget({
-    super.key,
-  });
+  const _CloseButtonWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +169,7 @@ class _SongInformationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           song.name,
@@ -160,6 +177,9 @@ class _SongInformationWidget extends StatelessWidget {
             color: Colors.white,
             fontWeight: FontWeight.w500,
           ),
+        ),
+        const SizedBox(
+          height: 10,
         ),
         Text(
           song.artistName,

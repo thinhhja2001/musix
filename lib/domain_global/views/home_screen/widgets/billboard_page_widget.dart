@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:musix/domain_album/views/widgets.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/domain_user/views/widgets/profile_card_widget.dart';

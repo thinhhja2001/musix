@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/config/app.dart';
-import 'package:musix/domain_music/services/musix_audio_hander.dart';
 
+import 'domain_music/services/musix_audio_handler.dart';
 import 'utils/utils.dart';
 
 void main() async {
