@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.13"
+  audio_video_progress_bar:
+    dependency: "direct main"
+    description:
+      name: audio_video_progress_bar
+      sha256: "38d8efe20cd0ff2bfad648396ae3d4ba6f8058b7d8b6ee6cb26e3245eda58ddd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   bloc:
     dependency: transitive
     description:
@@ -781,6 +789,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  zingmp3_api:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "45102e0d531ee3b11f6b94e6859ad47b08700584"
+      url: "https://github.com/thinhhja2001/zingmp3_api"
+    source: git
+    version: "1.0.0"
 sdks:
-  dart: ">=2.18.0 <4.0.0"
+  dart: ">=2.19.0 <4.0.0"
   flutter: ">=3.3.0"

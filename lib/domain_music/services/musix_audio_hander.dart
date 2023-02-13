@@ -4,21 +4,25 @@ import 'package:just_audio/just_audio.dart';
 import '../models/models.dart';
 
 class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
-  final _player = AudioPlayer();
+  final player = AudioPlayer();
+  //Singleton to display currentSong
+  Song currentSong = sampleSong;
 
   /// Initialize our audio handler.
   MusixAudioHandler() {
     // So that our clients (the Flutter UI and the system notification) know
     // what state to display, here we set up our audio handler to broadcast all
     // playback state changes as they happen via playbackState...
-    _player.playbackEventStream.map(_transformEvent).pipe(playbackState);
+    player.playbackEventStream.map(_transformEvent).pipe(playbackState);
+
     // ... and also the current media item via mediaItem.
   }
 
   void setSong(Song song) async {
     //Get the song duration since _player.seAudioSource will get the duration as NULL
-    final duration = await _player.setUrl(song.audioUrl);
+    final duration = await player.setUrl(song.audioUrl);
 
+    currentSong = song;
     //To add the song to the background service, you must do the code below
     final item = MediaItem(
       id: song.audioUrl,
@@ -29,20 +33,23 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
     );
 
     mediaItem.add(item);
-    _player.setAudioSource(AudioSource.uri(Uri.parse(item.id)));
+    player.setAudioSource(AudioSource.uri(Uri.parse(item.id)));
   }
 
   @override
-  Future<void> play() => _player.play();
+  Future<void> play() => player.play();
 
   @override
-  Future<void> pause() => _player.pause();
+  Future<void> pause() => player.pause();
 
   @override
-  Future<void> seek(Duration position) => _player.seek(position);
+  Future<void> seek(Duration position) async {
+    print('seeking to new position: $position');
+    player.seek(position);
+  }
 
   @override
-  Future<void> stop() => _player.stop();
+  Future<void> stop() => player.stop();
 
   /// Transform a just_audio event into an audio_service state.
   ///
@@ -53,7 +60,7 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
     return PlaybackState(
       controls: [
         MediaControl.rewind,
-        if (_player.playing) MediaControl.pause else MediaControl.play,
+        if (player.playing) MediaControl.pause else MediaControl.play,
         MediaControl.stop,
         MediaControl.fastForward,
       ],
@@ -69,11 +76,11 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
         ProcessingState.buffering: AudioProcessingState.buffering,
         ProcessingState.ready: AudioProcessingState.ready,
         ProcessingState.completed: AudioProcessingState.completed,
-      }[_player.processingState]!,
-      playing: _player.playing,
-      updatePosition: _player.position,
-      bufferedPosition: _player.bufferedPosition,
-      speed: _player.speed,
+      }[player.processingState]!,
+      playing: player.playing,
+      updatePosition: player.position,
+      bufferedPosition: player.bufferedPosition,
+      speed: player.speed,
       queueIndex: event.currentIndex,
     );
   }

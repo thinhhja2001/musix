@@ -4,3 +4,6 @@ export 'widgets/search_music_widget.dart';
 export 'widgets/weekly_song_widget.dart';
 export 'widgets/song_selection_widget.dart';
 export 'widgets/current_song_player_widget.dart';
+export 'widgets/control_widgets/play_button_widget.dart';
+export 'widgets/control_widgets/skip_to_next_button_widget.dart';
+export 'widgets/control_widgets/skip_to_previous_button_widget.dart';
