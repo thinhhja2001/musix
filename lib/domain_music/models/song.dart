@@ -29,12 +29,12 @@ class Song {
 
 Song sampleSong = Song(
     id: 'id',
-    name: 'Nguoi nhu anh',
+    name: 'ANh nang cua anh',
     audioUrl:
-        'https://s1.mp3.aka.zdn.vn/a63b11400c07e559bc16/6706952041522412104?authen=exp=1676096598~acl=/a63b11400c07e559bc16/*~hmac=6887051dba8c7acf84f405b83ee5f581&fs=MTY3NTkyMzmUsIC5ODIwNnx3ZWJWNHwxMTYdUngOTYdUngNDQdUngMTQz',
+        'https://vnso-zn-15-tf-mp3-s1-zmp3.zmdcdn.me/79cec7744e30a76efe21/561239208516760182?authen=exp=1676356051~acl=/79cec7744e30a76efe21/*~hmac=4f34d79765a12f9459d5e946c6a37d5e&fs=MTY3NjE4MzI1MTQ4OXx3ZWJWNHwxNzEdUngMjU1LjmUsIC4LjIzMg',
     lyricUrl:
-        'https://static-zmp3.zmdcdn.me/lyrics/d/f/9/9/df99fc219774148ef4719acabfd67dd4.lrc',
-    artistName: 'Mai Tien Dung',
-    artistLink: 'Mai tien dung',
+        'https://static-zmp3.zmdcdn.me/lyrics/2017/01/12/2290252da79e87550a07e858db86579f_1075798557.lrc',
+    artistName: 'Duc Phuc',
+    artistLink: 'Duc Phuc',
     thumbnailUrl:
-        'https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_jpeg/cover/d/c/9/e/dc9e0327d6e99d57cdcd54981cb5989d.jpg?fs=MTY3NTmUsIC1NzI4OTYxN3x3ZWJWNHwxODMdUngODAdUngMjE1LjmUsIC3');
+        'https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_jpeg/avatars/d/7/d7f34aa6b1112e4b605f6c6e7eccd162_1509437674.jpg?fs=MTY3NjE4MzI1MTQ4M3x3ZWJWNHwxNzEdUngMjU1LjmUsIC4LjIzMg');

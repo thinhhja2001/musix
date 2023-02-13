@@ -12,6 +12,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  zingmp3_api:
+    git:
+      url: https://github.com/thinhhja2001/zingmp3_api
+      ref: master
 
 
   cupertino_icons: ^1.0.5
@@ -30,6 +34,9 @@ dependencies:
   percent_indicator: ^4.2.2
   get_it: ^7.2.0
   audio_service: ^0.18.9
+  audio_video_progress_bar: ^1.0.0
+  flutter_lyric: ^2.0.4+6
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

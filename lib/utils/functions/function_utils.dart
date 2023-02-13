@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:http/http.dart' as http;
 
 Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
   final paletteGenerator = await PaletteGenerator.fromImageProvider(
@@ -17,4 +20,17 @@ String printDuration(Duration duration) {
   } else {
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
+}
+
+Future<String> getLyric(String lyricUrl) async {
+  String lyric = "";
+  try {
+    final response = await http.get(
+      Uri.parse(lyricUrl),
+    );
+    lyric = utf8.decode(response.bodyBytes);
+  } catch (e) {
+    lyric = "";
+  }
+  return lyric;
 }

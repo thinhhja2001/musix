@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/services/musix_audio_hander.dart';
+import 'package:musix/domain_music/services/musix_audio_handler.dart';
 import 'package:musix/theme/theme.dart';
 
 import 'package:musix/utils/utils.dart';
+import 'package:zingmp3_api/zingmp3_api.dart';
 
 class SongSelectionWidget extends StatelessWidget {
   const SongSelectionWidget({Key? key, required this.song}) : super(key: key);
@@ -14,6 +15,8 @@ class SongSelectionWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         final player = GetIt.I.get<MusixAudioHandler>();
+        final songFrom = await ZingMP3API.getSongDataByKey("ZW78BW9D");
+        print("song data is $songFrom");
         player.setSong(song);
         await player.play();
       },
