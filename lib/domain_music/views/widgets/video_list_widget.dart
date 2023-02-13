@@ -31,7 +31,7 @@ class VideoListWidget extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemCount: videos.length,
                 itemBuilder: (context, index) {
-                  return VideosSelectionWidget(
+                  return VideoCardWidget(
                     video: videos[index] ?? sampleVideo,
                     index: index + 1,
                     isRequestIndex: isShowIndex,

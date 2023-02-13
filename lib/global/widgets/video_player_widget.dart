@@ -135,20 +135,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
                             ),
                           ),
                         ),
-                        // VideoProgressIndicator(
-                        //   _videoController!,
-                        //   allowScrubbing: true,
-                        //   colors: VideoProgressColors(
-                        //     playedColor: ColorTheme.primaryLighten.withOpacity(0.8),
-                        //     backgroundColor: ColorTheme.grey100.withOpacity(0.6),
-                        //   ),
-                        //   padding: EdgeInsets.only(
-                        //     top: 256 / 320 * widget.height,
-                        //     bottom: 60 / 320 * widget.height,
-                        //     left: 16,
-                        //     right: 16,
-                        //   ),
-                        // ),
                         if (_status == VideoStatus.pause) ...[
                           Center(
                             child: InkWell(

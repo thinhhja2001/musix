@@ -20,22 +20,25 @@ class BillboardPageWidget extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 40,
+                height: 24,
               ),
               const ProfileCardWidget(),
               const SizedBox(
-                height: 20,
+                height: 24,
               ),
               AlbumListWidget(
                 title: 'New Album',
                 albums: sampleListAlbum,
               ),
               const SizedBox(
-                height: 60,
+                height: 32,
               ),
-              const WeeklySongWidget(),
+              VideoSelectionWidget(
+                title: 'Weekly',
+                video: sampleVideo,
+              ),
               const SizedBox(
-                height: 60,
+                height: 32,
               ),
               SongListWidget(
                 title: 'Recently Music',
@@ -43,7 +46,7 @@ class BillboardPageWidget extends StatelessWidget {
                 isShowIndex: true,
               ),
               const SizedBox(
-                height: 40,
+                height: 32,
               ),
             ],
           ),

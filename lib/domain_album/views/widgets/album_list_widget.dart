@@ -38,6 +38,7 @@ class AlbumListWidget extends StatelessWidget {
           if (isArrangeByGrid) ...[
             Expanded(
               child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: albums.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

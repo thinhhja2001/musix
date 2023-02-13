@@ -5,7 +5,6 @@ import '../../../../domain_album/models/models.dart';
 import '../../../../domain_album/views/widgets.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../domain_user/views/widgets.dart';
-import '../../../../utils/utils.dart';
 import 'widgets.dart';
 
 class ExplorePageWidget extends StatelessWidget {
@@ -20,21 +19,19 @@ class ExplorePageWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  top: DistinctConstant.regular,
-                ),
+              const SizedBox(
+                height: 24,
               ),
               const ProfileCardWidget(),
               const SizedBox(
-                height: 40,
+                height: 24,
               ),
               TopicListWidget(
                 title: 'Topics',
                 topics: sampleTopicList,
               ),
               const SizedBox(
-                height: 40,
+                height: 24,
               ),
               AlbumListWidget(
                 title: 'Recent Album',
@@ -42,12 +39,15 @@ class ExplorePageWidget extends StatelessWidget {
                 isShowAll: false,
               ),
               const SizedBox(
-                height: 60,
+                height: 24,
               ),
               SongListWidget(
                 title: 'All Song',
                 songs: sampleListSong,
                 isShowIndex: true,
+              ),
+              const SizedBox(
+                height: 24,
               ),
             ],
           ),

@@ -3,19 +3,21 @@ import 'package:just_audio/just_audio.dart';
 import 'package:musix/domain_music/models/models.dart';
 import 'package:musix/theme/theme.dart';
 
-class SongSelectionWidget extends StatelessWidget {
-  const SongSelectionWidget({
+class SongCardWidget extends StatelessWidget {
+  const SongCardWidget({
     Key? key,
     required this.song,
     required this.index,
     this.padding = 16,
     this.isRequestIndex = true,
+    this.isMini = false,
   }) : super(key: key);
 
   final Song song;
   final int index;
   final double padding;
   final bool isRequestIndex;
+  final bool isMini;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +52,8 @@ class SongSelectionWidget extends StatelessWidget {
                 ),
               ],
               Container(
-                width: 32,
-                height: 32,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     3,
@@ -88,6 +90,16 @@ class SongSelectionWidget extends StatelessWidget {
                         color: ColorTheme.primary,
                       ),
                     ),
+                    if (isMini) ...[
+                      Text(
+                        'Song',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyleTheme.ts10.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),

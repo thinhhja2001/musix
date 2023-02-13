@@ -30,7 +30,7 @@ class SongListWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: songs.length,
-              itemBuilder: (context, index) => SongSelectionWidget(
+              itemBuilder: (context, index) => SongCardWidget(
                 index: index + 1,
                 isRequestIndex: isShowIndex,
                 song: songs[index] ?? sampleSong,

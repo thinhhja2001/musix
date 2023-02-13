@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/text_style.dart';
 
-import '../../../utils/utils.dart';
-
 class ProfileCardWidget extends StatelessWidget {
   const ProfileCardWidget({Key? key}) : super(key: key);
 
   final String userName = 'Nguyen Van A';
-  final String avatar = AssetPath.signInCover;
+  final String avatar =
+      'https://plus.unsplash.com/premium_photo-1670090984087-d2c5199d9702?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80';
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

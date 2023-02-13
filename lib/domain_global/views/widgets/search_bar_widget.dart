@@ -5,10 +5,12 @@ import '../../../theme/theme.dart';
 class SearchBarWidget extends StatefulWidget {
   final String hintText;
   final List<String?> recommends;
+  final Function(String)? onTextChange;
   const SearchBarWidget({
     Key? key,
     required this.hintText,
     required this.recommends,
+    this.onTextChange,
   }) : super(key: key);
 
   @override
@@ -17,7 +19,15 @@ class SearchBarWidget extends StatefulWidget {
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
   final _searchController = TextEditingController();
-  bool _isShowAdvance = true;
+  bool _isShowAdvance = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      widget.onTextChange?.call(_searchController.text);
+    });
+  }
 
   @override
   void dispose() {

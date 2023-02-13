@@ -9,12 +9,14 @@ class ArtistCardWidget extends StatelessWidget {
     required this.index,
     this.padding = 16,
     this.isRequestIndex = true,
+    this.isMini = false,
   }) : super(key: key);
 
   final Artist artist;
   final int index;
   final double padding;
   final bool isRequestIndex;
+  final bool isMini;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +47,8 @@ class ArtistCardWidget extends StatelessWidget {
                 ),
               ],
               Container(
-                width: 32,
-                height: 32,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     3,
@@ -63,13 +65,30 @@ class ArtistCardWidget extends StatelessWidget {
                 width: 20,
               ),
               Expanded(
-                child: Text(
-                  artist.name,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyleTheme.ts14.copyWith(
-                    color: ColorTheme.white,
-                    fontWeight: FontWeight.w400,
-                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      artist.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyleTheme.ts14.copyWith(
+                        color: ColorTheme.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    if (isMini) ...[
+                      Text(
+                        'Artist',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyleTheme.ts10.copyWith(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ]
+                  ],
                 ),
               ),
               InkWell(
