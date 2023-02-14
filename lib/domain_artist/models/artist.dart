@@ -26,4 +26,12 @@ List<Artist> sampleArtistList = [
   sampleArtist,
   sampleArtist,
   sampleArtist,
+  sampleArtist,
+  sampleArtist,
+  sampleArtist,
+  sampleArtist,
+  sampleArtist,
+  sampleArtist,
+  sampleArtist,
+  sampleArtist,
 ];

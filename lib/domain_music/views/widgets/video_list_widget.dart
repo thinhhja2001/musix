@@ -28,7 +28,7 @@ class VideoListWidget extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: videos.length * 56,
+            height: videos.length * 120,
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: isScrollable

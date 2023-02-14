@@ -27,7 +27,7 @@ class SongListWidget extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: songs.length * 56,
+            height: songs.length * 72,
             child: ListView.builder(
               shrinkWrap: true,
               physics: isScrollable

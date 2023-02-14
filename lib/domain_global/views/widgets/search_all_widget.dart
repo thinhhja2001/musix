@@ -32,7 +32,7 @@ class SearchAllWidget extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: listDynamic.length * 56,
+            height: listDynamic.length * 72,
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: isScrollable

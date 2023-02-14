@@ -28,7 +28,7 @@ class SearchArtistWidget extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: 10 * 56,
+            height: artists.length * 72,
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: isScrollable
