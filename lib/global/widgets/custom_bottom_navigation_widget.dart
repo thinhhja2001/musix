@@ -63,7 +63,7 @@ class CustomBottomBarWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            CurrentSongPlayerWidget(song: sampleSong),
+            const CurrentSongPlayerWidget(),
             Container(
               height: 72,
               decoration: BoxDecoration(
