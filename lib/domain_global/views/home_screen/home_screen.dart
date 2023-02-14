@@ -29,16 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
       ),
-      body: SafeArea(
-        child: IndexedStack(
-          index: indexBottomNavigation,
-          children: [
-            const BillboardPageWidget(),
-            const ExplorePageWidget(),
-            SearchPageWidget(
-              homeTextPath: homeTextPath,
-            )
-          ],
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: SafeArea(
+          child: IndexedStack(
+            index: indexBottomNavigation,
+            children: [
+              const BillboardPageWidget(),
+              const ExplorePageWidget(),
+              SearchPageWidget(
+                homeTextPath: homeTextPath,
+              )
+            ],
+          ),
         ),
       ),
     );

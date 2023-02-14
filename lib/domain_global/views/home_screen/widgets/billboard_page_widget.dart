@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:musix/domain_album/views/widgets.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/domain_user/views/widgets/profile_card_widget.dart';
 
-import '../../../../utils/utils.dart';
+import '../../../../domain_album/models/models.dart';
+import '../../../../domain_music/models/models.dart';
 import 'widgets.dart';
 
 class BillboardPageWidget extends StatelessWidget {
@@ -18,35 +18,35 @@ class BillboardPageWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: DistinctConstant.regular,
-                ),
+            children: [
+              const SizedBox(
+                height: 24,
               ),
-              ProfileCardWidget(),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: DistinctConstant.small,
-                ),
+              const ProfileCardWidget(),
+              const SizedBox(
+                height: 24,
               ),
-              NewAlbumWidget(),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: DistinctConstant.small,
-                ),
+              AlbumListWidget(
+                title: 'New Album',
+                albums: sampleListAlbum,
               ),
-              WeeklySongWidget(),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: DistinctConstant.small,
-                ),
+              const SizedBox(
+                height: 32,
               ),
-              RecentlySongWidget(),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: DistinctConstant.medium,
-                ),
+              VideoSelectionWidget(
+                title: 'Weekly',
+                video: sampleVideo,
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              SongListWidget(
+                title: 'Recently Music',
+                songs: sampleListSong,
+                isShowIndex: true,
+              ),
+              const SizedBox(
+                height: 32,
               ),
             ],
           ),

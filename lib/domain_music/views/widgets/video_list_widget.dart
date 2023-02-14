@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_artist/models/models.dart';
 
 import '../../../global/widgets/widgets.dart';
+import '../../models/models.dart';
 import '../widgets.dart';
 
-class SearchArtistWidget extends StatelessWidget {
+class VideoListWidget extends StatelessWidget {
   final String title;
-  final List<Artist?> artists;
+  final List<Video?> videos;
   final bool isShowIndex;
   final bool isScrollable;
 
-  const SearchArtistWidget({
+  const VideoListWidget({
     Key? key,
     required this.title,
-    required this.artists,
+    required this.videos,
     this.isShowIndex = false,
     this.isScrollable = false,
   }) : super(key: key);
@@ -28,16 +28,16 @@ class SearchArtistWidget extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: 10 * 56,
+            height: videos.length * 56,
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: isScrollable
                     ? const BouncingScrollPhysics()
                     : const NeverScrollableScrollPhysics(),
-                itemCount: artists.length,
+                itemCount: videos.length,
                 itemBuilder: (context, index) {
-                  return ArtistCardWidget(
-                    artist: artists[index] ?? sampleArtist,
+                  return VideoCardWidget(
+                    video: videos[index] ?? sampleVideo,
                     index: index + 1,
                     isRequestIndex: isShowIndex,
                   );

@@ -1,16 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_album/models/models.dart';
+import 'package:musix/domain_album/views/widgets.dart';
+import 'package:musix/domain_artist/models/artist.dart';
+import 'package:musix/domain_artist/views/widgets.dart';
 
+import '../../../domain_music/models/models.dart';
+import '../../../domain_music/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
 
 class SearchAllWidget extends StatelessWidget {
-  const SearchAllWidget({Key? key}) : super(key: key);
+  final String title;
+  final List<dynamic> listDynamic;
+  final bool isShowIndex;
+  final bool isScrollable;
+
+  const SearchAllWidget({
+    Key? key,
+    required this.title,
+    required this.listDynamic,
+    this.isShowIndex = false,
+    this.isScrollable = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
-        RotatedTextWidget(text: 'ALL'),
-        Text('SEARCH ALL'),
+      children: [
+        RotatedTextWidget(text: title),
+        const SizedBox(
+          width: 8,
+        ),
+        Expanded(
+          child: SizedBox(
+            height: listDynamic.length * 56,
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: isScrollable
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
+                itemCount: listDynamic.length,
+                itemBuilder: (context, index) {
+                  switch (listDynamic[index].runtimeType.toString()) {
+                    case 'Song':
+                      return SongCardWidget(
+                        isRequestIndex: isShowIndex,
+                        song: listDynamic[index] as Song,
+                        index: index + 1,
+                        isHasType: true,
+                        onPress: () {},
+                      );
+                    case 'Artist':
+                      return ArtistCardWidget(
+                        artist: listDynamic[index] as Artist,
+                        index: index + 1,
+                        isRequestIndex: isShowIndex,
+                        isHasType: true,
+                        onPress: () {},
+                      );
+                    case 'Album':
+                      return AlbumCardWidget(
+                        album: listDynamic[index] as Album,
+                        isRequestIndex: isShowIndex,
+                        index: index,
+                        isHasType: true,
+                        onPress: () {},
+                      );
+                    case 'Video':
+                      return VideoCardWidget(
+                        video: listDynamic[index] as Video,
+                        index: index,
+                        isRequestIndex: isShowIndex,
+                        isHasType: true,
+                        onPress: () {},
+                      );
+                    default:
+                      return const SizedBox.shrink();
+                  }
+                }),
+          ),
+        )
       ],
     );
   }
