@@ -7,26 +7,39 @@ class VideoCardWidget extends StatelessWidget {
     Key? key,
     required this.video,
     required this.index,
+    this.onPress,
     this.padding = 16,
     this.isRequestIndex = true,
-    this.isMini = false,
+    this.isHasType = false,
+    this.type = 'Video',
   }) : super(key: key);
 
   final Video video;
   final int index;
-  final double padding;
+  final VoidCallback? onPress;
+
+  /// [isRequestIndex] for check should place index in start of card
   final bool isRequestIndex;
-  final bool isMini;
+
+  /// [isHasType] for check type of card
+  final bool isHasType;
+
+  /// [type] for check type of card
+  final String type;
+
+  /// [padding] for top and right
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
-    if (isMini) {
+    /// Support for showing for dynamic type
+    if (isHasType) {
       return Padding(
         padding: EdgeInsets.only(top: padding, right: padding),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-          onTap: () async {},
+          onTap: onPress,
           child: Padding(
             padding: const EdgeInsets.all(4),
             child: Row(
@@ -87,7 +100,7 @@ class VideoCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Video',
+                        type,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleTheme.ts10.copyWith(
                           fontWeight: FontWeight.w400,
@@ -125,12 +138,14 @@ class VideoCardWidget extends StatelessWidget {
         ),
       );
     }
+
+    /// Default Widget
     return Padding(
       padding: EdgeInsets.only(top: padding, right: padding),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-        onTap: () async {},
+        onTap: onPress,
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Row(

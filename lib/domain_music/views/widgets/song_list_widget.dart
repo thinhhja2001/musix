@@ -7,12 +7,14 @@ class SongListWidget extends StatelessWidget {
   final String title;
   final List<Song?> songs;
   final bool isShowIndex;
+  final bool isScrollable;
 
   const SongListWidget({
     Key? key,
     required this.title,
     required this.songs,
     this.isShowIndex = true,
+    this.isScrollable = false,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,9 @@ class SongListWidget extends StatelessWidget {
             height: songs.length * 56,
             child: ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: isScrollable
+                  ? const BouncingScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
               itemCount: songs.length,
               itemBuilder: (context, index) => SongCardWidget(
                 index: index + 1,

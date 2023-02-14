@@ -7,16 +7,28 @@ class ArtistCardWidget extends StatelessWidget {
     Key? key,
     required this.artist,
     required this.index,
+    this.onPress,
     this.padding = 16,
     this.isRequestIndex = true,
-    this.isMini = false,
+    this.isHasType = false,
+    this.type = 'Artist',
   }) : super(key: key);
 
   final Artist artist;
   final int index;
-  final double padding;
+  final VoidCallback? onPress;
+
+  /// [isRequestIndex] for check should place index in start of card
   final bool isRequestIndex;
-  final bool isMini;
+
+  /// [isHasType] for check type of card
+  final bool isHasType;
+
+  /// [type] for check type of card
+  final String type;
+
+  /// [padding] for top and right
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +37,7 @@ class ArtistCardWidget extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-        onTap: () async {},
+        onTap: onPress,
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Row(
@@ -78,9 +90,9 @@ class ArtistCardWidget extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    if (isMini) ...[
+                    if (isHasType) ...[
                       Text(
-                        'Artist',
+                        type,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleTheme.ts10.copyWith(
                           color: Colors.white70,

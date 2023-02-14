@@ -18,3 +18,10 @@ final sampleAllList = [
   sampleAlbum,
   sampleSong
 ];
+
+List<String?> recommends = [
+  r'Chairlie Puth',
+  'Fall Out Boy',
+  'Fall Out Lucky Boy',
+  'Happy',
+];

@@ -8,11 +8,14 @@ class SearchArtistWidget extends StatelessWidget {
   final String title;
   final List<Artist?> artists;
   final bool isShowIndex;
+  final bool isScrollable;
+
   const SearchArtistWidget({
     Key? key,
     required this.title,
     required this.artists,
     this.isShowIndex = false,
+    this.isScrollable = false,
   }) : super(key: key);
 
   @override
@@ -28,7 +31,9 @@ class SearchArtistWidget extends StatelessWidget {
             height: 10 * 56,
             child: ListView.builder(
                 shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
+                physics: isScrollable
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
                 itemCount: artists.length,
                 itemBuilder: (context, index) {
                   return ArtistCardWidget(

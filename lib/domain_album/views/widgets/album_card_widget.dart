@@ -8,10 +8,19 @@ class AlbumCardWidget extends StatelessWidget {
   final double? width;
   final double? height;
   final int? index;
-  final VoidCallback? onTap;
+  final VoidCallback? onPress;
   final Album album;
-  final bool isMini;
+
+  /// [isRequestIndex] for check should place index in start of card
   final bool isRequestIndex;
+
+  /// [isHasType] for check type of card
+  final bool isHasType;
+
+  /// [type] for check type of card
+  final String type;
+
+  /// [padding] for top and right
   final double padding;
 
   const AlbumCardWidget({
@@ -19,22 +28,24 @@ class AlbumCardWidget extends StatelessWidget {
     this.width,
     this.height,
     this.index,
-    this.onTap,
+    this.onPress,
     required this.album,
-    this.isMini = false,
+    this.isHasType = false,
     this.isRequestIndex = false,
     this.padding = 16,
+    this.type = 'Album',
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (isMini) {
+    /// Support for showing for dynamic type
+    if (isHasType) {
       return Padding(
         padding: EdgeInsets.only(top: padding, right: padding),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-          onTap: () async {},
+          onTap: onPress,
           child: Padding(
             padding: const EdgeInsets.all(4),
             child: Row(
@@ -95,7 +106,7 @@ class AlbumCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Album',
+                        type,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleTheme.ts10.copyWith(
                           fontWeight: FontWeight.w400,
@@ -140,6 +151,7 @@ class AlbumCardWidget extends StatelessWidget {
       image: album.thumbnailUrl,
       title: album.albumName,
       subTitle: album.artistName,
+      onTap: onPress,
       titleTextStyle: TextStyleTheme.ts15.copyWith(
         fontWeight: FontWeight.w500,
       ),

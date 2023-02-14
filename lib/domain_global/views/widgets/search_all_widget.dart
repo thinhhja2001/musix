@@ -11,13 +11,15 @@ import '../../../global/widgets/widgets.dart';
 class SearchAllWidget extends StatelessWidget {
   final String title;
   final List<dynamic> listDynamic;
-  final bool isRequestIndex;
+  final bool isShowIndex;
+  final bool isScrollable;
 
   const SearchAllWidget({
     Key? key,
     required this.title,
     required this.listDynamic,
-    this.isRequestIndex = false,
+    this.isShowIndex = false,
+    this.isScrollable = false,
   }) : super(key: key);
 
   @override
@@ -33,37 +35,43 @@ class SearchAllWidget extends StatelessWidget {
             height: listDynamic.length * 56,
             child: ListView.builder(
                 shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
+                physics: isScrollable
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
                 itemCount: listDynamic.length,
                 itemBuilder: (context, index) {
                   switch (listDynamic[index].runtimeType.toString()) {
                     case 'Song':
                       return SongCardWidget(
-                        isRequestIndex: isRequestIndex,
+                        isRequestIndex: isShowIndex,
                         song: listDynamic[index] as Song,
                         index: index + 1,
-                        isMini: true,
+                        isHasType: true,
+                        onPress: () {},
                       );
                     case 'Artist':
                       return ArtistCardWidget(
                         artist: listDynamic[index] as Artist,
                         index: index + 1,
-                        isRequestIndex: isRequestIndex,
-                        isMini: true,
+                        isRequestIndex: isShowIndex,
+                        isHasType: true,
+                        onPress: () {},
                       );
                     case 'Album':
                       return AlbumCardWidget(
                         album: listDynamic[index] as Album,
-                        isRequestIndex: isRequestIndex,
+                        isRequestIndex: isShowIndex,
                         index: index,
-                        isMini: true,
+                        isHasType: true,
+                        onPress: () {},
                       );
                     case 'Video':
                       return VideoCardWidget(
                         video: listDynamic[index] as Video,
                         index: index,
-                        isRequestIndex: isRequestIndex,
-                        isMini: true,
+                        isRequestIndex: isShowIndex,
+                        isHasType: true,
+                        onPress: () {},
                       );
                     default:
                       return const SizedBox.shrink();

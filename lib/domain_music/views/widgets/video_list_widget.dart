@@ -8,11 +8,14 @@ class VideoListWidget extends StatelessWidget {
   final String title;
   final List<Video?> videos;
   final bool isShowIndex;
+  final bool isScrollable;
+
   const VideoListWidget({
     Key? key,
     required this.title,
     required this.videos,
     this.isShowIndex = false,
+    this.isScrollable = false,
   }) : super(key: key);
 
   @override
@@ -28,7 +31,9 @@ class VideoListWidget extends StatelessWidget {
             height: videos.length * 56,
             child: ListView.builder(
                 shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
+                physics: isScrollable
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
                 itemCount: videos.length,
                 itemBuilder: (context, index) {
                   return VideoCardWidget(

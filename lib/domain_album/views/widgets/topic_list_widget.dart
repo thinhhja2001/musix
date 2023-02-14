@@ -42,7 +42,7 @@ class TopicListWidget extends StatelessWidget {
                   return TopicCardWidget(
                     topic: topics[index] ?? sampleTopic,
                     index: index,
-                    onTap: () => Navigator.of(context).pushNamed(
+                    onPress: () => Navigator.of(context).pushNamed(
                       RoutingPath.topicSelection,
                       arguments: topics[index] ?? sampleTopic,
                     ),

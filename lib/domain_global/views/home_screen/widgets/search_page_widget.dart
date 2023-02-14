@@ -49,13 +49,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    List<String?> recommends = [
-      'Chairlie Puth',
-      'Fall Out Boy',
-      'Fall Out Lucky Boy',
-      'Happy',
-    ];
-    recommends.sort((a, b) => a!.length.compareTo(b!.length));
     return NestedScrollView(
       physics: const NeverScrollableScrollPhysics(),
       headerSliverBuilder: (context, value) {
@@ -219,27 +212,33 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                   SearchAllWidget(
                     title: 'Top Searching',
                     listDynamic: sampleAllList,
+                    isShowIndex: false,
+                    isScrollable: true,
                   ),
                   SongListWidget(
                     title: 'Top Songs',
                     songs: sampleListSong,
                     isShowIndex: false,
+                    isScrollable: true,
                   ),
                   VideoListWidget(
                     title: 'Top Videos',
                     videos: sampleVideoList,
                     isShowIndex: false,
+                    isScrollable: true,
                   ),
                   SearchArtistWidget(
                     title: 'Top Artists',
                     artists: sampleArtistList,
                     isShowIndex: false,
+                    isScrollable: true,
                   ),
                   AlbumListWidget(
                     title: 'Top Albums',
                     albums: sampleListAlbum,
                     isShowAll: false,
                     isArrangeByGrid: true,
+                    isScrollable: true,
                   ),
                 ],
               ),

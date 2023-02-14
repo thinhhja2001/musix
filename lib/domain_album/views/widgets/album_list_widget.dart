@@ -13,6 +13,8 @@ class AlbumListWidget extends StatelessWidget {
   final double? width;
   final double? height;
   final bool isArrangeByGrid;
+  final bool isScrollable;
+
   const AlbumListWidget({
     Key? key,
     required this.title,
@@ -21,6 +23,7 @@ class AlbumListWidget extends StatelessWidget {
     this.width,
     this.height,
     this.isArrangeByGrid = false,
+    this.isScrollable = false,
   }) : super(key: key);
 
   @override
@@ -38,7 +41,9 @@ class AlbumListWidget extends StatelessWidget {
           if (isArrangeByGrid) ...[
             Expanded(
               child: GridView.builder(
-                physics: const BouncingScrollPhysics(),
+                physics: isScrollable
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
                 itemCount: albums.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

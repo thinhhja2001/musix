@@ -24,6 +24,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   void initState() {
     super.initState();
+    widget.recommends.sort((a, b) => a!.length.compareTo(b!.length));
     _searchController.addListener(() {
       widget.onTextChange?.call(_searchController.text);
     });
