@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:musix/domain_music/models/song.dart';
+import 'package:musix/domain_music/services/musix_audio_handler.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/global/widgets/rotated_text_widget.dart';
 
@@ -19,6 +21,8 @@ class SongListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MusixAudioHandler musixAudioHandler =
+        GetIt.I.get<MusixAudioHandler>();
     return Row(
       children: [
         RotatedTextWidget(text: title),
@@ -39,6 +43,10 @@ class SongListWidget extends StatelessWidget {
                     index: index + 1,
                     isRequestIndex: isShowIndex,
                     song: songs[index] ?? sampleSong,
+                    onPress: () => {
+                      musixAudioHandler.setSong(songs[index]!),
+                      musixAudioHandler.play(),
+                    },
                   ),
                 ),
               ],
