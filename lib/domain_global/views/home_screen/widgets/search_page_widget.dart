@@ -237,7 +237,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     title: 'Top Albums',
                     albums: sampleListAlbum,
                     isShowAll: false,
-                    isArrangeByGrid: true,
+                    albumArrange: AlbumArrange.grid,
                     isScrollable: true,
                   ),
                 ],

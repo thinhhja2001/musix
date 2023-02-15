@@ -5,6 +5,7 @@ import 'package:musix/routing/routing_path.dart';
 
 import '../domain_album/models/models.dart';
 import '../domain_album/views/screens.dart';
+import '../domain_artist/views/screens.dart';
 
 Route<dynamic> routeController(RouteSettings settings) {
   final routingPath = settings.name;
@@ -47,6 +48,11 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => const AlbumInfoScreen(),
+      );
+    case RoutingPath.artistInfo:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const ArtistInfoScreen(),
       );
     default:
       return MaterialPageRoute(
