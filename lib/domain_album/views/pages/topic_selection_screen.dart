@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:musix/domain_album/models/models.dart';
+import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/color.dart';
 import 'package:musix/theme/text_style.dart';
 
@@ -78,7 +79,11 @@ class TopicSelectionScreen extends StatelessWidget {
                   topic: topic.child[index - 1] ?? sampleTopic,
                   index: index - 1,
                   height: 180,
-                  onPress: () {},
+                  onPress: () {
+                    Navigator.of(context).pushNamed(
+                      RoutingPath.albumInfo,
+                    );
+                  },
                 );
               },
             ),
