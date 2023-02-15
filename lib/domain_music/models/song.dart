@@ -30,8 +30,7 @@ class Song {
 Song sampleSong = Song(
   id: 'id',
   name: 'Nguoi nhu anh',
-  audioUrl:
-      'https://vnno-pt-2-tf-mp3-s1-zmp3.zmdcdn.me/f0a1e85be91b0045590a/589361203805054074?authen=exp=1675930089~acl=/f0a1e85be91b0045590a/*~hmac=aad4f47b72ba13ef739bc3cb67bc836a&fs=MTY3NTmUsIC1NzI4OTY1Mnx3ZWJWNHwxODMdUngODAdUngMjE1LjmUsIC3',
+  audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   lyricUrl:
       'https://static-zmp3.zmdcdn.me/lyrics/d/f/9/9/df99fc219774148ef4719acabfd67dd4.lrc',
   artistName: 'Mai Tien Dung',

@@ -21,7 +21,7 @@ class MusixLyricUI extends LyricUI {
       this.bias = 0.5,
       this.lineGap = 25,
       this.inlineGap = 25,
-      this.lyricAlign = LyricAlign.CENTER,
+      this.lyricAlign = LyricAlign.LEFT,
       this.lyricBaseLine = LyricBaseLine.CENTER,
       this.highlight = true});
 
