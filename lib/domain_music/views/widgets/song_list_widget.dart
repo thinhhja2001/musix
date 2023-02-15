@@ -30,23 +30,26 @@ class SongListWidget extends StatelessWidget {
           width: 8,
         ),
         Expanded(
-          child: SizedBox(
-            height: songs.length * 56,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: isScrollable
-                  ? const BouncingScrollPhysics()
-                  : const NeverScrollableScrollPhysics(),
-              itemCount: songs.length,
-              itemBuilder: (context, index) => SongCardWidget(
-                onPress: () => {
-                  musixAudioHandler.setSong(songs[index]!),
-                  musixAudioHandler.play(),
-                },
-                index: index + 1,
-                isRequestIndex: isShowIndex,
-                song: songs[index] ?? sampleSong,
-              ),
+          child: SingleChildScrollView(
+            physics: isScrollable
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...List.generate(
+                  songs.length,
+                  (index) => SongCardWidget(
+                    index: index + 1,
+                    isRequestIndex: isShowIndex,
+                    song: songs[index] ?? sampleSong,
+                    onPress: () => {
+                      musixAudioHandler.setSong(songs[index]!),
+                      musixAudioHandler.play(),
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ),

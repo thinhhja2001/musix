@@ -31,54 +31,58 @@ class SearchAllWidget extends StatelessWidget {
           width: 8,
         ),
         Expanded(
-          child: SizedBox(
-            height: listDynamic.length * 56,
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: isScrollable
-                    ? const BouncingScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                itemCount: listDynamic.length,
-                itemBuilder: (context, index) {
-                  switch (listDynamic[index].runtimeType.toString()) {
-                    case 'Song':
-                      return SongCardWidget(
-                        isRequestIndex: isShowIndex,
-                        song: listDynamic[index] as Song,
-                        index: index + 1,
-                        isHasType: true,
-                        onPress: () {},
-                      );
-                    case 'Artist':
-                      return ArtistCardWidget(
-                        artist: listDynamic[index] as Artist,
-                        index: index + 1,
-                        isRequestIndex: isShowIndex,
-                        isHasType: true,
-                        onPress: () {},
-                      );
-                    case 'Album':
-                      return AlbumCardWidget(
-                        album: listDynamic[index] as Album,
-                        isRequestIndex: isShowIndex,
-                        index: index,
-                        isHasType: true,
-                        onPress: () {},
-                      );
-                    case 'Video':
-                      return VideoCardWidget(
-                        video: listDynamic[index] as Video,
-                        index: index,
-                        isRequestIndex: isShowIndex,
-                        isHasType: true,
-                        onPress: () {},
-                      );
-                    default:
-                      return const SizedBox.shrink();
-                  }
-                }),
+          child: SingleChildScrollView(
+            physics: isScrollable
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...List.generate(
+                  listDynamic.length,
+                  (index) {
+                    switch (listDynamic[index].runtimeType.toString()) {
+                      case 'Song':
+                        return SongCardWidget(
+                          isRequestIndex: isShowIndex,
+                          song: listDynamic[index] as Song,
+                          index: index + 1,
+                          isHasType: true,
+                          onPress: () {},
+                        );
+                      case 'Artist':
+                        return ArtistCardWidget(
+                          artist: listDynamic[index] as Artist,
+                          index: index + 1,
+                          isRequestIndex: isShowIndex,
+                          isHasType: true,
+                          onPress: () {},
+                        );
+                      case 'Album':
+                        return AlbumCardWidget(
+                          album: listDynamic[index] as Album,
+                          isRequestIndex: isShowIndex,
+                          index: index,
+                          isHasType: true,
+                          onPress: () {},
+                        );
+                      case 'Video':
+                        return VideoCardWidget(
+                          video: listDynamic[index] as Video,
+                          index: index,
+                          isRequestIndex: isShowIndex,
+                          isHasType: true,
+                          onPress: () {},
+                        );
+                      default:
+                        return const SizedBox.shrink();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }

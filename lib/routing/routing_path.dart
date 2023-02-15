@@ -8,4 +8,5 @@ class RoutingPath {
 
   // Album - Topic - Playlist
   static const String topicSelection = '$home/topicSelection';
+  static const String albumInfo = '$home/albumInfo';
 }

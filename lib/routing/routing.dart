@@ -43,6 +43,11 @@ Route<dynamic> routeController(RouteSettings settings) {
           topic: topic,
         ),
       );
+    case RoutingPath.albumInfo:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const AlbumInfoScreen(),
+      );
     default:
       return MaterialPageRoute(
         settings: settings,
