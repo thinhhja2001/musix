@@ -27,23 +27,25 @@ class VideoListWidget extends StatelessWidget {
           width: 8,
         ),
         Expanded(
-          child: SizedBox(
-            height: videos.length * 120,
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: isScrollable
-                    ? const BouncingScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                itemCount: videos.length,
-                itemBuilder: (context, index) {
-                  return VideoCardWidget(
-                    video: videos[index] ?? sampleVideo,
+          child: SingleChildScrollView(
+            physics: isScrollable
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...List.generate(
+                  videos.length,
+                  (index) => VideoCardWidget(
                     index: index + 1,
                     isRequestIndex: isShowIndex,
-                  );
-                }),
+                    video: videos[index] ?? sampleVideo,
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }

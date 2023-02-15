@@ -227,7 +227,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     isShowIndex: false,
                     isScrollable: true,
                   ),
-                  SearchArtistWidget(
+                  ArtistListWidget(
                     title: 'Top Artists',
                     artists: sampleArtistList,
                     isShowIndex: false,

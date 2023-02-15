@@ -4,13 +4,13 @@ import 'package:musix/domain_artist/models/models.dart';
 import '../../../global/widgets/widgets.dart';
 import '../widgets.dart';
 
-class SearchArtistWidget extends StatelessWidget {
+class ArtistListWidget extends StatelessWidget {
   final String title;
   final List<Artist?> artists;
   final bool isShowIndex;
   final bool isScrollable;
 
-  const SearchArtistWidget({
+  const ArtistListWidget({
     Key? key,
     required this.title,
     required this.artists,
@@ -27,23 +27,25 @@ class SearchArtistWidget extends StatelessWidget {
           width: 8,
         ),
         Expanded(
-          child: SizedBox(
-            height: artists.length * 72,
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: isScrollable
-                    ? const BouncingScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                itemCount: artists.length,
-                itemBuilder: (context, index) {
-                  return ArtistCardWidget(
-                    artist: artists[index] ?? sampleArtist,
+          child: SingleChildScrollView(
+            physics: isScrollable
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...List.generate(
+                  artists.length,
+                  (index) => ArtistCardWidget(
                     index: index + 1,
                     isRequestIndex: isShowIndex,
-                  );
-                }),
+                    artist: artists[index] ?? sampleArtist,
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }
