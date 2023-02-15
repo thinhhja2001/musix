@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_artist/models/models.dart';
+import 'package:musix/routing/routing_path.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../widgets.dart';
@@ -40,6 +41,11 @@ class ArtistListWidget extends StatelessWidget {
                     index: index + 1,
                     isRequestIndex: isShowIndex,
                     artist: artists[index] ?? sampleArtist,
+                    onPress: () {
+                      Navigator.of(context).pushNamed(
+                        RoutingPath.artistInfo,
+                      );
+                    },
                   ),
                 ),
               ],
