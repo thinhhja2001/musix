@@ -8,12 +8,14 @@ class CustomDatePickerWidget extends StatelessWidget {
   final String label;
   final DateTime? datePicker;
   final String? error;
+  final bool darkTheme;
   const CustomDatePickerWidget({
     Key? key,
     required this.label,
     this.datePicker,
     this.pickDateFunction,
     this.error,
+    this.darkTheme = true,
   }) : super(key: key);
 
   void _pickDate(BuildContext context) async {
@@ -69,21 +71,26 @@ class CustomDatePickerWidget extends StatelessWidget {
                     Text(
                       datePicker == null
                           ? label
-                          : DateFormat('d/M/y').format(datePicker!),
+                          : DateFormat('d MMM y').format(datePicker!),
                       style: datePicker == null
                           ? TextStyleTheme.ts15.copyWith(
-                              color: ColorTheme.grey100,
+                              color: darkTheme
+                                  ? Colors.grey.shade100
+                                  : Colors.black54,
                               fontWeight: FontWeight.w400,
                             )
                           : TextStyleTheme.ts15.copyWith(
-                              color: ColorTheme.white,
+                              color:
+                                  darkTheme ? ColorTheme.white : Colors.black,
                               fontWeight: FontWeight.w400,
                             ),
                     ),
                     IconButton(
                         onPressed: () => _pickDate(context),
-                        icon: const Icon(Icons.calendar_month,
-                            color: Colors.white))
+                        icon: Icon(
+                          Icons.calendar_month,
+                          color: darkTheme ? Colors.white : Colors.black,
+                        ))
                   ],
                 )),
           ),
