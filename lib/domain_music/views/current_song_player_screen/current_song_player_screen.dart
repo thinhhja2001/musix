@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/screens/lyric_screen.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/domain_music/views/widgets/custom_slider.dart';
 import 'package:musix/theme/color.dart';
@@ -11,6 +10,7 @@ import 'package:musix/utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../models/models.dart';
+import 'widgets.dart';
 
 class CurrentSongPlayerScreen extends StatelessWidget {
   const CurrentSongPlayerScreen({super.key});
@@ -20,7 +20,7 @@ class CurrentSongPlayerScreen extends StatelessWidget {
     return CarouselSlider(
       items: const [
         _CurrentSongPlayerWidget(),
-        LyricScreen(),
+        LyricWidget(),
       ],
       options: CarouselOptions(
         height: double.infinity,

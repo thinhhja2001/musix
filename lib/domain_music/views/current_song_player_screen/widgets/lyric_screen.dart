@@ -9,10 +9,10 @@ import 'package:musix/theme/text_style.dart';
 import 'package:musix/utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
-import '../widgets.dart';
+import '../../widgets.dart';
 
-class LyricScreen extends StatelessWidget {
-  const LyricScreen({super.key});
+class LyricWidget extends StatelessWidget {
+  const LyricWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
