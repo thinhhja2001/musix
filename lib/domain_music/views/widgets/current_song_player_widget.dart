@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_music/models/models.dart';
 import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/screens/screens.dart';
+import 'package:musix/domain_music/views/screens.dart';
 import 'package:musix/domain_music/views/widgets/custom_slider.dart';
 import 'package:musix/theme/theme.dart';
 import 'package:musix/utils/functions/function_utils.dart';

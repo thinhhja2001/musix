@@ -54,6 +54,16 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const ArtistInfoScreen(),
       );
+    case RoutingPath.changePassword:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const ChangePasswordScreen(),
+      );
+    case RoutingPath.editProfile:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const EditProfileScreen(),
+      );
     default:
       return MaterialPageRoute(
         settings: settings,
