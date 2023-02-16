@@ -10,11 +10,13 @@ class CustomInputFieldWidget extends StatefulWidget {
     required this.label,
     required this.controller,
     this.validation,
+    this.darkTheme = true,
   }) : super(key: key);
   final CustomInputFieldType customInputFieldType;
   final String label;
   final TextEditingController controller;
   final String? Function(String?)? validation;
+  final bool darkTheme;
   @override
   State<CustomInputFieldWidget> createState() => _CustomInputFieldWidgetState();
 }
@@ -33,8 +35,9 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
             widget.customInputFieldType == CustomInputFieldType.password
                 ? _isObscure
                 : false,
-        style:
-            const TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
+        style: TextStyle(
+            color: widget.darkTheme ? Colors.white : Colors.black,
+            fontWeight: FontWeight.w400),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
@@ -87,7 +90,7 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
               widget.label,
               style: TextStyleTheme.ts15.copyWith(
                 fontWeight: FontWeight.w400,
-                color: ColorTheme.grey100,
+                color: widget.darkTheme ? Colors.grey.shade100 : Colors.black54,
               ),
             ),
           ),
