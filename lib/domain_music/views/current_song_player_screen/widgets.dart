@@ -1,1 +1,1 @@
-export 'widgets/lyric_screen.dart';
+export 'widgets/lyric_widget.dart';

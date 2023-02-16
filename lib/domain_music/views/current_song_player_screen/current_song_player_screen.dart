@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_music/services/musix_audio_handler.dart';
+import 'package:musix/domain_music/views/current_song_player_screen/widgets/set_timer_widget.dart';
 import 'package:musix/domain_music/views/widgets.dart';
+import 'package:musix/domain_music/views/widgets/control_widgets/repeat_button_widget.dart';
 import 'package:musix/domain_music/views/widgets/custom_slider.dart';
 import 'package:musix/theme/color.dart';
 import 'package:musix/theme/text_style.dart';
@@ -78,7 +80,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(
-                          Icons.share_outlined,
+                          Icons.favorite,
                           color: Colors.white,
                         ),
                       ),
@@ -92,14 +94,20 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(
-                          Icons.favorite,
+                          Icons.file_download_outlined,
                           color: Colors.white,
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) => const SetTimerWidget(),
+                          );
+                        },
                         icon: const Icon(
-                          Icons.file_download_outlined,
+                          Icons.nights_stay,
                           color: Colors.white,
                         ),
                       ),
@@ -121,13 +129,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       const SkipToPreviousButtonWidget(),
                       const PlayButtonWidget(width: 100, height: 100),
                       const SkipToNextButtonWidget(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.loop_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
+                      const RepeatButtonWidget(),
                     ],
                   )
                 ],
