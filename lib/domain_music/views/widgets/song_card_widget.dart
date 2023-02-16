@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_music/models/models.dart';
+import 'package:musix/domain_music/views/widgets/view_song_detail_widget.dart';
 import 'package:musix/theme/theme.dart';
 
 class SongCardWidget extends StatelessWidget {
@@ -123,11 +124,22 @@ class SongCardWidget extends StatelessWidget {
                   ),
                   width: 24,
                   height: 24,
-                  child: const Center(
-                    child: Icon(
-                      Icons.more_horiz,
-                      color: ColorTheme.primary,
-                      size: 16,
+                  child: Center(
+                    child: InkWell(
+                      onTap: () => {
+                        showModalBottomSheet(
+                          context: context, backgroundColor: Colors.transparent,
+                          // isScrollControlled: true,
+                          builder: (context) => ViewSongDetailWidget(
+                            song: song,
+                          ),
+                        )
+                      },
+                      child: const Icon(
+                        Icons.more_horiz,
+                        color: ColorTheme.primary,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),

@@ -11,6 +11,7 @@ import 'package:musix/utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../models/models.dart';
+import '../widgets/control_widgets/repeat_button_widget.dart';
 
 class CurrentSongPlayerScreen extends StatelessWidget {
   const CurrentSongPlayerScreen({super.key});
@@ -121,13 +122,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       const SkipToPreviousButtonWidget(),
                       const PlayButtonWidget(width: 100, height: 100),
                       const SkipToNextButtonWidget(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.loop_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
+                      const RepeatButtonWidget(),
                     ],
                   )
                 ],
