@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/album.dart';
-import 'package:musix/domain_album/views/widgets/album_list_widget.dart';
-import 'package:musix/domain_music/models/song.dart';
-import 'package:musix/domain_music/views/widgets.dart';
 
+import '../../../domain_album/models/album.dart';
+import '../../../domain_album/views/widgets/album_list_widget.dart';
+import '../../../domain_music/models/song.dart';
+import '../../../domain_music/views/widgets.dart';
 import '../../../theme/theme.dart';
 
 class ArtistInfoScreen extends StatelessWidget {

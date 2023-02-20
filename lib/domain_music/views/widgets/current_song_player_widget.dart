@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/screens.dart';
-import 'package:musix/domain_music/views/widgets/custom_slider.dart';
-import 'package:musix/theme/theme.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../models/models.dart';
+import '../../services/musix_audio_handler.dart';
+import '../screens.dart';
+import 'custom_slider.dart';
+import '../../../theme/theme.dart';
+import '../../../utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 class CurrentSongPlayerWidget extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../routing/routing_path.dart';
 
 import '../routing/routing.dart';
 

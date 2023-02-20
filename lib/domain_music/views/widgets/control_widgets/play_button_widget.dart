@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:musix/theme/theme.dart';
+import '../../../../theme/theme.dart';
 
 class PlayButtonWidget extends StatelessWidget {
   const PlayButtonWidget({

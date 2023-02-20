@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/views/widgets.dart';
+import '../../domain_music/models/models.dart';
+import '../../domain_music/views/widgets.dart';
 
 import '../../theme/theme.dart';
 

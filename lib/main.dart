@@ -4,7 +4,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/config/app.dart';
+import 'config/app.dart';
 
 import 'domain_music/services/musix_audio_handler.dart';
 import 'utils/utils.dart';

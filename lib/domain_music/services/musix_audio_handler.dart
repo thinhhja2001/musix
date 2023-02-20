@@ -1,7 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musix/utils/functions/function_utils.dart';
 
+import '../../utils/functions/function_utils.dart';
 import '../models/models.dart';
 
 class MusixAudioHandler extends BaseAudioHandler with SeekHandler {

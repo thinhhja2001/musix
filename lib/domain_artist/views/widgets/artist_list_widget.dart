@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_artist/models/models.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../../models/models.dart';
+import '../../../routing/routing_path.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../widgets.dart';

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:http/http.dart' as http;
+import 'package:palette_generator/palette_generator.dart';
 
 Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
   final paletteGenerator = await PaletteGenerator.fromImageProvider(

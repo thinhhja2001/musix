@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/views/widgets.dart';
 
+import '../../../domain_music/models/models.dart';
+import '../../../domain_music/views/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../models/models.dart';
 

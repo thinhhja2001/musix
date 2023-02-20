@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_user/views/forget_password_screen/utils/text_path.dart';
+import 'utils/text_path.dart';
 
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';

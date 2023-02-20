@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/theme/theme.dart';
+import '../../models/models.dart';
+import '../../../theme/theme.dart';
 
 class VideoCardWidget extends StatelessWidget {
   const VideoCardWidget({

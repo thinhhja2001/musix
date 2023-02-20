@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
+import '../../../../domain_music/models/models.dart';
 
 import '../../../../domain_album/models/models.dart';
 import '../../../../domain_album/views/widgets.dart';

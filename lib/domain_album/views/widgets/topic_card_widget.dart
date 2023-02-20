@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/global/widgets/custom_card_widget.dart';
+import '../../models/models.dart';
+import '../../../global/widgets/custom_card_widget.dart';
 
 import '../../../theme/theme.dart';
 

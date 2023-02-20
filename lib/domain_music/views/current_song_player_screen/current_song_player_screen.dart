@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/current_song_player_screen/widgets/set_timer_widget.dart';
-import 'package:musix/domain_music/views/widgets.dart';
-import 'package:musix/domain_music/views/widgets/control_widgets/repeat_button_widget.dart';
-import 'package:musix/domain_music/views/widgets/custom_slider.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/text_style.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../services/musix_audio_handler.dart';
+import 'widgets/set_timer_widget.dart';
+import '../widgets.dart';
+import '../widgets/control_widgets/repeat_button_widget.dart';
+import '../widgets/custom_slider.dart';
+import '../../../theme/color.dart';
+import '../../../theme/text_style.dart';
+import '../../../utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../models/models.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/domain_album/views/widgets.dart';
-import 'package:musix/domain_artist/models/artist.dart';
-import 'package:musix/domain_artist/views/widgets.dart';
+import '../../../domain_album/models/models.dart';
+import '../../../domain_album/views/widgets.dart';
+import '../../../domain_artist/models/artist.dart';
+import '../../../domain_artist/views/widgets.dart';
 
 import '../../../domain_music/models/models.dart';
 import '../../../domain_music/views/widgets.dart';

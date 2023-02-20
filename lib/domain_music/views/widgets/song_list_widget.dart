@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/models/song.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/widgets.dart';
-import 'package:musix/global/widgets/rotated_text_widget.dart';
+import '../../models/song.dart';
+import '../../services/musix_audio_handler.dart';
+import '../widgets.dart';
+import '../../../global/widgets/rotated_text_widget.dart';
 
 class SongListWidget extends StatelessWidget {
   final String title;

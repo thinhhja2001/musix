@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
 
 import '../../../global/widgets/widgets.dart';
+import '../../models/models.dart';
 
 class VideoSelectionWidget extends StatelessWidget {
   final String title;

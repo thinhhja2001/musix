@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/views/widgets/view_song_detail_widget.dart';
-import 'package:musix/theme/theme.dart';
+import '../../models/models.dart';
+import 'view_song_detail_widget.dart';
+import '../../../theme/theme.dart';
 
 class SongCardWidget extends StatelessWidget {
   const SongCardWidget({
