@@ -43,7 +43,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
     final Song song = musixAudioHandler.currentSong;
     return FutureBuilder<PaletteGenerator>(
         future: updatePaletteGenerator(
-          song.thumbnailUrl,
+          song.thumbnailM,
         ),
         builder: (context, snapshot) {
           return Container(
@@ -69,7 +69,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                   CircleAvatar(
                     radius: 120,
                     backgroundImage: NetworkImage(
-                      song.thumbnailUrl,
+                      song.thumbnailM,
                     ),
                   ),
                   _SongInformationWidget(song: song),
@@ -174,7 +174,7 @@ class _SongInformationWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          song.name,
+          song.title,
           style: TextStyleTheme.ts28.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w500,
@@ -184,7 +184,7 @@ class _SongInformationWidget extends StatelessWidget {
           height: 10,
         ),
         Text(
-          song.artistName,
+          song.artistsNames,
           style: TextStyleTheme.ts16.copyWith(
             color: ColorTheme.primary,
             fontWeight: FontWeight.w400,

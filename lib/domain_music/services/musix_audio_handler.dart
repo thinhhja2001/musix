@@ -22,17 +22,17 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
 
   void setSong(Song song) async {
     //Get the song duration since _player.seAudioSource will get the duration as NULL
-    final duration = await player.setUrl(song.audioUrl);
+    final duration = await player.setUrl(song.audioUrl ?? "");
 
     currentSong = song;
-    lyric = await getLyric(currentSong.lyricUrl);
+    lyric = await getLyric(currentSong.lyricUrl ?? "");
     //To add the song to the background service, you must do the code below
     final item = MediaItem(
-      id: song.audioUrl,
-      title: song.name,
+      id: song.audioUrl!,
+      title: song.title,
       duration: duration,
-      artist: song.artistName,
-      artUri: Uri.parse(song.thumbnailUrl),
+      artist: song.artistsNames,
+      artUri: Uri.parse(song.thumbnailM),
     );
 
     mediaItem.add(item);

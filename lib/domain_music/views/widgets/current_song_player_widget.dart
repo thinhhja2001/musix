@@ -30,7 +30,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FutureBuilder<PaletteGenerator>(
-                future: updatePaletteGenerator(song.thumbnailUrl),
+                future: updatePaletteGenerator(song.thumbnailM),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
@@ -43,7 +43,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                         ],
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(song.thumbnailUrl),
+                        backgroundImage: NetworkImage(song.thumbnailM),
                         radius: 26,
                       ),
                     );
@@ -55,7 +55,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                           BoxShadow(color: Colors.black, blurRadius: 10),
                         ]),
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(song.thumbnailUrl),
+                      backgroundImage: NetworkImage(song.thumbnailM),
                       radius: 26,
                     ),
                   );

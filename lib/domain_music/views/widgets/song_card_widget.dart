@@ -68,7 +68,7 @@ class SongCardWidget extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      song.thumbnailUrl,
+                      song.thumbnailM,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -83,7 +83,7 @@ class SongCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      song.name,
+                      song.title,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts14.copyWith(
                         color: ColorTheme.white,
@@ -91,7 +91,7 @@ class SongCardWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      song.artistName,
+                      song.artistsNames,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts12.copyWith(
                         fontWeight: FontWeight.w400,
