@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:musix/domain_album/entities/entities.dart';
+import 'package:musix/domain_album/logic/playlist_bloc.dart';
 import 'package:musix/domain_album/models/models.dart';
 import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/color.dart';
@@ -80,6 +83,9 @@ class TopicSelectionScreen extends StatelessWidget {
                   index: index - 1,
                   height: 180,
                   onPress: () {
+                    context
+                        .read<PlaylistBloc>()
+                        .add(const PlaylistGetInfoEvent('ZWZB8EEW'));
                     Navigator.of(context).pushNamed(
                       RoutingPath.albumInfo,
                     );

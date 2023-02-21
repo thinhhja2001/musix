@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/config/app.dart';
 
+import 'config/register_dependency.dart';
 import 'domain_music/services/musix_audio_handler.dart';
 import 'utils/utils.dart';
 
@@ -19,10 +20,10 @@ Future<void> bootstrap() async {
   FlutterError.onError = (details) {
     debugLogger.log(details.exceptionAsString(), details.stack);
   };
-
   Bloc.observer = AppObserver();
   //Need to use await here to avoid facing the GetIt plugin error like https://stackoverflow.com/questions/61131822/flutter-getit-plugin-no-type-xxx-is-registered-inside-getit
   await configAudioService();
+  await registerDependency();
   runZonedGuarded(
     () => runApp(
       const MusixApp(),

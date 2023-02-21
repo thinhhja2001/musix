@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/painting/text_style.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:musix/theme/color.dart';
 
