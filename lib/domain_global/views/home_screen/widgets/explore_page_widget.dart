@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain_album/models/models.dart';
 import '../../../../domain_album/views/widgets.dart';
-import '../../../../domain_music/models/models.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../domain_user/views/widgets.dart';
 import 'widgets.dart';
@@ -28,14 +26,14 @@ class ExplorePageWidget extends StatelessWidget {
               ),
               TopicListWidget(
                 title: 'Topics',
-                topics: sampleTopicList,
+                topics: [],
               ),
               const SizedBox(
                 height: 24,
               ),
               AlbumListWidget(
                 title: 'Recent Album',
-                albums: sampleListAlbum,
+                playlists: [],
                 isShowAll: false,
               ),
               const SizedBox(

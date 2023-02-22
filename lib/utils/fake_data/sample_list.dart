@@ -1,4 +1,3 @@
-import '../../domain_album/models/album.dart';
 import '../../domain_artist/models/artist.dart';
 import '../../domain_music/models/models.dart';
 
@@ -8,14 +7,12 @@ final sampleAllList = [
   sampleSong,
   sampleArtist,
   sampleArtist,
-  sampleAlbum,
   sampleSong,
   sampleVideo,
   sampleSong,
   sampleSong,
   sampleArtist,
   sampleArtist,
-  sampleAlbum,
   sampleSong
 ];
 
