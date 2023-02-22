@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../../../domain_album/views/widgets.dart';
+import '../../../../domain_music/models/models.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../domain_user/views/widgets/profile_card_widget.dart';
-
-import '../../../../domain_album/models/models.dart';
-import '../../../../domain_music/models/models.dart';
 import 'widgets.dart';
 
 class BillboardPageWidget extends StatelessWidget {
@@ -28,7 +27,7 @@ class BillboardPageWidget extends StatelessWidget {
               ),
               AlbumListWidget(
                 title: 'New Album',
-                albums: sampleListAlbum,
+                playlists: [],
               ),
               const SizedBox(
                 height: 32,

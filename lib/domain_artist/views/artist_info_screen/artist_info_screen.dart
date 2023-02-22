@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/album.dart';
 import 'package:musix/domain_album/views/widgets/album_list_widget.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 
@@ -199,7 +198,7 @@ class ArtistInfoScreen extends StatelessWidget {
               ),
               AlbumListWidget(
                 title: 'Album',
-                albums: sampleListAlbum,
+                playlists: [],
                 isShowAll: false,
                 albumArrange: AlbumArrange.list,
                 isScrollable: true,

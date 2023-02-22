@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_album/entities/entities.dart';
 
-import '../../../domain_album/models/models.dart';
 import '../../../domain_album/views/widgets.dart';
 import '../../../domain_artist/models/artist.dart';
 import '../../../domain_artist/views/widgets.dart';
@@ -60,7 +60,7 @@ class SearchAllWidget extends StatelessWidget {
                         );
                       case 'Album':
                         return AlbumCardWidget(
-                          album: listDynamic[index] as Album,
+                          playlist: listDynamic[index] as Playlist,
                           isRequestIndex: isShowIndex,
                           index: index,
                           isHasType: true,
