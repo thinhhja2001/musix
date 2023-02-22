@@ -1,3 +1,5 @@
+import '../../../domain_artist/models/models.dart';
+
 class GetPlaylistModel {
   int? err;
   String? msg;
@@ -44,7 +46,7 @@ class PlaylistModel {
   String? description;
   String? aliasTitle;
   String? sectionId;
-  List<GenresInGetPlaylistModel>? genres;
+  List<GenresModel>? genres;
   SongsModel? song;
 
   PlaylistModel({
@@ -95,9 +97,9 @@ class PlaylistModel {
     aliasTitle = json['aliasTitle'];
     sectionId = json['sectionId'];
     if (json['genres'] != null) {
-      genres = <GenresInGetPlaylistModel>[];
+      genres = <GenresModel>[];
       json['genres'].forEach((v) {
-        genres!.add(GenresInGetPlaylistModel.fromJson(v));
+        genres!.add(GenresModel.fromJson(v));
       });
     }
     song = json['song'] != null ? SongsModel.fromJson(json['song']) : null;
@@ -135,58 +137,20 @@ class PlaylistModel {
   }
 }
 
-class ArtistModel {
-  String? id;
-  String? name;
-  String? alias;
-  String? thumbnail;
-  String? thumbnailM;
-  String? playlistId;
-
-  ArtistModel({
-    this.id,
-    this.name,
-    this.alias,
-    this.thumbnail,
-    this.thumbnailM,
-    this.playlistId,
-  });
-
-  ArtistModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    alias = json['alias'];
-    thumbnail = json['thumbnail'];
-    thumbnailM = json['thumbnailM'];
-    playlistId = json['playlistId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['alias'] = alias;
-    data['thumbnail'] = thumbnail;
-    data['thumbnailM'] = thumbnailM;
-    data['playlistId'] = playlistId;
-    return data;
-  }
-}
-
-class GenresInGetPlaylistModel {
+class GenresModel {
   String? id;
   String? name;
   String? title;
   String? alias;
 
-  GenresInGetPlaylistModel({
+  GenresModel({
     this.id,
     this.name,
     this.title,
     this.alias,
   });
 
-  GenresInGetPlaylistModel.fromJson(Map<String, dynamic> json) {
+  GenresModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     title = json['title'];

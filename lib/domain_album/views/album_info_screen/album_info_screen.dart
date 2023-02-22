@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_music/models/models.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 
 import '../../../theme/theme.dart';
@@ -24,6 +23,7 @@ class AlbumInfoScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
+            context.read<PlaylistBloc>().add(const BackEvent());
             Navigator.maybePop(context);
           },
           icon: const Icon(
@@ -135,12 +135,25 @@ class AlbumInfoScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: Text(
-                                  playlist.title!,
-                                  style: TextStyleTheme.ts22.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.white,
-                                  ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      playlist.title!,
+                                      style: TextStyleTheme.ts20.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      playlist.artistsNames!,
+                                      style: TextStyleTheme.ts14.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white54,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               IconButton(
@@ -183,7 +196,7 @@ class AlbumInfoScreen extends StatelessWidget {
                           Text(
                             playlist.description!,
                             style: TextStyleTheme.ts14.copyWith(
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w400,
                               color: const Color(0xffE8BCD3),
                             ),
                             textAlign: TextAlign.justify,
@@ -201,7 +214,7 @@ class AlbumInfoScreen extends StatelessWidget {
                               },
                               width: size.width,
                               height: 160,
-                              fit: BoxFit.fitWidth,
+                              fit: BoxFit.fill,
                             ),
                           ),
                           const SizedBox(
@@ -209,7 +222,7 @@ class AlbumInfoScreen extends StatelessWidget {
                           ),
                           SongListWidget(
                             title: 'All Songs',
-                            songs: sampleListSong,
+                            songs: playlist.songs!,
                             isScrollable: false,
                             isShowIndex: true,
                           ),

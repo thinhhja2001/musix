@@ -13,6 +13,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     required this.playlistRepo,
   }) : super(initialState) {
     on<PlaylistGetInfoEvent>(_getPlaylist);
+    on<BackEvent>(_back);
   }
 
   final PlaylistRepo playlistRepo;
@@ -71,5 +72,16 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
             ),
           ),
         ));
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _back(BackEvent event, Emitter<PlaylistState> emit) async {
+    emit(PlaylistState(
+      status: updateMapStatus(
+        source: state.status,
+        keys: [PlaylistStatusKey.global.key],
+        status: [Status.idle],
+      ),
+    ));
   }
 }

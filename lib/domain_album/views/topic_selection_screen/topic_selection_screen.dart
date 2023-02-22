@@ -85,7 +85,7 @@ class TopicSelectionScreen extends StatelessWidget {
                   onPress: () {
                     context
                         .read<PlaylistBloc>()
-                        .add(const PlaylistGetInfoEvent('ZWZB8EEW'));
+                        .add(const PlaylistGetInfoEvent('ZU6Z07DU'));
                     Navigator.of(context).pushNamed(
                       RoutingPath.albumInfo,
                     );

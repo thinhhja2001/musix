@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/models/song.dart';
 import 'package:musix/domain_music/services/musix_audio_handler.dart';
 import 'package:musix/domain_music/views/widgets.dart';
 import 'package:musix/global/widgets/rotated_text_widget.dart';
+
+import '../../entities/song.dart';
 
 class SongListWidget extends StatelessWidget {
   final String title;
@@ -39,15 +40,17 @@ class SongListWidget extends StatelessWidget {
               children: [
                 ...List.generate(
                   songs.length,
-                  (index) => SongCardWidget(
-                    index: index + 1,
-                    isRequestIndex: isShowIndex,
-                    song: songs[index] ?? sampleSong,
-                    onPress: () => {
-                      musixAudioHandler.setSong(songs[index]!),
-                      musixAudioHandler.play(),
-                    },
-                  ),
+                  (index) => songs[index] == null
+                      ? const SizedBox.shrink()
+                      : SongCardWidget(
+                          index: index + 1,
+                          isRequestIndex: isShowIndex,
+                          song: songs[index]!,
+                          onPress: () => {
+                            // musixAudioHandler.setSong(songs[index]!),
+                            // musixAudioHandler.play(),
+                          },
+                        ),
                 ),
               ],
             ),

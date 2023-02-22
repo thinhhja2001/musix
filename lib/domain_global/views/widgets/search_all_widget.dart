@@ -4,7 +4,8 @@ import 'package:musix/domain_album/views/widgets.dart';
 import 'package:musix/domain_artist/models/artist.dart';
 import 'package:musix/domain_artist/views/widgets.dart';
 
-import '../../../domain_music/models/models.dart';
+import '../../../domain_music/entities/song.dart';
+import '../../../domain_music/models/video.dart';
 import '../../../domain_music/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
 

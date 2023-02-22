@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
 
 import '../../../../domain_album/models/models.dart';
 import '../../../../domain_album/views/widgets.dart';
@@ -43,7 +42,7 @@ class ExplorePageWidget extends StatelessWidget {
               ),
               SongListWidget(
                 title: 'All Song',
-                songs: sampleListSong,
+                songs: [],
                 isShowIndex: true,
               ),
               const SizedBox(
