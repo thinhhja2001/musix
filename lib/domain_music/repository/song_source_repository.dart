@@ -1,13 +1,15 @@
-import '../models/songs/song_source.dart';
+import '../../config/register_dependency.dart';
+import '../models/songs/song_source_model.dart';
 
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 class SongSourceRepositoryImpl {
-  Future<SongSource> getInfo(String id) async {
-    final zingMp3Api = await ZingMP3APIV2.createAsync();
+  Future<SongSourceModel> getInfo(String id) async {
+    final zingMp3Api = await getIt.getAsync<ZingMP3APIV2>();
+
     final sourceJson = await zingMp3Api.getSongById(id);
     final lyricJson = await zingMp3Api.getLyricBySongId(id);
-    return SongSource.fromJson(
+    return SongSourceModel.fromJson(
       sourceJson["data"],
       lyricJson["data"],
     );

@@ -7,8 +7,8 @@ import '../models/models.dart';
 class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
   final player = AudioPlayer();
   //Singleton to display currentSong
-  SongInfo currentSong = sampleSong;
-  SongSource currentSource = sampleSource;
+  SongInfoModel currentSong = sampleSong;
+  SongSourceModel currentSource = sampleSource;
   String lyric = "";
 
   /// Initialize our audio handler.
@@ -21,7 +21,7 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
     // ... and also the current media item via mediaItem.
   }
 
-  void setSong(SongInfo song, SongSource source) async {
+  void setSong(SongInfoModel song, SongSourceModel source) async {
     //Get the song duration since _player.seAudioSource will get the duration as NULL
     final duration = await player.setUrl(source.audioUrl ?? "");
 
@@ -30,10 +30,10 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
     //To add the song to the background service, you must do the code below
     final item = MediaItem(
       id: source.audioUrl!,
-      title: song.title,
+      title: song.title ?? "",
       duration: duration,
       artist: song.artistsNames,
-      artUri: Uri.parse(song.thumbnailM),
+      artUri: Uri.parse(song.thumbnailM ?? ""),
     );
 
     mediaItem.add(item);

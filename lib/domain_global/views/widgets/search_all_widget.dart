@@ -45,7 +45,7 @@ class SearchAllWidget extends StatelessWidget {
                       case 'Song':
                         return SongCardWidget(
                           isRequestIndex: isShowIndex,
-                          song: listDynamic[index] as SongInfo,
+                          song: listDynamic[index] as SongInfoModel,
                           index: index + 1,
                           isHasType: true,
                           onPress: () {},

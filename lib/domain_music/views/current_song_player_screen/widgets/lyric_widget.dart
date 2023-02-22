@@ -30,7 +30,7 @@ class LyricWidget extends StatelessWidget {
       ),
       child: FutureBuilder<PaletteGenerator>(
           future: updatePaletteGenerator(
-            musixAudioHandler.currentSong.thumbnailM,
+            musixAudioHandler.currentSong.thumbnailM ?? "",
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -130,7 +130,7 @@ class _SongInformationWidget extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                musixAudioHandler.currentSong.thumbnailM,
+                musixAudioHandler.currentSong.thumbnailM ?? "",
               ),
             ),
             borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -142,14 +142,14 @@ class _SongInformationWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                musixAudioHandler.currentSong.title,
+                musixAudioHandler.currentSong.title ?? "",
                 style: TextStyleTheme.ts22.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                musixAudioHandler.currentSong.artistsNames,
+                musixAudioHandler.currentSong.artistsNames ?? "",
                 style: TextStyleTheme.ts12.copyWith(
                   color: ColorTheme.primary,
                   fontWeight: FontWeight.w400,

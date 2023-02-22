@@ -16,7 +16,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final MusixAudioHandler musixAudioHandler =
         GetIt.I.get<MusixAudioHandler>();
-    final SongInfo song = musixAudioHandler.currentSong;
+    final SongInfoModel song = musixAudioHandler.currentSong;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -30,7 +30,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FutureBuilder<PaletteGenerator>(
-                future: updatePaletteGenerator(song.thumbnailM),
+                future: updatePaletteGenerator(song.thumbnailM ?? ""),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
@@ -43,7 +43,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                         ],
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(song.thumbnailM),
+                        backgroundImage: NetworkImage(song.thumbnailM ?? ""),
                         radius: 26,
                       ),
                     );
@@ -55,7 +55,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                           BoxShadow(color: Colors.black, blurRadius: 10),
                         ]),
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(song.thumbnailM),
+                      backgroundImage: NetworkImage(song.thumbnailM ?? ""),
                       radius: 26,
                     ),
                   );

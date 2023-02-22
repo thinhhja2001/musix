@@ -11,7 +11,7 @@ class Playlist extends Equatable {
   final int? releasedAt;
   final List<String>? genreIds;
   final List<String>? artistIds;
-  final List<SongInfo?>? songs;
+  final List<SongInfoModel?>? songs;
   final String? artistsNames;
   final String? thumbnailM;
   final String? userName;
@@ -73,7 +73,7 @@ class Playlist extends Equatable {
     int? releasedAt,
     List<String>? genreIds,
     List<String>? artistIds,
-    List<SongInfo?>? songs,
+    List<SongInfoModel?>? songs,
     String? artistsNames,
     String? thumbnailM,
     String? userName,

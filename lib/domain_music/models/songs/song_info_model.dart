@@ -1,26 +1,26 @@
-class SongInfo {
-  SongInfo({
-    required this.encodeId,
-    required this.title,
-    required this.artistsNames,
-    required this.thumbnailM,
-    required this.genreIds,
+class SongInfoModel {
+  SongInfoModel({
+    this.encodeId,
+    this.title,
+    this.artistsNames,
+    this.thumbnailM,
+    this.genreIds,
     this.albumId,
     this.artistsId,
   });
-  String encodeId;
-  String title;
-  String artistsNames;
+  String? encodeId;
+  String? title;
+  String? artistsNames;
   // Use thumbnailM instead of thumbnail because it will have higher resolution
-  String thumbnailM;
-  List<String> genreIds;
+  String? thumbnailM;
+  List<String>? genreIds;
   String? albumId;
   List<String>? artistsId;
 
-  factory SongInfo.fromJson(
+  factory SongInfoModel.fromJson(
     Map<String, dynamic> songInfoJson,
   ) {
-    return SongInfo(
+    return SongInfoModel(
       encodeId: songInfoJson["encodeId"],
       title: songInfoJson['title'],
       artistsNames: songInfoJson['artistsNames'],
@@ -48,7 +48,7 @@ class SongInfo {
       };
 }
 
-SongInfo sampleSong = SongInfo(
+SongInfoModel sampleSong = SongInfoModel(
   encodeId: "ZW68AD67",
   title: "Rap God",
   artistsNames: "Eminem",
@@ -59,7 +59,7 @@ SongInfo sampleSong = SongInfo(
   albumId: "ZWZAFD88",
 );
 
-List<SongInfo> sampleListSong = [
+List<SongInfoModel> sampleListSong = [
   sampleSong,
   sampleSong,
   sampleSong,
