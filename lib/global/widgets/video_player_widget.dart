@@ -1,6 +1,6 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/utils/utils.dart';
+import '../../utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../theme/color.dart';

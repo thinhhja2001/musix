@@ -1,7 +1,6 @@
 import 'package:musix/domain_album/entities/entities.dart';
 import 'package:musix/domain_album/models/models.dart';
-
-import '../../../domain_music/entities/song.dart';
+import 'package:musix/domain_music/models/models.dart';
 
 Playlist? convertPlaylistModel(PlaylistModel? model) {
   if (model == null) {
@@ -28,25 +27,17 @@ Playlist? convertPlaylistModel(PlaylistModel? model) {
   );
 }
 
-Song? convertSongModel(SongModel? model) {
+SongInfo? convertSongModel(SongModel? model) {
   if (model == null) {
     return null;
   }
-  return Song(
-    encodeId: model.encodeId,
-    title: model.title,
-    alias: model.alias,
-    isOffical: model.isOffical,
-    username: model.username,
-    artistsNames: model.artistsNames,
-    artistIds: model.artists?.map((e) => e.id ?? '').toList(),
-    thumbnailM: model.thumbnailM,
-    thumbnail: model.thumbnail,
-    duration: model.duration,
-    releaseDate: model.releaseDate,
-    genreIds: model.genreIds,
-    radioId: model.radioId,
-    hasLyric: model.hasLyric,
-    mvlink: model.mvlink,
+  return SongInfo(
+    encodeId: model.encodeId!,
+    title: model.title!,
+    artistsNames: model.artistsNames!,
+    thumbnailM: model.thumbnailM!,
+    genreIds: model.genreIds!,
+    albumId: model.album!.encodeId,
+    artistsId: model.artists?.map((e) => e.id!).toList(),
   );
 }

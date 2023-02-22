@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/widgets.dart';
-import 'package:musix/global/widgets/rotated_text_widget.dart';
-
-import '../../entities/song.dart';
+import '../../repository/song_source_repository.dart';
+import '../../models/songs/song_info.dart';
+import '../../services/musix_audio_handler.dart';
+import '../widgets.dart';
+import '../../../global/widgets/rotated_text_widget.dart';
 
 class SongListWidget extends StatelessWidget {
   final String title;
-  final List<Song?> songs;
+  final List<SongInfo?> songs;
   final bool isShowIndex;
   final bool isScrollable;
 
@@ -40,17 +40,17 @@ class SongListWidget extends StatelessWidget {
               children: [
                 ...List.generate(
                   songs.length,
-                  (index) => songs[index] == null
-                      ? const SizedBox.shrink()
-                      : SongCardWidget(
-                          index: index + 1,
-                          isRequestIndex: isShowIndex,
-                          song: songs[index]!,
-                          onPress: () => {
-                            // musixAudioHandler.setSong(songs[index]!),
-                            // musixAudioHandler.play(),
-                          },
-                        ),
+                  (index) => SongCardWidget(
+                    index: index + 1,
+                    isRequestIndex: isShowIndex,
+                    song: songs[index] ?? sampleSong,
+                    onPress: () async {
+                      final songSource = await SongSourceRepositoryImpl()
+                          .getInfo(songs[index]!.encodeId);
+                      musixAudioHandler.setSong(songs[index]!, songSource);
+                      musixAudioHandler.play();
+                    },
+                  ),
                 ),
               ],
             ),

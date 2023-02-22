@@ -818,10 +818,18 @@ packages:
     description:
       path: "."
       ref: master
+<<<<<<< HEAD
       resolved-ref: a743eb10840308ab62ede8a9ee79759dd64d66e7
+=======
+      resolved-ref: a245a88bd3c9083e3e220ea92b892027534612e9
+>>>>>>> 641911bb08e1942499a194126e1ed816aee6d423
       url: "https://github.com/thinhhja2001/zingmp3_api"
     source: git
     version: "1.0.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.18.0 <4.0.0"
+=======
+  dart: ">=2.18.0 <3.0.0"
+>>>>>>> 641911bb08e1942499a194126e1ed816aee6d423
   flutter: ">=3.3.0"

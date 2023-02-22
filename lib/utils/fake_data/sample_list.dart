@@ -1,6 +1,6 @@
-import 'package:musix/domain_album/models/album.dart';
-import 'package:musix/domain_artist/models/artist.dart';
-import 'package:musix/domain_music/models/models.dart';
+import '../../domain_album/models/album.dart';
+import '../../domain_artist/models/artist.dart';
+import '../../domain_music/models/models.dart';
 
 final sampleAllList = [
   sampleVideo,

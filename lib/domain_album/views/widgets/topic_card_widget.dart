@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/global/widgets/custom_card_widget.dart';
 
+import '../../../global/widgets/custom_card_widget.dart';
 import '../../../theme/theme.dart';
+import '../../models/models.dart';
 
 class TopicCardWidget extends StatelessWidget {
   final Topic topic;

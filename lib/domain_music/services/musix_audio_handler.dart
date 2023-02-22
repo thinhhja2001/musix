@@ -1,13 +1,14 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musix/utils/functions/function_utils.dart';
 
+import '../../utils/functions/function_utils.dart';
 import '../models/models.dart';
 
 class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
   final player = AudioPlayer();
   //Singleton to display currentSong
-  Song currentSong = sampleSong;
+  SongInfo currentSong = sampleSong;
+  SongSource currentSource = sampleSource;
   String lyric = "";
 
   /// Initialize our audio handler.
@@ -20,19 +21,19 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
     // ... and also the current media item via mediaItem.
   }
 
-  void setSong(Song song) async {
+  void setSong(SongInfo song, SongSource source) async {
     //Get the song duration since _player.seAudioSource will get the duration as NULL
-    final duration = await player.setUrl(song.audioUrl);
+    final duration = await player.setUrl(source.audioUrl ?? "");
 
     currentSong = song;
-    lyric = await getLyric(currentSong.lyricUrl);
+    lyric = await getLyric(source.lyricUrl ?? "");
     //To add the song to the background service, you must do the code below
     final item = MediaItem(
-      id: song.audioUrl,
-      title: song.name,
+      id: source.audioUrl!,
+      title: song.title,
       duration: duration,
-      artist: song.artistName,
-      artUri: Uri.parse(song.thumbnailUrl),
+      artist: song.artistsNames,
+      artUri: Uri.parse(song.thumbnailM),
     );
 
     mediaItem.add(item);

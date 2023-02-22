@@ -1,6 +1,7 @@
+import 'dart:developer' as dev;
+
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
-import 'dart:developer' as dev;
 
 class DebugLogger {
   static DebugLogger? _instance;

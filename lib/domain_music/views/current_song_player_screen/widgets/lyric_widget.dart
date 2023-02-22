@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/services/musix_lyric_ui.dart';
-import 'package:musix/domain_music/views/widgets/custom_slider.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/text_style.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../../services/musix_audio_handler.dart';
+import '../../../services/musix_lyric_ui.dart';
+import '../../widgets/custom_slider.dart';
+import '../../../../theme/color.dart';
+import '../../../../theme/text_style.dart';
+import '../../../../utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../widgets.dart';
@@ -30,7 +30,7 @@ class LyricWidget extends StatelessWidget {
       ),
       child: FutureBuilder<PaletteGenerator>(
           future: updatePaletteGenerator(
-            musixAudioHandler.currentSong.thumbnailUrl,
+            musixAudioHandler.currentSong.thumbnailM,
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -130,7 +130,7 @@ class _SongInformationWidget extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                musixAudioHandler.currentSong.thumbnailUrl,
+                musixAudioHandler.currentSong.thumbnailM,
               ),
             ),
             borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -142,14 +142,14 @@ class _SongInformationWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                musixAudioHandler.currentSong.name,
+                musixAudioHandler.currentSong.title,
                 style: TextStyleTheme.ts22.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                musixAudioHandler.currentSong.artistName,
+                musixAudioHandler.currentSong.artistsNames,
                 style: TextStyleTheme.ts12.copyWith(
                   color: ColorTheme.primary,
                   fontWeight: FontWeight.w400,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/theme/theme.dart';
+import '../../../../theme/theme.dart';
 
 import '../../widgets.dart';
 

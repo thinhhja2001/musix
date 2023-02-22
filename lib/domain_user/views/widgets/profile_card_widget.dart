@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musix/routing/routing_path.dart';
-import 'package:musix/theme/text_style.dart';
+
+import '../../../routing/routing_path.dart';
+import '../../../theme/text_style.dart';
 
 class ProfileCardWidget extends StatelessWidget {
   const ProfileCardWidget({Key? key}) : super(key: key);

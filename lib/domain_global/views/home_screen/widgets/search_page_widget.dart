@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/album.dart';
-import 'package:musix/domain_artist/models/artist.dart';
-import 'package:musix/domain_artist/views/widgets.dart';
-import 'package:musix/domain_global/views/widgets.dart';
-import 'package:musix/domain_music/views/widgets.dart';
-import 'package:musix/utils/fake_data/sample_list.dart';
+import '../../../../domain_album/models/album.dart';
+import '../../../../domain_artist/models/artist.dart';
+import '../../../../domain_artist/views/widgets.dart';
+import '../../widgets.dart';
+import '../../../../domain_music/views/widgets.dart';
+import '../../../../utils/fake_data/sample_list.dart';
 
 import '../../../../domain_album/views/widgets.dart';
 import '../../../../domain_music/models/models.dart';

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/global/widgets/widgets.dart';
-import 'package:musix/theme/theme.dart';
+import '../../../global/widgets/widgets.dart';
+import '../../../theme/theme.dart';
 
 import '../../models/models.dart';
 import '../widgets.dart';

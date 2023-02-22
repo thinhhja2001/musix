@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_artist/models/models.dart';
-import 'package:musix/theme/theme.dart';
+import '../../models/models.dart';
+import '../../../theme/theme.dart';
 
 class ArtistCardWidget extends StatelessWidget {
   const ArtistCardWidget({

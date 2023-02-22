@@ -6,7 +6,7 @@ import '../widgets.dart';
 
 class VideoListWidget extends StatelessWidget {
   final String title;
-  final List<Video?> videos;
+  final List<VideoDetail?> videos;
   final bool isShowIndex;
   final bool isScrollable;
 

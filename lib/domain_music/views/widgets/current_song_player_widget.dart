@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/screens.dart';
-import 'package:musix/domain_music/views/widgets/custom_slider.dart';
-import 'package:musix/theme/theme.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../models/models.dart';
+import '../../services/musix_audio_handler.dart';
+import '../screens.dart';
+import 'custom_slider.dart';
+import '../../../theme/theme.dart';
+import '../../../utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 class CurrentSongPlayerWidget extends StatelessWidget {
@@ -16,7 +16,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final MusixAudioHandler musixAudioHandler =
         GetIt.I.get<MusixAudioHandler>();
-    final Song song = musixAudioHandler.currentSong;
+    final SongInfo song = musixAudioHandler.currentSong;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -30,7 +30,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FutureBuilder<PaletteGenerator>(
-                future: updatePaletteGenerator(song.thumbnailUrl),
+                future: updatePaletteGenerator(song.thumbnailM),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
@@ -43,7 +43,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                         ],
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(song.thumbnailUrl),
+                        backgroundImage: NetworkImage(song.thumbnailM),
                         radius: 26,
                       ),
                     );
@@ -55,7 +55,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                           BoxShadow(color: Colors.black, blurRadius: 10),
                         ]),
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(song.thumbnailUrl),
+                      backgroundImage: NetworkImage(song.thumbnailM),
                       radius: 26,
                     ),
                   );

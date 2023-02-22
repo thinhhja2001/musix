@@ -1,11 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_user/views/sign_in_screen/utils/text_path.dart';
-import 'package:musix/routing/routing_path.dart';
 
+import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
 import '../widgets.dart';
+import 'utils/text_path.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
