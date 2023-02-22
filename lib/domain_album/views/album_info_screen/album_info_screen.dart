@@ -23,7 +23,7 @@ class AlbumInfoScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            context.read<PlaylistBloc>().add(const BackEvent());
+            context.read<PlaylistBloc>().add(const PlaylistBackInfoEvent());
             Navigator.maybePop(context);
           },
           icon: const Icon(

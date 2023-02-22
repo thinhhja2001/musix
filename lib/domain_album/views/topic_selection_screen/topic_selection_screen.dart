@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:musix/domain_album/entities/entities.dart';
 import 'package:musix/domain_album/logic/playlist_bloc.dart';
-import 'package:musix/domain_album/models/models.dart';
 import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/color.dart';
 import 'package:musix/theme/text_style.dart';
@@ -15,10 +14,7 @@ import '../widgets.dart';
 class TopicSelectionScreen extends StatelessWidget {
   const TopicSelectionScreen({
     Key? key,
-    required this.topic,
   }) : super(key: key);
-
-  final Topic topic;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +25,7 @@ class TopicSelectionScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
+            // context.read<PlaylistBloc>().add(const PlaylistBackListEvent());
             Navigator.maybePop(context);
           },
           icon: const Icon(
@@ -49,99 +46,87 @@ class TopicSelectionScreen extends StatelessWidget {
         ],
       ),
       extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          const BlurBackgroundWidget(
-            imageUrl: AssetPath.group5,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 24,
-            ),
-            child: MasonryGridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 24,
-              crossAxisSpacing: 24,
-              itemCount: topic.child.length + 1,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return SizedBox(
-                    height: 48,
-                    child: Text(
-                      'Classic',
-                      style: TextStyleTheme.ts28.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                }
-                return TopicCardWidget(
-                  topic: topic.child[index - 1] ?? sampleTopic,
-                  index: index - 1,
-                  height: 180,
-                  onPress: () {
-                    context
-                        .read<PlaylistBloc>()
-                        .add(const PlaylistGetInfoEvent('ZU6Z07DU'));
-                    Navigator.of(context).pushNamed(
-                      RoutingPath.albumInfo,
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+      body: BlocBuilder<PlaylistBloc, PlaylistState>(
+        builder: (context, state) {
+          if (state.status?[PlaylistStatusKey.playlists.key] == null) {
+            return const SizedBox.shrink();
+          }
+          if (state.status?[PlaylistStatusKey.playlists.key] ==
+              Status.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Stack(
+            children: [
+              const BlurBackgroundWidget(
+                imageUrl: AssetPath.group5,
+              ),
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 24,
+                ),
+                child: ListView.builder(
+                    itemCount: state.topics?.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      if (state.topics?[index] == null) {
+                        return const SizedBox.shrink();
+                      }
+                      final Topic topic = state.topics![index]!;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 24,
+                        ),
+                        child: MasonryGridView.count(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 24,
+                          crossAxisSpacing: 24,
+                          itemCount: topic.items?.length ?? 0 + 1,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return SizedBox(
+                                height: 48,
+                                child: Text(
+                                  topic.title!,
+                                  style: TextStyleTheme.ts28.copyWith(
+                                    fontSize:
+                                        topic.title!.length > 10 ? 22 : 28,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            }
+                            return TopicCardWidget(
+                              miniPlaylist:
+                                  topic.items?[index - 1] ?? sampleMiniPlaylist,
+                              index: index - 1,
+                              height: 180,
+                              onPress: () {
+                                context.read<PlaylistBloc>().add(
+                                      PlaylistGetInfoEvent(
+                                          topic.items![index - 1].encodeId!),
+                                    );
+                                Navigator.of(context).pushNamed(
+                                  RoutingPath.albumInfo,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    }),
+              ),
+            ],
+          );
+        },
       ),
-    );
-  }
-}
-
-class Tile extends StatelessWidget {
-  const Tile({
-    Key? key,
-    required this.index,
-    this.extent,
-    this.backgroundColor,
-    this.bottomSpace,
-  }) : super(key: key);
-
-  final int index;
-  final double? extent;
-  final double? bottomSpace;
-  final Color? backgroundColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final child = Container(
-      color: backgroundColor ?? const Color(0xFF34568B),
-      height: extent,
-      child: Center(
-        child: CircleAvatar(
-          minRadius: 20,
-          maxRadius: 20,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          child: Text('$index', style: const TextStyle(fontSize: 20)),
-        ),
-      ),
-    );
-
-    if (bottomSpace == null) {
-      return child;
-    }
-
-    return Column(
-      children: [
-        Expanded(child: child),
-        Container(
-          height: bottomSpace,
-          color: Colors.green,
-        )
-      ],
     );
   }
 }

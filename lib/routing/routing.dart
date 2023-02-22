@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+
+import '../domain_album/views/screens.dart';
+import '../domain_artist/views/screens.dart';
 import '../domain_global/views/screens.dart';
 import '../domain_user/views/screens.dart';
 import 'routing_path.dart';
-
-import '../domain_album/models/models.dart';
-import '../domain_album/views/screens.dart';
-import '../domain_artist/views/screens.dart';
 
 Route<dynamic> routeController(RouteSettings settings) {
   final routingPath = settings.name;
@@ -37,12 +36,9 @@ Route<dynamic> routeController(RouteSettings settings) {
         builder: (context) => const HomeScreen(),
       );
     case RoutingPath.topicSelection:
-      final topic = settings.arguments as Topic;
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => TopicSelectionScreen(
-          topic: topic,
-        ),
+        builder: (context) => const TopicSelectionScreen(),
       );
     case RoutingPath.albumInfo:
       return MaterialPageRoute(

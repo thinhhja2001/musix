@@ -7,6 +7,15 @@ class PlaylistGetInfoEvent implements PlaylistEvent {
   const PlaylistGetInfoEvent(this.id);
 }
 
-class BackEvent implements PlaylistEvent {
-  const BackEvent();
+class PlaylistBackInfoEvent implements PlaylistEvent {
+  const PlaylistBackInfoEvent();
+}
+
+class PlaylistGetListEvent implements PlaylistEvent {
+  final String hubId;
+  const PlaylistGetListEvent(this.hubId);
+}
+
+class PlaylistBackListEvent implements PlaylistEvent {
+  const PlaylistBackListEvent();
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models/models.dart';
-import '../widgets.dart';
-import '../../../routing/routing_path.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_album/entities/entities.dart';
+import 'package:musix/domain_album/logic/playlist_bloc.dart';
 
 import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
+import '../widgets.dart';
 
 class TopicListWidget extends StatelessWidget {
   final String title;
@@ -37,15 +39,19 @@ class TopicListWidget extends StatelessWidget {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                 ),
-                itemCount: topics.length,
+                itemCount: 1,
                 itemBuilder: (context, index) {
                   return TopicCardWidget(
-                    topic: topics[index] ?? sampleTopic,
+                    miniPlaylist: sampleMiniPlaylist,
                     index: index,
-                    onPress: () => Navigator.of(context).pushNamed(
-                      RoutingPath.topicSelection,
-                      arguments: topics[index] ?? sampleTopic,
-                    ),
+                    onPress: () {
+                      context
+                          .read<PlaylistBloc>()
+                          .add(const PlaylistGetListEvent('IWZ9Z09U'));
+                      Navigator.of(context).pushNamed(
+                        RoutingPath.topicSelection,
+                      );
+                    },
                   );
                 },
               ),

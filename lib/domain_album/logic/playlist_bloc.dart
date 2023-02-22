@@ -4,19 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/domain_album/entities/entities.dart';
 import 'package:musix/domain_album/repo/playlist_repo.dart';
 import 'package:musix/domain_album/utils/convert_model_entity/convert_playlist.dart';
+import 'package:musix/domain_global/repo/hub_repo.dart';
 
 import '../../utils/utils.dart';
+import '../utils/convert_model_entity/convert_mini_playlist.dart';
 
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   PlaylistBloc({
     required PlaylistState initialState,
     required this.playlistRepo,
+    required this.hubRepo,
   }) : super(initialState) {
     on<PlaylistGetInfoEvent>(_getPlaylist);
-    on<BackEvent>(_back);
+    on<PlaylistBackInfoEvent>(_backInfo);
+    on<PlaylistGetListEvent>(_getPlaylists);
+    on<PlaylistBackListEvent>(_backList);
   }
 
   final PlaylistRepo playlistRepo;
+  final HubRepo hubRepo;
 
   //----------------------------------------------------------------------------
   @override
@@ -33,8 +39,14 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
       emit(state.copyWith(
         status: updateMapStatus(
           source: state.status,
-          keys: [PlaylistStatusKey.global.key],
-          status: [Status.loading],
+          keys: [
+            PlaylistStatusKey.global.key,
+            PlaylistStatusKey.info.key,
+          ],
+          status: [
+            Status.loading,
+            Status.loading,
+          ],
         ),
       ));
 
@@ -44,8 +56,14 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
         state.copyWith(
           status: updateMapStatus(
             source: state.status,
-            keys: [PlaylistStatusKey.global.key],
-            status: [Status.success],
+            keys: [
+              PlaylistStatusKey.global.key,
+              PlaylistStatusKey.info.key,
+            ],
+            status: [
+              Status.idle,
+              Status.success,
+            ],
           ),
           playlist: playlist,
         ),
@@ -54,8 +72,14 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
       emit(state.copyWith(
         status: updateMapStatus(
           source: state.status,
-          keys: [PlaylistStatusKey.global.key],
-          status: [Status.error],
+          keys: [
+            PlaylistStatusKey.global.key,
+            PlaylistStatusKey.info.key,
+          ],
+          status: [
+            Status.idle,
+            Status.error,
+          ],
         ),
       ));
       addError(
@@ -67,20 +91,128 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
           state.copyWith(
             status: updateMapStatus(
               source: state.status,
-              keys: [PlaylistStatusKey.global.key],
-              status: [Status.idle],
+              keys: [
+                PlaylistStatusKey.global.key,
+                PlaylistStatusKey.info.key,
+              ],
+              status: [
+                Status.idle,
+                Status.idle,
+              ],
             ),
           ),
         ));
   }
 
   //----------------------------------------------------------------------------
-  FutureOr<void> _back(BackEvent event, Emitter<PlaylistState> emit) async {
+  FutureOr<void> _getPlaylists(
+      PlaylistGetListEvent event, Emitter<PlaylistState> emit) async {
+    try {
+      emit(state.copyWith(
+        status: updateMapStatus(
+          source: state.status,
+          keys: [
+            PlaylistStatusKey.global.key,
+            PlaylistStatusKey.playlists.key,
+          ],
+          status: [
+            Status.loading,
+            Status.loading,
+          ],
+        ),
+      ));
+
+      final response = await hubRepo.getHubDetailed(event.hubId);
+      DebugLogger().log(response);
+      final topics = response.data?.sections
+          ?.map((e) => convertTopicFromHubSection(e))
+          .where((element) => element != null)
+          .toList();
+      topics
+          ?.map((e) => DebugLogger().log('${e?.title} - ${e?.items?.length}'));
+      emit(
+        state.copyWith(
+          status: updateMapStatus(
+            source: state.status,
+            keys: [
+              PlaylistStatusKey.global.key,
+              PlaylistStatusKey.playlists.key,
+            ],
+            status: [
+              Status.idle,
+              Status.success,
+            ],
+          ),
+          topics: topics,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(
+        status: updateMapStatus(
+          source: state.status,
+          keys: [
+            PlaylistStatusKey.global.key,
+            PlaylistStatusKey.playlists.key,
+          ],
+          status: [
+            Status.idle,
+            Status.error,
+          ],
+        ),
+      ));
+      addError(
+          Exception("PlaylistLogic _getPlaylists error"), StackTrace.current);
+    }
+    await Future.delayed(
+      const Duration(milliseconds: 300),
+    ).whenComplete(() => emit(
+          state.copyWith(
+            status: updateMapStatus(
+              source: state.status,
+              keys: [
+                PlaylistStatusKey.global.key,
+                PlaylistStatusKey.playlists.key,
+              ],
+              status: [
+                Status.idle,
+                Status.idle,
+              ],
+            ),
+          ),
+        ));
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _backInfo(
+      PlaylistBackInfoEvent event, Emitter<PlaylistState> emit) async {
     emit(PlaylistState(
       status: updateMapStatus(
         source: state.status,
-        keys: [PlaylistStatusKey.global.key],
-        status: [Status.idle],
+        keys: [
+          PlaylistStatusKey.global.key,
+          PlaylistStatusKey.playlists.key,
+        ],
+        status: [
+          Status.idle,
+          Status.idle,
+        ],
+      ),
+      topics: state.topics,
+    ));
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _backList(
+      PlaylistBackListEvent event, Emitter<PlaylistState> emit) async {
+    emit(PlaylistState(
+      status: updateMapStatus(
+        source: state.status,
+        keys: [
+          PlaylistStatusKey.global.key,
+        ],
+        status: [
+          Status.idle,
+        ],
       ),
     ));
   }

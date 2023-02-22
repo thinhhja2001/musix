@@ -21,11 +21,11 @@ class _MusixAppState extends State<MusixApp> {
         BlocProvider(
           lazy: false,
           create: (context) => PlaylistBloc(
-            initialState: PlaylistState(status: {
-              PlaylistStatusKey.global.key: Status.idle,
-            }),
-            playlistRepo: getIt.get<PlaylistRepo>(),
-          ),
+              initialState: PlaylistState(status: {
+                PlaylistStatusKey.global.key: Status.idle,
+              }),
+              playlistRepo: getIt.get<PlaylistRepo>(),
+              hubRepo: getIt.get<HubRepo>()),
         ),
       ],
       child: const MusixAppView(),
