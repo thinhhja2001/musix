@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../routing/routing_path.dart';
 import '../../../theme/text_style.dart';
-
 import '../../models/models.dart';
 
 class ViewSongDetailWidget extends StatelessWidget {
@@ -9,7 +9,7 @@ class ViewSongDetailWidget extends StatelessWidget {
     super.key,
     required this.song,
   });
-  final Song song;
+  final SongInfo song;
   @override
   Widget build(BuildContext context) {
     return Container(

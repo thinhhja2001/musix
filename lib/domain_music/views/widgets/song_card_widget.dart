@@ -15,7 +15,7 @@ class SongCardWidget extends StatelessWidget {
     this.type = 'Song',
   }) : super(key: key);
 
-  final Song song;
+  final SongInfo song;
   final int index;
   final VoidCallback? onPress;
 

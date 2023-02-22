@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'app_view.dart';
 
 class MusixApp extends StatefulWidget {

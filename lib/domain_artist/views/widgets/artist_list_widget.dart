@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../models/models.dart';
-import '../../../routing/routing_path.dart';
 
 import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
+import '../../models/models.dart';
 import '../widgets.dart';
 
 class ArtistListWidget extends StatelessWidget {

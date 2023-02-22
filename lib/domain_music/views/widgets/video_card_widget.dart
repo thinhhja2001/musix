@@ -14,7 +14,7 @@ class VideoCardWidget extends StatelessWidget {
     this.type = 'Video',
   }) : super(key: key);
 
-  final Video video;
+  final VideoDetail video;
   final int index;
   final VoidCallback? onPress;
 
@@ -69,7 +69,7 @@ class VideoCardWidget extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: NetworkImage(
-                        video.thumbnailUrl,
+                        video.thumbnailM,
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -84,7 +84,7 @@ class VideoCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        video.name,
+                        video.title,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleTheme.ts14.copyWith(
                           color: ColorTheme.white,
@@ -92,7 +92,7 @@ class VideoCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        video.artistName,
+                        video.artistsNames,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleTheme.ts12.copyWith(
                           fontWeight: FontWeight.w400,
@@ -175,7 +175,7 @@ class VideoCardWidget extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      video.thumbnailUrl,
+                      video.thumbnailM,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -210,7 +210,7 @@ class VideoCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      video.name,
+                      video.title,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts14.copyWith(
                         color: ColorTheme.white,
@@ -218,7 +218,7 @@ class VideoCardWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      video.artistName,
+                      video.artistsNames,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts12.copyWith(
                         fontWeight: FontWeight.w400,

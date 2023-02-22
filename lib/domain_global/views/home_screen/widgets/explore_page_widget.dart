@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../domain_music/models/models.dart';
 
 import '../../../../domain_album/models/models.dart';
 import '../../../../domain_album/views/widgets.dart';
+import '../../../../domain_music/models/models.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../domain_user/views/widgets.dart';
 import 'widgets.dart';

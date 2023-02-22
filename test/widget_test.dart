@@ -7,16 +7,19 @@
 
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:musix/domain_music/repository/song_repository.dart';
-
-import 'package:musix/main.dart';
+import 'package:musix/domain_music/repository/repository.dart';
 
 void main() async {
-  SongRepositoryImpl songRepositoryImpl = SongRepositoryImpl();
-  final song = await songRepositoryImpl.getInfo('ZW6I7899');
-  printJson(song.toJson());
+  VideoRepositoryImpl videoRepositoryImpl = VideoRepositoryImpl();
+  SongInfoRepositoryImpl songInfoRepositoryImpl = SongInfoRepositoryImpl();
+  final songs = await songInfoRepositoryImpl.getByQuery("anh");
+  for (var song in songs) {
+    printJson(song.toJson());
+  }
+  // final videos = await videoRepositoryImpl.getByQuery("Anh");
+  // for (var video in videos) {
+  //   printJson(video.toJson());
+  // }
 }
 
 void printJson(Map<String, dynamic>? json) {

@@ -16,7 +16,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final MusixAudioHandler musixAudioHandler =
         GetIt.I.get<MusixAudioHandler>();
-    final Song song = musixAudioHandler.currentSong;
+    final SongInfo song = musixAudioHandler.currentSong;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),

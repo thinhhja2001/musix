@@ -5,7 +5,7 @@ import '../../models/models.dart';
 
 class VideoSelectionWidget extends StatelessWidget {
   final String title;
-  final Video video;
+  final VideoDetail video;
   const VideoSelectionWidget({
     Key? key,
     required this.title,
@@ -22,9 +22,9 @@ class VideoSelectionWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           alignment: Alignment.center,
           child: VideoPlayerWidget(
-            videoUrl: video.url,
-            authorVideo: video.artistName,
-            titleVideo: video.name,
+            videoUrl: video.videoUrl,
+            authorVideo: video.artistsNames,
+            titleVideo: video.title,
           ),
         ))
       ],

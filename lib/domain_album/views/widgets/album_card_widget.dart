@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../models/models.dart';
 
 import '../../../global/widgets/custom_card_widget.dart';
 import '../../../theme/theme.dart';
+import '../../models/models.dart';
 
 class AlbumCardWidget extends StatelessWidget {
   final double? width;

@@ -40,7 +40,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final MusixAudioHandler musixAudioHandler =
         GetIt.I.get<MusixAudioHandler>();
-    final Song song = musixAudioHandler.currentSong;
+    final SongInfo song = musixAudioHandler.currentSong;
     return FutureBuilder<PaletteGenerator>(
         future: updatePaletteGenerator(
           song.thumbnailM,
@@ -166,7 +166,7 @@ class _SongInformationWidget extends StatelessWidget {
     required this.song,
   });
 
-  final Song song;
+  final SongInfo song;
 
   @override
   Widget build(BuildContext context) {
