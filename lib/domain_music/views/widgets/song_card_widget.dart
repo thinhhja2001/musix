@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/models/models.dart';
-import 'package:musix/domain_music/views/widgets/view_song_detail_widget.dart';
-import 'package:musix/theme/theme.dart';
+import '../../models/models.dart';
+import 'view_song_detail_widget.dart';
+import '../../../theme/theme.dart';
 
 class SongCardWidget extends StatelessWidget {
   const SongCardWidget({
@@ -15,7 +15,7 @@ class SongCardWidget extends StatelessWidget {
     this.type = 'Song',
   }) : super(key: key);
 
-  final Song song;
+  final SongInfo song;
   final int index;
   final VoidCallback? onPress;
 
@@ -68,7 +68,7 @@ class SongCardWidget extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      song.thumbnailUrl,
+                      song.thumbnailM,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -83,7 +83,7 @@ class SongCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      song.name,
+                      song.title,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts14.copyWith(
                         color: ColorTheme.white,
@@ -91,7 +91,7 @@ class SongCardWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      song.artistName,
+                      song.artistsNames,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts12.copyWith(
                         fontWeight: FontWeight.w400,

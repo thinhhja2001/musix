@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/theme/text_style.dart';
+import '../../../../theme/text_style.dart';
 
 class SetTimerWidget extends StatelessWidget {
   const SetTimerWidget({super.key});

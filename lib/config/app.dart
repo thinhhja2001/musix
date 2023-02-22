@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/config/app_view.dart';
+
+import 'app_view.dart';
 
 class MusixApp extends StatefulWidget {
   const MusixApp({super.key});

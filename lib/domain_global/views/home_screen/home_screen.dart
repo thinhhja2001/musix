@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/global/widgets/widgets.dart';
 
+import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import 'utils/text_path.dart';
 import 'widgets/widgets.dart';

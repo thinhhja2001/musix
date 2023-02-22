@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/routing/routing_path.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/text_style.dart';
 
 import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
+import '../../../theme/color.dart';
+import '../../../theme/text_style.dart';
 import '../../../utils/utils.dart';
+import '../../models/models.dart';
 import '../widgets.dart';
 
 class TopicSelectionScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/domain_album/views/widgets.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../../models/models.dart';
+import '../widgets.dart';
+import '../../../routing/routing_path.dart';
 
 import '../../../global/widgets/widgets.dart';
 

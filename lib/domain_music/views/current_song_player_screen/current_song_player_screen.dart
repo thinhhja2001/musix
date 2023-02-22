@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/views/current_song_player_screen/widgets/set_timer_widget.dart';
-import 'package:musix/domain_music/views/widgets.dart';
-import 'package:musix/domain_music/views/widgets/control_widgets/repeat_button_widget.dart';
-import 'package:musix/domain_music/views/widgets/custom_slider.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/text_style.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../services/musix_audio_handler.dart';
+import 'widgets/set_timer_widget.dart';
+import '../widgets.dart';
+import '../widgets/control_widgets/repeat_button_widget.dart';
+import '../widgets/custom_slider.dart';
+import '../../../theme/color.dart';
+import '../../../theme/text_style.dart';
+import '../../../utils/functions/function_utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../models/models.dart';
@@ -40,10 +40,10 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final MusixAudioHandler musixAudioHandler =
         GetIt.I.get<MusixAudioHandler>();
-    final Song song = musixAudioHandler.currentSong;
+    final SongInfo song = musixAudioHandler.currentSong;
     return FutureBuilder<PaletteGenerator>(
         future: updatePaletteGenerator(
-          song.thumbnailUrl,
+          song.thumbnailM,
         ),
         builder: (context, snapshot) {
           return Container(
@@ -69,7 +69,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                   CircleAvatar(
                     radius: 120,
                     backgroundImage: NetworkImage(
-                      song.thumbnailUrl,
+                      song.thumbnailM,
                     ),
                   ),
                   _SongInformationWidget(song: song),
@@ -166,7 +166,7 @@ class _SongInformationWidget extends StatelessWidget {
     required this.song,
   });
 
-  final Song song;
+  final SongInfo song;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +174,7 @@ class _SongInformationWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          song.name,
+          song.title,
           style: TextStyleTheme.ts28.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w500,
@@ -184,7 +184,7 @@ class _SongInformationWidget extends StatelessWidget {
           height: 10,
         ),
         Text(
-          song.artistName,
+          song.artistsNames,
           style: TextStyleTheme.ts16.copyWith(
             color: ColorTheme.primary,
             fontWeight: FontWeight.w400,

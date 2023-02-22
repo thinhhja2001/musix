@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/domain_album/views/widgets.dart';
-import 'package:musix/domain_artist/models/artist.dart';
-import 'package:musix/domain_artist/views/widgets.dart';
 
+import '../../../domain_album/models/models.dart';
+import '../../../domain_album/views/widgets.dart';
+import '../../../domain_artist/models/artist.dart';
+import '../../../domain_artist/views/widgets.dart';
 import '../../../domain_music/models/models.dart';
 import '../../../domain_music/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
@@ -45,7 +45,7 @@ class SearchAllWidget extends StatelessWidget {
                       case 'Song':
                         return SongCardWidget(
                           isRequestIndex: isShowIndex,
-                          song: listDynamic[index] as Song,
+                          song: listDynamic[index] as SongInfo,
                           index: index + 1,
                           isHasType: true,
                           onPress: () {},
@@ -68,7 +68,7 @@ class SearchAllWidget extends StatelessWidget {
                         );
                       case 'Video':
                         return VideoCardWidget(
-                          video: listDynamic[index] as Video,
+                          video: listDynamic[index] as VideoDetail,
                           index: index,
                           isRequestIndex: isShowIndex,
                           isHasType: true,

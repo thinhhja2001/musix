@@ -12,7 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  zingmp3_api:
+  zing_mp3_api:
     git:
       url: https://github.com/thinhhja2001/zingmp3_api
       ref: master

@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_user/views/profile_screen/widgets/change_password_widget.dart';
-import 'package:musix/theme/theme.dart';
+import 'change_password_widget.dart';
+import '../../../../theme/theme.dart';
 
 import '../../widgets.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/views/widgets.dart';
-import 'package:musix/domain_music/views/widgets.dart';
-import 'package:musix/domain_user/views/widgets/profile_card_widget.dart';
+import '../../../../domain_album/views/widgets.dart';
+import '../../../../domain_music/views/widgets.dart';
+import '../../../../domain_user/views/widgets/profile_card_widget.dart';
 
 import '../../../../domain_album/models/models.dart';
 import '../../../../domain_music/models/models.dart';
