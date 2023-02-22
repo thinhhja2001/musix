@@ -217,7 +217,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                   ),
                   SongListWidget(
                     title: 'Top Songs',
-                    songs: sampleListSong,
+                    songs: [],
                     isShowIndex: false,
                     isScrollable: true,
                   ),

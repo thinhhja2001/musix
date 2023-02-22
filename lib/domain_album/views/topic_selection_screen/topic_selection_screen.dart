@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:musix/domain_album/entities/entities.dart';
+import 'package:musix/domain_album/logic/playlist_bloc.dart';
+import 'package:musix/domain_album/models/models.dart';
+import 'package:musix/routing/routing_path.dart';
+import 'package:musix/theme/color.dart';
+import 'package:musix/theme/text_style.dart';
 
 import '../../../global/widgets/widgets.dart';
-import '../../../routing/routing_path.dart';
-import '../../../theme/color.dart';
-import '../../../theme/text_style.dart';
 import '../../../utils/utils.dart';
-import '../../models/models.dart';
 import '../widgets.dart';
 
 class TopicSelectionScreen extends StatelessWidget {
@@ -80,6 +83,9 @@ class TopicSelectionScreen extends StatelessWidget {
                   index: index - 1,
                   height: 180,
                   onPress: () {
+                    context
+                        .read<PlaylistBloc>()
+                        .add(const PlaylistGetInfoEvent('ZU6Z07DU'));
                     Navigator.of(context).pushNamed(
                       RoutingPath.albumInfo,
                     );

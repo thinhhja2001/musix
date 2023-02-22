@@ -43,7 +43,7 @@ class ExplorePageWidget extends StatelessWidget {
               ),
               SongListWidget(
                 title: 'All Song',
-                songs: sampleListSong,
+                songs: [],
                 isShowIndex: true,
               ),
               const SizedBox(

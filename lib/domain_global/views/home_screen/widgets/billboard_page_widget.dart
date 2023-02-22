@@ -42,7 +42,7 @@ class BillboardPageWidget extends StatelessWidget {
               ),
               SongListWidget(
                 title: 'Recently Music',
-                songs: sampleListSong,
+                songs: [],
                 isShowIndex: true,
               ),
               const SizedBox(
