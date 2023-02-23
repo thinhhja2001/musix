@@ -3,6 +3,7 @@ import 'package:musix/domain_album/models/models.dart';
 import 'package:musix/domain_artist/utils/convert_mini_artist.dart';
 
 import '../../../domain_music/utils/convert_songs/convert_songs.dart';
+import '../convert_genre/convert_genre.dart';
 
 Playlist? convertPlaylistModel(PlaylistModel? model) {
   if (model == null) {
@@ -14,7 +15,10 @@ Playlist? convertPlaylistModel(PlaylistModel? model) {
     thumbnail: model.thumbnail,
     sortDescription: model.sortDescription,
     releasedAt: model.releasedAt,
-    genreIds: model.genreIds,
+    genres: model.genres
+        ?.map((e) => convertGenre(e))
+        .where((element) => element != null)
+        .toList(),
     artists: model.artists
         ?.map((e) => convertMiniArtist(e))
         .where((element) => element != null)
