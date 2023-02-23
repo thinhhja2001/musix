@@ -27,11 +27,11 @@ Playlist? convertPlaylistModel(PlaylistModel? model) {
   );
 }
 
-SongInfo? convertSongModel(SongModel? model) {
+SongInfoModel? convertSongModel(SongModel? model) {
   if (model == null) {
     return null;
   }
-  return SongInfo(
+  return SongInfoModel(
     encodeId: model.encodeId!,
     title: model.title!,
     artistsNames: model.artistsNames!,

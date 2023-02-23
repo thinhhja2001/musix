@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../entities/entities.dart';
+import '../../logic/song_bloc.dart';
 import '../../models/models.dart';
 import 'view_song_detail_widget.dart';
 import '../../../theme/theme.dart';
@@ -15,7 +18,7 @@ class SongCardWidget extends StatelessWidget {
     this.type = 'Song',
   }) : super(key: key);
 
-  final SongInfo song;
+  final SongInfoModel song;
   final int index;
   final VoidCallback? onPress;
 
@@ -33,121 +36,129 @@ class SongCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: padding, right: padding),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-        onTap: onPress,
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (isRequestIndex) ...[
-                Center(
-                  child: Text(
-                    '#$index',
-                    style: TextStyleTheme.ts16.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 26 - (index.toString().length - 1) * 10,
-                ),
-              ],
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    3,
-                  ),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      song.thumbnailM,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      song.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: ColorTheme.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Text(
-                      song.artistsNames,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleTheme.ts12.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: ColorTheme.primary,
-                      ),
-                    ),
-                    if (isHasType) ...[
-                      Text(
-                        type,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleTheme.ts10.copyWith(
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.only(top: padding, right: padding),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
+            splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
+            onTap: onPress,
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (isRequestIndex) ...[
+                    Center(
+                      child: Text(
+                        '#$index',
+                        style: TextStyleTheme.ts16.copyWith(
                           fontWeight: FontWeight.w400,
-                          color: Colors.white70,
+                          color: Colors.white,
                         ),
                       ),
-                    ],
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(6),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 0.8,
-                      color: ColorTheme.primary,
                     ),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  width: 24,
-                  height: 24,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () => {
-                        showModalBottomSheet(
-                          context: context, backgroundColor: Colors.transparent,
-                          // isScrollControlled: true,
-                          builder: (context) => ViewSongDetailWidget(
-                            song: song,
-                          ),
-                        )
-                      },
-                      child: const Icon(
-                        Icons.more_horiz,
-                        color: ColorTheme.primary,
-                        size: 16,
+                    SizedBox(
+                      width: 26 - (index.toString().length - 1) * 10,
+                    ),
+                  ],
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        3,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          song.thumbnailM ?? "",
+                        ),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          song.title ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleTheme.ts14.copyWith(
+                            color: (state.songInfo != null &&
+                                    state.songInfo!.encodeId == song.encodeId)
+                                ? ColorTheme.primary
+                                : Colors.white,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          song.artistsNames ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleTheme.ts12.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: ColorTheme.primary,
+                          ),
+                        ),
+                        if (isHasType) ...[
+                          Text(
+                            type,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyleTheme.ts10.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(6),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 0.8,
+                          color: ColorTheme.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      width: 24,
+                      height: 24,
+                      child: Center(
+                        child: InkWell(
+                          onTap: () => {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              // isScrollControlled: true,
+                              builder: (context) => ViewSongDetailWidget(
+                                song: song,
+                              ),
+                            )
+                          },
+                          child: const Icon(
+                            Icons.more_horiz,
+                            color: ColorTheme.primary,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
