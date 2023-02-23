@@ -1,17 +1,20 @@
 class GetGerneModel {
   int? err;
   String? msg;
-  DataInGetGenresModel? data;
+  GenresModel? data;
   int? timestamp;
 
-  GetGerneModel({this.err, this.msg, this.data, this.timestamp});
+  GetGerneModel({
+    this.err,
+    this.msg,
+    this.data,
+    this.timestamp,
+  });
 
   GetGerneModel.fromJson(Map<String, dynamic> json) {
     err = json['err'];
     msg = json['msg'];
-    data = json['data'] != null
-        ? DataInGetGenresModel.fromJson(json['data'])
-        : null;
+    data = json['data'] != null ? GenresModel.fromJson(json['data']) : null;
     timestamp = json['timestamp'];
   }
 
@@ -27,37 +30,34 @@ class GetGerneModel {
   }
 }
 
-class DataInGetGenresModel {
+class GenresModel {
   String? id;
   String? name;
   String? title;
   String? alias;
-  String? link;
-  GenreInGetGenresModel? parent;
-  List<GenreInGetGenresModel>? childs;
+  GenresModel? parent;
+  List<GenresModel?>? child;
 
-  DataInGetGenresModel(
-      {this.id,
-      this.name,
-      this.title,
-      this.alias,
-      this.link,
-      this.parent,
-      this.childs});
+  GenresModel({
+    this.id,
+    this.name,
+    this.title,
+    this.alias,
+    this.parent,
+    this.child,
+  });
 
-  DataInGetGenresModel.fromJson(Map<String, dynamic> json) {
+  GenresModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     title = json['title'];
     alias = json['alias'];
-    link = json['link'];
-    parent = json['parent'] != null
-        ? GenreInGetGenresModel.fromJson(json['parent'])
-        : null;
-    if (json['childs'] != null) {
-      childs = <GenreInGetGenresModel>[];
-      json['childs'].forEach((v) {
-        childs!.add(GenreInGetGenresModel.fromJson(v));
+    parent =
+        json['parent'] == null ? null : GenresModel.fromJson(json['parent']);
+    if (json['child'] != null) {
+      child = <GenresModel>[];
+      json['child'].forEach((v) {
+        child!.add(GenresModel.fromJson(v));
       });
     }
   }
@@ -68,42 +68,12 @@ class DataInGetGenresModel {
     data['name'] = name;
     data['title'] = title;
     data['alias'] = alias;
-    data['link'] = link;
+    if (child != null) {
+      data['child'] = child!.map((v) => v?.toJson()).toList();
+    }
     if (parent != null) {
       data['parent'] = parent!.toJson();
     }
-    if (childs != null) {
-      data['childs'] = childs!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class GenreInGetGenresModel {
-  String? id;
-  String? name;
-  String? title;
-  String? alias;
-  String? link;
-
-  GenreInGetGenresModel(
-      {this.id, this.name, this.title, this.alias, this.link});
-
-  GenreInGetGenresModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    title = json['title'];
-    alias = json['alias'];
-    link = json['link'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['title'] = title;
-    data['alias'] = alias;
-    data['link'] = link;
     return data;
   }
 }

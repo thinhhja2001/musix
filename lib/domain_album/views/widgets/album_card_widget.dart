@@ -9,7 +9,7 @@ class AlbumCardWidget extends StatelessWidget {
   final double? height;
   final int? index;
   final VoidCallback? onPress;
-  final Playlist? playlist;
+  final MiniPlaylist? playlist;
 
   /// [isRequestIndex] for check should place index in start of card
   final bool isRequestIndex;

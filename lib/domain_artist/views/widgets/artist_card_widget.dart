@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/models.dart';
+import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
+
 import '../../../theme/theme.dart';
 
 class ArtistCardWidget extends StatelessWidget {
@@ -14,7 +15,7 @@ class ArtistCardWidget extends StatelessWidget {
     this.type = 'Artist',
   }) : super(key: key);
 
-  final Artist artist;
+  final MiniArtist artist;
   final int index;
   final VoidCallback? onPress;
 
@@ -67,7 +68,7 @@ class ArtistCardWidget extends StatelessWidget {
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      artist.imageUrl,
+                      artist.thumbnailM!,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -83,7 +84,7 @@ class ArtistCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      artist.name,
+                      artist.name!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyleTheme.ts14.copyWith(
                         color: ColorTheme.white,

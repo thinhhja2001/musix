@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../theme/theme.dart';
 import '../../entities/entities.dart';
 import '../../logic/song_bloc.dart';
-import '../../models/models.dart';
 import 'view_song_detail_widget.dart';
-import '../../../theme/theme.dart';
 
 class SongCardWidget extends StatelessWidget {
   const SongCardWidget({
@@ -18,7 +18,7 @@ class SongCardWidget extends StatelessWidget {
     this.type = 'Song',
   }) : super(key: key);
 
-  final SongInfoModel song;
+  final SongInfo song;
   final int index;
   final VoidCallback? onPress;
 

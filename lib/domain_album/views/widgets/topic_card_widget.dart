@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_album/entities/entities.dart';
 
 import '../../../global/widgets/custom_card_widget.dart';
 import '../../../theme/theme.dart';
-import '../../models/models.dart';
 
 class TopicCardWidget extends StatelessWidget {
-  final Topic topic;
+  final MiniPlaylist? miniPlaylist;
   final double? width;
   final double? height;
   final int? index;
@@ -25,7 +25,7 @@ class TopicCardWidget extends StatelessWidget {
 
   const TopicCardWidget({
     Key? key,
-    required this.topic,
+    this.miniPlaylist,
     this.width,
     this.height,
     this.index,
@@ -38,6 +38,9 @@ class TopicCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (miniPlaylist == null) {
+      return const SizedBox.shrink();
+    }
     if (isHasType) {
       return Padding(
         padding: EdgeInsets.only(top: padding, right: padding),
@@ -74,7 +77,7 @@ class TopicCardWidget extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: NetworkImage(
-                        topic.image,
+                        miniPlaylist!.thumbnailM!,
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -89,7 +92,7 @@ class TopicCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        topic.title,
+                        miniPlaylist!.title!,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyleTheme.ts14.copyWith(
                           color: ColorTheme.white,
@@ -138,11 +141,11 @@ class TopicCardWidget extends StatelessWidget {
 
     /// Default Widget
     return CustomCardWidget(
-      image: topic.image,
+      image: miniPlaylist!.thumbnailM!,
       onTap: onPress,
       width: width ?? 100,
       height: height ?? 60,
-      title: topic.title,
+      title: miniPlaylist!.title,
       titleAlignment: Alignment.center,
       titleTextStyle: TextStyleTheme.ts18.copyWith(
         fontWeight: FontWeight.w400,

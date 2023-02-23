@@ -1,1 +1,1 @@
-export 'get_new_hub_model/get_new_hub_model.dart';
+export 'get_hub_detail_model/get_hub_detail_model.dart';

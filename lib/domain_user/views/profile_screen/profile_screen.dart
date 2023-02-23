@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../domain_music/models/models.dart';
-import '../../../domain_music/views/widgets.dart';
-import 'widgets/edit_profile_widget.dart';
 
+import '../../../domain_music/views/widgets.dart';
 import '../../../theme/theme.dart';
+import 'widgets/edit_profile_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -344,9 +343,9 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    SongListWidget(
+                    const SongListWidget(
                       title: 'Recent Music',
-                      songs: sampleListSong,
+                      songs: [],
                       isScrollable: false,
                       isShowIndex: true,
                     ),
