@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain_album/views/widgets.dart';
-import '../../../../domain_artist/models/artist.dart';
 import '../../../../domain_artist/views/widgets.dart';
 import '../../../../domain_music/models/models.dart';
 import '../../../../domain_music/views/widgets.dart';
@@ -214,7 +213,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     isShowIndex: false,
                     isScrollable: true,
                   ),
-                  SongListWidget(
+                  const SongListWidget(
                     title: 'Top Songs',
                     songs: [],
                     isShowIndex: false,
@@ -226,13 +225,13 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     isShowIndex: false,
                     isScrollable: true,
                   ),
-                  ArtistListWidget(
+                  const ArtistListWidget(
                     title: 'Top Artists',
-                    artists: sampleArtistList,
+                    artists: [],
                     isShowIndex: false,
                     isScrollable: true,
                   ),
-                  AlbumListWidget(
+                  const AlbumListWidget(
                     title: 'Top Albums',
                     playlists: [],
                     isShowAll: false,

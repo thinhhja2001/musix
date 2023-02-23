@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_album/entities/entities.dart';
+import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
 
 import '../../../domain_album/views/widgets.dart';
-import '../../../domain_artist/models/artist.dart';
 import '../../../domain_artist/views/widgets.dart';
 import '../../../domain_music/models/models.dart';
 import '../../../domain_music/views/widgets.dart';
@@ -52,7 +52,7 @@ class SearchAllWidget extends StatelessWidget {
                         );
                       case 'Artist':
                         return ArtistCardWidget(
-                          artist: listDynamic[index] as Artist,
+                          artist: listDynamic[index] as MiniArtist,
                           index: index + 1,
                           isRequestIndex: isShowIndex,
                           isHasType: true,
@@ -60,7 +60,7 @@ class SearchAllWidget extends StatelessWidget {
                         );
                       case 'Album':
                         return AlbumCardWidget(
-                          playlist: listDynamic[index] as Playlist,
+                          playlist: listDynamic[index] as MiniPlaylist,
                           isRequestIndex: isShowIndex,
                           index: index,
                           isHasType: true,

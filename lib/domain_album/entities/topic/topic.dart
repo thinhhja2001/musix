@@ -31,3 +31,11 @@ class Topic extends Equatable {
   @override
   bool? get stringify => true;
 }
+
+Topic sampleTopic = Topic(
+  title: r'Tru-Tinh-Bolero',
+  items: [
+    sampleMiniPlaylist,
+    sampleMiniPlaylist,
+  ],
+);

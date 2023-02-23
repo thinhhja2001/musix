@@ -10,7 +10,7 @@ enum AlbumArrange { list, grid, carousel }
 
 class AlbumListWidget extends StatelessWidget {
   final String title;
-  final List<Playlist?> playlists;
+  final List<MiniPlaylist?> playlists;
   final bool isShowAll;
   final double? width;
   final double? height;

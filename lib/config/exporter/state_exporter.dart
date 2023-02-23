@@ -1,2 +1,2 @@
-export 'package:musix/domain_album/entities/state/playlist_key.dart';
-export 'package:musix/domain_album/entities/state/playlist_state.dart';
+export 'package:musix/domain_album/entities/state/state.dart';
+export 'package:musix/domain_artist/entities/state/state.dart';

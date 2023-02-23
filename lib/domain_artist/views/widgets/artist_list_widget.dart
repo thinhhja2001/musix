@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter/bloc_exporter.dart';
+import 'package:musix/domain_artist/entities/entities.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
-import '../../models/models.dart';
 import '../widgets.dart';
 
 class ArtistListWidget extends StatelessWidget {
   final String title;
-  final List<Artist?> artists;
+  final List<MiniArtist?> artists;
   final bool isShowIndex;
   final bool isScrollable;
 
@@ -40,8 +42,11 @@ class ArtistListWidget extends StatelessWidget {
                   (index) => ArtistCardWidget(
                     index: index + 1,
                     isRequestIndex: isShowIndex,
-                    artist: artists[index] ?? sampleArtist,
+                    artist: artists[index] ?? sampleMiniArtist,
                     onPress: () {
+                      context
+                          .read<ArtistBloc>()
+                          .add(ArtistGetInfoEvent(artists[index]!.alias!));
                       Navigator.of(context).pushNamed(
                         RoutingPath.artistInfo,
                       );

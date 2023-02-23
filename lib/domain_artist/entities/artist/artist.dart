@@ -1,18 +1,22 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../domain_album/entities/topic/topic.dart';
+import '../../../domain_music/models/songs/song_info.dart';
+
 class Artist extends Equatable {
   final String? id;
   final String? name;
   final String? alias;
   final String? playlistId;
   final String? cover;
-  final String? thumbnail;
   final String? biography;
   final String? sortBiography;
   final String? thumbnailM;
   final String? national;
   final String? birthday;
   final String? realname;
+  final List<Topic?>? topics;
+  final List<SongInfo?>? songs;
 
   @override
   List<Object?> get props => [
@@ -21,13 +25,14 @@ class Artist extends Equatable {
         alias,
         playlistId,
         cover,
-        thumbnailM,
         biography,
         sortBiography,
         thumbnailM,
         national,
         birthday,
         realname,
+        topics,
+        songs,
       ];
 
   @override
@@ -39,13 +44,14 @@ class Artist extends Equatable {
     this.alias,
     this.playlistId,
     this.cover,
-    this.thumbnail,
     this.biography,
     this.sortBiography,
     this.thumbnailM,
     this.national,
     this.birthday,
     this.realname,
+    this.topics,
+    this.songs,
   });
 
   Artist copyWith({
@@ -54,13 +60,14 @@ class Artist extends Equatable {
     String? alias,
     String? playlistId,
     String? cover,
-    String? thumbnail,
     String? biography,
     String? sortBiography,
     String? thumbnailM,
     String? national,
     String? birthday,
     String? realname,
+    List<Topic?>? topics,
+    List<SongInfo?>? songs,
   }) {
     return Artist(
       id: id ?? this.id,
@@ -68,13 +75,14 @@ class Artist extends Equatable {
       alias: alias ?? this.alias,
       playlistId: playlistId ?? this.playlistId,
       cover: cover ?? this.cover,
-      thumbnail: thumbnail ?? this.thumbnail,
       biography: biography ?? this.biography,
       sortBiography: sortBiography ?? this.sortBiography,
       thumbnailM: thumbnailM ?? this.thumbnailM,
       national: national ?? this.national,
       birthday: birthday ?? this.birthday,
       realname: realname ?? this.realname,
+      topics: topics ?? this.topics,
+      songs: songs ?? this.songs,
     );
   }
 }

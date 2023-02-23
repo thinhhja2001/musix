@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
 import 'package:musix/domain_music/models/models.dart';
 
 class Playlist extends Equatable {
@@ -8,7 +9,7 @@ class Playlist extends Equatable {
   final String? sortDescription;
   final int? releasedAt;
   final List<String>? genreIds;
-  final List<String>? artistIds;
+  final List<MiniArtist?>? artists;
   final List<SongInfo?>? songs;
   final String? artistsNames;
   final String? thumbnailM;
@@ -23,7 +24,7 @@ class Playlist extends Equatable {
         sortDescription,
         releasedAt,
         genreIds,
-        artistIds,
+        artists,
         songs,
         artistsNames,
         thumbnailM,
@@ -41,7 +42,7 @@ class Playlist extends Equatable {
     this.sortDescription,
     this.releasedAt,
     this.genreIds,
-    this.artistIds,
+    this.artists,
     this.songs,
     this.artistsNames,
     this.thumbnailM,
@@ -56,7 +57,7 @@ class Playlist extends Equatable {
     String? sortDescription,
     int? releasedAt,
     List<String>? genreIds,
-    List<String>? artistIds,
+    List<MiniArtist?>? artists,
     List<SongInfo?>? songs,
     String? artistsNames,
     String? thumbnailM,
@@ -70,7 +71,7 @@ class Playlist extends Equatable {
       sortDescription: sortDescription ?? this.sortDescription,
       releasedAt: releasedAt ?? this.releasedAt,
       genreIds: genreIds ?? this.genreIds,
-      artistIds: artistIds ?? this.artistIds,
+      artists: artists ?? this.artists,
       songs: songs ?? this.songs,
       artistsNames: artistsNames ?? this.artistsNames,
       thumbnailM: thumbnailM ?? this.thumbnailM,

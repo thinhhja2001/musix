@@ -11,4 +11,5 @@ FutureOr<void> registerDependency() async {
   getIt.registerFactoryAsync<ZingMP3APIV2>(() => ZingMP3APIV2.createAsync());
   getIt.registerLazySingleton<PlaylistRepo>(() => PlaylistRepo());
   getIt.registerLazySingleton<HubRepo>(() => HubRepo());
+  getIt.registerLazySingleton<ArtistRepo>(() => ArtistRepo());
 }

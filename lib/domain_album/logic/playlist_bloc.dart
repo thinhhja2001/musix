@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_album/repo/playlist_repo.dart';
-import 'package:musix/domain_album/utils/convert_model_entity/convert_playlist.dart';
-import 'package:musix/domain_global/repo/hub_repo.dart';
 
+import '../../config/exporter/repo_exporter.dart';
 import '../../utils/utils.dart';
-import '../utils/convert_model_entity/convert_mini_playlist.dart';
+import '../utils/convert_playlist/convert_mini_playlist.dart';
+import '../utils/convert_playlist/convert_playlist.dart';
 
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   PlaylistBloc({
