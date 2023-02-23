@@ -1,16 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:musix/domain_album/entities/entities.dart';
+
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
-
-import '../../models/models.dart';
 import '../widgets.dart';
 
 enum AlbumArrange { list, grid, carousel }
 
 class AlbumListWidget extends StatelessWidget {
   final String title;
-  final List<Album?> albums;
+  final List<Playlist?> playlists;
   final bool isShowAll;
   final double? width;
   final double? height;
@@ -20,7 +20,7 @@ class AlbumListWidget extends StatelessWidget {
   const AlbumListWidget({
     Key? key,
     required this.title,
-    required this.albums,
+    required this.playlists,
     this.isShowAll = true,
     this.width,
     this.height,
@@ -52,13 +52,13 @@ class AlbumListWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ...List.generate(
-                        albums.length,
+                        playlists.length,
                         (index) => Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: AlbumCardWidget(
                             index: index + 1,
                             isRequestIndex: isShowAll,
-                            album: albums[index] ?? sampleAlbum,
+                            playlist: playlists[index],
                             width: 160,
                             height: 160,
                             onPress: () {},
@@ -88,7 +88,7 @@ class AlbumListWidget extends StatelessWidget {
                   physics: isScrollable
                       ? const BouncingScrollPhysics()
                       : const NeverScrollableScrollPhysics(),
-                  itemCount: albums.length,
+                  itemCount: playlists.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 12,
@@ -96,7 +96,7 @@ class AlbumListWidget extends StatelessWidget {
                     childAspectRatio: 0.84,
                   ),
                   itemBuilder: (context, index) => AlbumCardWidget(
-                    album: albums[index] ?? sampleAlbum,
+                    playlist: playlists[index],
                   ),
                 ),
               ),
@@ -135,9 +135,9 @@ class AlbumListWidget extends StatelessWidget {
                     ],
                     CarouselSlider(
                       items: List.generate(
-                        albums.length,
+                        playlists.length,
                         (index) => AlbumCardWidget(
-                          album: albums[index] ?? sampleAlbum,
+                          playlist: playlists[index],
                         ),
                       ),
                       options: CarouselOptions(
