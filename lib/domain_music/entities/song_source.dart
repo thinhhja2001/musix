@@ -17,8 +17,8 @@ class SongSource extends Equatable {
 
   SongSource copyWith({String? audioUrl, String? lyricUrl}) {
     return SongSource(
-      audioUrl: audioUrl ?? audioUrl,
-      lyricUrl: lyricUrl ?? lyricUrl,
+      audioUrl: audioUrl ?? this.audioUrl,
+      lyricUrl: lyricUrl ?? this.lyricUrl,
     );
   }
 }

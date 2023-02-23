@@ -91,7 +91,10 @@ class SongCardWidget extends StatelessWidget {
                           song.title ?? "",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyleTheme.ts14.copyWith(
-                            color: Colors.white,
+                            color: (state.songInfo != null &&
+                                    state.songInfo!.encodeId == song.encodeId)
+                                ? ColorTheme.primary
+                                : Colors.white,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

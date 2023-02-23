@@ -18,10 +18,17 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   }) : super(initialState) {
     on<SongGetInfoEvent>(_getSongInfo);
     on<SongGetSourceEvent>(_getSourceInfo);
+    on<SongPlayEvent>(_playSong);
+    on<SongPauseEvent>(_pauseSong);
+    on<SongUpdatePositionEvent>(_updatePosition);
+    on<SongUpdateDurationEvent>(_updateDuration);
+    on<SongOnSeekEvent>(_seekToPosition);
+    _settingUpDurationStream();
   }
   final SongInfoRepositoryImpl songInfoRepositoryImpl;
   final SongSourceRepositoryImpl songSourceRepositoryImpl;
   final MusixAudioHandler musixAudioHandler;
+
   //----------------------------------------------------------------------------
   @override
   void onError(Object error, StackTrace stackTrace) {
@@ -64,19 +71,60 @@ class SongBloc extends Bloc<SongEvent, SongState> {
             keys: [SongStatusKey.global.key],
             status: [Status.loading])));
     final response = await songSourceRepositoryImpl.getInfo(event.id);
-    final songSource = convertSongSourceModel(response);
     musixAudioHandler.setSong(
       convertSongInfo(state.songInfo!)!,
       response,
     );
-    musixAudioHandler.play();
+    add(SongPlayEvent());
     emit(
       state.copyWith(
           status: updateMapStatus(
               source: state.status,
               keys: [SongStatusKey.global.key],
               status: [Status.success]),
-          songSource: songSource),
+          songSource: convertSongSourceModel(response)),
     );
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _playSong(SongPlayEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(isPlaying: true),
+    );
+    await musixAudioHandler.play();
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _pauseSong(SongPauseEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(isPlaying: false),
+    );
+    await musixAudioHandler.pause();
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _updatePosition(
+      SongUpdatePositionEvent event, Emitter emit) async {
+    emit(state.copyWith(position: event.position));
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _updateDuration(
+      SongUpdateDurationEvent event, Emitter emit) async {
+    emit(state.copyWith(duration: event.duration));
+  }
+
+  FutureOr<void> _seekToPosition(SongOnSeekEvent event, Emitter emit) async {
+    musixAudioHandler.seek(event.position);
+  }
+
+  //----------------------------------------------------------------------------
+  FutureOr<void> _settingUpDurationStream() {
+    musixAudioHandler.player.positionStream.listen((position) {
+      add(SongUpdatePositionEvent(position));
+    });
+    musixAudioHandler.player.durationStream.listen((duration) {
+      add(SongUpdateDurationEvent(duration));
+    });
   }
 }

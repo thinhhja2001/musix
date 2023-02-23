@@ -1,6 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:musix/domain_music/utils/conver_model_entity/convert_song.dart';
+import '../../entities/entities.dart';
+import '../../logic/song_bloc.dart';
 import '../../services/musix_audio_handler.dart';
 import 'widgets/set_timer_widget.dart';
 import '../widgets.dart';
@@ -38,105 +42,113 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MusixAudioHandler musixAudioHandler =
-        GetIt.I.get<MusixAudioHandler>();
-    final SongInfoModel song = musixAudioHandler.currentSong;
-    return FutureBuilder<PaletteGenerator>(
-        future: updatePaletteGenerator(
-          song.thumbnailM ?? "",
-        ),
-        builder: (context, snapshot) {
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  snapshot.hasData
-                      ? snapshot.data!.dominantColor!.color
-                      : Colors.black,
-                  Colors.black,
-                ],
-                tileMode: TileMode.clamp,
-              ),
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        final currentSong = state.songInfo;
+        return FutureBuilder<PaletteGenerator>(
+            future: updatePaletteGenerator(
+              currentSong?.thumbnailM ?? "",
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const _CloseButtonWidget(),
-                  CircleAvatar(
-                    radius: 120,
-                    backgroundImage: NetworkImage(
-                      song.thumbnailM ?? "",
-                    ),
+            builder: (context, snapshot) {
+              return Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      snapshot.hasData
+                          ? snapshot.data!.dominantColor!.color
+                          : Colors.black,
+                      Colors.black,
+                    ],
+                    tileMode: TileMode.clamp,
                   ),
-                  _SongInformationWidget(song: song),
-                  // Music control field (Add to favorites, Add to playlists, ...)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite,
-                          color: Colors.white,
+                      const _CloseButtonWidget(),
+                      CircleAvatar(
+                        radius: 120,
+                        backgroundImage: NetworkImage(
+                          currentSong?.thumbnailM ?? "",
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.playlist_add,
-                          color: Colors.white,
-                        ),
+                      _SongInformationWidget(
+                        song: convertSongInfo(currentSong!)!,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.file_download_outlined,
-                          color: Colors.white,
-                        ),
+                      // Music control field (Add to favorites, Add to playlists, ...)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.favorite,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.playlist_add,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.file_download_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => const SetTimerWidget(),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.nights_stay,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) => const SetTimerWidget(),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.nights_stay,
-                          color: Colors.white,
-                        ),
-                      ),
+                      const CustomSlider(draggable: true),
+                      // Audio player control field
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.shuffle,
+                              color: Colors.white,
+                              size: 25,
+                            ),
+                          ),
+                          const SkipToPreviousButtonWidget(),
+                          const PlayButtonWidget(
+                            width: 100,
+                            height: 100,
+                            iconSize: 50,
+                          ),
+                          const SkipToNextButtonWidget(),
+                          const RepeatButtonWidget(),
+                        ],
+                      )
                     ],
                   ),
-                  const CustomSlider(draggable: true),
-                  // Audio player control field
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shuffle,
-                          color: Colors.white,
-                          size: 25,
-                        ),
-                      ),
-                      const SkipToPreviousButtonWidget(),
-                      const PlayButtonWidget(width: 100, height: 100),
-                      const SkipToNextButtonWidget(),
-                      const RepeatButtonWidget(),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-        });
+                ),
+              );
+            });
+      },
+    );
   }
 }
 

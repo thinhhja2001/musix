@@ -17,7 +17,6 @@ class MusixAudioHandler extends BaseAudioHandler with SeekHandler {
     // what state to display, here we set up our audio handler to broadcast all
     // playback state changes as they happen via playbackState...
     player.playbackEventStream.map(_transformEvent).pipe(playbackState);
-
     // ... and also the current media item via mediaItem.
   }
 
