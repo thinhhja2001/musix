@@ -25,7 +25,7 @@ class BillboardPageWidget extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              AlbumListWidget(
+              const AlbumListWidget(
                 title: 'New Album',
                 playlists: [],
               ),
@@ -39,7 +39,7 @@ class BillboardPageWidget extends StatelessWidget {
               const SizedBox(
                 height: 32,
               ),
-              SongListWidget(
+              const SongListWidget(
                 title: 'Recently Music',
                 songs: [],
                 isShowIndex: true,

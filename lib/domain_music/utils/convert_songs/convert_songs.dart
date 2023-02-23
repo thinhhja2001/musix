@@ -1,6 +1,7 @@
 import 'package:musix/domain_global/models/get_hub_detail_model/get_hub_detail_model.dart';
 
-import '../../models/models.dart';
+import '../../entities/song_info.dart';
+import '../../models/get_song_list_model/get_song_list_model.dart';
 
 List<SongInfo?> convertSongsFromSections(SectionsModel? sectionsModel) {
   if (sectionsModel == null) return [];

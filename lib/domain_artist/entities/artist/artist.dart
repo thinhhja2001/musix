@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../domain_album/entities/topic/topic.dart';
-import '../../../domain_music/models/songs/song_info.dart';
+import '../../../domain_music/entities/song_info.dart';
 
 class Artist extends Equatable {
   final String? id;

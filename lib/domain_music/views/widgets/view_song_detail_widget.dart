@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_music/entities/entities.dart';
 
 import '../../../routing/routing_path.dart';
 import '../../../theme/text_style.dart';
-import '../../models/models.dart';
 
 class ViewSongDetailWidget extends StatelessWidget {
   const ViewSongDetailWidget({
@@ -30,7 +30,7 @@ class ViewSongDetailWidget extends StatelessWidget {
               height: 20,
             ),
             Image.network(
-              song.thumbnailM,
+              song.thumbnailM ?? "",
               height: 200,
               width: 200,
               fit: BoxFit.fill,
@@ -39,14 +39,14 @@ class ViewSongDetailWidget extends StatelessWidget {
               height: 20,
             ),
             Text(
-              song.title,
+              song.title ?? "",
               style: TextStyleTheme.ts20.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
               ),
             ),
             Text(
-              song.artistsNames,
+              song.artistsNames ?? "",
               style: TextStyleTheme.ts15.copyWith(
                 color: Colors.grey,
                 fontWeight: FontWeight.w400,

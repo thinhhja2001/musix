@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
-import 'package:musix/domain_music/models/models.dart';
+
+import '../../../domain_music/entities/song_info.dart';
 
 class Playlist extends Equatable {
   final String? encodeId;

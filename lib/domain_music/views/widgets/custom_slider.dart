@@ -1,10 +1,11 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../theme/color.dart';
 import '../../../theme/text_style.dart';
-import '../../services/musix_audio_handler.dart';
+import '../../entities/entities.dart';
+import '../../logic/song_bloc.dart';
 
 class CustomSlider extends StatelessWidget {
   const CustomSlider({
@@ -24,20 +25,26 @@ class _NonDraggableSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliderTheme(
-      data: SliderThemeData(
-        trackShape: _CustomTrackShape(),
-        thumbShape: SliderComponentShape.noThumb,
-        thumbColor: ColorTheme.primary,
-      ),
-      child: Slider(
-        activeColor: ColorTheme.primary,
-        thumbColor: ColorTheme.primary,
-        value: 20,
-        min: 0,
-        max: 100,
-        onChanged: (value) {},
-      ),
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        final position = state.position;
+        final duration = state.duration;
+        return SliderTheme(
+          data: SliderThemeData(
+            trackShape: _CustomTrackShape(),
+            thumbShape: SliderComponentShape.noThumb,
+            thumbColor: ColorTheme.primary,
+          ),
+          child: Slider(
+            activeColor: ColorTheme.primary,
+            thumbColor: ColorTheme.primary,
+            value: position.inSeconds.toDouble(),
+            min: 0,
+            max: duration.inSeconds.toDouble(),
+            onChanged: (position) {},
+          ),
+        );
+      },
     );
   }
 }
@@ -47,18 +54,24 @@ class _DraggableSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final musixAudioHandler = GetIt.I.get<MusixAudioHandler>();
-    return ProgressBar(
-      thumbColor: Colors.white,
-      progressBarColor: ColorTheme.primary,
-      thumbGlowColor: Colors.transparent,
-      timeLabelTextStyle: TextStyleTheme.ts14.copyWith(
-        fontWeight: FontWeight.w500,
-      ),
-      onSeek: (position) => musixAudioHandler.seek(position),
-      thumbRadius: 8.0,
-      progress: musixAudioHandler.player.position,
-      total: musixAudioHandler.player.duration ?? const Duration(seconds: 0),
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        final position = state.position;
+        final duration = state.duration;
+        return ProgressBar(
+          thumbColor: Colors.white,
+          progressBarColor: ColorTheme.primary,
+          thumbGlowColor: Colors.transparent,
+          timeLabelTextStyle: TextStyleTheme.ts14.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
+          onSeek: (position) =>
+              context.read<SongBloc>().add(SongOnSeekEvent(position)),
+          thumbRadius: 8.0,
+          progress: position,
+          total: duration,
+        );
+      },
     );
   }
 }

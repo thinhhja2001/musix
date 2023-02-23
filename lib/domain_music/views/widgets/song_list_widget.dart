@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import '../../repository/song_source_repository.dart';
-import '../../models/songs/song_info.dart';
-import '../../services/musix_audio_handler.dart';
-import '../widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../global/widgets/rotated_text_widget.dart';
+import '../../entities/entities.dart';
+import '../../logic/song_bloc.dart';
+import '../widgets.dart';
 
 class SongListWidget extends StatelessWidget {
   final String title;
@@ -22,41 +22,48 @@ class SongListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MusixAudioHandler musixAudioHandler =
-        GetIt.I.get<MusixAudioHandler>();
-    return Row(
-      children: [
-        RotatedTextWidget(text: title),
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            physics: isScrollable
-                ? const BouncingScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ...List.generate(
-                  songs.length,
-                  (index) => SongCardWidget(
-                    index: index + 1,
-                    isRequestIndex: isShowIndex,
-                    song: songs[index] ?? sampleSong,
-                    onPress: () async {
-                      final songSource = await SongSourceRepositoryImpl()
-                          .getInfo(songs[index]!.encodeId);
-                      musixAudioHandler.setSong(songs[index]!, songSource);
-                      musixAudioHandler.play();
-                    },
-                  ),
-                ),
-              ],
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            RotatedTextWidget(text: title),
+            const SizedBox(
+              width: 8,
             ),
-          ),
-        ),
-      ],
+            Expanded(
+              child: SingleChildScrollView(
+                physics: isScrollable
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...List.generate(
+                      songs.length,
+                      (index) => SongCardWidget(
+                        index: index + 1,
+                        isRequestIndex: isShowIndex,
+                        song: songs[index]!,
+                        onPress: () async {
+                          context
+                              .read<SongBloc>()
+                              .add(SongGetInfoEvent(songs[index]!.encodeId!));
+
+                          context.read<SongBloc>().add(
+                                SongGetSourceEvent(
+                                  songs[index]!.encodeId!,
+                                ),
+                              );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
