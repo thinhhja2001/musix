@@ -1,5 +1,5 @@
-import 'package:musix/domain_music/entities/entities.dart';
-import 'package:musix/domain_music/models/models.dart';
+import 'package:musix/domain_song/entities/entities.dart';
+import 'package:musix/domain_song/models/models.dart';
 
 SongInfo? convertSongInfoModel(SongInfoModel songInfoModel) => SongInfo(
     encodeId: songInfoModel.encodeId,

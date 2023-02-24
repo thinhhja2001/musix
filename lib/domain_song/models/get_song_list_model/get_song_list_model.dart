@@ -95,7 +95,7 @@ class SongModel {
     hasLyric = json['hasLyric'];
     mvlink = json['mvlink'];
     album =
-    json['album'] != null ? PlaylistModel.fromJson(json['album']) : null;
+        json['album'] != null ? PlaylistModel.fromJson(json['album']) : null;
   }
 
   Map<String, dynamic> toJson() {

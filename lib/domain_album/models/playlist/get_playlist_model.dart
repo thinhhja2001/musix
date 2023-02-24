@@ -1,5 +1,5 @@
 import '../../../domain_artist/models/models.dart';
-import '../../../domain_music/models/get_song_list_model/get_song_list_model.dart';
+import '../../../domain_song/models/get_song_list_model/get_song_list_model.dart';
 import '../models.dart';
 
 class GetPlaylistModel {

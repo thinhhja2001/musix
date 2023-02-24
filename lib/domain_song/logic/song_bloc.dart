@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_music/repository/repository.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
-import 'package:musix/domain_music/utils/conver_model_entity/convert_song.dart';
+import 'package:musix/domain_song/repository/repository.dart';
+import 'package:musix/domain_song/services/musix_audio_handler.dart';
+import 'package:musix/domain_song/utils/conver_model_entity/convert_song.dart';
 import 'package:musix/utils/debug/logger.dart';
 import 'package:musix/utils/utils.dart';
 

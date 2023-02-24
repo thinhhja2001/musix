@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../../domain_music/views/widgets.dart';
+import '../../../domain_song/views/widgets.dart';
 import '../../../theme/theme.dart';
 import 'widgets/edit_profile_widget.dart';
 

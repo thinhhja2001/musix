@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_music/logic/song_bloc.dart';
-import '../../domain_music/entities/entities.dart';
-import '../../domain_music/models/models.dart';
-import '../../domain_music/views/widgets.dart';
+import 'package:musix/domain_song/logic/song_bloc.dart';
+import '../../domain_song/entities/entities.dart';
+import '../../domain_song/models/models.dart';
+import '../../domain_song/views/widgets.dart';
 
 import '../../theme/theme.dart';
 

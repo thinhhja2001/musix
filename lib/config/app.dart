@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/config/app_view.dart';
-import 'package:musix/domain_music/entities/entities.dart';
-import 'package:musix/domain_music/entities/state/song_state.dart';
-import 'package:musix/domain_music/logic/song_bloc.dart';
-import 'package:musix/domain_music/repository/repository.dart';
-import 'package:musix/domain_music/services/musix_audio_handler.dart';
+import 'package:musix/domain_song/entities/entities.dart';
+import 'package:musix/domain_song/entities/state/song_state.dart';
+import 'package:musix/domain_song/logic/song_bloc.dart';
+import 'package:musix/domain_song/repository/repository.dart';
+import 'package:musix/domain_song/services/musix_audio_handler.dart';
 
 import '../utils/utils.dart';
 import 'exporter.dart';

@@ -4,9 +4,9 @@ import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
 
 import '../../../domain_album/views/widgets.dart';
 import '../../../domain_artist/views/widgets.dart';
-import '../../../domain_music/entities/entities.dart';
-import '../../../domain_music/models/models.dart';
-import '../../../domain_music/views/widgets.dart';
+import '../../../domain_song/entities/entities.dart';
+import '../../../domain_song/models/models.dart';
+import '../../../domain_song/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
 
 class SearchAllWidget extends StatelessWidget {

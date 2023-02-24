@@ -2,7 +2,7 @@ import 'package:musix/domain_album/entities/entities.dart';
 import 'package:musix/domain_album/models/models.dart';
 import 'package:musix/domain_artist/utils/convert_mini_artist.dart';
 
-import '../../../domain_music/utils/convert_songs/convert_songs.dart';
+import '../../../domain_song/utils/convert_songs/convert_songs.dart';
 import '../convert_genre/convert_genre.dart';
 
 Playlist? convertPlaylistModel(PlaylistModel? model) {

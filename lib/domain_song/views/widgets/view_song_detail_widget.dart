@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_music/entities/entities.dart';
+import 'package:musix/domain_song/entities/entities.dart';
 
 import '../../../routing/routing_path.dart';
 import '../../../theme/text_style.dart';

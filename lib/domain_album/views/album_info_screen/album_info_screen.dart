@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_music/views/widgets.dart';
+import 'package:musix/domain_song/views/widgets.dart';
 
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';

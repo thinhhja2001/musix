@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'config/app.dart';
 
 import 'config/register_dependency.dart';
-import 'domain_music/services/musix_audio_handler.dart';
+import 'domain_song/services/musix_audio_handler.dart';
 import 'utils/utils.dart';
 
 void main() async {
