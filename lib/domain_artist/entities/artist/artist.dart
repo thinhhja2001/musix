@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../domain_album/entities/topic/topic.dart';
-import '../../../domain_music/entities/song_info.dart';
+import '../../../domain_hub/entities/entities.dart';
 
 class Artist extends Equatable {
   final String? id;
@@ -15,8 +14,8 @@ class Artist extends Equatable {
   final String? national;
   final String? birthday;
   final String? realname;
-  final List<Topic?>? topics;
-  final List<SongInfo?>? songs;
+  final List<SectionPlaylist>? sectionPlaylist;
+  final SectionSong? songs;
 
   @override
   List<Object?> get props => [
@@ -31,7 +30,7 @@ class Artist extends Equatable {
         national,
         birthday,
         realname,
-        topics,
+        sectionPlaylist,
         songs,
       ];
 
@@ -50,7 +49,7 @@ class Artist extends Equatable {
     this.national,
     this.birthday,
     this.realname,
-    this.topics,
+    this.sectionPlaylist,
     this.songs,
   });
 
@@ -66,8 +65,8 @@ class Artist extends Equatable {
     String? national,
     String? birthday,
     String? realname,
-    List<Topic?>? topics,
-    List<SongInfo?>? songs,
+    List<SectionPlaylist>? sectionPlaylist,
+    SectionSong? songs,
   }) {
     return Artist(
       id: id ?? this.id,
@@ -81,7 +80,7 @@ class Artist extends Equatable {
       national: national ?? this.national,
       birthday: birthday ?? this.birthday,
       realname: realname ?? this.realname,
-      topics: topics ?? this.topics,
+      sectionPlaylist: sectionPlaylist ?? this.sectionPlaylist,
       songs: songs ?? this.songs,
     );
   }

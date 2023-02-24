@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain_album/views/widgets.dart';
+import '../../../../domain_hub/views/widgets.dart';
 import '../../../../domain_music/views/widgets.dart';
+import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../domain_user/views/widgets.dart';
 import 'widgets.dart';
 
@@ -16,27 +17,27 @@ class ExplorePageWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: [
-              const SizedBox(
+            children: const [
+              SizedBox(
                 height: 24,
               ),
-              const ProfileCardWidget(),
-              const SizedBox(
+              ProfileCardWidget(),
+              SizedBox(
                 height: 24,
               ),
-              TopicListWidget(
+              HubListWidget(
                 title: 'Topics',
-                topics: [],
+                hubs: [],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 24,
               ),
-              AlbumListWidget(
+              PlaylistListWidget(
                 title: 'Recent Album',
                 playlists: [],
                 isShowAll: false,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 24,
               ),
               SongListWidget(
@@ -44,7 +45,7 @@ class ExplorePageWidget extends StatelessWidget {
                 songs: [],
                 isShowIndex: true,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 24,
               ),
             ],
