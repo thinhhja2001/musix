@@ -16,4 +16,5 @@ FutureOr<void> registerDependency() async {
       () => SongInfoRepositoryImpl());
   getIt.registerLazySingleton<SongSourceRepositoryImpl>(
       () => SongSourceRepositoryImpl());
+  getIt.registerLazySingleton<HomeMusicRepo>(() => HomeMusicRepo());
 }

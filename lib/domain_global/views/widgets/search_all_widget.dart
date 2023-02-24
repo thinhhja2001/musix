@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/entities/entities.dart';
 import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
 
-import '../../../domain_album/views/widgets.dart';
 import '../../../domain_artist/views/widgets.dart';
 import '../../../domain_music/entities/entities.dart';
 import '../../../domain_music/models/models.dart';
 import '../../../domain_music/views/widgets.dart';
+import '../../../domain_playlist/entities/entities.dart';
+import '../../../domain_playlist/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
 
 class SearchAllWidget extends StatelessWidget {
@@ -43,7 +43,7 @@ class SearchAllWidget extends StatelessWidget {
                   listDynamic.length,
                   (index) {
                     switch (listDynamic[index].runtimeType.toString()) {
-                      case 'Song':
+                      case 'SongInfo':
                         return SongCardWidget(
                           isRequestIndex: isShowIndex,
                           song: listDynamic[index] as SongInfo,
@@ -51,7 +51,7 @@ class SearchAllWidget extends StatelessWidget {
                           isHasType: true,
                           onPress: () {},
                         );
-                      case 'Artist':
+                      case 'MiniArtist':
                         return ArtistCardWidget(
                           artist: listDynamic[index] as MiniArtist,
                           index: index + 1,
@@ -59,15 +59,15 @@ class SearchAllWidget extends StatelessWidget {
                           isHasType: true,
                           onPress: () {},
                         );
-                      case 'Album':
-                        return AlbumCardWidget(
+                      case 'MiniPlaylist':
+                        return PlaylistCardWidget(
                           playlist: listDynamic[index] as MiniPlaylist,
                           isRequestIndex: isShowIndex,
                           index: index,
                           isHasType: true,
                           onPress: () {},
                         );
-                      case 'Video':
+                      case 'VideoDetail':
                         return VideoCardWidget(
                           video: listDynamic[index] as VideoDetail,
                           index: index,

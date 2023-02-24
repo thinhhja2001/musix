@@ -5,7 +5,7 @@ class RoutingPath {
   static const String forgetPassword = '/forgetPassword';
 
   // Main
-  static const String home = '/home';
+  static const String home = '/home_music';
 
   // User
   static const String profile = '$home/profile';
@@ -13,8 +13,8 @@ class RoutingPath {
   static const String editProfile = '$profile/edit';
 
   // Album - Topic - Playlist
-  static const String topicSelection = '$home/topicSelection';
-  static const String albumInfo = '$home/albumInfo';
+  static const String playlistList = '$home/playlists';
+  static const String playlistInfo = '$home/playlist';
 
   // Artist
   static const String artistInfo = '$home/artistInfo';
