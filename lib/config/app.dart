@@ -28,6 +28,7 @@ class _MusixAppState extends State<MusixApp> {
               },
             ),
             homeMusicRepo: getIt.get<HomeMusicRepo>(),
+            hubRepo: getIt.get<HubRepo>(),
           )..add(const HomeMusicGetEvent()),
         ),
         BlocProvider(

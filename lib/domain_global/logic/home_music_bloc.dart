@@ -2,20 +2,23 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/domain_global/entities/entities.dart';
-import 'package:musix/domain_global/repo/home_music_repo.dart';
 import 'package:musix/domain_global/utils/convert_home_music/convert_home_music.dart';
 
+import '../../config/exporter/repo_exporter.dart';
+import '../../domain_hub/utils/utils.dart';
 import '../../utils/utils.dart';
 
 class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
   HomeMusicBloc({
     required HomeMusicState initialState,
     required this.homeMusicRepo,
+    required this.hubRepo,
   }) : super(initialState) {
     on<HomeMusicGetEvent>(_getHomeMusic);
   }
 
   final HomeMusicRepo homeMusicRepo;
+  final HubRepo hubRepo;
 
   //----------------------------------------------------------------------------
   @override
@@ -42,7 +45,11 @@ class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
       ));
 
       final response = await homeMusicRepo.getHomeModel();
-      final homeMusic = convertFromGetHomeModel(response);
+      final hubResponse = await hubRepo.getHomeHub();
+      final hubs = convertHubFromGetHomeHub(hubResponse);
+      var homeMusic = convertFromGetHomeModel(response);
+      homeMusic = homeMusic?.copyWith(hubs: hubs);
+
       emit(
         state.copyWith(
           status: updateMapStatus(

@@ -16,9 +16,8 @@ class HubListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firstHubs = hubs.getRange(0, (hubs.length / 2 - 1) as int).toList();
-    final secondHubs =
-        hubs.getRange((hubs.length / 2) as int, hubs.length).toList();
+    final firstHubs = hubs.getRange(0, ((hubs.length ~/ 2) - 1)).toList();
+    final secondHubs = hubs.getRange((hubs.length ~/ 2), hubs.length).toList();
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Row(
@@ -34,6 +33,7 @@ class HubListWidget extends StatelessWidget {
                 HubCarouselWidget(
                   hubs: firstHubs,
                 ),
+                const SizedBox(height: 16,),
                 HubCarouselWidget(
                   hubs: secondHubs,
                 ),
@@ -69,7 +69,7 @@ class HubCarouselWidget extends StatelessWidget {
               ),
             ),
             options: CarouselOptions(
-              height: 240,
+              height: 160,
               autoPlay: true,
               enlargeCenterPage: true,
               enlargeFactor: 0.32,

@@ -25,9 +25,9 @@ class HomeHubModel {
         topTopic!.add(HubModel.fromJson(v));
       });
     }
-    if (json['section'] != null) {
+    if (json['topic'] != null) {
       topic = <HubModel>[];
-      json['section'].forEach((v) {
+      json['topic'].forEach((v) {
         topic!.add(HubModel.fromJson(v));
       });
     }

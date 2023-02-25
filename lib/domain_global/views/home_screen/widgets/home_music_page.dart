@@ -4,13 +4,14 @@ import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_playlist/views/widgets.dart';
 
 import '../../../../domain_artist/views/widgets.dart';
+import '../../../../domain_hub/views/widgets.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
 import 'widgets.dart';
 
-class BillboardPageWidget extends StatelessWidget {
-  const BillboardPageWidget({Key? key}) : super(key: key);
+class HomeMusicPage extends StatelessWidget {
+  const HomeMusicPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,13 @@ class BillboardPageWidget extends StatelessWidget {
                     PlaylistListWidget(
                       sectionPlaylist: homeMusic.newPlaylists!,
                       playlistArrange: PlaylistArrange.carousel,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    HubListWidget(
+                      title: 'Topics',
+                      hubs: homeMusic.hubs!,
                     ),
                     const SizedBox(
                       height: 24,

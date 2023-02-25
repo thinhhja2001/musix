@@ -13,9 +13,6 @@ class SongTabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    for (var e in items) {
-      debugPrint('${e.title} - ${e.items?.length}');
-    }
     return DefaultTabController(
       length: items.length,
       child: SizedBox(
