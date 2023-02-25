@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain_hub/entities/entities.dart';
 import '../../../../domain_music/models/models.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
@@ -26,8 +27,10 @@ class BillboardPageWidget extends StatelessWidget {
                 height: 24,
               ),
               const PlaylistListWidget(
-                title: 'New Album',
-                playlists: [],
+                playlistArrange: PlaylistArrange.carousel,
+                sectionPlaylist: SectionPlaylist(
+                  title: 'New Album',
+                ),
               ),
               const SizedBox(
                 height: 32,
@@ -40,9 +43,12 @@ class BillboardPageWidget extends StatelessWidget {
                 height: 32,
               ),
               const SongListWidget(
-                title: 'Recently Music',
-                songs: [],
+                songArrange: SongArrange.info,
+                isScrollable: false,
                 isShowIndex: true,
+                sectionSong: SectionSong(
+                  title: 'Recent Song',
+                ),
               ),
               const SizedBox(
                 height: 32,

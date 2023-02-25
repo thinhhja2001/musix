@@ -1,160 +1,109 @@
 import 'package:flutter/material.dart';
 
-import '../../../global/widgets/custom_card_widget.dart';
+import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../entities/entities.dart';
 
+enum PlaylistType {
+  cardImage,
+  cardInfo,
+}
+
 class PlaylistCardWidget extends StatelessWidget {
-  final double? width;
-  final double? height;
-  final int? index;
+  final MiniPlaylist playlist;
   final VoidCallback? onPress;
-  final MiniPlaylist? playlist;
-
-  /// [isRequestIndex] for check should place index in start of card
-  final bool isRequestIndex;
-
-  /// [isHasType] for check type of card
-  final bool isHasType;
-
-  /// [type] for check type of card
-  final String type;
-
-  /// [padding] for top and right
-  final double padding;
+  final int index;
+  final bool isShowIndex;
+  final bool isShowType;
+  final double? size;
+  final PlaylistType type;
 
   const PlaylistCardWidget({
-    Key? key,
-    this.width,
-    this.height,
-    this.index,
+    super.key,
+    required this.playlist,
     this.onPress,
-    this.playlist,
-    this.isHasType = false,
-    this.isRequestIndex = false,
-    this.padding = 16,
-    this.type = 'Album',
-  }) : super(key: key);
+    this.index = 0,
+    this.isShowIndex = false,
+    this.isShowType = false,
+    this.size,
+    required this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (playlist == null) {
-      return const SizedBox.shrink();
+    switch (type) {
+      case PlaylistType.cardImage:
+        return PlaylistCardImageWidget(
+          playlist: playlist,
+          onPress: onPress,
+          size: size,
+        );
+      case PlaylistType.cardInfo:
+        return PlaylistCardInfoWidget(
+          playlist: playlist,
+          index: index,
+          isShowIndex: isShowIndex,
+          isShowType: isShowType,
+          onPress: onPress,
+        );
     }
+  }
+}
 
-    /// Support for showing for dynamic type
-    if (isHasType) {
-      return Padding(
-        padding: EdgeInsets.only(top: padding, right: padding),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-          onTap: onPress,
-          child: Padding(
-            padding: const EdgeInsets.all(4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                if (isRequestIndex) ...[
-                  Center(
-                    child: Text(
-                      '#$index',
-                      style: TextStyleTheme.ts16.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 26 - (index.toString().length - 1) * 10,
-                  ),
-                ],
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      3,
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        playlist!.thumbnailM!,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        playlist!.title!,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleTheme.ts14.copyWith(
-                          color: ColorTheme.white,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        playlist!.artistsNames!,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleTheme.ts12.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: ColorTheme.primary,
-                        ),
-                      ),
-                      Text(
-                        type,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleTheme.ts10.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(6),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 0.8,
-                        color: ColorTheme.primary,
-                      ),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    width: 24,
-                    height: 24,
-                    child: const Center(
-                      child: Icon(
-                        Icons.more_horiz,
-                        color: ColorTheme.primary,
-                        size: 16,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+class PlaylistCardInfoWidget extends StatelessWidget {
+  final MiniPlaylist playlist;
+  final VoidCallback? onPress;
+  final int index;
+  final bool isShowIndex;
+  final bool isShowType;
 
+  const PlaylistCardInfoWidget({
+    super.key,
+    required this.playlist,
+    this.onPress,
+    this.index = 0,
+    this.isShowIndex = false,
+    this.isShowType = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCardInfoWidget(
+      index: index,
+      image: playlist.thumbnailM!,
+      title: playlist.title!,
+      subTitle: playlist.artistsNames!,
+      type: isShowType ? 'Playlist' : null,
+      isShowIndex: isShowIndex,
+      padding: 0,
+      onCardPress: onPress,
+
+      /// TODO: code for button press
+      onButtonPress: () {},
+    );
+  }
+}
+
+class PlaylistCardImageWidget extends StatelessWidget {
+  final double? size;
+  final MiniPlaylist playlist;
+  final VoidCallback? onPress;
+
+  const PlaylistCardImageWidget({
+    super.key,
+    this.size,
+    required this.playlist,
+    this.onPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return CustomCardWidget(
-      width: width ?? 240,
-      height: height ?? 240,
-      image: playlist!.thumbnailM!,
-      title: playlist!.title!,
-      subTitle: playlist!.artistsNames!,
+      width: size ?? 240,
+      height: size ?? 240,
+      image: playlist.thumbnailM!,
+      title: playlist.title!,
+      subTitle: playlist.artistsNames!,
       onTap: onPress,
       titleTextStyle: TextStyleTheme.ts15.copyWith(
         fontWeight: FontWeight.w500,

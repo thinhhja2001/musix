@@ -44,7 +44,7 @@ class HubListWidget extends StatelessWidget {
                     index: index,
                     onPress: () {
                       Navigator.of(context).pushNamed(
-                        RoutingPath.playlistList,
+                        RoutingPath.hubInfo,
                       );
                     },
                   );

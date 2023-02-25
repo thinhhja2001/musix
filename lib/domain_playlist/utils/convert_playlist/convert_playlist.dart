@@ -15,13 +15,21 @@ Playlist? convertPlaylistModel(PlaylistModel? model) {
   List<Genre>? genres =
       model.genres?.map((genreModel) => convertGenre(genreModel)!).toList();
 
-  List<SongInfo>? songs = model.song?.items
+  List<SongInfo>? songList = model.song?.items
       ?.map((songInfoModel) => convertSongInfoModel(songInfoModel)!)
       .toList();
+  SectionSong songs = SectionSong(
+    title: 'All',
+    items: songList,
+  );
 
-  List<MiniArtist>? artists = model.artists
+  List<MiniArtist>? artistList = model.artists
       ?.map((artistModel) => convertMiniArtistFromModel(artistModel)!)
       .toList();
+  SectionArtist artists = SectionArtist(
+    title: 'Artists',
+    items: artistList,
+  );
 
   return Playlist(
     encodeId: model.encodeId,

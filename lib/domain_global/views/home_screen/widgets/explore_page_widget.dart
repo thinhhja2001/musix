@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain_hub/entities/entities.dart';
 import '../../../../domain_hub/views/widgets.dart';
 import '../../../../domain_music/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
@@ -33,17 +34,21 @@ class ExplorePageWidget extends StatelessWidget {
                 height: 24,
               ),
               PlaylistListWidget(
-                title: 'Recent Album',
-                playlists: [],
-                isShowAll: false,
+                playlistArrange: PlaylistArrange.carousel,
+                sectionPlaylist: SectionPlaylist(
+                  title: 'Recent Album',
+                ),
               ),
               SizedBox(
                 height: 24,
               ),
               SongListWidget(
-                title: 'All Song',
-                songs: [],
+                songArrange: SongArrange.info,
+                isScrollable: false,
                 isShowIndex: true,
+                sectionSong: SectionSong(
+                  title: 'All Song',
+                ),
               ),
               SizedBox(
                 height: 24,

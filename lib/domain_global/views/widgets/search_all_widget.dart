@@ -45,27 +45,30 @@ class SearchAllWidget extends StatelessWidget {
                     switch (listDynamic[index].runtimeType.toString()) {
                       case 'SongInfo':
                         return SongCardWidget(
-                          isRequestIndex: isShowIndex,
                           song: listDynamic[index] as SongInfo,
+                          isShowIndex: isShowIndex,
+                          isShowType: true,
                           index: index + 1,
-                          isHasType: true,
                           onPress: () {},
+                          type: SongType.cardInfo,
                         );
                       case 'MiniArtist':
                         return ArtistCardWidget(
                           artist: listDynamic[index] as MiniArtist,
+                          isShowIndex: isShowIndex,
+                          isShowType: true,
                           index: index + 1,
-                          isRequestIndex: isShowIndex,
-                          isHasType: true,
                           onPress: () {},
+                          type: ArtistType.cardInfo,
                         );
                       case 'MiniPlaylist':
                         return PlaylistCardWidget(
                           playlist: listDynamic[index] as MiniPlaylist,
-                          isRequestIndex: isShowIndex,
-                          index: index,
-                          isHasType: true,
+                          isShowIndex: isShowIndex,
+                          isShowType: true,
+                          index: index + 1,
                           onPress: () {},
+                          type: PlaylistType.cardInfo,
                         );
                       case 'VideoDetail':
                         return VideoCardWidget(

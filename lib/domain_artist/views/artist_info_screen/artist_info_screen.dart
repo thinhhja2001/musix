@@ -179,19 +179,18 @@ class ArtistInfoScreen extends StatelessWidget {
                     ...List.generate(info.sectionPlaylist?.length ?? 0,
                         (index) {
                       return PlaylistListWidget(
-                        title: info.sectionPlaylist?[index].title ?? '',
-                        playlists: info.sectionPlaylist?[index].items ?? [],
-                        isShowAll: false,
-                        playlistArrange: PlaylistArrange.list,
-                        isScrollable: true,
+                        playlistArrange: PlaylistArrange.carousel,
+                        sectionPlaylist: info.sectionPlaylist![index],
                       );
                     }),
                     const SizedBox(
                       height: 12,
                     ),
                     SongListWidget(
-                      title: 'All Songs',
-                      songs: info.songs?.items ?? [],
+                      sectionSong: info.songs!,
+                      isScrollable: false,
+                      isShowIndex: true,
+                      songArrange: SongArrange.info,
                     ),
                   ],
                 ),

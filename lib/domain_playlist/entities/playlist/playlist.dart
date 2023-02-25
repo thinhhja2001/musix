@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
 
 import '../../../domain_hub/entities/entities.dart';
-import '../../../domain_music/entities/song_info.dart';
 
 class Playlist extends Equatable {
   final String? encodeId;
@@ -11,8 +9,8 @@ class Playlist extends Equatable {
   final String? sortDescription;
   final int? releasedAt;
   final List<Genre>? genres;
-  final List<MiniArtist>? artists;
-  final List<SongInfo>? songs;
+  final SectionArtist? artists;
+  final SectionSong? songs;
   final String? artistsNames;
   final String? thumbnailM;
   final String? userName;
@@ -59,8 +57,8 @@ class Playlist extends Equatable {
     String? sortDescription,
     int? releasedAt,
     List<Genre>? genres,
-    List<MiniArtist>? artists,
-    List<SongInfo>? songs,
+    SectionArtist? artists,
+    SectionSong? songs,
     String? artistsNames,
     String? thumbnailM,
     String? userName,

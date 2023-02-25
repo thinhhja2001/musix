@@ -227,10 +227,10 @@ class PlaylistInfoScreen extends StatelessWidget {
                                   height: 12,
                                 ),
                                 SongListWidget(
-                                  title: 'All Songs',
-                                  songs: playlist.songs!,
+                                  sectionSong: playlist.songs!,
                                   isScrollable: false,
                                   isShowIndex: true,
+                                  songArrange: SongArrange.info,
                                 ),
                               ],
                             ),
