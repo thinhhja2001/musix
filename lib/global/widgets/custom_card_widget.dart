@@ -12,6 +12,7 @@ class CustomCardWidget extends StatelessWidget {
   final double height;
   final Alignment titleAlignment;
   final bool opacityTitle;
+  final bool isShowTitle;
   final TextStyle titleTextStyle;
 
   const CustomCardWidget({
@@ -25,79 +26,77 @@ class CustomCardWidget extends StatelessWidget {
     this.titleAlignment = Alignment.bottomCenter,
     this.opacityTitle = true,
     this.titleTextStyle = TextStyleTheme.ts15,
+    this.isShowTitle = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.white70),
-        ),
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                width: width,
-                height: height,
-                fit: BoxFit.fill,
-                imageUrl: image,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) =>
-                    const Center(child: Icon(Icons.error)),
-              ),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: image,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
             ),
-            Container(
-              decoration: opacityTitle
-                  ? BoxDecoration(
-                      color: Colors.black.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(10),
-                    )
-                  : null,
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (title != null) ...[
-                    Text(
-                      title!,
-                      overflow: title!.length > 44
-                          ? TextOverflow.ellipsis
-                          : TextOverflow.clip,
-                      style: titleTextStyle.copyWith(
-                        color: Colors.white,
+          ),
+          if (isShowTitle)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: 140,
+                decoration: opacityTitle
+                    ? BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10),
+                      )
+                    : null,
+                padding: const EdgeInsets.all(8),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (title != null) ...[
+                      Text(
+                        title!,
+                        overflow: title!.length > 16
+                            ? TextOverflow.ellipsis
+                            : TextOverflow.clip,
+                        style: titleTextStyle.copyWith(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
+                    ],
+                    if (subTitle != null) ...[
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        subTitle!,
+                        overflow: TextOverflow.ellipsis,
+                        style: titleTextStyle.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ]
                   ],
-                  if (subTitle != null) ...[
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      subTitle!,
-                      overflow: TextOverflow.ellipsis,
-                      style: titleTextStyle.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ]
-                ],
+                ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

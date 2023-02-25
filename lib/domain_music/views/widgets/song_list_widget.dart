@@ -19,6 +19,7 @@ class SongListWidget extends StatelessWidget {
   final bool isScrollable;
   final bool isShowIndex;
   final bool isShowType;
+  final bool isShowTitle;
   final SectionSong sectionSong;
   final SongArrange songArrange;
 
@@ -28,6 +29,7 @@ class SongListWidget extends StatelessWidget {
     this.isScrollable = false,
     this.isShowIndex = false,
     this.isShowType = false,
+    this.isShowTitle = true,
     required this.sectionSong,
     required this.songArrange,
   }) : super(key: key);
@@ -42,6 +44,7 @@ class SongListWidget extends StatelessWidget {
           isShowType: isShowType,
           isScrollable: isScrollable,
           isShowIndex: isShowType,
+          isShowTitle: isShowTitle,
         );
       case SongArrange.carousel:
         return SongCarouselWidget(
@@ -57,6 +60,7 @@ class SongInfoWidget extends StatelessWidget {
   final bool isScrollable;
   final bool isShowIndex;
   final bool isShowType;
+  final bool isShowTitle;
   final SectionSong sectionSong;
 
   const SongInfoWidget({
@@ -65,6 +69,7 @@ class SongInfoWidget extends StatelessWidget {
     this.isScrollable = true,
     this.isShowIndex = true,
     this.isShowType = true,
+    this.isShowTitle = true,
     required this.sectionSong,
   });
 
@@ -75,7 +80,7 @@ class SongInfoWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (sectionSong.title != null) ...[
+          if (sectionSong.title != null && isShowTitle) ...[
             RotatedTextWidget(
               text: sectionSong.title!,
             ),
@@ -132,7 +137,7 @@ class SongInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (sectionSong.title != null) ...[
+            if (sectionSong.title != null && isShowTitle) ...[
               Text(
                 sectionSong.title!,
                 style: TextStyleTheme.ts20.copyWith(

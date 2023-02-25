@@ -274,7 +274,6 @@ class PlaylistCarouselWidget extends StatelessWidget {
     this.isVerticalTitle = true,
     required this.sectionPlaylist,
   });
-
   @override
   Widget build(BuildContext context) {
     if (isVerticalTitle) {
@@ -299,13 +298,12 @@ class PlaylistCarouselWidget extends StatelessWidget {
                   isShowIndex: false,
                   isShowType: false,
                   type: PlaylistType.cardImage,
-                  size: 160,
                   playlist: sectionPlaylist.items![index],
                   onPress: () {},
                 ),
               ),
               options: CarouselOptions(
-                height: 240,
+                height: 200,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.32,

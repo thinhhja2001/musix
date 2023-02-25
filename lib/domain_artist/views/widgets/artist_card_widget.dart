@@ -103,6 +103,7 @@ class ArtistCardImageWidget extends StatelessWidget {
       image: artist.thumbnailM!,
       title: artist.name!,
       onTap: onPress,
+      isShowTitle: true,
       titleTextStyle: TextStyleTheme.ts15.copyWith(
         fontWeight: FontWeight.w500,
       ),

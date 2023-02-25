@@ -5,15 +5,15 @@ import '../../../domain_playlist/utils/utils.dart';
 import '../../entities/entities.dart';
 import '../../model/model.dart';
 
-List<NewReleaseSong> convertNewReleaseSongFromJson(Map<String, dynamic> json) {
-  final results = <NewReleaseSong>[];
+List<SectionSong> convertNewReleaseSongFromJson(Map<String, dynamic> json) {
+  final results = <SectionSong>[];
   if (json['all'] != null) {
     String title = 'All';
     final data = <SongInfo>[];
     json['all'].forEach((v) {
       data.add(convertSongInfoModel(SongInfoModel.fromJson(v))!);
     });
-    results.add(NewReleaseSong(title: title, songs: data));
+    results.add(SectionSong(title: title, items: data));
   }
   if (json['vPop'] != null) {
     String title = 'Việt Nam';
@@ -21,7 +21,7 @@ List<NewReleaseSong> convertNewReleaseSongFromJson(Map<String, dynamic> json) {
     json['vPop'].forEach((v) {
       data.add(convertSongInfoModel(SongInfoModel.fromJson(v))!);
     });
-    results.add(NewReleaseSong(title: title, songs: data));
+    results.add(SectionSong(title: title, items: data));
   }
   if (json['others'] != null) {
     String title = 'Quốc tế';
@@ -29,27 +29,27 @@ List<NewReleaseSong> convertNewReleaseSongFromJson(Map<String, dynamic> json) {
     json['others'].forEach((v) {
       data.add(convertSongInfoModel(SongInfoModel.fromJson(v))!);
     });
-    results.add(NewReleaseSong(title: title, songs: data));
+    results.add(SectionSong(title: title, items: data));
   }
   return results;
 }
 
-NewReleaseSong? convertNewReleaseSongModel(
+SectionSong? convertNewReleaseSongModel(
     GetNewReleaseSongModel getNewReleaseSongModel) {
   if (getNewReleaseSongModel.data == null) return null;
-  return NewReleaseSong(
+  return SectionSong(
       title: 'Tất cả',
-      songs: getNewReleaseSongModel.data!
-          .map((e) => convertSongInfoModel(e))
+      items: getNewReleaseSongModel.data!
+          .map((e) => convertSongInfoModel(e)!)
           .toList());
 }
 
-NewReleasePlaylist? convertNewReleasePlaylistModel(
+SectionPlaylist? convertNewReleasePlaylistModel(
     GetNewReleasePlaylistModel getNewReleasePlaylistModel) {
   if (getNewReleasePlaylistModel.data == null) return null;
-  return NewReleasePlaylist(
+  return SectionPlaylist(
       title: 'Tất cả',
-      playlists: getNewReleasePlaylistModel.data!
-          .map((e) => convertPlaylistModel(e))
+      items: getNewReleasePlaylistModel.data!
+          .map((e) => convertMiniPlaylistFromPlaylistModel(e)!)
           .toList());
 }

@@ -41,7 +41,7 @@ Playlist? convertPlaylistModel(PlaylistModel? model) {
     artists: artists,
     songs: songs,
     artistsNames: model.artistsNames,
-    thumbnailM: model.thumbnailM,
+    thumbnailM: model.thumbnailM ?? model.thumbnail,
     userName: model.userName,
     description: model.description,
   );

@@ -192,7 +192,7 @@ class ArtistCarouselWidget extends StatelessWidget {
                 ),
               ),
               options: CarouselOptions(
-                height: 240,
+                height: 200,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.32,

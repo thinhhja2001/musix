@@ -43,24 +43,50 @@ class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
 
       final response = await homeMusicRepo.getHomeModel();
       final homeMusic = convertFromGetHomeModel(response);
-      DebugLogger().log(homeMusic);
+      emit(
+        state.copyWith(
+          status: updateMapStatus(
+            source: state.status,
+            keys: [
+              HomeMusicStatusKey.global.key,
+            ],
+            status: [
+              Status.success,
+            ],
+          ),
+          homeMusic: homeMusic,
+        ),
+      );
     } catch (e) {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(
+            source: state.status,
+            keys: [
+              HomeMusicStatusKey.global.key,
+            ],
+            status: [
+              Status.error,
+            ],
+          ),
+        ),
+      );
       addError(Exception("HomeMusicBloc _getHomeMusic error $e"),
           StackTrace.current);
     }
 
-    emit(
-      state.copyWith(
-        status: updateMapStatus(
-          source: state.status,
-          keys: [
-            HomeMusicStatusKey.global.key,
-          ],
-          status: [
-            Status.idle,
-          ],
-        ),
-      ),
-    );
+    // emit(
+    //   state.copyWith(
+    //     status: updateMapStatus(
+    //       source: state.status,
+    //       keys: [
+    //         HomeMusicStatusKey.global.key,
+    //       ],
+    //       status: [
+    //         Status.idle,
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
