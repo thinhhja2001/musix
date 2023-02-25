@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
+import '../../entities/artist/mini_artist.dart';
 
 import '../../../theme/theme.dart';
 

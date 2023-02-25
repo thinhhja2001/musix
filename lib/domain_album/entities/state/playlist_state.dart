@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/utils/enum/enum_status.dart';
+import '../entities.dart';
+import '../../../utils/enum/enum_status.dart';
 
 class PlaylistState extends Equatable {
   final Map<String, Status>? status;

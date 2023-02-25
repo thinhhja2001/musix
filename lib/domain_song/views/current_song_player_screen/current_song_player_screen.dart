@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_song/utils/conver_model_entity/convert_song.dart';
+import '../../utils/conver_model_entity/convert_song.dart';
 import '../../entities/entities.dart';
 import '../../logic/song_bloc.dart';
 import '../../services/musix_audio_handler.dart';

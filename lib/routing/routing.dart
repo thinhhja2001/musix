@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
 
 import '../domain_album/views/screens.dart';
 import '../domain_artist/views/screens.dart';
@@ -60,6 +61,10 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const EditProfileScreen(),
       );
+    case RoutingPath.videoDetailPage:
+      return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const VideoDetailPageWidget());
     default:
       return MaterialPageRoute(
         settings: settings,

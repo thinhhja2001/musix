@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
-import 'package:musix/config/register_dependency.dart';
+import '../../config/register_dependency.dart';
 
 import '../models/models.dart';
 import 'repository.dart';

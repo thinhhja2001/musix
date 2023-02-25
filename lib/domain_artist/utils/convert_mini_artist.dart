@@ -1,5 +1,5 @@
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
-import 'package:musix/domain_artist/models/get_artist_model/get_artist_model.dart';
+import '../entities/artist/mini_artist.dart';
+import '../models/get_artist_model/get_artist_model.dart';
 
 MiniArtist? convertMiniArtist(ArtistModel? artistModel) {
   if (artistModel == null) return null;

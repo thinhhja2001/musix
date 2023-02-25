@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain_album/views/widgets.dart';
-import '../../../../domain_song/models/models.dart';
 import '../../../../domain_song/views/widgets.dart';
 import '../../../../domain_user/views/widgets/profile_card_widget.dart';
+import '../../../../domain_video/models/video_detail_model.dart';
 import 'widgets.dart';
 
 class BillboardPageWidget extends StatelessWidget {
@@ -31,10 +31,6 @@ class BillboardPageWidget extends StatelessWidget {
               ),
               const SizedBox(
                 height: 32,
-              ),
-              VideoSelectionWidget(
-                title: 'Weekly',
-                video: sampleVideo,
               ),
               const SizedBox(
                 height: 32,

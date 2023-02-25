@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
+import '../entities.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
 
 import '../../../domain_song/entities/song_info.dart';
 

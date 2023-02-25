@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_song/entities/song_info.dart';
-import 'package:musix/domain_song/entities/song_source.dart';
-import 'package:musix/utils/utils.dart';
+import '../song_info.dart';
+import '../song_source.dart';
+import '../../../utils/utils.dart';
 
 class SongState extends Equatable {
   final Map<String, Status>? status;

@@ -1,6 +1,6 @@
-import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_album/models/models.dart';
-import 'package:musix/domain_artist/utils/convert_mini_artist.dart';
+import '../../entities/entities.dart';
+import '../../models/models.dart';
+import '../../../domain_artist/utils/convert_mini_artist.dart';
 
 import '../../../domain_song/utils/convert_songs/convert_songs.dart';
 import '../convert_genre/convert_genre.dart';

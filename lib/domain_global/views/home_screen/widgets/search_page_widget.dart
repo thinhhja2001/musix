@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../domain_video/models/video_detail_model.dart';
 
 import '../../../../domain_album/views/widgets.dart';
 import '../../../../domain_artist/views/widgets.dart';
@@ -216,12 +217,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                   const SongListWidget(
                     title: 'Top Songs',
                     songs: [],
-                    isShowIndex: false,
-                    isScrollable: true,
-                  ),
-                  VideoListWidget(
-                    title: 'Top Videos',
-                    videos: sampleVideoList,
                     isShowIndex: false,
                     isScrollable: true,
                   ),

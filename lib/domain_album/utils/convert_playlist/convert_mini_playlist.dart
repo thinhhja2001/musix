@@ -1,4 +1,4 @@
-import 'package:musix/domain_album/entities/entities.dart';
+import '../../entities/entities.dart';
 
 import '../../../domain_global/models/get_hub_detail_model/get_hub_detail_model.dart';
 import '../../models/playlist/get_playlist_model.dart';

@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/entities/entities.dart';
+import '../../entities/entities.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/entities/entities.dart';
+import '../../entities/entities.dart';
 
 import '../../../global/widgets/custom_card_widget.dart';
 import '../../../theme/theme.dart';

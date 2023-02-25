@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_album/entities/entities.dart';
+import '../entities/entities.dart';
 
 import '../../config/exporter/repo_exporter.dart';
 import '../../utils/utils.dart';

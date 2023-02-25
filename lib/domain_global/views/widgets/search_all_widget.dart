@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
+import '../../../domain_album/entities/entities.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
 
 import '../../../domain_album/views/widgets.dart';
 import '../../../domain_artist/views/widgets.dart';
 import '../../../domain_song/entities/entities.dart';
 import '../../../domain_song/models/models.dart';
 import '../../../domain_song/views/widgets.dart';
+import '../../../domain_video/models/video_detail_model.dart';
 import '../../../global/widgets/widgets.dart';
 
 class SearchAllWidget extends StatelessWidget {
@@ -67,14 +68,7 @@ class SearchAllWidget extends StatelessWidget {
                           isHasType: true,
                           onPress: () {},
                         );
-                      case 'Video':
-                        return VideoCardWidget(
-                          video: listDynamic[index] as VideoDetail,
-                          index: index,
-                          isRequestIndex: isShowIndex,
-                          isHasType: true,
-                          onPress: () {},
-                        );
+
                       default:
                         return const SizedBox.shrink();
                     }

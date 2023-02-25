@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_album/entities/entities.dart';
-import 'package:musix/domain_album/logic/playlist_bloc.dart';
+import '../../entities/entities.dart';
+import '../../logic/playlist_bloc.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';

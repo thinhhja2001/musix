@@ -1,4 +1,4 @@
-import 'package:musix/domain_global/models/model.dart';
+import '../../../domain_global/models/model.dart';
 
 class GetArtistModel {
   int? err;

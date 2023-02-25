@@ -1,8 +1,7 @@
 name: musix
 description: Music App
 
-publish_to: 'none'
-
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -17,7 +16,6 @@ dependencies:
       url: https://github.com/thinhhja2001/zingmp3_api
       ref: master
 
-
   cupertino_icons: ^1.0.5
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
@@ -27,7 +25,6 @@ dependencies:
   logging: ^1.1.0
   cached_network_image: ^3.2.3
   carousel_slider: ^4.2.1
-  chewie: ^1.3.6
   video_player: ^2.4.10
   material_design_icons_flutter: ^6.0.7096
   just_audio: ^0.9.31
@@ -38,6 +35,8 @@ dependencies:
   flutter_lyric: ^2.0.4+6
   http: ^0.13.5
   flutter_staggered_grid_view: ^0.6.2
+  chewie: ^1.4.0
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
@@ -54,26 +53,26 @@ flutter_icons:
   min_sdk_android: 21
 
 flutter:
-
   uses-material-design: true
 
   assets:
     - assets/images/icons/
     - assets/images/images/
+    - assets/videos/
 
   fonts:
-     - family: SVN-Gotham
-       fonts:
-         - asset: assets/fonts/Gotham/400.otf
-         - asset: assets/fonts/Gotham/400I.otf
-           style: italic
-         - asset: assets/fonts/Gotham/700.otf
-           weight: 700
-         - asset: assets/fonts/Gotham/700I.otf
-           weight: 700
-           style: italic
-         - asset: assets/fonts/Gotham/300.otf
-           weight: 300
-         - asset: assets/fonts/Gotham/300I.otf
-           weight: 300
-           style: italic
+    - family: SVN-Gotham
+      fonts:
+        - asset: assets/fonts/Gotham/400.otf
+        - asset: assets/fonts/Gotham/400I.otf
+          style: italic
+        - asset: assets/fonts/Gotham/700.otf
+          weight: 700
+        - asset: assets/fonts/Gotham/700I.otf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Gotham/300.otf
+          weight: 300
+        - asset: assets/fonts/Gotham/300I.otf
+          weight: 300
+          style: italic
