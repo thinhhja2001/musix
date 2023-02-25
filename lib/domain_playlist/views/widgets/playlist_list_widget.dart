@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:musix/domain_hub/entities/entities.dart';
 
+import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
 import '../widgets.dart';
 
@@ -83,7 +86,7 @@ class PlaylistInfoWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionPlaylist.title != null) ...[
             RotatedTextWidget(
@@ -112,7 +115,14 @@ class PlaylistInfoWidget extends StatelessWidget {
                         isShowType: isShowType,
                         type: PlaylistType.cardInfo,
                         playlist: sectionPlaylist.items![index],
-                        onPress: () {},
+                        onPress: () {
+                          context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                              sectionPlaylist.items![index].encodeId!));
+                          Navigator.pushNamed(
+                            context,
+                            RoutingPath.playlistInfo,
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -130,7 +140,7 @@ class PlaylistInfoWidget extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             if (sectionPlaylist.title != null) ...[
@@ -155,7 +165,14 @@ class PlaylistInfoWidget extends StatelessWidget {
                   isShowType: isShowType,
                   type: PlaylistType.cardInfo,
                   playlist: sectionPlaylist.items![index],
-                  onPress: () {},
+                  onPress: () {
+                    context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                        sectionPlaylist.items![index].encodeId!));
+                    Navigator.pushNamed(
+                      context,
+                      RoutingPath.playlistInfo,
+                    );
+                  },
                 ),
               ),
             ),
@@ -182,7 +199,7 @@ class PlaylistImageWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionPlaylist.title != null) ...[
             RotatedTextWidget(
@@ -211,7 +228,14 @@ class PlaylistImageWidget extends StatelessWidget {
                 type: PlaylistType.cardImage,
                 size: 160,
                 playlist: sectionPlaylist.items![index],
-                onPress: () {},
+                onPress: () {
+                  context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                      sectionPlaylist.items![index].encodeId!));
+                  Navigator.pushNamed(
+                    context,
+                    RoutingPath.playlistInfo,
+                  );
+                },
               ),
             ),
           ),
@@ -225,7 +249,7 @@ class PlaylistImageWidget extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (sectionPlaylist.title != null) ...[
               Text(
@@ -256,7 +280,14 @@ class PlaylistImageWidget extends StatelessWidget {
                 type: PlaylistType.cardImage,
                 size: 160,
                 playlist: sectionPlaylist.items![index],
-                onPress: () {},
+                onPress: () {
+                  context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                      sectionPlaylist.items![index].encodeId!));
+                  Navigator.pushNamed(
+                    context,
+                    RoutingPath.playlistInfo,
+                  );
+                },
               ),
             ),
           ],
@@ -279,7 +310,7 @@ class PlaylistCarouselWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionPlaylist.title != null) ...[
             RotatedTextWidget(
@@ -299,7 +330,14 @@ class PlaylistCarouselWidget extends StatelessWidget {
                   isShowType: false,
                   type: PlaylistType.cardImage,
                   playlist: sectionPlaylist.items![index],
-                  onPress: () {},
+                  onPress: () {
+                    context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                        sectionPlaylist.items![index].encodeId!));
+                    Navigator.pushNamed(
+                      context,
+                      RoutingPath.playlistInfo,
+                    );
+                  },
                 ),
               ),
               options: CarouselOptions(
@@ -318,7 +356,7 @@ class PlaylistCarouselWidget extends StatelessWidget {
     } else {
       return Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionPlaylist.title != null) ...[
             Text(
@@ -343,7 +381,14 @@ class PlaylistCarouselWidget extends StatelessWidget {
                   type: PlaylistType.cardImage,
                   size: 160,
                   playlist: sectionPlaylist.items![index],
-                  onPress: () {},
+                  onPress: () {
+                    context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                        sectionPlaylist.items![index].encodeId!));
+                    Navigator.pushNamed(
+                      context,
+                      RoutingPath.playlistInfo,
+                    );
+                  },
                 ),
               ),
               options: CarouselOptions(
@@ -400,8 +445,15 @@ class PlaylistMasonWidget extends StatelessWidget {
           isShowType: false,
           type: PlaylistType.cardImage,
           size: 160,
-          playlist: sectionPlaylist.items![index],
-          onPress: () {},
+          playlist: sectionPlaylist.items![index - 1],
+          onPress: () {
+            context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
+                sectionPlaylist.items![index - 1].encodeId!));
+            Navigator.pushNamed(
+              context,
+              RoutingPath.playlistInfo,
+            );
+          },
         );
       },
     );

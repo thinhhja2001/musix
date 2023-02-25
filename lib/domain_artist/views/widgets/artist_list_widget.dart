@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/exporter.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
 import '../widgets.dart';
 
@@ -70,7 +73,7 @@ class ArtistInfoWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionArtist.title != null) ...[
             RotatedTextWidget(
@@ -99,7 +102,14 @@ class ArtistInfoWidget extends StatelessWidget {
                         isShowType: isShowType,
                         type: ArtistType.cardInfo,
                         artist: sectionArtist.items![index],
-                        onPress: () {},
+                        onPress: () {
+                          context.read<ArtistBloc>().add(ArtistGetInfoEvent(
+                              sectionArtist.items![index].alias!));
+                          Navigator.pushNamed(
+                            context,
+                            RoutingPath.artistInfo,
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -117,7 +127,7 @@ class ArtistInfoWidget extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             if (sectionArtist.title != null) ...[
@@ -142,7 +152,14 @@ class ArtistInfoWidget extends StatelessWidget {
                   isShowType: isShowType,
                   type: ArtistType.cardInfo,
                   artist: sectionArtist.items![index],
-                  onPress: () {},
+                  onPress: () {
+                    context.read<ArtistBloc>().add(
+                        ArtistGetInfoEvent(sectionArtist.items![index].alias!));
+                    Navigator.pushNamed(
+                      context,
+                      RoutingPath.artistInfo,
+                    );
+                  },
                 ),
               ),
             ),
@@ -167,7 +184,7 @@ class ArtistCarouselWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionArtist.title != null) ...[
             RotatedTextWidget(
@@ -188,7 +205,14 @@ class ArtistCarouselWidget extends StatelessWidget {
                   type: ArtistType.cardImage,
                   size: 160,
                   artist: sectionArtist.items![index],
-                  onPress: () {},
+                  onPress: () {
+                    context.read<ArtistBloc>().add(
+                        ArtistGetInfoEvent(sectionArtist.items![index].alias!));
+                    Navigator.pushNamed(
+                      context,
+                      RoutingPath.artistInfo,
+                    );
+                  },
                 ),
               ),
               options: CarouselOptions(
@@ -207,7 +231,7 @@ class ArtistCarouselWidget extends StatelessWidget {
     } else {
       return Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionArtist.title != null) ...[
             Text(
@@ -232,7 +256,14 @@ class ArtistCarouselWidget extends StatelessWidget {
                   type: ArtistType.cardImage,
                   size: 160,
                   artist: sectionArtist.items![index],
-                  onPress: () {},
+                  onPress: () {
+                    context.read<ArtistBloc>().add(
+                        ArtistGetInfoEvent(sectionArtist.items![index].alias!));
+                    Navigator.pushNamed(
+                      context,
+                      RoutingPath.artistInfo,
+                    );
+                  },
                 ),
               ),
               options: CarouselOptions(

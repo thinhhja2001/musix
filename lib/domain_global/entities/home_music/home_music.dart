@@ -42,8 +42,6 @@ class HomeMusic extends Equatable {
 
   @override
   List<Object?> get props => [
-        recommendPlaylist,
-        recommendSongs,
         representArtists,
         hubs,
         newPlaylists,

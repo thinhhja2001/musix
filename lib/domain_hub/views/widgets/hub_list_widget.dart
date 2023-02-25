@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
 import '../../entities/entities.dart';
 import '../widgets.dart';
 
@@ -33,7 +36,9 @@ class HubListWidget extends StatelessWidget {
                 HubCarouselWidget(
                   hubs: firstHubs,
                 ),
-                const SizedBox(height: 16,),
+                const SizedBox(
+                  height: 16,
+                ),
                 HubCarouselWidget(
                   hubs: secondHubs,
                 ),
@@ -65,7 +70,12 @@ class HubCarouselWidget extends StatelessWidget {
               hubs.length,
               (index) => HubCardWidget(
                 hub: hubs[index],
-                onPress: () {},
+                onPress: () {
+                  context
+                      .read<HubBloc>()
+                      .add(HubGetInfoEvent(hubs[index].encodeId!));
+                  Navigator.pushNamed(context, RoutingPath.hubInfo);
+                },
               ),
             ),
             options: CarouselOptions(

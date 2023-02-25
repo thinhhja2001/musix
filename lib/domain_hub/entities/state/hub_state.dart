@@ -1,22 +1,22 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_artist/entities/entities.dart';
 
 import '../../../utils/utils.dart';
+import '../entities.dart';
 
-class ArtistState extends Equatable {
+class HubState extends Equatable {
   final Map<String, Status>? status;
-  final Artist? info;
+  final Hub? info;
 
-  const ArtistState({
+  const HubState({
     this.status,
     this.info,
   });
 
-  ArtistState copyWith({
+  HubState copyWith({
     Map<String, Status>? status,
-    Artist? info,
+    Hub? info,
   }) {
-    return ArtistState(
+    return HubState(
       status: status ?? this.status,
       info: info ?? this.info,
     );

@@ -54,6 +54,17 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
+          create: (context) => HubBloc(
+            initialState: HubState(
+              status: {
+                HubStatusKey.global.key: Status.idle,
+              },
+            ),
+            hubRepo: getIt.get<HubRepo>(),
+          ),
+        ),
+        BlocProvider(
           create: (context) => SongBloc(
             musixAudioHandler: getIt.get<MusixAudioHandler>(),
             initialState: SongState(

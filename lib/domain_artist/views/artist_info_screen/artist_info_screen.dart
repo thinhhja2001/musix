@@ -178,9 +178,12 @@ class ArtistInfoScreen extends StatelessWidget {
                     ),
                     ...List.generate(info.sectionPlaylist?.length ?? 0,
                         (index) {
-                      return PlaylistListWidget(
-                        playlistArrange: PlaylistArrange.carousel,
-                        sectionPlaylist: info.sectionPlaylist![index],
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: PlaylistListWidget(
+                          playlistArrange: PlaylistArrange.carousel,
+                          sectionPlaylist: info.sectionPlaylist![index],
+                        ),
                       );
                     }),
                     const SizedBox(

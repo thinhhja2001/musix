@@ -78,7 +78,7 @@ class SongInfoWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionSong.title != null && isShowTitle) ...[
             RotatedTextWidget(
@@ -134,7 +134,7 @@ class SongInfoWidget extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             if (sectionSong.title != null && isShowTitle) ...[
@@ -193,7 +193,7 @@ class SongCarouselWidget extends StatelessWidget {
     if (isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionSong.title != null) ...[
             RotatedTextWidget(
@@ -242,7 +242,7 @@ class SongCarouselWidget extends StatelessWidget {
     } else {
       return Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (sectionSong.title != null) ...[
             Text(

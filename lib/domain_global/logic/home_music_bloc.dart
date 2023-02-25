@@ -82,18 +82,20 @@ class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
           StackTrace.current);
     }
 
-    // emit(
-    //   state.copyWith(
-    //     status: updateMapStatus(
-    //       source: state.status,
-    //       keys: [
-    //         HomeMusicStatusKey.global.key,
-    //       ],
-    //       status: [
-    //         Status.idle,
-    //       ],
-    //     ),
-    //   ),
-    // );
+    await Future.delayed(
+      const Duration(milliseconds: 300),
+    ).whenComplete(() => emit(
+          state.copyWith(
+            status: updateMapStatus(
+              source: state.status,
+              keys: [
+                HomeMusicStatusKey.global.key,
+              ],
+              status: [
+                Status.idle,
+              ],
+            ),
+          ),
+        ));
   }
 }

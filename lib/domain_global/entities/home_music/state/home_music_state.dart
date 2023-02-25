@@ -17,8 +17,8 @@ class HomeMusicState extends Equatable {
     HomeMusic? homeMusic,
   }) {
     return HomeMusicState(
-      status: status,
-      homeMusic: homeMusic,
+      status: status ?? this.status,
+      homeMusic: homeMusic ?? this.homeMusic,
     );
   }
 
