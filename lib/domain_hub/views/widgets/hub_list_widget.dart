@@ -1,5 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../entities/entities.dart';
@@ -7,7 +10,7 @@ import '../widgets.dart';
 
 class HubListWidget extends StatelessWidget {
   final String title;
-  final List<Hub?> hubs;
+  final List<Hub> hubs;
   const HubListWidget({
     Key? key,
     required this.title,
@@ -16,6 +19,8 @@ class HubListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firstHubs = hubs.getRange(0, ((hubs.length ~/ 2) - 1)).toList();
+    final secondHubs = hubs.getRange((hubs.length ~/ 2), hubs.length).toList();
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Row(
@@ -25,35 +30,66 @@ class HubListWidget extends StatelessWidget {
             width: 8,
           ),
           Expanded(
-            child: SizedBox(
-              height: 240,
-              child: GridView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 100,
-                  childAspectRatio: 3 / 4,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                HubCarouselWidget(
+                  hubs: firstHubs,
                 ),
-                itemCount: hubs.length,
-                itemBuilder: (context, index) {
-                  return HubCardWidget(
-                    hub: hubs[index],
-                    index: index,
-                    onPress: () {
-                      Navigator.of(context).pushNamed(
-                        RoutingPath.playlistList,
-                      );
-                    },
-                  );
-                },
-              ),
+                const SizedBox(
+                  height: 16,
+                ),
+                HubCarouselWidget(
+                  hubs: secondHubs,
+                ),
+              ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class HubCarouselWidget extends StatelessWidget {
+  final List<Hub> hubs;
+  const HubCarouselWidget({
+    super.key,
+    required this.hubs,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: CarouselSlider(
+            items: List.generate(
+              hubs.length,
+              (index) => HubCardWidget(
+                hub: hubs[index],
+                onPress: () {
+                  context
+                      .read<HubBloc>()
+                      .add(HubGetInfoEvent(hubs[index].encodeId!));
+                  Navigator.pushNamed(context, RoutingPath.hubInfo);
+                },
+              ),
+            ),
+            options: CarouselOptions(
+              height: 160,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              enlargeFactor: 0.32,
+              aspectRatio: 1,
+              viewportFraction: 0.64,
+              autoPlayAnimationDuration: const Duration(milliseconds: 1500),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

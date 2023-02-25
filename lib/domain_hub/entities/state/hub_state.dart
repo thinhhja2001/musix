@@ -1,31 +1,31 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/utils/enum/enum_status.dart';
 
+import '../../../utils/utils.dart';
 import '../entities.dart';
 
-class PlaylistState extends Equatable {
+class HubState extends Equatable {
   final Map<String, Status>? status;
-  final Playlist? playlist;
+  final Hub? info;
 
-  const PlaylistState({
-    this.playlist,
+  const HubState({
     this.status,
+    this.info,
   });
 
-  PlaylistState copyWith({
+  HubState copyWith({
     Map<String, Status>? status,
-    Playlist? playlist,
+    Hub? info,
   }) {
-    return PlaylistState(
+    return HubState(
       status: status ?? this.status,
-      playlist: playlist ?? this.playlist,
+      info: info ?? this.info,
     );
   }
 
   @override
   List<Object?> get props => [
         status,
-        playlist,
+        info,
       ];
 
   @override

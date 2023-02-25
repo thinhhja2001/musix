@@ -1,22 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_artist/utils/convert_artist/convert_artist.dart';
 
-import '../../config/exporter/repo_exporter.dart';
 import '../../utils/utils.dart';
 import '../entities/entities.dart';
+import '../repo/hub_repo/hub_repo.dart';
+import '../utils/utils.dart';
 
-class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
-  ArtistBloc({
-    required ArtistState initialState,
-    required this.artistRepo,
+class HubBloc extends Bloc<HubEvent, HubState> {
+  HubBloc({
+    required HubState initialState,
+    required this.hubRepo,
   }) : super(initialState) {
-    on<ArtistGetInfoEvent>(_getInfo);
-    on<ArtistBackInfoEvent>(_backInfo);
+    on<HubGetInfoEvent>(_getInfo);
+    on<HubBackInfoEvent>(_backInfo);
   }
 
-  final ArtistRepo artistRepo;
+  final HubRepo hubRepo;
 
   //----------------------------------------------------------------------------
   @override
@@ -27,15 +27,14 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
   }
 
   //----------------------------------------------------------------------------
-  FutureOr<void> _getInfo(
-      ArtistGetInfoEvent event, Emitter<ArtistState> emit) async {
+  FutureOr<void> _getInfo(HubGetInfoEvent event, Emitter<HubState> emit) async {
     try {
       emit(state.copyWith(
         status: updateMapStatus(
           source: state.status,
           keys: [
-            ArtistStatusKey.global.key,
-            ArtistStatusKey.info.key,
+            HubStatusKey.global.key,
+            HubStatusKey.info.key,
           ],
           status: [
             Status.loading,
@@ -44,15 +43,15 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
         ),
       ));
 
-      final response = await artistRepo.getArtistInfo(event.alias);
-      final info = convertArtistFromModel(response.data);
+      final response = await hubRepo.getHubDetailed(event.id);
+      final info = convertHubFromHubModel(response.data!);
       emit(
         state.copyWith(
           status: updateMapStatus(
             source: state.status,
             keys: [
-              ArtistStatusKey.global.key,
-              ArtistStatusKey.info.key,
+              HubStatusKey.global.key,
+              HubStatusKey.info.key,
             ],
             status: [
               Status.idle,
@@ -67,8 +66,8 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
         status: updateMapStatus(
           source: state.status,
           keys: [
-            ArtistStatusKey.global.key,
-            ArtistStatusKey.info.key,
+            HubStatusKey.global.key,
+            HubStatusKey.info.key,
           ],
           status: [
             Status.idle,
@@ -86,8 +85,8 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
             status: updateMapStatus(
               source: state.status,
               keys: [
-                ArtistStatusKey.global.key,
-                ArtistStatusKey.info.key,
+                HubStatusKey.global.key,
+                HubStatusKey.info.key,
               ],
               status: [
                 Status.idle,
@@ -98,17 +97,14 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
         ));
   }
 
-  FutureOr<void> _backInfo(
-      ArtistBackInfoEvent event, Emitter<ArtistState> emit) {
-    emit(ArtistState(
+  FutureOr<void> _backInfo(HubBackInfoEvent event, Emitter<HubState> emit) {
+    emit(HubState(
       status: updateMapStatus(
         source: state.status,
         keys: [
-          ArtistStatusKey.global.key,
-          ArtistStatusKey.artists.key,
+          HubStatusKey.global.key,
         ],
         status: [
-          Status.idle,
           Status.idle,
         ],
       ),

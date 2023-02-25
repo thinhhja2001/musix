@@ -8,7 +8,7 @@ class HomeMusic extends Equatable {
   final SectionPlaylist? newPlaylists;
   final SectionPlaylist? randomPlaylist;
   final SectionArtist? representArtists;
-  final List<NewReleaseSong>? newReleaseSongs;
+  final List<SectionSong>? newReleaseSongs;
 
   const HomeMusic({
     this.recommendPlaylist,
@@ -27,7 +27,7 @@ class HomeMusic extends Equatable {
     SectionPlaylist? newPlaylists,
     SectionPlaylist? randomPlaylist,
     SectionArtist? representArtists,
-    List<NewReleaseSong>? newReleaseSongs,
+    List<SectionSong>? newReleaseSongs,
   }) {
     return HomeMusic(
       recommendPlaylist: recommendPlaylist ?? this.recommendPlaylist,
@@ -42,8 +42,6 @@ class HomeMusic extends Equatable {
 
   @override
   List<Object?> get props => [
-        recommendPlaylist,
-        recommendSongs,
         representArtists,
         hubs,
         newPlaylists,

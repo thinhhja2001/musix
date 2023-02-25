@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_hub/entities/entities.dart';
 
 import '../../../../domain_artist/views/widgets.dart';
 import '../../../../domain_music/models/models.dart';
@@ -214,10 +215,12 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     isScrollable: true,
                   ),
                   const SongListWidget(
-                    title: 'Top Songs',
-                    songs: [],
-                    isShowIndex: false,
+                    songArrange: SongArrange.info,
                     isScrollable: true,
+                    isShowIndex: false,
+                    sectionSong: SectionSong(
+                      title: 'Top Song',
+                    ),
                   ),
                   VideoListWidget(
                     title: 'Top Videos',
@@ -226,17 +229,19 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     isScrollable: true,
                   ),
                   const ArtistListWidget(
-                    title: 'Top Artists',
-                    artists: [],
-                    isShowIndex: false,
+                    artistArrange: ArtistArrange.info,
                     isScrollable: true,
+                    isShowIndex: false,
+                    sectionArtist: SectionArtist(
+                      title: 'Top Artist',
+                    ),
                   ),
                   const PlaylistListWidget(
-                    title: 'Top Albums',
-                    playlists: [],
-                    isShowAll: false,
-                    playlistArrange: PlaylistArrange.grid,
+                    playlistArrange: PlaylistArrange.image,
                     isScrollable: true,
+                    sectionPlaylist: SectionPlaylist(
+                      title: 'Top Album',
+                    ),
                   ),
                 ],
               ),

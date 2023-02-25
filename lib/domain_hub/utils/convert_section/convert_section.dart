@@ -21,7 +21,7 @@ SectionPlaylist? convertSectionPlaylistFromModel(SectionsModel sectionsModel) {
 }
 
 SectionArtist? convertSectionArtistFromModel(SectionsModel sectionsModel) {
-  if (sectionsModel.sectionType != 'artistSpotlight' ||
+  if (sectionsModel.sectionType != 'artistSpotlight' &&
       sectionsModel.sectionType != 'artist') return null;
 
   List<MiniArtist>? miniArtists = (sectionsModel.items as List)

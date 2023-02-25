@@ -8,7 +8,7 @@ MiniPlaylist? convertMiniPlaylistFromPlaylistModel(PlaylistModel? model) {
   return MiniPlaylist(
     encodeId: model.encodeId,
     title: model.title,
-    thumbnailM: model.thumbnailM,
+    thumbnailM: model.thumbnail,
     artistsNames: model.artistsNames,
   );
 }
@@ -19,7 +19,7 @@ MiniPlaylist? convertMiniPlaylistFromJson(Map<String, dynamic>? json) {
   return MiniPlaylist(
     encodeId: model.encodeId,
     title: model.title,
-    thumbnailM: model.thumbnailM,
+    thumbnailM: model.thumbnail,
     artistsNames: model.artistsNames,
   );
 }

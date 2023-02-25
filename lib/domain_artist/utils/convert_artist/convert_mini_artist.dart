@@ -7,7 +7,7 @@ MiniArtist? convertMiniArtistFromModel(ArtistModel? artistModel) {
     id: artistModel.id,
     name: artistModel.name,
     alias: artistModel.alias,
-    thumbnailM: artistModel.thumbnailM,
+    thumbnailM: artistModel.thumbnail,
   );
 }
 
@@ -17,6 +17,6 @@ MiniArtist? convertMiniArtistFromJson(Map<String, dynamic> json) {
     id: artistModel.id,
     name: artistModel.name,
     alias: artistModel.alias,
-    thumbnailM: artistModel.thumbnailM,
+    thumbnailM: artistModel.thumbnail,
   );
 }

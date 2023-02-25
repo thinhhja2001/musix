@@ -1,134 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
 
+import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 
+enum ArtistType {
+  cardImage,
+  cardInfo,
+}
+
 class ArtistCardWidget extends StatelessWidget {
-  const ArtistCardWidget({
-    Key? key,
-    required this.artist,
-    required this.index,
-    this.onPress,
-    this.padding = 16,
-    this.isRequestIndex = true,
-    this.isHasType = false,
-    this.type = 'Artist',
-  }) : super(key: key);
-
   final MiniArtist artist;
-  final int index;
   final VoidCallback? onPress;
+  final int index;
+  final bool isShowIndex;
+  final bool isShowType;
+  final double? size;
+  final ArtistType type;
 
-  /// [isRequestIndex] for check should place index in start of card
-  final bool isRequestIndex;
-
-  /// [isHasType] for check type of card
-  final bool isHasType;
-
-  /// [type] for check type of card
-  final String type;
-
-  /// [padding] for top and right
-  final double padding;
+  const ArtistCardWidget({
+    super.key,
+    required this.artist,
+    this.onPress,
+    this.index = 0,
+    this.isShowIndex = false,
+    this.isShowType = false,
+    this.size,
+    required this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: padding, right: padding),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-        onTap: onPress,
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (isRequestIndex) ...[
-                Center(
-                  child: Text(
-                    '#$index',
-                    style: TextStyleTheme.ts16.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 26 - (index.toString().length - 1) * 10,
-                ),
-              ],
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    3,
-                  ),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      artist.thumbnailM!,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      artist.name!,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: ColorTheme.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    if (isHasType) ...[
-                      Text(
-                        type,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleTheme.ts10.copyWith(
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ]
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(6),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 0.8,
-                      color: ColorTheme.primary,
-                    ),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  width: 24,
-                  height: 24,
-                  child: const Center(
-                    child: Icon(
-                      Icons.more_horiz,
-                      color: ColorTheme.primary,
-                      size: 16,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+    switch (type) {
+      case ArtistType.cardImage:
+        return ArtistCardImageWidget(
+          artist: artist,
+          onPress: onPress,
+          size: size,
+        );
+      case ArtistType.cardInfo:
+        return ArtistCardInfoWidget(
+          artist: artist,
+          index: index,
+          isShowIndex: isShowIndex,
+          isShowType: isShowType,
+          onPress: onPress,
+        );
+    }
+  }
+}
+
+class ArtistCardInfoWidget extends StatelessWidget {
+  final MiniArtist artist;
+  final VoidCallback? onPress;
+  final int index;
+  final bool isShowIndex;
+  final bool isShowType;
+
+  const ArtistCardInfoWidget({
+    super.key,
+    required this.artist,
+    this.onPress,
+    this.index = 0,
+    this.isShowIndex = false,
+    this.isShowType = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCardInfoWidget(
+      index: index,
+      image: artist.thumbnailM!,
+      title: artist.name!,
+      type: isShowType ? 'Artist' : null,
+      isShowIndex: isShowIndex,
+      padding: 0,
+      onCardPress: onPress,
+
+      /// TODO: code for button press
+      onButtonPress: () {}, subTitle: '',
+    );
+  }
+}
+
+class ArtistCardImageWidget extends StatelessWidget {
+  final double? size;
+  final MiniArtist artist;
+  final VoidCallback? onPress;
+
+  const ArtistCardImageWidget({
+    super.key,
+    this.size,
+    required this.artist,
+    this.onPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCardWidget(
+      width: size ?? 240,
+      height: size ?? 240,
+      image: artist.thumbnailM!,
+      title: artist.name!,
+      onTap: onPress,
+      isShowTitle: true,
+      titleTextStyle: TextStyleTheme.ts15.copyWith(
+        fontWeight: FontWeight.w500,
       ),
     );
   }

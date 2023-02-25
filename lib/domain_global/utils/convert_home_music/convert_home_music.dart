@@ -11,28 +11,31 @@ HomeMusic? convertFromGetHomeModel(GetHomeModel model) {
     SectionsModel section = model.data!.items![i];
     if (section.sectionType == 'playlist' &&
         section.sectionId == 'hAutoTheme2') {
-      SectionPlaylist? sPlaylist = convertSectionPlaylistFromModel(section);
+      SectionPlaylist? sPlaylist = convertSectionPlaylistFromModel(section)!;
+      sPlaylist = sPlaylist.copyWith(title: 'Gần đây');
       homeMusic = homeMusic.copyWith(
         newPlaylists: sPlaylist,
       );
       continue;
     }
     if (section.sectionType == 'playlist' && section.sectionId == 'hAlbum') {
-      SectionPlaylist? sPlaylist = convertSectionPlaylistFromModel(section);
+      SectionPlaylist sPlaylist = convertSectionPlaylistFromModel(section)!;
+      sPlaylist = sPlaylist.copyWith(title: 'Ngẫu nhiên');
       homeMusic = homeMusic.copyWith(
         randomPlaylist: sPlaylist,
       );
       continue;
     }
     if (section.sectionType == 'artistSpotlight') {
-      SectionArtist? sArtist = convertSectionArtistFromModel(section);
+      SectionArtist sArtist = convertSectionArtistFromModel(section)!;
+      sArtist = sArtist.copyWith(title: 'Nghệ sĩ tuần');
       homeMusic = homeMusic.copyWith(
         representArtists: sArtist,
       );
       continue;
     }
     if (section.sectionType == 'new-release') {
-      List<NewReleaseSong> newReleaseSongs =
+      List<SectionSong> newReleaseSongs =
           convertNewReleaseSongFromJson(section.items! as Map<String, dynamic>);
       homeMusic = homeMusic.copyWith(
         newReleaseSongs: newReleaseSongs,

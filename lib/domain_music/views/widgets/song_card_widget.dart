@@ -1,164 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../entities/entities.dart';
-import '../../logic/song_bloc.dart';
-import 'view_song_detail_widget.dart';
+import '../widgets.dart';
+
+enum SongType {
+  cardImage,
+  cardInfo,
+}
 
 class SongCardWidget extends StatelessWidget {
-  const SongCardWidget({
-    Key? key,
-    required this.song,
-    required this.index,
-    this.onPress,
-    this.padding = 16,
-    this.isRequestIndex = true,
-    this.isHasType = false,
-    this.type = 'Song',
-  }) : super(key: key);
-
   final SongInfo song;
-  final int index;
   final VoidCallback? onPress;
+  final int index;
+  final bool isShowIndex;
+  final bool isShowType;
+  final double? size;
+  final SongType type;
 
-  /// [isRequestIndex] for check should place index in start of card
-  final bool isRequestIndex;
-
-  /// [isHasType] for check type of card
-  final bool isHasType;
-
-  /// [type] for check type of card
-  final String type;
-
-  /// [padding] for top and right
-  final double padding;
+  const SongCardWidget({
+    super.key,
+    required this.song,
+    this.onPress,
+    this.index = 0,
+    this.isShowIndex = false,
+    this.isShowType = false,
+    this.size,
+    required this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SongBloc, SongState>(
-      builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.only(top: padding, right: padding),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            splashColor: ColorTheme.primaryLighten.withOpacity(0.3),
-            onTap: onPress,
-            child: Padding(
-              padding: const EdgeInsets.all(4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (isRequestIndex) ...[
-                    Center(
-                      child: Text(
-                        '#$index',
-                        style: TextStyleTheme.ts16.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 26 - (index.toString().length - 1) * 10,
-                    ),
-                  ],
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        3,
-                      ),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          song.thumbnailM ?? "",
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          song.title ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyleTheme.ts14.copyWith(
-                            color: (state.songInfo != null &&
-                                    state.songInfo!.encodeId == song.encodeId)
-                                ? ColorTheme.primary
-                                : Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Text(
-                          song.artistsNames ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyleTheme.ts12.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: ColorTheme.primary,
-                          ),
-                        ),
-                        if (isHasType) ...[
-                          Text(
-                            type,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyleTheme.ts10.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(6),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 0.8,
-                          color: ColorTheme.primary,
-                        ),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      width: 24,
-                      height: 24,
-                      child: Center(
-                        child: InkWell(
-                          onTap: () => {
-                            showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              // isScrollControlled: true,
-                              builder: (context) => ViewSongDetailWidget(
-                                song: song,
-                              ),
-                            )
-                          },
-                          child: const Icon(
-                            Icons.more_horiz,
-                            color: ColorTheme.primary,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+    switch (type) {
+      case SongType.cardImage:
+        return SongCardImageWidget(
+          song: song,
+          onPress: onPress,
+          size: size,
         );
+      case SongType.cardInfo:
+        return SongCardInfoWidget(
+          song: song,
+          index: index,
+          isShowIndex: isShowIndex,
+          isShowType: isShowType,
+          onPress: onPress,
+        );
+    }
+  }
+}
+
+class SongCardInfoWidget extends StatelessWidget {
+  final SongInfo song;
+  final VoidCallback? onPress;
+  final int index;
+  final bool isShowIndex;
+  final bool isShowType;
+
+  const SongCardInfoWidget({
+    super.key,
+    required this.song,
+    this.onPress,
+    this.index = 0,
+    this.isShowIndex = false,
+    this.isShowType = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCardInfoWidget(
+      index: index,
+      image: song.thumbnailM!,
+      title: song.title!,
+      subTitle: song.artistsNames!,
+      type: isShowType ? 'Song' : null,
+      isShowIndex: isShowIndex,
+      padding: 0,
+      onCardPress: onPress,
+      onButtonPress: () => {
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (context) => ViewSongDetailWidget(
+            song: song,
+          ),
+        )
       },
+    );
+  }
+}
+
+class SongCardImageWidget extends StatelessWidget {
+  final double? size;
+  final SongInfo song;
+  final VoidCallback? onPress;
+
+  const SongCardImageWidget({
+    super.key,
+    this.size,
+    required this.song,
+    this.onPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCardWidget(
+      width: size ?? 240,
+      height: size ?? 240,
+      image: song.thumbnailM!,
+      title: song.title!,
+      subTitle: song.artistsNames!,
+      onTap: onPress,
+      titleTextStyle: TextStyleTheme.ts15.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 }

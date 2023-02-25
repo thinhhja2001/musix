@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/domain_hub/entities/entities.dart';
 
 import '../../../domain_music/views/widgets.dart';
 import '../../../theme/theme.dart';
@@ -344,10 +345,13 @@ class ProfileScreen extends StatelessWidget {
                       height: 12,
                     ),
                     const SongListWidget(
-                      title: 'Recent Music',
-                      songs: [],
+                      sectionSong: SectionSong(
+                        title: 'Recent Songs',
+                        items: [],
+                      ),
                       isScrollable: false,
                       isShowIndex: true,
+                      songArrange: SongArrange.info,
                     ),
                   ],
                 ),
