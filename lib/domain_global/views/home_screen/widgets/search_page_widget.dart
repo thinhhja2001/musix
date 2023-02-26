@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_hub/entities/entities.dart';
+import '../../../../domain_hub/entities/entities.dart';
 
 import '../../../../domain_artist/views/widgets.dart';
-import '../../../../domain_music/models/models.dart';
-import '../../../../domain_music/views/widgets.dart';
+import '../../../../domain_song/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/fake_data/sample_list.dart';
@@ -221,12 +220,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     sectionSong: SectionSong(
                       title: 'Top Song',
                     ),
-                  ),
-                  VideoListWidget(
-                    title: 'Top Videos',
-                    videos: sampleVideoList,
-                    isShowIndex: false,
-                    isScrollable: true,
                   ),
                   const ArtistListWidget(
                     artistArrange: ArtistArrange.info,

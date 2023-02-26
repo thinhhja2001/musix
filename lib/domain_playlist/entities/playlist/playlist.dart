@@ -1,4 +1,8 @@
 import 'package:equatable/equatable.dart';
+import '../entities.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
+
+import '../../../domain_song/entities/song_info.dart';
 
 import '../../../domain_hub/entities/entities.dart';
 

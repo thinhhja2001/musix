@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../entities/entities.dart';
 
 import '../../config/exporter/repo_exporter.dart';
 import '../../utils/utils.dart';

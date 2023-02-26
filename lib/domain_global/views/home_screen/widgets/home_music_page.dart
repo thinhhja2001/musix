@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/domain_playlist/views/widgets.dart';
+import '../../../../config/exporter.dart';
+import '../../../../domain_playlist/views/widgets.dart';
 
 import '../../../../domain_artist/views/widgets.dart';
 import '../../../../domain_hub/views/widgets.dart';
-import '../../../../domain_music/views/widgets.dart';
+import '../../../../domain_song/views/widgets.dart';
 import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
 import 'widgets.dart';

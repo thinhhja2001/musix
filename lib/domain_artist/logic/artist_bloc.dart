@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_artist/utils/convert_artist/convert_artist.dart';
+import '../utils/convert_artist.dart';
 
 import '../../config/exporter/repo_exporter.dart';
 import '../../utils/utils.dart';

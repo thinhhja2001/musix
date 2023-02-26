@@ -1,4 +1,5 @@
-import '../../domain_music/models/models.dart';
+import '../../domain_song/models/models.dart';
+import '../../domain_video/models/models.dart';
 
 final sampleAllList = [
   sampleVideo,

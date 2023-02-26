@@ -1,7 +1,7 @@
-import '../../../domain_music/entities/song_info.dart';
-import '../../../domain_music/models/songs/song_info_model.dart';
-import '../../../domain_music/utils/utils.dart';
 import '../../../domain_playlist/utils/utils.dart';
+import '../../../domain_song/entities/song_info.dart';
+import '../../../domain_song/models/songs/song_info_model.dart';
+import '../../../domain_song/utils/utils.dart';
 import '../../entities/entities.dart';
 import '../../model/model.dart';
 

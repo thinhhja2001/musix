@@ -1,4 +1,4 @@
-import 'package:musix/domain_hub/utils/convert_section/convert_section.dart';
+import '../../../domain_hub/utils/convert_section/convert_section.dart';
 
 import '../../../domain_hub/entities/entities.dart';
 import '../../entities/entities.dart';

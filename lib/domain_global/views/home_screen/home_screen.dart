@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import 'utils/text_path.dart';
+import '../../../domain_video/views/screens/video_short_list_page_widget.dart';
 import 'widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
               const ExplorePageWidget(),
               SearchPageWidget(
                 homeTextPath: homeTextPath,
-              )
+              ),
+              const VideoShortListPageWidget(),
             ],
           ),
         ),

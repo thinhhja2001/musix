@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/exporter.dart';
 import '../../../../domain_artist/views/widgets.dart';
-import '../../../../domain_music/views/widgets.dart';
+import '../../../../domain_song/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';
+import '../../../entities/entities.dart';
 
 class HubInfoScreen extends StatelessWidget {
   const HubInfoScreen({

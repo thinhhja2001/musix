@@ -1,5 +1,5 @@
 import '../../entities/entities.dart';
-import '../../models/models.dart';
+import '../../models/playlist/playlist_model.dart';
 
 MiniPlaylist? convertMiniPlaylistFromPlaylistModel(PlaylistModel? model) {
   if (model == null) {

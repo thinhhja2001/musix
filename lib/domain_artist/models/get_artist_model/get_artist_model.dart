@@ -1,3 +1,4 @@
+import '../../../domain_global/models/model.dart';
 import '../models.dart';
 
 class GetArtistModel {

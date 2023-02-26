@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_hub/entities/entities.dart';
+import '../../../domain_hub/entities/entities.dart';
 
 class HomeMusic extends Equatable {
   final SectionPlaylist? recommendPlaylist;

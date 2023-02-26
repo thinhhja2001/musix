@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
 
 import '../../../domain_artist/views/widgets.dart';
-import '../../../domain_music/entities/entities.dart';
-import '../../../domain_music/models/models.dart';
-import '../../../domain_music/views/widgets.dart';
+import '../../../domain_song/entities/entities.dart';
+import '../../../domain_song/models/models.dart';
+import '../../../domain_song/views/widgets.dart';
+import '../../../domain_video/models/video_detail_model.dart';
 import '../../../domain_playlist/entities/entities.dart';
 import '../../../domain_playlist/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
@@ -70,14 +72,7 @@ class SearchAllWidget extends StatelessWidget {
                           onPress: () {},
                           type: PlaylistType.cardInfo,
                         );
-                      case 'VideoDetail':
-                        return VideoCardWidget(
-                          video: listDynamic[index] as VideoDetail,
-                          index: index,
-                          isRequestIndex: isShowIndex,
-                          isHasType: true,
-                          onPress: () {},
-                        );
+
                       default:
                         return const SizedBox.shrink();
                     }

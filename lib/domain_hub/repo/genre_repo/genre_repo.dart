@@ -1,4 +1,4 @@
-import 'package:musix/domain_hub/model/model.dart';
+import '../../model/model.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import '../../../config/register_dependency.dart';

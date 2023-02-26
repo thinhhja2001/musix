@@ -18,4 +18,8 @@ class RoutingPath {
 
   // Artist
   static const String artistInfo = '$home/artistInfo';
+
+  // Video
+  static const String video = "/video";
+  static const String videoDetailPage = "$video/detail";
 }

@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/utils/enum/enum_status.dart';
+import '../entities.dart';
+import '../../../utils/enum/enum_status.dart';
+import '../../../utils/enum/enum_status.dart';
 
 import '../entities.dart';
 

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_artist/entities/entities.dart';
 
 import '../../../utils/utils.dart';
+import '../entities.dart';
 
 class ArtistState extends Equatable {
   final Map<String, Status>? status;

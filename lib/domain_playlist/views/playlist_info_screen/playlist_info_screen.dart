@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:musix/domain_music/views/widgets.dart';
+import '../../entities/entities.dart';
+import '../../../domain_song/views/widgets.dart';
 
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
-import '../../entities/entities.dart';
 import '../../logic/playlist_bloc.dart';
 
 class PlaylistInfoScreen extends StatelessWidget {

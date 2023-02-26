@@ -5,6 +5,7 @@ import '../domain_global/views/screens.dart';
 import '../domain_hub/views/screens.dart';
 import '../domain_playlist/views/screens.dart';
 import '../domain_user/views/screens.dart';
+import '../domain_video/views/screens/video_detail_page_widget.dart';
 import 'routing_path.dart';
 
 Route<dynamic> routeController(RouteSettings settings) {
@@ -61,6 +62,10 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const EditProfileScreen(),
       );
+    case RoutingPath.videoDetailPage:
+      return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const VideoDetailPageWidget());
     default:
       return MaterialPageRoute(
         settings: settings,

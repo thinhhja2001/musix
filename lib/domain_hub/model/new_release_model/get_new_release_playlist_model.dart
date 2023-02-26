@@ -1,3 +1,5 @@
+import '../../../domain_playlist/models/playlist/playlist_model.dart';
+
 import '../../../domain_playlist/models/models.dart';
 
 class GetNewReleasePlaylistModel {

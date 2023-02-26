@@ -7,7 +7,7 @@
 
 import 'dart:convert';
 
-import 'package:musix/domain_music/repository/repository.dart';
+import 'package:musix/domain_song/repository/repository.dart';
 
 void main() async {
   VideoRepositoryImpl videoRepositoryImpl = VideoRepositoryImpl();

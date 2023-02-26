@@ -1,4 +1,4 @@
-import '../../../domain_music/models/models.dart';
+import '../../../domain_song/models/models.dart';
 
 class GetNewReleaseSongModel {
   int? err;

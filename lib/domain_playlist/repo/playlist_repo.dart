@@ -1,5 +1,9 @@
-import 'package:musix/config/register_dependency.dart';
-import 'package:musix/utils/utils.dart';
+import '../../config/register_dependency.dart';
+import '../models/models.dart';
+import 'i_playlist_repo.dart';
+import '../../utils/utils.dart';
+import '../../config/register_dependency.dart';
+import '../../utils/utils.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import '../models/models.dart';

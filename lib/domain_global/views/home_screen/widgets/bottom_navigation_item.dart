@@ -33,5 +33,13 @@ List<CustomBottomBarItem> bottomNavigationItems(BuildContext context) {
             )),
         unselectedColor: Colors.white,
         selectedColor: Colors.black),
+    CustomBottomBarItem(
+        icon: const Icon(Icons.smart_display_outlined),
+        title: Text(homeTextPath.video,
+            style: TextStyleTheme.ts15.copyWith(
+              fontWeight: FontWeight.w400,
+            )),
+        unselectedColor: Colors.white,
+        selectedColor: Colors.black),
   ];
 }

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_global/entities/entities.dart';
+import '../../entities.dart';
 
 import '../../../../utils/utils.dart';
 

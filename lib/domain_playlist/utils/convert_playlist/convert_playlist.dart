@@ -2,10 +2,11 @@ import '../../../domain_artist/entities/entities.dart';
 import '../../../domain_artist/utils/utils.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../domain_hub/utils/utils.dart';
-import '../../../domain_music/entities/entities.dart';
-import '../../../domain_music/utils/utils.dart';
+import '../../../domain_song/entities/entities.dart';
+import '../../../domain_song/utils/utils.dart';
 import '../../entities/entities.dart';
 import '../../models/models.dart';
+import '../../models/playlist/playlist_model.dart';
 
 Playlist? convertPlaylistModel(PlaylistModel? model) {
   if (model == null) {

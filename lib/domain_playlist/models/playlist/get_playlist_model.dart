@@ -1,3 +1,5 @@
+import 'playlist_model.dart';
+
 import '../models.dart';
 
 class GetPlaylistModel {

@@ -1,5 +1,5 @@
-import 'package:musix/domain_artist/models/get_artist_model/get_artist_model.dart';
-import 'package:musix/domain_artist/repo/i_artist_repo.dart';
+import '../models/get_artist_model/get_artist_model.dart';
+import 'i_artist_repo.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import '../../config/register_dependency.dart';

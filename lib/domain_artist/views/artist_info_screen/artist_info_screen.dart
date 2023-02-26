@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:musix/domain_artist/entities/entities.dart';
-import 'package:musix/domain_music/views/widgets.dart';
+import '../../entities/entities.dart';
+import '../../../domain_song/views/widgets.dart';
+import '../../entities/entities.dart';
 
 import '../../../config/exporter/bloc_exporter.dart';
 import '../../../domain_playlist/views/widgets.dart';

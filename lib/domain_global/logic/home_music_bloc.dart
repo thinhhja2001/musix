@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_global/entities/entities.dart';
-import 'package:musix/domain_global/utils/convert_home_music/convert_home_music.dart';
+import '../entities/entities.dart';
+import '../utils/convert_home_music/convert_home_music.dart';
 
 import '../../config/exporter/repo_exporter.dart';
 import '../../domain_hub/utils/utils.dart';

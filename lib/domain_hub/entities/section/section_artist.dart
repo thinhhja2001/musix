@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_artist/entities/entities.dart';
+import '../../../domain_artist/entities/entities.dart';
 
 class SectionArtist extends Equatable {
   final String? title;
