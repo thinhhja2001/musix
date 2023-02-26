@@ -36,8 +36,10 @@ class VideoPlayerWidget extends StatelessWidget {
         : const SizedBox(
             height: 200,
             child: Center(
-                child: CircularProgressIndicator(
-              color: ColorTheme.primary,
-            )));
+              child: CircularProgressIndicator(
+                color: ColorTheme.primary,
+              ),
+            ),
+          );
   }
 }

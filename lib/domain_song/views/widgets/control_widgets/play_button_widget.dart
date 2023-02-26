@@ -1,9 +1,12 @@
+// ignore_for_file: implementation_imports
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../entities/entities.dart';
 import '../../../logic/song_bloc.dart';
+import 'package:chewie/src/animated_play_pause.dart';
 
 class PlayButtonWidget extends StatelessWidget {
   const PlayButtonWidget({
@@ -27,18 +30,17 @@ class PlayButtonWidget extends StatelessWidget {
                 );
           },
           child: Container(
-            height: height,
-            width: width,
-            decoration: const BoxDecoration(
-              color: ColorTheme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              state.isPlaying ? Icons.pause : Icons.play_arrow,
-              size: iconSize,
-              color: Colors.white,
-            ),
-          ),
+              height: height,
+              width: width,
+              decoration: const BoxDecoration(
+                color: ColorTheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: AnimatedPlayPause(
+                playing: state.isPlaying,
+                color: Colors.white,
+                size: iconSize,
+              )),
         );
       },
     );

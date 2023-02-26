@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:musix/domain_song/utils/widget_util/text_scroll_widget.dart';
 import '../widgets.dart';
 import '../../entities/entities.dart';
 import '../../logic/song_bloc.dart';
@@ -74,9 +75,9 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          currentSong?.title ?? "",
-                          style: TextStyleTheme.ts16.copyWith(
+                        defaultTextScrollWidget(
+                          text: currentSong?.title ?? "",
+                          textStyle: TextStyleTheme.ts16.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
                           ),

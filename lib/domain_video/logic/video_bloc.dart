@@ -4,7 +4,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain_song/repository/repository.dart';
 import '../entities/state/video_key.dart';
-import '../entities/video_detail.dart';
 import '../utils/convert_video.dart';
 import '../utils/methods.dart';
 import '../../utils/utils.dart';
@@ -20,6 +19,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   }) : super(initialState) {
     on<VideoGetVideoShortEvent>(_getVideoShortEvent);
     on<VideoGetVideoDetailEvent>(_getVideoDetailEvent);
+    on<VideoBackEvent>(_back);
   }
   final VideoRepositoryImpl videoRepositoryImpl;
   late VideoPlayerController videoPlayerController;
@@ -60,8 +60,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
       controller: videoPlayerController,
       videoDetail: videoDetail,
     );
-    print(
-        "videoPlayerController value is ${chewieController.videoPlayerController.value.isInitialized}");
+
     emit(
       state.copyWith(
         status: updateMapStatus(
@@ -71,6 +70,17 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         videoDetail: videoDetail,
         chewieController: chewieController,
         isVideoLoaded: true,
+      ),
+    );
+  }
+
+  FutureOr<void> _back(VideoBackEvent event, Emitter emit) async {
+    print("back event called");
+    emit(
+      state.copyWith(
+        videoDetail: null,
+        chewieController: null,
+        isVideoLoaded: false,
       ),
     );
   }

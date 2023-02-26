@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get_it/get_it.dart';
+import 'package:musix/domain_song/utils/widget_util/text_scroll_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../../theme/color.dart';
@@ -154,16 +155,16 @@ class _SongInformationWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                musixAudioHandler.currentSong.title ?? "",
-                style: TextStyleTheme.ts22.copyWith(
+              defaultTextScrollWidget(
+                text: musixAudioHandler.currentSong.title ?? "",
+                textStyle: TextStyleTheme.ts22.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
                 musixAudioHandler.currentSong.artistsNames ?? "",
-                style: TextStyleTheme.ts12.copyWith(
+                style: TextStyleTheme.ts18.copyWith(
                   color: ColorTheme.primary,
                   fontWeight: FontWeight.w400,
                 ),

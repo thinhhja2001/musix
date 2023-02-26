@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
 
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
@@ -17,17 +18,18 @@ class VideoShortCardWidget extends StatelessWidget {
   final VideoShort videoShort;
   @override
   Widget build(BuildContext context) {
-    return BlocListener<VideoBloc, VideoState>(
-      listener: (context, state) {
-        if (state.isVideoLoaded == true) {
-          Navigator.pushNamed(context, RoutingPath.videoDetailPage);
-        }
-      },
-      child: InkWell(
+    return BlocBuilder<VideoBloc, VideoState>(
+      builder: (context, state) => InkWell(
         onTap: () async {
           context.read<VideoBloc>().add(
                 VideoGetVideoDetailEvent(videoShort.encodeID ?? ""),
               );
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => const VideoDetailPageWidget(),
+            isScrollControlled: true,
+            backgroundColor: ColorTheme.background,
+          );
         },
         child: Row(
           children: [

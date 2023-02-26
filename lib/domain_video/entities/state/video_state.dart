@@ -8,19 +8,16 @@ class VideoState extends Equatable {
   final Map<String, Status>? status;
   final VideoDetail? videoDetail;
   final ChewieController? chewieController;
-  final bool? isVideoLoaded;
   const VideoState({
     this.status,
     this.chewieController,
     this.videoDetail,
-    this.isVideoLoaded,
   });
   @override
   List<Object?> get props => [
         status,
         videoDetail,
         chewieController,
-        isVideoLoaded,
       ];
   @override
   bool? get stringify => true;
@@ -34,6 +31,5 @@ class VideoState extends Equatable {
         status: status ?? this.status,
         videoDetail: videoDetail ?? this.videoDetail,
         chewieController: chewieController ?? this.chewieController,
-        isVideoLoaded: isVideoLoaded ?? this.isVideoLoaded,
       );
 }

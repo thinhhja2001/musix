@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain_global/views/home_screen/widgets/template_widget.dart';
 import '../../models/models.dart';
 import '../../utils/convert_video.dart';
-import '../widgets/video_player/video_detail_card_widget.dart';
 import '../widgets/video_player/video_short_card_widget.dart';
 
 import '../../entities/state/video_state.dart';

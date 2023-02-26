@@ -11,3 +11,5 @@ class VideoGetVideoDetailEvent implements VideoEvent {
 
   VideoGetVideoDetailEvent(this.id);
 }
+
+class VideoBackEvent implements VideoEvent {}

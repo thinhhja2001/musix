@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 import 'dart:async';
 
 import 'package:chewie/src/center_play_button.dart';
@@ -11,7 +13,10 @@ import 'package:chewie/src/models/option_item.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
-import '../../../../theme/color.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_video/entities/event/video_event.dart';
+import 'package:musix/domain_video/entities/state/video_state.dart';
+import 'package:musix/domain_video/logic/video_bloc.dart';
 import '../../../../theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -607,23 +612,39 @@ class _buildSongInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.title,
-            style: TextStyleTheme.ts18.copyWith(color: Colors.white),
-          ),
-          Text(
-            widget.singer,
-            style: TextStyleTheme.ts16.copyWith(
-              color: ColorTheme.primary,
-            ),
-          )
-        ],
-      ),
+    final chewieController = ChewieController.of(context);
+    return BlocBuilder<VideoBloc, VideoState>(
+      builder: (context, state) {
+        return Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
+            child: chewieController.isFullScreen
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.title,
+                        style:
+                            TextStyleTheme.ts18.copyWith(color: Colors.white),
+                      ),
+                      Text(
+                        widget.singer,
+                        style: TextStyleTheme.ts16.copyWith(
+                          color: ColorTheme.primary,
+                        ),
+                      )
+                    ],
+                  )
+                : IconButton(
+                    onPressed: () {
+                      context.read<VideoBloc>().add(VideoBackEvent());
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.expand_more,
+                      color: Colors.white,
+                    ),
+                  ));
+      },
     );
   }
 }
