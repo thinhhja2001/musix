@@ -1,6 +1,7 @@
-import '../models/models.dart';
-import '../../domain_song/repository/i_repository.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
+
+import '../../domain_song/repository/i_repository.dart';
+import '../models/models.dart';
 
 class VideoRepositoryImpl extends IRepository {
   @override

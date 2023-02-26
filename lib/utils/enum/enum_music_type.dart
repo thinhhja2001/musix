@@ -1,0 +1,4 @@
+enum MusicType {
+  album,
+  song,
+}

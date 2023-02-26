@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get_it/get_it.dart';
+import 'package:palette_generator/palette_generator.dart';
+
+import '../../../../theme/color.dart';
+import '../../../../theme/text_style.dart';
+import '../../../../utils/functions/function_utils.dart';
 import '../../../entities/entities.dart';
 import '../../../logic/song_bloc.dart';
 import '../../../services/musix_audio_handler.dart';
 import '../../../services/musix_lyric_ui.dart';
-import '../../widgets/custom_slider.dart';
-import '../../../../theme/color.dart';
-import '../../../../theme/text_style.dart';
-import '../../../../utils/functions/function_utils.dart';
-import 'package:palette_generator/palette_generator.dart';
-
 import '../../widgets.dart';
+import '../../widgets/custom_slider.dart';
 
 class LyricWidget extends StatelessWidget {
   const LyricWidget({super.key});

@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+
+import '../../../utils/utils.dart';
 import '../song_info.dart';
 import '../song_source.dart';
-import '../../../utils/utils.dart';
 
 class SongState extends Equatable {
   final Map<String, Status>? status;

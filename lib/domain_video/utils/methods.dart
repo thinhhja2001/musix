@@ -1,6 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_video/entities/video_detail.dart';
+import '../entities/video_detail.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../theme/theme.dart';

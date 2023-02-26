@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../domain_album/entities/entities.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
 import '../../../domain_artist/entities/artist/mini_artist.dart';
 
-import '../../../domain_album/views/widgets.dart';
 import '../../../domain_artist/views/widgets.dart';
 import '../../../domain_song/entities/entities.dart';
 import '../../../domain_song/models/models.dart';
 import '../../../domain_song/views/widgets.dart';
 import '../../../domain_video/models/video_detail_model.dart';
+import '../../../domain_playlist/entities/entities.dart';
+import '../../../domain_playlist/views/widgets.dart';
 import '../../../global/widgets/widgets.dart';
 
 class SearchAllWidget extends StatelessWidget {
@@ -44,29 +45,32 @@ class SearchAllWidget extends StatelessWidget {
                   listDynamic.length,
                   (index) {
                     switch (listDynamic[index].runtimeType.toString()) {
-                      case 'Song':
+                      case 'SongInfo':
                         return SongCardWidget(
-                          isRequestIndex: isShowIndex,
                           song: listDynamic[index] as SongInfo,
+                          isShowIndex: isShowIndex,
+                          isShowType: true,
                           index: index + 1,
-                          isHasType: true,
                           onPress: () {},
+                          type: SongType.cardInfo,
                         );
-                      case 'Artist':
+                      case 'MiniArtist':
                         return ArtistCardWidget(
                           artist: listDynamic[index] as MiniArtist,
+                          isShowIndex: isShowIndex,
+                          isShowType: true,
                           index: index + 1,
-                          isRequestIndex: isShowIndex,
-                          isHasType: true,
                           onPress: () {},
+                          type: ArtistType.cardInfo,
                         );
-                      case 'Album':
-                        return AlbumCardWidget(
+                      case 'MiniPlaylist':
+                        return PlaylistCardWidget(
                           playlist: listDynamic[index] as MiniPlaylist,
-                          isRequestIndex: isShowIndex,
-                          index: index,
-                          isHasType: true,
+                          isShowIndex: isShowIndex,
+                          isShowType: true,
+                          index: index + 1,
                           onPress: () {},
+                          type: PlaylistType.cardInfo,
                         );
 
                       default:

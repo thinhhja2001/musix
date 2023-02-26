@@ -1,5 +1,5 @@
-import '../../../domain_album/models/models.dart';
 import '../../../domain_artist/models/models.dart';
+import '../../../domain_playlist/models/playlist/playlist_model.dart';
 
 class SongsModel {
   List<SongModel>? items;

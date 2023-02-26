@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_video/entities/event/video_event.dart';
-import 'package:musix/domain_video/entities/video_short.dart';
-import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
-import 'package:musix/routing/routing_path.dart';
-import 'package:musix/theme/theme.dart';
 
+import '../../../../routing/routing_path.dart';
+import '../../../../theme/theme.dart';
+import '../../../entities/event/video_event.dart';
 import '../../../entities/state/video_state.dart';
+import '../../../entities/video_short.dart';
 import '../../../logic/video_bloc.dart';
 // ignore: implementation_imports
 

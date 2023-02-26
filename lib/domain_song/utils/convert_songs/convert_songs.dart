@@ -1,5 +1,4 @@
-import '../../../domain_global/models/get_hub_detail_model/get_hub_detail_model.dart';
-
+import '../../../domain_hub/model/model.dart';
 import '../../entities/song_info.dart';
 import '../../models/get_song_list_model/get_song_list_model.dart';
 

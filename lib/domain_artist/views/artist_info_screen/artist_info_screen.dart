@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../domain_album/views/widgets/album_list_widget.dart';
 import '../../entities/entities.dart';
 import '../../../domain_song/views/widgets.dart';
+import '../../entities/entities.dart';
 
 import '../../../config/exporter/bloc_exporter.dart';
+import '../../../domain_playlist/views/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/enum/enum_status.dart';
 
@@ -176,21 +177,24 @@ class ArtistInfoScreen extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    ...List.generate(info.topics?.length ?? 0, (index) {
-                      return AlbumListWidget(
-                        title: info.topics?[index]?.title ?? '',
-                        playlists: info.topics?[index]?.items ?? [],
-                        isShowAll: false,
-                        albumArrange: AlbumArrange.list,
-                        isScrollable: true,
+                    ...List.generate(info.sectionPlaylist?.length ?? 0,
+                        (index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: PlaylistListWidget(
+                          playlistArrange: PlaylistArrange.carousel,
+                          sectionPlaylist: info.sectionPlaylist![index],
+                        ),
                       );
                     }),
                     const SizedBox(
                       height: 12,
                     ),
                     SongListWidget(
-                      title: 'All Songs',
-                      songs: info.songs ?? [],
+                      sectionSong: info.songs!,
+                      isScrollable: false,
+                      isShowIndex: true,
+                      songArrange: SongArrange.info,
                     ),
                   ],
                 ),

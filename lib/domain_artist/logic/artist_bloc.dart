@@ -112,7 +112,6 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
           Status.idle,
         ],
       ),
-      artists: state.artists,
     ));
   }
 }

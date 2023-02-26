@@ -4,4 +4,6 @@ export 'widgets/control_widgets/skip_to_previous_button_widget.dart';
 export 'widgets/current_song_player_widget.dart';
 export 'widgets/song_card_widget.dart';
 export 'widgets/song_list_widget.dart';
+export 'widgets/song_tab_widget.dart';
 export 'widgets/song_type_selection_widget.dart';
+export 'widgets/view_song_detail_widget.dart';

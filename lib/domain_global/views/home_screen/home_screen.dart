@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: IndexedStack(
             index: indexBottomNavigation,
             children: [
-              const BillboardPageWidget(),
+              const HomeMusicPage(),
               const ExplorePageWidget(),
               SearchPageWidget(
                 homeTextPath: homeTextPath,

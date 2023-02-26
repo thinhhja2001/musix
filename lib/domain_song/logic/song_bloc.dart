@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../repository/repository.dart';
 import '../services/musix_audio_handler.dart';
-import '../utils/conver_model_entity/convert_song.dart';
-import '../../utils/debug/logger.dart';
 import '../../utils/utils.dart';
 
 import '../entities/entities.dart';
+import '../utils/utils.dart';
 
 class SongBloc extends Bloc<SongEvent, SongState> {
   SongBloc({
@@ -51,7 +50,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
 
     final response = await songInfoRepositoryImpl.getInfo(event.id);
     final songInfo = convertSongInfoModel(response);
-    print('current song encode Id: ${songInfo?.encodeId}');
+    DebugLogger().log('current song encode Id: ${songInfo?.encodeId}');
     emit(
       state.copyWith(
           status: updateMapStatus(

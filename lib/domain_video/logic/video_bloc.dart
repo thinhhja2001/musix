@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_song/repository/repository.dart';
-import 'package:musix/domain_video/entities/state/video_key.dart';
-import 'package:musix/domain_video/entities/video_detail.dart';
-import 'package:musix/domain_video/utils/convert_video.dart';
-import 'package:musix/domain_video/utils/methods.dart';
-import 'package:musix/utils/utils.dart';
+import '../../domain_song/repository/repository.dart';
+import '../entities/state/video_key.dart';
+import '../entities/video_detail.dart';
+import '../utils/convert_video.dart';
+import '../utils/methods.dart';
+import '../../utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 import '../entities/event/video_event.dart';

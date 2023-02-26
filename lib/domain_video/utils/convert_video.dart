@@ -1,7 +1,6 @@
-import 'package:musix/domain_video/entities/video_short.dart';
-import 'package:musix/domain_video/models/models.dart';
-
 import '../entities/video_detail.dart';
+import '../entities/video_short.dart';
+import '../models/models.dart';
 
 VideoShort convertVideoShortModel(VideoShortModel videoShortModel) =>
     VideoShort(

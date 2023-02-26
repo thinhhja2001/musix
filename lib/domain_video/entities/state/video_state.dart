@@ -1,6 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_video/entities/video_detail.dart';
+import '../video_detail.dart';
 
 import '../../../utils/utils.dart';
 

@@ -12,6 +12,7 @@ class CustomCardWidget extends StatelessWidget {
   final double height;
   final Alignment titleAlignment;
   final bool opacityTitle;
+  final bool isShowTitle;
   final TextStyle titleTextStyle;
 
   const CustomCardWidget({
@@ -25,42 +26,41 @@ class CustomCardWidget extends StatelessWidget {
     this.titleAlignment = Alignment.bottomCenter,
     this.opacityTitle = true,
     this.titleTextStyle = TextStyleTheme.ts15,
+    this.isShowTitle = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: InkWell(
-        onTap: onTap,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                width: width,
-                height: height,
-                fit: BoxFit.fill,
-                imageUrl: image,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) =>
-                    const Center(child: Icon(Icons.error)),
-              ),
+    return InkWell(
+      onTap: onTap,
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: image,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
             ),
+          ),
+          if (isShowTitle)
             Align(
-              alignment: titleAlignment,
+              alignment: Alignment.bottomCenter,
               child: Container(
+                width: 140,
                 decoration: opacityTitle
                     ? BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
+                        color: Colors.black.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(10),
                       )
                     : null,
                 padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.all(16),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,8 +69,9 @@ class CustomCardWidget extends StatelessWidget {
                     if (title != null) ...[
                       Text(
                         title!,
-                        overflow:
-                            title!.length > 44 ? TextOverflow.ellipsis : null,
+                        overflow: title!.length > 16
+                            ? TextOverflow.ellipsis
+                            : TextOverflow.clip,
                         style: titleTextStyle.copyWith(
                           color: Colors.white,
                         ),
@@ -95,8 +96,7 @@ class CustomCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

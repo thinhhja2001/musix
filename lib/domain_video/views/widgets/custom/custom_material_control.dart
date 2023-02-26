@@ -11,8 +11,8 @@ import 'package:chewie/src/models/option_item.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/theme.dart';
+import '../../../../theme/color.dart';
+import '../../../../theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 

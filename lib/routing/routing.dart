@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
 
-import '../domain_album/views/screens.dart';
 import '../domain_artist/views/screens.dart';
 import '../domain_global/views/screens.dart';
+import '../domain_hub/views/screens.dart';
+import '../domain_playlist/views/screens.dart';
 import '../domain_user/views/screens.dart';
+import '../domain_video/views/screens/video_detail_page_widget.dart';
 import 'routing_path.dart';
 
 Route<dynamic> routeController(RouteSettings settings) {
@@ -36,15 +37,15 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const HomeScreen(),
       );
-    case RoutingPath.topicSelection:
+    case RoutingPath.hubInfo:
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => const TopicSelectionScreen(),
+        builder: (context) => const HubInfoScreen(),
       );
-    case RoutingPath.albumInfo:
+    case RoutingPath.playlistInfo:
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => const AlbumInfoScreen(),
+        builder: (context) => const PlaylistInfoScreen(),
       );
     case RoutingPath.artistInfo:
       return MaterialPageRoute(

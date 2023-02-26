@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../domain_video/models/video_detail_model.dart';
+import '../../../../domain_hub/entities/entities.dart';
 
-import '../../../../domain_album/views/widgets.dart';
 import '../../../../domain_artist/views/widgets.dart';
-import '../../../../domain_song/models/models.dart';
 import '../../../../domain_song/views/widgets.dart';
+import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/fake_data/sample_list.dart';
 import '../../../../utils/utils.dart';
@@ -215,23 +214,27 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     isScrollable: true,
                   ),
                   const SongListWidget(
-                    title: 'Top Songs',
-                    songs: [],
-                    isShowIndex: false,
+                    songArrange: SongArrange.info,
                     isScrollable: true,
+                    isShowIndex: false,
+                    sectionSong: SectionSong(
+                      title: 'Top Song',
+                    ),
                   ),
                   const ArtistListWidget(
-                    title: 'Top Artists',
-                    artists: [],
+                    artistArrange: ArtistArrange.info,
+                    isScrollable: true,
                     isShowIndex: false,
-                    isScrollable: true,
+                    sectionArtist: SectionArtist(
+                      title: 'Top Artist',
+                    ),
                   ),
-                  const AlbumListWidget(
-                    title: 'Top Albums',
-                    playlists: [],
-                    isShowAll: false,
-                    albumArrange: AlbumArrange.grid,
+                  const PlaylistListWidget(
+                    playlistArrange: PlaylistArrange.image,
                     isScrollable: true,
+                    sectionPlaylist: SectionPlaylist(
+                      title: 'Top Album',
+                    ),
                   ),
                 ],
               ),

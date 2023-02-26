@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import 'exporter.dart';
+import 'exporter/repo_exporter.dart';
 
 final getIt = GetIt.instance;
 
@@ -18,4 +19,5 @@ FutureOr<void> registerDependency() async {
       () => SongSourceRepositoryImpl());
 
   getIt.registerLazySingleton<VideoRepositoryImpl>(() => VideoRepositoryImpl());
+  getIt.registerLazySingleton<HomeMusicRepo>(() => HomeMusicRepo());
 }

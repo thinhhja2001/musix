@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain_album/views/widgets.dart';
-import '../../../../domain_song/views/widgets.dart';
-import '../../../../domain_user/views/widgets.dart';
 import 'widgets.dart';
 
 class ExplorePageWidget extends StatelessWidget {
@@ -16,37 +13,43 @@ class ExplorePageWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            children: [
-              const SizedBox(
-                height: 24,
-              ),
-              const ProfileCardWidget(),
-              const SizedBox(
-                height: 24,
-              ),
-              TopicListWidget(
-                title: 'Topics',
-                topics: [],
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              AlbumListWidget(
-                title: 'Recent Album',
-                playlists: [],
-                isShowAll: false,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              SongListWidget(
-                title: 'All Song',
-                songs: [],
-                isShowIndex: true,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
+            children: const [
+              // SizedBox(
+              //   height: 24,
+              // ),
+              // ProfileCardWidget(),
+              // SizedBox(
+              //   height: 24,
+              // ),
+              // HubListWidget(
+              //   title: 'Topics',
+              //   hubs: [],
+              // ),
+              // SizedBox(
+              //   height: 24,
+              // ),
+              // PlaylistListWidget(
+              //   playlistArrange: PlaylistArrange.carousel,
+              //   sectionPlaylist: SectionPlaylist(
+              //     title: 'Recent Album',
+              //     items: [],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 24,
+              // ),
+              // SongListWidget(
+              //   songArrange: SongArrange.info,
+              //   isScrollable: false,
+              //   isShowIndex: true,
+              //   sectionSong: SectionSong(
+              //     title: 'All Song',
+              //     items: [],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 24,
+              // ),
             ],
           ),
         ),
