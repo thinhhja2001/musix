@@ -71,6 +71,7 @@ class SongCardInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCardInfoWidget(
       index: index,
+      encodeId: song.encodeId!,
       image: song.thumbnailM!,
       title: song.title!,
       subTitle: song.artistsNames!,
