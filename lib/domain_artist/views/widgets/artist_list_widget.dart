@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../config/exporter/bloc_exporter.dart';
-import '../../entities/entities.dart';
 
 import '../../../config/exporter.dart';
+import '../../../config/exporter/bloc_exporter.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
+import '../../entities/entities.dart';
 import '../widgets.dart';
 
 enum ArtistArrange {
@@ -49,6 +49,7 @@ class ArtistListWidget extends StatelessWidget {
         return ArtistCarouselWidget(
           sectionArtist: sectionArtist,
           isVerticalTitle: isVerticalTitle,
+          isScrollable: isScrollable,
         );
     }
   }
@@ -175,8 +176,10 @@ class ArtistInfoWidget extends StatelessWidget {
 class ArtistCarouselWidget extends StatelessWidget {
   final bool isVerticalTitle;
   final SectionArtist sectionArtist;
+  final bool isScrollable;
   const ArtistCarouselWidget({
     super.key,
+    this.isScrollable = false,
     this.isVerticalTitle = true,
     required this.sectionArtist,
   });
@@ -219,7 +222,7 @@ class ArtistCarouselWidget extends StatelessWidget {
               ),
               options: CarouselOptions(
                 height: 200,
-                autoPlay: true,
+                autoPlay: isScrollable,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.32,
                 aspectRatio: 1,
@@ -270,7 +273,7 @@ class ArtistCarouselWidget extends StatelessWidget {
               ),
               options: CarouselOptions(
                 height: 240,
-                autoPlay: true,
+                autoPlay: isScrollable,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.32,
                 aspectRatio: 1,

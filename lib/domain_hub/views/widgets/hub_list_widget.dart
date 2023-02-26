@@ -53,9 +53,11 @@ class HubListWidget extends StatelessWidget {
 
 class HubCarouselWidget extends StatelessWidget {
   final List<Hub> hubs;
+  final bool isScrollable;
   const HubCarouselWidget({
     super.key,
     required this.hubs,
+    this.isScrollable = false,
   });
 
   @override
@@ -80,7 +82,7 @@ class HubCarouselWidget extends StatelessWidget {
             ),
             options: CarouselOptions(
               height: 160,
-              autoPlay: true,
+              autoPlay: isScrollable,
               enlargeCenterPage: true,
               enlargeFactor: 0.32,
               aspectRatio: 1,

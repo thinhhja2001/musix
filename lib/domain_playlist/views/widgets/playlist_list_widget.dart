@@ -2,10 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../../../domain_hub/entities/entities.dart';
 
-import '../../../config/exporter.dart';
 import '../../../config/exporter/state_exporter.dart';
+import '../../../domain_hub/entities/entities.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
@@ -58,6 +57,7 @@ class PlaylistListWidget extends StatelessWidget {
         return PlaylistCarouselWidget(
           sectionPlaylist: sectionPlaylist,
           isVerticalTitle: isVerticalTitle,
+          isScrollable: isScrollable,
         );
       case PlaylistArrange.mason:
         return PlaylistMasonWidget(
@@ -301,9 +301,11 @@ class PlaylistImageWidget extends StatelessWidget {
 
 class PlaylistCarouselWidget extends StatelessWidget {
   final bool isVerticalTitle;
+  final bool isScrollable;
   final SectionPlaylist sectionPlaylist;
   const PlaylistCarouselWidget({
     super.key,
+    this.isScrollable = false,
     this.isVerticalTitle = true,
     required this.sectionPlaylist,
   });
@@ -344,7 +346,7 @@ class PlaylistCarouselWidget extends StatelessWidget {
               ),
               options: CarouselOptions(
                 height: 200,
-                autoPlay: true,
+                autoPlay: isScrollable,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.32,
                 aspectRatio: 1,
@@ -395,7 +397,7 @@ class PlaylistCarouselWidget extends StatelessWidget {
               ),
               options: CarouselOptions(
                 height: 240,
-                autoPlay: true,
+                autoPlay: isScrollable,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.32,
                 aspectRatio: 1,
