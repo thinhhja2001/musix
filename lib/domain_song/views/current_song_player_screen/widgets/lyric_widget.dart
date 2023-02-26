@@ -134,45 +134,50 @@ class _SongInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MusixAudioHandler musixAudioHandler =
-        GetIt.I.get<MusixAudioHandler>();
-    return Row(
-      children: [
-        Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(
-                musixAudioHandler.currentSong.thumbnailM ?? "",
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    state.songInfo?.thumbnailM ?? "",
+                  ),
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              defaultTextScrollWidget(
-                text: musixAudioHandler.currentSong.title ?? "",
-                textStyle: TextStyleTheme.ts22.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    defaultTextScrollWidget(
+                      text: state.songInfo?.title ?? "",
+                      textStyle: TextStyleTheme.ts22.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Text(
+                      state.songInfo?.artistsNames ?? "",
+                      style: TextStyleTheme.ts18.copyWith(
+                        color: ColorTheme.primary,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                musixAudioHandler.currentSong.artistsNames ?? "",
-                style: TextStyleTheme.ts18.copyWith(
-                  color: ColorTheme.primary,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
+            )
+          ],
+        );
+      },
     );
   }
 }

@@ -189,13 +189,14 @@ class _SongInformationWidget extends StatelessWidget {
             color: Colors.white,
             fontWeight: FontWeight.w500,
           ),
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
           song.artistsNames ?? "",
-          style: TextStyleTheme.ts16.copyWith(
+          style: TextStyleTheme.ts20.copyWith(
             color: ColorTheme.primary,
             fontWeight: FontWeight.w400,
           ),
