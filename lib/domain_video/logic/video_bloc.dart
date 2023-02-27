@@ -49,7 +49,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         isVideoLoaded: false,
       ),
     );
-
+    print(event.id);
     final response = await videoRepositoryImpl.getInfo(event.id);
     final videoDetail = convertVideoDetailModel(response);
     videoPlayerController =

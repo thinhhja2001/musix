@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:musix/domain_artist/entities/artist/artist.dart';
 
 class VideoShort extends Equatable {
   final String? encodeID;
@@ -7,7 +8,8 @@ class VideoShort extends Equatable {
   final String? thumbnailM;
   final List? genreIds;
   final String? albumId;
-  final List? artistsId;
+  final List<Artist>? artists;
+  final int? duration;
   const VideoShort({
     this.encodeID,
     this.title,
@@ -15,7 +17,8 @@ class VideoShort extends Equatable {
     this.thumbnailM,
     this.genreIds,
     this.albumId,
-    this.artistsId,
+    this.artists,
+    this.duration,
   });
   @override
   List<Object?> get props => [
@@ -25,7 +28,8 @@ class VideoShort extends Equatable {
         thumbnailM,
         genreIds,
         albumId,
-        artistsId,
+        artists,
+        duration,
       ];
 
   @override
@@ -38,7 +42,8 @@ class VideoShort extends Equatable {
     String? thumbnailM,
     List? genreIds,
     String? albumId,
-    List? artistsId,
+    List<Artist>? artists,
+    int? duration,
   }) =>
       VideoShort(
         encodeID: encodeID ?? this.encodeID,
@@ -47,6 +52,7 @@ class VideoShort extends Equatable {
         thumbnailM: thumbnailM ?? this.thumbnailM,
         genreIds: genreIds ?? this.genreIds,
         albumId: albumId ?? this.albumId,
-        artistsId: artistsId ?? this.artistsId,
+        artists: artists ?? this.artists,
+        duration: duration ?? this.duration,
       );
 }
