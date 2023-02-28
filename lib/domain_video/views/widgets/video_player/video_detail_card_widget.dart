@@ -12,7 +12,6 @@ class VideoDetailCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<VideoBloc, VideoState>(
       builder: (context, state) {
-        print(state.videoDetail?.videoUrl);
         return state.chewieController != null
             ? VideoPlayerWidget(
                 controller: state.chewieController!,

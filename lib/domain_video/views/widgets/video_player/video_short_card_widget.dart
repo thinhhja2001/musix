@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter/bloc_exporter.dart';
+import 'package:musix/config/exporter/state_exporter.dart';
+import 'package:musix/domain_artist/entities/artist/artist.dart';
 import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
+import 'package:musix/routing/routing_path.dart';
 import 'package:musix/utils/functions/function_utils.dart';
 
 import '../../../../theme/theme.dart';
@@ -34,6 +38,11 @@ class VideoShortCardWidget extends StatelessWidget {
                   builder: (context) => const VideoDetailPageWidget(),
                   isScrollControlled: true,
                   backgroundColor: ColorTheme.background,
+                ).then(
+                  // On Close Event Modal Bottom Sheet
+                  (value) => context.read<VideoBloc>().add(
+                        VideoBackEvent(),
+                      ),
                 )
               : null;
         },
@@ -44,15 +53,11 @@ class VideoShortCardWidget extends StatelessWidget {
               width: double.infinity,
               height: 150,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(videoShort.thumbnailM ?? ""),
-                ),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(videoShort.thumbnailM ?? ""),
+                  ),
+                  borderRadius: BorderRadius.circular(10)),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
@@ -62,7 +67,7 @@ class VideoShortCardWidget extends StatelessWidget {
                       color: Colors.black54,
                       borderRadius: BorderRadius.all(
                         Radius.circular(
-                          20,
+                          10,
                         ),
                       ),
                     ),
@@ -80,48 +85,72 @@ class VideoShortCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        videoShort.artists?.first.thumbnailM ?? ""),
+            _VideoInformationWidget(videoShort: videoShort),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class _VideoInformationWidget extends StatelessWidget {
+  const _VideoInformationWidget({
+    required this.videoShort,
+  });
+
+  final VideoShort videoShort;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => {
+              context.read<ArtistBloc>().add(
+                    ArtistGetInfoEvent(videoShort.artists!.first.alias!),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            videoShort.title ?? "",
-                            style: TextStyleTheme.ts18.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                          Text(
-                            videoShort.artistsNames ?? "",
-                            style: TextStyleTheme.ts16.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorTheme.primary,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
+              Navigator.pushNamed(
+                context,
+                RoutingPath.artistInfo,
+              )
+            },
+            child: CircleAvatar(
+              backgroundImage:
+                  NetworkImage(videoShort.artists?.first.thumbnailM ?? ""),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    videoShort.title ?? "",
+                    style: TextStyleTheme.ts18.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  Text(
+                    videoShort.artistsNames ?? "",
+                    style: TextStyleTheme.ts16.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: ColorTheme.primary,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      );
-    });
+          ),
+        ],
+      ),
+    );
   }
 }

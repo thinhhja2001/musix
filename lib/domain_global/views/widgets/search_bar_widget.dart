@@ -79,6 +79,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                             fillColor: Colors.blue),
                       ),
                     ),
+                    IconButton(
+                        onPressed: () {
+                          _searchController.clear();
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: ColorTheme.white,
+                        )),
                     Container(
                       width: 60,
                       decoration: BoxDecoration(

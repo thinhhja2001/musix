@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:musix/domain_video/entities/event/video_event.dart';
 import 'package:musix/domain_video/views/widgets/video_player/video_short_card_widget.dart';
+import 'package:musix/routing/routing_path.dart';
+import '../../../config/exporter/bloc_exporter.dart';
+import '../../../config/exporter/state_exporter.dart';
 import '../../../theme/theme.dart';
 import '../../entities/state/video_state.dart';
 import '../../logic/video_bloc.dart';
+import '../widgets/next_video_list_widget.dart';
 import '../widgets/video_player/video_detail_card_widget.dart';
 
 class VideoDetailPageWidget extends StatelessWidget {
@@ -47,39 +51,7 @@ class VideoDetailPageWidget extends StatelessWidget {
       ),
       const VideoDetailCardWidget(),
       const _VideoInformationWidget(),
-      Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: Text(
-          "Next Video",
-          style: TextStyleTheme.ts22.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-      if (state.videoDetail == null)
-        Container()
-      else
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ...state.videoDetail!.recommends!.map(
-                  (recommend) => Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: VideoShortCardWidget(
-                      videoShort: recommend,
-                      isCreateNewSheet: false,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
+      const NextVideoListWidget()
     ];
   }
 }
@@ -95,9 +67,21 @@ class _VideoInformationWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    state.videoDetail?.artists?.first.thumbnailM ?? ""),
+              InkWell(
+                onTap: () => {
+                  context.read<ArtistBloc>().add(
+                        ArtistGetInfoEvent(
+                            state.videoDetail!.artists!.first.alias!),
+                      ),
+                  Navigator.pushNamed(
+                    context,
+                    RoutingPath.artistInfo,
+                  )
+                },
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      state.videoDetail?.artists?.first.thumbnailM ?? ""),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
