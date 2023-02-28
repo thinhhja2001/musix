@@ -6,7 +6,12 @@ import '../../models/model.dart';
 
 HomeMusic? convertFromGetHomeModel(GetHomeModel model) {
   if (model.data == null) return null;
-  HomeMusic homeMusic = const HomeMusic();
+  HomeMusic homeMusic = const HomeMusic(
+    randomPlaylist: SectionPlaylist(title: '', items: []),
+    newPlaylists: SectionPlaylist(title: '', items: []),
+    representArtists: SectionArtist(title: '', items: []),
+    newReleaseSongs: [],
+  );
   for (int i = 0; i < model.data!.total!; i++) {
     SectionsModel section = model.data!.items![i];
     if (section.sectionType == 'playlist' &&
@@ -18,7 +23,8 @@ HomeMusic? convertFromGetHomeModel(GetHomeModel model) {
       );
       continue;
     }
-    if (section.sectionType == 'playlist' && section.sectionId == 'hAlbum') {
+    if (section.sectionType == 'playlist' &&
+        section.sectionId!.contains('hAlbum')) {
       SectionPlaylist sPlaylist = convertSectionPlaylistFromModel(section)!;
       sPlaylist = sPlaylist.copyWith(title: 'Ngẫu nhiên');
       homeMusic = homeMusic.copyWith(

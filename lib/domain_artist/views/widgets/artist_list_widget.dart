@@ -36,6 +36,9 @@ class ArtistListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (sectionArtist.items?.isEmpty == true) {
+      return const SizedBox.shrink();
+    }
     switch (artistArrange) {
       case ArtistArrange.info:
         return ArtistInfoWidget(

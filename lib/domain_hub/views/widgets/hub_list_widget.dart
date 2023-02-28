@@ -19,6 +19,9 @@ class HubListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (hubs.isEmpty) {
+      return const SizedBox.shrink();
+    }
     final firstHubs = hubs.getRange(0, ((hubs.length ~/ 2) - 1)).toList();
     final secondHubs = hubs.getRange((hubs.length ~/ 2), hubs.length).toList();
     return Padding(

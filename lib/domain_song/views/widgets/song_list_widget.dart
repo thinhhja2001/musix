@@ -36,6 +36,9 @@ class SongListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (sectionSong.items?.isEmpty == true) {
+      return const SizedBox.shrink();
+    }
     switch (songArrange) {
       case SongArrange.info:
         return SongInfoWidget(
