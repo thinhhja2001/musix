@@ -4,11 +4,9 @@ import '../../theme/theme.dart';
 
 class RotatedTextWidget extends StatelessWidget {
   final String text;
-  const RotatedTextWidget({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
+  const RotatedTextWidget({Key? key, required this.text, this.style})
+      : super(key: key);
+  final TextStyle? style;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -16,8 +14,9 @@ class RotatedTextWidget extends StatelessWidget {
         quarterTurns: -1,
         child: Text(
           text,
-          style: TextStyleTheme.ts22
-              .copyWith(color: Colors.white, fontWeight: FontWeight.w300),
+          style: style ??
+              TextStyleTheme.ts22
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.w300),
         ),
       ),
     );

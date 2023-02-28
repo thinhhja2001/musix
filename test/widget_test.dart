@@ -7,19 +7,21 @@
 
 import 'dart:convert';
 
+import 'package:musix/domain_artist/models/get_artist_model/artist_model.dart';
 import 'package:musix/domain_song/repository/repository.dart';
 
 void main() async {
   VideoRepositoryImpl videoRepositoryImpl = VideoRepositoryImpl();
-  SongInfoRepositoryImpl songInfoRepositoryImpl = SongInfoRepositoryImpl();
-  final songs = await songInfoRepositoryImpl.getByQuery("anh");
-  for (var song in songs) {
-    printJson(song.toJson());
+  // // SongInfoRepositoryImpl songInfoRepositoryImpl = SongInfoRepositoryImpl();
+  // // final songs = await songInfoRepositoryImpl.getByQuery("anh");
+  // // for (var song in songs) {
+  // //   printJson(song.toJson());
+  // // }
+  final videos = await videoRepositoryImpl.getByQuery("khi phai quen di");
+  // printJson(videos.toJson());
+  for (var video in videos) {
+    printJson(video.toJson());
   }
-  // final videos = await videoRepositoryImpl.getByQuery("Anh");
-  // for (var video in videos) {
-  //   printJson(video.toJson());
-  // }
 }
 
 void printJson(Map<String, dynamic>? json) {

@@ -18,9 +18,11 @@ class HomeTemplateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const BlurBackgroundWidget(
-          imageUrl: AssetPath.group5,
-        ),
+        isNeedBackground
+            ? const BlurBackgroundWidget(
+                imageUrl: AssetPath.group5,
+              )
+            : Container(),
         CustomScrollView(slivers: [
           if (sliverAppbar != null) sliverAppbar!,
           SliverFillRemaining(

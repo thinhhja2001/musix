@@ -49,7 +49,6 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         isVideoLoaded: false,
       ),
     );
-
     final response = await videoRepositoryImpl.getInfo(event.id);
     final videoDetail = convertVideoDetailModel(response);
     videoPlayerController =
@@ -60,7 +59,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
       controller: videoPlayerController,
       videoDetail: videoDetail,
     );
-
+    chewieController.videoPlayerController.play();
     emit(
       state.copyWith(
         status: updateMapStatus(
@@ -76,6 +75,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
 
   FutureOr<void> _back(VideoBackEvent event, Emitter emit) async {
     print("back event called");
+    chewieController.videoPlayerController.pause();
     emit(
       state.copyWith(
         videoDetail: null,
