@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets.dart';
 
 import '../../../domain_hub/entities/entities.dart';
 import '../../../theme/text_style.dart';
+import '../widgets.dart';
 
 class SongTabWidget extends StatelessWidget {
   final List<SectionSong> items;
@@ -13,6 +13,9 @@ class SongTabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty == true) {
+      return const SizedBox.shrink();
+    }
     return DefaultTabController(
       length: items.length,
       child: SizedBox(

@@ -38,6 +38,9 @@ class PlaylistListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (sectionPlaylist.items?.isEmpty == true) {
+      return const SizedBox.shrink();
+    }
     switch (playlistArrange) {
       case PlaylistArrange.info:
         return PlaylistInfoWidget(
