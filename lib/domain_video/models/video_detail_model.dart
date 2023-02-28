@@ -1,3 +1,7 @@
+import 'package:musix/domain_video/models/models.dart';
+
+import '../../domain_artist/models/models.dart';
+
 /// VideoShort is used for returning object in getInfo() which will have the videoUrl
 
 class VideoDetailModel {
@@ -7,9 +11,11 @@ class VideoDetailModel {
   String? thumbnailM;
   List? genreIds;
   String? albumId;
-  List? artistsId;
+  List<ArtistModel>? artists;
+  int? duration;
   String? videoUrl;
-
+  List<VideoShortModel>? recommends;
+  DateTime? createdAt;
   VideoDetailModel({
     this.encodeID,
     this.title,
@@ -18,7 +24,10 @@ class VideoDetailModel {
     this.genreIds,
     this.videoUrl,
     this.albumId,
-    this.artistsId,
+    this.artists,
+    this.duration,
+    this.recommends,
+    this.createdAt,
   });
 
   factory VideoDetailModel.fromJson(Map<String, dynamic> json) {
@@ -28,7 +37,7 @@ class VideoDetailModel {
     final videosUrl = json["streaming"]["mp4"] as Map<String, dynamic>;
     // print(videosUrl.keys);
     final videoUrl = videosUrl[videosUrl.keys.last];
-
+    const secondsToMillisecond = 1000;
     return VideoDetailModel(
       encodeID: json["encodeId"],
       title: json["title"],
@@ -36,8 +45,20 @@ class VideoDetailModel {
       thumbnailM: json["thumbnailM"],
       genreIds: json["genres"]?.map((genre) => genre["id"]).toList(),
       albumId: json["album"]?["id"],
-      artistsId: json["artists"]?.map((artist) => artist["id"]).toList(),
+      artists: json["artists"]
+          ?.map(
+            (artist) => ArtistModel.fromJson(artist),
+          )
+          .toList()
+          .cast<ArtistModel>(),
+      recommends: json["recommends"]
+          ?.map((recommend) => VideoShortModel.fromJson(recommend))
+          .toList()
+          .cast<VideoShortModel>(),
+      duration: json["duration"],
       videoUrl: videoUrl,
+      createdAt: DateTime.fromMillisecondsSinceEpoch(
+          json["createdAt"] * secondsToMillisecond),
     );
   }
   Map<String, dynamic> toJson() => {
@@ -47,32 +68,9 @@ class VideoDetailModel {
         "thumbnailM": thumbnailM,
         "genreIds": genreIds,
         "albumId": albumId,
-        "artistsId": artistsId,
+        "artists": artists,
         "videoUrl": videoUrl,
+        "recommends": recommends,
+        "duration": duration
       };
 }
-
-final sampleVideo = VideoDetailModel(
-  encodeID: "ZW6CO0FA",
-  title: "Khi Phải Quên Đi",
-  artistsNames: "Phan Mạnh Quỳnh",
-  thumbnailM:
-      "https://photo-resize-zmp3.zmdcdn.me/w600_r300x169_jpeg/thumb_video/0/6/06b8b0c81dc95cbe5d1c764b6dc14b87_1405155254.jpg",
-  genreIds: ["IWZ9Z08I", "IWZ97FCD"],
-  albumId: null,
-  artistsId: ["IWZ98O7W"],
-  videoUrl:
-      "https://mcloud-bf-s7-mv-zmp3.zmdcdn.me/ui7rMG5AUsU/cc6c77fdfab913e74aa8/ad3fdbd8c89d21c3788c/1080/Khi-Phai-Quen-Di.mp4?authen=exp=1677223978~acl=/ui7rMG5AUsU/*~hmac=7be8ff50f523296e6af737e2e7a3d859",
-);
-final List<VideoDetailModel> sampleVideoList = [
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-  sampleVideo,
-];

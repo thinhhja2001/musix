@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:musix/domain_artist/entities/artist/artist.dart';
+import 'package:musix/domain_video/entities/video_short.dart';
 
 class VideoDetail extends Equatable {
   final String? encodeID;
@@ -7,9 +9,11 @@ class VideoDetail extends Equatable {
   final String? thumbnailM;
   final List? genreIds;
   final String? albumId;
-  final List? artistsId;
+  final List<Artist>? artists;
   final String? videoUrl;
-
+  final int? duration;
+  final DateTime? createdAt;
+  final List<VideoShort>? recommends;
   const VideoDetail({
     this.encodeID,
     this.title,
@@ -17,8 +21,11 @@ class VideoDetail extends Equatable {
     this.thumbnailM,
     this.genreIds,
     this.albumId,
-    this.artistsId,
+    this.artists,
     this.videoUrl,
+    this.duration,
+    this.createdAt,
+    this.recommends,
   });
   @override
   List<Object?> get props => [
@@ -28,8 +35,11 @@ class VideoDetail extends Equatable {
         thumbnailM,
         genreIds,
         albumId,
-        artistsId,
-        videoUrl
+        artists,
+        videoUrl,
+        duration,
+        createdAt,
+        recommends
       ];
 
   @override
@@ -42,8 +52,11 @@ class VideoDetail extends Equatable {
     String? thumbnailM,
     List? genreIds,
     String? albumId,
-    List? artistsId,
+    List<Artist>? artists,
     String? videoUrl,
+    int? duration,
+    DateTime? createdAt,
+    List<VideoShort>? recommends,
   }) =>
       VideoDetail(
         encodeID: encodeID ?? this.encodeID,
@@ -52,7 +65,10 @@ class VideoDetail extends Equatable {
         thumbnailM: thumbnailM ?? this.thumbnailM,
         genreIds: genreIds ?? this.genreIds,
         albumId: albumId ?? this.albumId,
-        artistsId: artistsId ?? this.artistsId,
+        artists: artists ?? this.artists,
         videoUrl: videoUrl ?? this.videoUrl,
+        duration: duration ?? this.duration,
+        createdAt: createdAt ?? this.createdAt,
+        recommends: recommends ?? this.recommends,
       );
 }

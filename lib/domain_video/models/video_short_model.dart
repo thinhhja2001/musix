@@ -1,3 +1,5 @@
+import 'package:musix/domain_artist/models/get_artist_model/artist_model.dart';
+
 /// VideoShort is used for returning object in search query which won't have the videoUrl
 class VideoShortModel {
   String? encodeID;
@@ -6,8 +8,8 @@ class VideoShortModel {
   String? thumbnailM;
   List? genreIds;
   String? albumId;
-  List? artistsId;
-
+  List<ArtistModel>? artists;
+  int? duration;
   VideoShortModel({
     this.encodeID,
     this.title,
@@ -15,7 +17,8 @@ class VideoShortModel {
     this.thumbnailM,
     this.genreIds,
     this.albumId,
-    this.artistsId,
+    this.artists,
+    this.duration,
   });
 
   factory VideoShortModel.fromJson(Map<String, dynamic> json) {
@@ -26,7 +29,11 @@ class VideoShortModel {
       thumbnailM: json["thumbnailM"],
       genreIds: json["genres"]?.map((genre) => genre["id"]).toList(),
       albumId: json["album"]?["id"],
-      artistsId: json["artists"]?.map((artist) => artist["id"]).toList(),
+      artists: json["artists"]
+          ?.map((artist) => ArtistModel.fromJson(artist))
+          .toList()
+          .cast<ArtistModel>(),
+      duration: json["duration"],
     );
   }
   Map<String, dynamic> toJson() => {
@@ -36,7 +43,8 @@ class VideoShortModel {
         "thumbnailM": thumbnailM,
         "genreIds": genreIds,
         "albumId": albumId,
-        "artistsId": artistsId,
+        "artists": artists,
+        "duration": duration,
       };
 }
 
@@ -44,11 +52,29 @@ final sampleVideoShort = VideoShortModel(
   encodeID: "ZW6CO0FA",
   title: "Khi Phải Quên Đi",
   artistsNames: "Phan Mạnh Quỳnh",
+  artists: [
+    ArtistModel.fromJson({
+      "id": "IWZ98O7W",
+      "name": "Phan Mạnh Quỳnh",
+      "alias": "Phan-Manh-Quynh",
+      "playlistId": "ZWZAEBZF",
+      "cover": null,
+      "thumbnail":
+          "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_jpeg/avatars/1/6/a/d/16ad38a571e873f840bbfc0d97214baa.jpg",
+      "biography": null,
+      "sortBiography": null,
+      "thumbnailM":
+          "https://photo-resize-zmp3.zmdcdn.me/w360_r1x1_jpeg/avatars/1/6/a/d/16ad38a571e873f840bbfc0d97214baa.jpg",
+      "national": null,
+      "birthday": null,
+      "realname": null
+    })
+  ],
   thumbnailM:
       "https://photo-resize-zmp3.zmdcdn.me/w600_r300x169_jpeg/thumb_video/0/6/06b8b0c81dc95cbe5d1c764b6dc14b87_1405155254.jpg",
   genreIds: ["IWZ9Z08I", "IWZ97FCD"],
+  duration: 417,
   albumId: null,
-  artistsId: ["IWZ98O7W"],
 );
 
 final sampleListVideoShorts = [
