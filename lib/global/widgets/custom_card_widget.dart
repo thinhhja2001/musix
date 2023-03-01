@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../theme/theme.dart';
 
@@ -41,8 +42,20 @@ class CustomCardWidget extends StatelessWidget {
             child: CachedNetworkImage(
               fit: BoxFit.fill,
               imageUrl: image,
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
+              placeholder: (context, url) => ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Shimmer.fromColors(
+                  baseColor: ColorTheme.background,
+                  highlightColor: ColorTheme.backgroundDarker,
+                  child: Material(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                    ),
+                  ),
+                ),
+              ),
               errorWidget: (context, url, error) =>
                   const Center(child: Icon(Icons.error)),
             ),

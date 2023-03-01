@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_song/views/widgets.dart';
 
+import '../../../domain_video/views/screens/video_short_list_page_widget.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import 'utils/text_path.dart';
-import '../../../domain_video/views/screens/video_short_list_page_widget.dart';
 import 'widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeTextPath = HomeTextPath();
     return Scaffold(
       backgroundColor: ColorTheme.background,
+      persistentFooterButtons: [CurrentSongPlayerWidget()],
       bottomNavigationBar: CustomBottomBarWidget(
         items: bottomNavigationItems(context),
         index: indexBottomNavigation,

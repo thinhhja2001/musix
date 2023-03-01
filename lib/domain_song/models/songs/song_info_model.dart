@@ -26,14 +26,18 @@ class SongInfoModel {
       artistsNames: songInfoJson['artistsNames'],
       thumbnailM: songInfoJson['thumbnailM'],
       albumId: songInfoJson["album"]?["encodeId"],
-      genreIds: songInfoJson["genreIds"]
-          .map((genreId) => genreId as String)
-          .toList()
-          .cast<String>(),
-      artistsId: songInfoJson["artists"]
-          ?.map((artist) => artist["id"] as String)
-          .toList()
-          .cast<String>(),
+      genreIds: songInfoJson["genreIds"] != null
+          ? songInfoJson["genreIds"]
+              .map((genreId) => genreId as String)
+              .toList()
+              .cast<String>()
+          : [],
+      artistsId: songInfoJson["artists"] != null
+          ? songInfoJson["artists"]
+              ?.map((artist) => artist["id"] as String)
+              .toList()
+              .cast<String>()
+          : [],
     );
   }
 

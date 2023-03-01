@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../entities/entities.dart';
+import '../../logic/song_bloc.dart';
 import '../widgets.dart';
 
 enum SongType {
@@ -69,24 +71,29 @@ class SongCardInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomCardInfoWidget(
-      index: index,
-      encodeId: song.encodeId!,
-      image: song.thumbnailM!,
-      title: song.title!,
-      subTitle: song.artistsNames!,
-      type: isShowType ? 'Song' : null,
-      isShowIndex: isShowIndex,
-      padding: 0,
-      onCardPress: onPress,
-      onButtonPress: () => {
-        showModalBottomSheet(
-          context: context,
-          backgroundColor: Colors.transparent,
-          builder: (context) => ViewSongDetailWidget(
-            song: song,
-          ),
-        )
+    return BlocBuilder<SongBloc, SongState>(
+      builder: (context, state) {
+        return CustomCardInfoWidget(
+          index: index,
+          image: song.thumbnailM!,
+          title: song.title!,
+          subTitle: song.artistsNames!,
+          type: isShowType ? 'Song' : null,
+          isShowIndex: isShowIndex,
+          padding: 0,
+          isActive: state.songInfo != null &&
+              state.songInfo!.encodeId == song.encodeId!,
+          onCardPress: onPress,
+          onButtonPress: () => {
+            showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => ViewSongDetailWidget(
+                song: song,
+              ),
+            )
+          },
+        );
       },
     );
   }

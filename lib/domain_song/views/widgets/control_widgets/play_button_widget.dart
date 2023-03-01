@@ -1,12 +1,12 @@
 // ignore_for_file: implementation_imports
 
+import 'package:chewie/src/animated_play_pause.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../entities/entities.dart';
 import '../../../logic/song_bloc.dart';
-import 'package:chewie/src/animated_play_pause.dart';
 
 class PlayButtonWidget extends StatelessWidget {
   const PlayButtonWidget({
@@ -29,6 +29,7 @@ class PlayButtonWidget extends StatelessWidget {
                   state.isPlaying ? SongPauseEvent() : SongPlayEvent(),
                 );
           },
+          borderRadius: BorderRadius.circular(180),
           child: Container(
               height: height,
               width: width,
