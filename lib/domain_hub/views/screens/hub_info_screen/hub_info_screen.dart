@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../../config/exporter.dart';
 import '../../../../domain_artist/views/widgets.dart';
-import '../../../../domain_song/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
+import '../../../../domain_song/views/widgets.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
@@ -19,6 +20,7 @@ class HubInfoScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: ColorTheme.background,
+      persistentFooterButtons: [CurrentSongPlayerWidget()],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -45,22 +47,25 @@ class HubInfoScreen extends StatelessWidget {
         ],
       ),
       extendBodyBehindAppBar: true,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-        ),
-        child: BlocBuilder<HubBloc, HubState>(
-          builder: (context, state) {
-            if (state.status?[HubStatusKey.info.key] == Status.loading) {
-              return const Center(child: CircularProgressIndicator());
+      body: BlocBuilder<HubBloc, HubState>(
+        builder: (context, state) {
+          if (state.status?[HubStatusKey.info.key] == Status.loading) {
+            return const Center(
+                child: SpinKitPulse(
+              color: ColorTheme.primary,
+              size: 100,
+            ));
+          } else {
+            final hub = state.info;
+            if (hub == null) {
+              return const SizedBox.shrink();
             } else {
-              final hub = state.info;
-              if (hub == null) {
-                return const SizedBox.shrink();
-              } else {
-                debugPrint('Hub: ${hub.title} - ${hub.description != null}');
-                return Column(
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
@@ -158,11 +163,11 @@ class HubInfoScreen extends StatelessWidget {
                       ),
                     ],
                   ],
-                );
-              }
+                ),
+              );
             }
-          },
-        ),
+          }
+        },
       ),
     );
   }

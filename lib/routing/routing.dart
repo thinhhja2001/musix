@@ -35,7 +35,8 @@ Route<dynamic> routeController(RouteSettings settings) {
     case RoutingPath.home:
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const SlashHomeScreen(),
+        // builder: (context) => const HomeScreen(),
       );
     case RoutingPath.hubInfo:
       return MaterialPageRoute(

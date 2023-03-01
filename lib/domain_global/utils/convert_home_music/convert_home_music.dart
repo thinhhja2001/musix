@@ -12,7 +12,7 @@ HomeMusic? convertFromGetHomeModel(GetHomeModel model) {
     representArtists: SectionArtist(title: '', items: []),
     newReleaseSongs: [],
   );
-  for (int i = 0; i < model.data!.total!; i++) {
+  for (int i = 0; i < model.data!.items!.length; i++) {
     SectionsModel section = model.data!.items![i];
     if (section.sectionType == 'playlist' &&
         section.sectionId == 'hAutoTheme2') {
