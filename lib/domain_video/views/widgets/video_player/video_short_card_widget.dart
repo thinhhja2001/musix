@@ -141,8 +141,8 @@ class _VideoInformationWidget extends StatelessWidget {
               )
             },
             child: SizedBox(
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               child: ClipOval(
                 child: CachedNetworkImage(
                   imageUrl: videoShort.artists?.first.thumbnailM ?? "",
