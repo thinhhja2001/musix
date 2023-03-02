@@ -1,3 +1,5 @@
+import '../entities.dart';
+
 class SongEvent {}
 
 class SongGetInfoEvent implements SongEvent {
@@ -33,3 +35,17 @@ class SongOnSeekEvent implements SongEvent {
 
   SongOnSeekEvent(this.position);
 }
+
+class SongSetLoopModeEvent implements SongEvent {}
+
+class SongSetListSongInfoEvent implements SongEvent {
+  final List<SongInfo>? listSongInfo;
+  final int baseIndex;
+  SongSetListSongInfoEvent({this.listSongInfo, required this.baseIndex});
+}
+
+class SongPlayNextSongEvent implements SongEvent {}
+
+class SongPlayPreviousSongEvent implements SongEvent {}
+
+class SongChangeShuffleModeEvent implements SongEvent {}

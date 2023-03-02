@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:musix/config/exporter/bloc_exporter.dart';
+import 'package:musix/config/exporter/state_exporter.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../domain_song/views/widgets.dart';
@@ -70,6 +72,7 @@ class PlaylistInfoScreen extends StatelessWidget {
             ));
           } else {
             final playlist = state.playlist;
+
             if (playlist == null) {
               return const SizedBox.shrink();
             } else {
