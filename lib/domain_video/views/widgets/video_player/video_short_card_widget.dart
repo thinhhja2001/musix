@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:musix/config/exporter/bloc_exporter.dart';
 import 'package:musix/config/exporter/state_exporter.dart';
 import 'package:musix/domain_artist/entities/artist/artist.dart';
 import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
 import 'package:musix/routing/routing_path.dart';
 import 'package:musix/utils/functions/function_utils.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../entities/event/video_event.dart';
@@ -49,40 +52,61 @@ class VideoShortCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
+            SizedBox(
               height: 150,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
+              child: Stack(
+                children: [
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //       image: DecorationImage(
+                  //         fit: BoxFit.fill,
+                  //         image: NetworkImage(videoShort.thumbnailM ?? ""),
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(10)),
+                  CachedNetworkImage(
+                    imageUrl: videoShort.thumbnailM ?? "",
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: ColorTheme.background,
+                      highlightColor: ColorTheme.backgroundDarker,
+                      child: const Material(
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 240,
+                        ),
+                      ),
+                    ),
+                    width: double.infinity,
+                    height: 240,
                     fit: BoxFit.fill,
-                    image: NetworkImage(videoShort.thumbnailM ?? ""),
                   ),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          10,
-                        ),
-                      ),
-                    ),
+                  Align(
+                    alignment: Alignment.bottomRight,
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        formatTime(timeInSecond: videoShort.duration ?? 0),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
+                      padding: const EdgeInsets.only(bottom: 8.0, right: 8.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10,
+                            ),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            formatTime(timeInSecond: videoShort.duration ?? 0),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ),
             ),
             _VideoInformationWidget(videoShort: videoShort),
@@ -116,9 +140,25 @@ class _VideoInformationWidget extends StatelessWidget {
                 RoutingPath.artistInfo,
               )
             },
-            child: CircleAvatar(
-              backgroundImage:
-                  NetworkImage(videoShort.artists?.first.thumbnailM ?? ""),
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: videoShort.artists?.first.thumbnailM ?? "",
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: ColorTheme.background,
+                    highlightColor: ColorTheme.backgroundDarker,
+                    child: const Material(
+                      color: Colors.white,
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 240,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           Expanded(
