@@ -8,6 +8,7 @@ import 'package:musix/config/exporter/state_exporter.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../domain_song/views/widgets.dart';
+import '../../../domain_song/views/widgets/control_widgets/shuffle_button_widget.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
 import '../../entities/entities.dart';
@@ -170,22 +171,24 @@ class PlaylistInfoScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    tooltip: 'Shuffle',
-                                    icon: const Center(
-                                      child: Icon(
-                                        MdiIcons.shuffle,
-                                        size: 24,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                                  const ShuffleButtonWidget(),
                                   const SizedBox(
                                     width: 8,
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      context.read<SongBloc>().add(
+                                          SongSetListSongInfoEvent(
+                                              state.playlist?.songs?.items));
+
+                                      ///Passing nul will start playing the song base on current state of
+                                      ///@isShuffle in SongBloc
+                                      ///If @isShuffle is true, generate a random index and start playing at the index.
+                                      ///If @isShuffle is false, start playing the section at the index of 0
+                                      context.read<SongBloc>().add(
+                                            SongStartPlayingSectionEvent(null),
+                                          );
+                                    },
                                     icon: Container(
                                       decoration: BoxDecoration(
                                         borderRadius:

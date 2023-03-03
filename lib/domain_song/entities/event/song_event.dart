@@ -40,8 +40,13 @@ class SongSetLoopModeEvent implements SongEvent {}
 
 class SongSetListSongInfoEvent implements SongEvent {
   final List<SongInfo>? listSongInfo;
-  final int baseIndex;
-  SongSetListSongInfoEvent({this.listSongInfo, required this.baseIndex});
+  SongSetListSongInfoEvent(this.listSongInfo);
+}
+
+class SongStartPlayingSectionEvent implements SongEvent {
+  final int? index;
+
+  SongStartPlayingSectionEvent(this.index);
 }
 
 class SongPlayNextSongEvent implements SongEvent {}
