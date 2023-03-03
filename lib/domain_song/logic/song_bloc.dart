@@ -31,6 +31,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     on<SongChangeShuffleModeEvent>(_changeShuffleMode);
     on<SongStartPlayingSectionEvent>(_startPlayingSection);
     _settingUpDurationStream();
+    _setSongEndEvent();
   }
   final SongInfoRepositoryImpl songInfoRepositoryImpl;
   final SongSourceRepositoryImpl songSourceRepositoryImpl;
@@ -150,7 +151,6 @@ class SongBloc extends Bloc<SongEvent, SongState> {
         break;
       default:
     }
-    _setSongEndEvent();
     emit(
       state.copyWith(
         loopMode: nextLoopMode,
