@@ -29,6 +29,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     on<SongPlayNextSongEvent>(_playNextSong);
     on<SongPlayPreviousSongEvent>(_playPreviousSong);
     on<SongChangeShuffleModeEvent>(_changeShuffleMode);
+    on<SongStartPlayingSectionEvent>(_startPlayingSection);
     _settingUpDurationStream();
   }
   final SongInfoRepositoryImpl songInfoRepositoryImpl;
@@ -179,11 +180,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
             int baseIndex = state.isShuffle
                 ? _playNextPreHandler.getNextIndexOfRandomSong()
                 : 0;
-            SongInfo starterSongInfo =
-                _playNextPreHandler.listSongInfo.elementAt(baseIndex);
-            add(SongGetInfoEvent(starterSongInfo.encodeId!));
-            add(SongGetSourceEvent(starterSongInfo.encodeId!));
-            _playNextPreHandler.playedSong.add(starterSongInfo);
+            add(SongStartPlayingSectionEvent(baseIndex));
             break;
           default:
         }
@@ -196,7 +193,17 @@ class SongBloc extends Bloc<SongEvent, SongState> {
       SongSetListSongInfoEvent event, Emitter emit) async {
     emit(state.copyWith(listSongInfo: event.listSongInfo));
     _playNextPreHandler.setListSongInfo(event.listSongInfo ?? []);
-    _playNextPreHandler.setBaseIndex(event.baseIndex);
+  }
+
+  FutureOr<void> _startPlayingSection(
+      SongStartPlayingSectionEvent event, Emitter emit) async {
+    int baseIndex = event.index ??
+        (state.isShuffle ? _playNextPreHandler.getNextIndexOfRandomSong() : 0);
+    SongInfo starterSongInfo =
+        _playNextPreHandler.listSongInfo.elementAt(baseIndex);
+    add(SongGetInfoEvent(starterSongInfo.encodeId!));
+    add(SongGetSourceEvent(starterSongInfo.encodeId!));
+    _playNextPreHandler.playedSong.add(starterSongInfo);
   }
 
   //----------------------------------------------------------------------------

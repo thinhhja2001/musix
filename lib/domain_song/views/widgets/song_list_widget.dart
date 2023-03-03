@@ -113,16 +113,11 @@ class SongInfoWidget extends StatelessWidget {
                         song: sectionSong.items![index],
                         onPress: () async {
                           context.read<SongBloc>().add(SongSetListSongInfoEvent(
-                                listSongInfo: sectionSong.items ?? [],
-                                baseIndex: index,
+                                sectionSong.items ?? [],
                               ));
-                          context.read<SongBloc>().add(SongGetInfoEvent(
-                              sectionSong.items![index].encodeId!));
-                          context.read<SongBloc>().add(
-                                SongGetSourceEvent(
-                                  sectionSong.items![index].encodeId!,
-                                ),
-                              );
+                          context
+                              .read<SongBloc>()
+                              .add(SongStartPlayingSectionEvent(index));
                         },
                       ),
                     ),
@@ -167,14 +162,12 @@ class SongInfoWidget extends StatelessWidget {
                   type: SongType.cardInfo,
                   song: sectionSong.items![index],
                   onPress: () async {
-                    context.read<SongBloc>().add(
-                        SongGetInfoEvent(sectionSong.items![index].encodeId!));
-
-                    context.read<SongBloc>().add(
-                          SongGetSourceEvent(
-                            sectionSong.items![index].encodeId!,
-                          ),
-                        );
+                    context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                          sectionSong.items ?? [],
+                        ));
+                    context
+                        .read<SongBloc>()
+                        .add(SongStartPlayingSectionEvent(index));
                   },
                 ),
               ),
@@ -222,14 +215,12 @@ class SongCarouselWidget extends StatelessWidget {
                   size: 160,
                   song: sectionSong.items![index],
                   onPress: () async {
-                    context.read<SongBloc>().add(
-                        SongGetInfoEvent(sectionSong.items![index].encodeId!));
-
-                    context.read<SongBloc>().add(
-                          SongGetSourceEvent(
-                            sectionSong.items![index].encodeId!,
-                          ),
-                        );
+                    context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                          sectionSong.items ?? [],
+                        ));
+                    context
+                        .read<SongBloc>()
+                        .add(SongStartPlayingSectionEvent(index));
                   },
                 ),
               ),
@@ -275,14 +266,12 @@ class SongCarouselWidget extends StatelessWidget {
                   size: 160,
                   song: sectionSong.items![index],
                   onPress: () async {
-                    context.read<SongBloc>().add(
-                        SongGetInfoEvent(sectionSong.items![index].encodeId!));
-
-                    context.read<SongBloc>().add(
-                          SongGetSourceEvent(
-                            sectionSong.items![index].encodeId!,
-                          ),
-                        );
+                    context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                          sectionSong.items ?? [],
+                        ));
+                    context
+                        .read<SongBloc>()
+                        .add(SongStartPlayingSectionEvent(index));
                   },
                 ),
               ),
