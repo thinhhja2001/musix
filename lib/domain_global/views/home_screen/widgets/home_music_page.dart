@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../config/exporter.dart';
-import '../../../../domain_playlist/views/widgets.dart';
+import 'package:musix/routing/routing_path.dart';
 
+import '../../../../config/exporter.dart';
 import '../../../../domain_artist/views/widgets.dart';
 import '../../../../domain_hub/views/widgets.dart';
+import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../domain_song/views/widgets.dart';
 import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
+import '../../widgets.dart';
 import 'widgets.dart';
 
 class HomeMusicPage extends StatelessWidget {
@@ -31,6 +33,12 @@ class HomeMusicPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    SearchBarNavigationWidget(
+                      hintText: r'What do you want to hear?',
+                      onTap: () {
+                        Navigator.of(context).pushNamed(RoutingPath.search);
+                      },
+                    ),
                     const SizedBox(
                       height: 24,
                     ),

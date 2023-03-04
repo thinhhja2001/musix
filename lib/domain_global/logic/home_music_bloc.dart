@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../entities/entities.dart';
-import '../utils/convert_home_music/convert_home_music.dart';
 
 import '../../config/exporter/repo_exporter.dart';
 import '../../domain_hub/utils/utils.dart';
 import '../../utils/utils.dart';
+import '../entities/entities.dart';
+import '../utils/convert_home_music/convert_home_music.dart';
 
 class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
   HomeMusicBloc({
@@ -82,20 +82,34 @@ class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
           StackTrace.current);
     }
 
-    await Future.delayed(
-      const Duration(milliseconds: 300),
-    ).whenComplete(() => emit(
-          state.copyWith(
-            status: updateMapStatus(
-              source: state.status,
-              keys: [
-                HomeMusicStatusKey.global.key,
-              ],
-              status: [
-                Status.idle,
-              ],
-            ),
-          ),
-        ));
+    emit(
+      state.copyWith(
+        status: updateMapStatus(
+          source: state.status,
+          keys: [
+            HomeMusicStatusKey.global.key,
+          ],
+          status: [
+            Status.idle,
+          ],
+        ),
+      ),
+    );
+
+    // await Future.delayed(
+    //   const Duration(milliseconds: 300),
+    // ).whenComplete(() => emit(
+    //       state.copyWith(
+    //         status: updateMapStatus(
+    //           source: state.status,
+    //           keys: [
+    //             HomeMusicStatusKey.global.key,
+    //           ],
+    //           status: [
+    //             Status.idle,
+    //           ],
+    //         ),
+    //       ),
+    //     ));
   }
 }

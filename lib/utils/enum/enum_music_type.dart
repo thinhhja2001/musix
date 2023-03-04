@@ -1,4 +1,6 @@
 enum MusicType {
-  album,
+  playlist,
   song,
+  artist,
+  video,
 }

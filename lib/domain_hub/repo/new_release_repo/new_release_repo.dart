@@ -8,7 +8,7 @@ class NewReleaseRepo {
   Future<dynamic> getNewReleaseList(MusicType type) async {
     final ZingMP3APIV2 zingMP3APIV2 = await getIt.getAsync<ZingMP3APIV2>();
     switch (type) {
-      case MusicType.album:
+      case MusicType.playlist:
         final response =
             await zingMP3APIV2.getNewReleaseType(ReleaseType.album);
         return GetNewReleasePlaylistModel.fromJson(response);

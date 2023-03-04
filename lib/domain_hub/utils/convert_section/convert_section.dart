@@ -1,9 +1,12 @@
+import 'package:musix/domain_video/utils/convert_video.dart';
+
 import '../../../domain_artist/entities/entities.dart';
 import '../../../domain_artist/utils/utils.dart';
-import '../../../domain_song/entities/entities.dart';
-import '../../../domain_song/utils/utils.dart';
 import '../../../domain_playlist/entities/entities.dart';
 import '../../../domain_playlist/utils/utils.dart';
+import '../../../domain_song/entities/entities.dart';
+import '../../../domain_song/utils/utils.dart';
+import '../../../domain_video/entities/video_short.dart';
 import '../../entities/entities.dart';
 import '../../model/model.dart';
 
@@ -42,6 +45,19 @@ SectionSong? convertSectionSongFromModel(SectionsModel sectionsModel) {
       .toList();
 
   return SectionSong(
+    title: sectionsModel.title,
+    items: songs,
+  );
+}
+
+SectionVideo? convertSectionVideoFromModel(SectionsModel sectionsModel) {
+  if (sectionsModel.sectionType != 'song') return null;
+
+  List<VideoShort>? songs = (sectionsModel.items as List)
+      .map((jsonData) => convertVideoShortModel(jsonData))
+      .toList();
+
+  return SectionVideo(
     title: sectionsModel.title,
     items: songs,
   );

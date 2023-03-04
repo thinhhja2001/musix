@@ -67,6 +67,12 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
           settings: settings,
           builder: (context) => const VideoDetailPageWidget());
+    case RoutingPath.search:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const SearchScreen(),
+        // builder: (context) => const HomeScreen(),
+      );
     default:
       return MaterialPageRoute(
         settings: settings,
