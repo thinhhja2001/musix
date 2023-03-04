@@ -65,7 +65,7 @@ class SongInfoWidget extends StatelessWidget {
   final bool isShowType;
   final bool isShowTitle;
   final SectionSong sectionSong;
-
+  final bool isFromPlaylist;
   const SongInfoWidget({
     super.key,
     this.isVerticalTitle = true,
@@ -73,6 +73,7 @@ class SongInfoWidget extends StatelessWidget {
     this.isShowIndex = true,
     this.isShowType = true,
     this.isShowTitle = true,
+    this.isFromPlaylist = false,
     required this.sectionSong,
   });
 
@@ -111,14 +112,12 @@ class SongInfoWidget extends StatelessWidget {
                         type: SongType.cardInfo,
                         song: sectionSong.items![index],
                         onPress: () async {
-                          context.read<SongBloc>().add(SongGetInfoEvent(
-                              sectionSong.items![index].encodeId!));
-
-                          context.read<SongBloc>().add(
-                                SongGetSourceEvent(
-                                  sectionSong.items![index].encodeId!,
-                                ),
-                              );
+                          context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                                sectionSong.items ?? [],
+                              ));
+                          context
+                              .read<SongBloc>()
+                              .add(SongStartPlayingSectionEvent(index));
                         },
                       ),
                     ),
@@ -163,14 +162,12 @@ class SongInfoWidget extends StatelessWidget {
                   type: SongType.cardInfo,
                   song: sectionSong.items![index],
                   onPress: () async {
-                    context.read<SongBloc>().add(
-                        SongGetInfoEvent(sectionSong.items![index].encodeId!));
-
-                    context.read<SongBloc>().add(
-                          SongGetSourceEvent(
-                            sectionSong.items![index].encodeId!,
-                          ),
-                        );
+                    context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                          sectionSong.items ?? [],
+                        ));
+                    context
+                        .read<SongBloc>()
+                        .add(SongStartPlayingSectionEvent(index));
                   },
                 ),
               ),
@@ -218,14 +215,12 @@ class SongCarouselWidget extends StatelessWidget {
                   size: 160,
                   song: sectionSong.items![index],
                   onPress: () async {
-                    context.read<SongBloc>().add(
-                        SongGetInfoEvent(sectionSong.items![index].encodeId!));
-
-                    context.read<SongBloc>().add(
-                          SongGetSourceEvent(
-                            sectionSong.items![index].encodeId!,
-                          ),
-                        );
+                    context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                          sectionSong.items ?? [],
+                        ));
+                    context
+                        .read<SongBloc>()
+                        .add(SongStartPlayingSectionEvent(index));
                   },
                 ),
               ),
@@ -271,14 +266,12 @@ class SongCarouselWidget extends StatelessWidget {
                   size: 160,
                   song: sectionSong.items![index],
                   onPress: () async {
-                    context.read<SongBloc>().add(
-                        SongGetInfoEvent(sectionSong.items![index].encodeId!));
-
-                    context.read<SongBloc>().add(
-                          SongGetSourceEvent(
-                            sectionSong.items![index].encodeId!,
-                          ),
-                        );
+                    context.read<SongBloc>().add(SongSetListSongInfoEvent(
+                          sectionSong.items ?? [],
+                        ));
+                    context
+                        .read<SongBloc>()
+                        .add(SongStartPlayingSectionEvent(index));
                   },
                 ),
               ),

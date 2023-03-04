@@ -40,7 +40,7 @@ class _NonDraggableSlider extends StatelessWidget {
             thumbColor: ColorTheme.primary,
             value: position.inSeconds.toDouble(),
             min: 0,
-            max: duration.inSeconds.toDouble(),
+            max: duration.inSeconds.toDouble() + 5,
             onChanged: (position) {},
           ),
         );
@@ -69,7 +69,10 @@ class _DraggableSlider extends StatelessWidget {
               context.read<SongBloc>().add(SongOnSeekEvent(position)),
           thumbRadius: 8.0,
           progress: position,
-          total: duration,
+          // We must plus the total duration to 5 because when the music ended,
+          // the progress still count for a short amount of time.
+          // which sometimes will violate the assert of (progress <= total)
+          total: duration + const Duration(seconds: 5),
         );
       },
     );

@@ -8,6 +8,8 @@ import '../models/model.dart';
 class SearchMusicRepo extends InitialRepo {
   FutureOr<SearchAllModel> searchAll(String q) async {
     final response = await (await apiZingMP3).searchMusicByQuery(q);
+    // debugPrint('All=========================');
+    // printJson(response);
     return SearchAllModel.fromJson(response);
   }
 
@@ -22,6 +24,8 @@ class SearchMusicRepo extends InitialRepo {
       page: page,
       count: count,
     );
+    // debugPrint('Songs=========================');
+    // printJson(response);
     return SearchSongModel.fromJson(response);
   }
 
@@ -36,6 +40,8 @@ class SearchMusicRepo extends InitialRepo {
       page: page,
       count: count,
     );
+    // debugPrint('Artist=========================');
+    // printJson(response);
     return SearchArtistModel.fromJson(response);
   }
 
@@ -50,6 +56,8 @@ class SearchMusicRepo extends InitialRepo {
       page: page,
       count: count,
     );
+    // debugPrint('Playlist=========================');
+    // printJson(response);
     return SearchPlaylistModel.fromJson(response);
   }
 

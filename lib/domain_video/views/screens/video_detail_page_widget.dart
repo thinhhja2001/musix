@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:musix/domain_video/entities/event/video_event.dart';
 import 'package:musix/domain_video/views/widgets/video_player/video_short_card_widget.dart';
 import 'package:musix/routing/routing_path.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../config/exporter/bloc_exporter.dart';
 import '../../../config/exporter/state_exporter.dart';
 import '../../../theme/theme.dart';
@@ -78,15 +80,31 @@ class _VideoInformationWidget extends StatelessWidget {
                     RoutingPath.artistInfo,
                   )
                 },
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      state.videoDetail?.artists?.first.thumbnailM ?? ""),
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          state.videoDetail?.artists?.first.thumbnailM ?? "",
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: ColorTheme.background,
+                        highlightColor: ColorTheme.backgroundDarker,
+                        child: const Material(
+                          color: Colors.white,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 240,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 8.0,
-                  top: 8.0,
                 ),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width / 2,

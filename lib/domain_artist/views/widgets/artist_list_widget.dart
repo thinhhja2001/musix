@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../config/exporter.dart';
-import '../../../config/exporter/bloc_exporter.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
-import '../../entities/entities.dart';
 import '../widgets.dart';
 
 enum ArtistArrange {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widgets.dart';
+import '../widgets.dart';
 
 class ExplorePageWidget extends StatelessWidget {
   const ExplorePageWidget({Key? key}) : super(key: key);

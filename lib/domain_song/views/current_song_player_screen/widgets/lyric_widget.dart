@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_song/utils/widget_util/text_scroll_widget.dart';
+import 'package:musix/domain_song/views/widgets/control_widgets/repeat_button_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../../theme/color.dart';
@@ -13,6 +14,7 @@ import '../../../logic/song_bloc.dart';
 import '../../../services/musix_audio_handler.dart';
 import '../../../services/musix_lyric_ui.dart';
 import '../../widgets.dart';
+import '../../widgets/control_widgets/shuffle_button_widget.dart';
 import '../../widgets/custom_slider.dart';
 
 class LyricWidget extends StatelessWidget {
@@ -88,29 +90,16 @@ class LyricWidget extends StatelessWidget {
                           const CustomSlider(draggable: true),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.shuffle,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
-                              ),
-                              const SkipToPreviousButtonWidget(),
-                              const PlayButtonWidget(
+                            children: const [
+                              ShuffleButtonWidget(),
+                              SkipToPreviousButtonWidget(),
+                              PlayButtonWidget(
                                 width: 100,
                                 height: 100,
                                 iconSize: 50,
                               ),
-                              const SkipToNextButtonWidget(),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.loop_rounded,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              SkipToNextButtonWidget(),
+                              RepeatButtonWidget()
                             ],
                           ),
                           const SizedBox(

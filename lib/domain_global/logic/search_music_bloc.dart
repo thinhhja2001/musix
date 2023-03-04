@@ -37,12 +37,12 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
               SearchMusicStatusKey.global.key,
             ],
             status: [
-              Status.error,
+              Status.loading,
             ],
           ),
         ),
       );
-
+      DebugLogger().log(event.query);
       final responseAll = await repo.searchAll(event.query);
       final responseSongs = await repo.searchSong(event.query, 1, 18);
       final responsePlaylists = await repo.searchPlaylist(event.query, 1, 18);

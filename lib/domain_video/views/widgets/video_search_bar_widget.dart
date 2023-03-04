@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain_global/views/home_screen/utils/text_path.dart';
 import '../../../theme/theme.dart';
 
 class VideoSearchBarWidget extends StatelessWidget {
@@ -33,7 +32,7 @@ class VideoSearchBarWidget extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: InputDecoration.collapsed(
-                          hintText: HomeTextPath().searchBarHintText,
+                          hintText: r'What do you want to hear?',
                           hintStyle: TextStyleTheme.ts15.copyWith(
                             color: ColorTheme.grey100,
                             fontWeight: FontWeight.w400,

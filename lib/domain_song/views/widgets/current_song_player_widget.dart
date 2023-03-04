@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/domain_song/utils/widget_util/text_scroll_widget.dart';
+import 'package:musix/domain_song/views/widgets/control_widgets/shuffle_button_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../theme/theme.dart';
@@ -105,14 +106,7 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                  iconSize: 24,
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.shuffle,
-                    color: Colors.white,
-                  ),
-                ),
+                const ShuffleButtonWidget(),
                 const SizedBox(
                   width: 8,
                 ),

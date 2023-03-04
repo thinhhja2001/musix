@@ -9,8 +9,7 @@ import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../domain_song/views/widgets.dart';
 import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
-import '../../widgets.dart';
-import 'widgets.dart';
+import '../widgets.dart';
 
 class HomeMusicPage extends StatelessWidget {
   const HomeMusicPage({Key? key}) : super(key: key);

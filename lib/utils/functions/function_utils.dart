@@ -42,3 +42,9 @@ formatTime({required int timeInSecond}) {
   String second = sec.toString().length <= 1 ? "0$sec" : "$sec";
   return "$minute : $second";
 }
+
+void printJson(Map<String, dynamic>? json) {
+  JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+  String prettyprint = encoder.convert(json);
+  debugPrint(prettyprint);
+}

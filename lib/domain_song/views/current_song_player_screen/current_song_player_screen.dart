@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../entities/entities.dart';
 import '../../logic/song_bloc.dart';
+import '../widgets/control_widgets/shuffle_button_widget.dart';
 import 'widgets/set_timer_widget.dart';
 import '../widgets.dart';
 import '../widgets/control_widgets/repeat_button_widget.dart';
@@ -121,23 +122,16 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       // Audio player control field
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.shuffle,
-                              color: Colors.white,
-                              size: 25,
-                            ),
-                          ),
-                          const SkipToPreviousButtonWidget(),
-                          const PlayButtonWidget(
+                        children: const [
+                          ShuffleButtonWidget(),
+                          SkipToPreviousButtonWidget(),
+                          PlayButtonWidget(
                             width: 100,
                             height: 100,
                             iconSize: 50,
                           ),
-                          const SkipToNextButtonWidget(),
-                          const RepeatButtonWidget(),
+                          SkipToNextButtonWidget(),
+                          RepeatButtonWidget(),
                         ],
                       )
                     ],
