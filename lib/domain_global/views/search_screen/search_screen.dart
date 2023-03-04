@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../config/exporter.dart';
 import '../../../domain_artist/views/widgets.dart';
@@ -23,7 +24,6 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  bool _isShowSearch = true;
   int _currentIndex = 0;
   GlobalKey key = GlobalKey();
   Timer? searchOnStoppedTyping;
@@ -94,187 +94,136 @@ class _SearchScreenState extends State<SearchScreen>
                     top: DistinctConstant.small,
                   ),
                 ),
-                if (_isShowSearch) ...[
-                  SliverToBoxAdapter(
-                    child: TabBar(
-                      controller: _tabController,
-                      labelColor: ColorTheme.white,
-                      unselectedLabelColor: ColorTheme.grey100,
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: ColorTheme.primary,
-                      ),
-                      isScrollable: true,
-                      tabs: [
-                        Tab(
-                          icon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_tabController.index == 0) ...[
-                                const Icon(Icons.star_border),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                              ],
-                              Text(
-                                'All',
-                                style: TextStyleTheme.ts15.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
+                BlocSelector<SearchMusicBloc, SearchMusicState, bool>(
+                  selector: (state) {
+                    if (state.all != null) return true;
+                    return false;
+                  },
+                  builder: (context, state) {
+                    if (state == true) {
+                      return SliverToBoxAdapter(
+                        child: TabBar(
+                          controller: _tabController,
+                          labelColor: ColorTheme.white,
+                          unselectedLabelColor: ColorTheme.grey100,
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorTheme.primary,
                           ),
-                          iconMargin: const EdgeInsets.all(4),
-                        ),
-                        Tab(
-                          icon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_tabController.index == 1) ...[
-                                const Icon(Icons.music_note),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                              ],
-                              Text(
-                                'Songs',
-                                style: TextStyleTheme.ts15.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                          isScrollable: true,
+                          tabs: [
+                            Tab(
+                              icon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (_tabController.index == 0) ...[
+                                    const Icon(Icons.star_border),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                  ],
+                                  Text(
+                                    'All',
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          iconMargin: const EdgeInsets.all(4),
-                        ),
-                        Tab(
-                          icon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_tabController.index == 2) ...[
-                                const Icon(Icons.person),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                              ],
-                              Text(
-                                'Artist',
-                                style: TextStyleTheme.ts15.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              iconMargin: const EdgeInsets.all(4),
+                            ),
+                            Tab(
+                              icon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (_tabController.index == 1) ...[
+                                    const Icon(Icons.music_note),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                  ],
+                                  Text(
+                                    'Songs',
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          iconMargin: const EdgeInsets.all(4),
-                        ),
-                        Tab(
-                          icon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_tabController.index == 3) ...[
-                                const Icon(Icons.album_outlined),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                              ],
-                              Text(
-                                'Playlists',
-                                style: TextStyleTheme.ts15.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                              iconMargin: const EdgeInsets.all(4),
+                            ),
+                            Tab(
+                              icon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (_tabController.index == 2) ...[
+                                    const Icon(Icons.person),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                  ],
+                                  Text(
+                                    'Artist',
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          iconMargin: const EdgeInsets.all(4),
+                              iconMargin: const EdgeInsets.all(4),
+                            ),
+                            Tab(
+                              icon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (_tabController.index == 3) ...[
+                                    const Icon(Icons.album_outlined),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                  ],
+                                  Text(
+                                    'Playlists',
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              iconMargin: const EdgeInsets.all(4),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
+                      );
+                    } else {
+                      return const SliverPadding(
+                        padding: EdgeInsets.only(
+                          top: 0,
+                        ),
+                      );
+                    }
+                  },
+                )
               ];
             },
-            body: _isShowSearch
-                ? Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        BlocSelector<SearchMusicBloc, SearchMusicState,
-                            SectionAll?>(
-                          selector: (state) {
-                            return state.all;
-                          },
-                          builder: (context, all) {
-                            if (all == null || all.items?.isEmpty == true) {
-                              return const SizedBox.shrink();
-                            }
-                            return SearchAllWidget(
-                              all: all,
-                              isShowIndex: false,
-                              isScrollable: true,
-                            );
-                          },
-                        ),
-                        BlocSelector<SearchMusicBloc, SearchMusicState,
-                            SectionSong?>(
-                          selector: (state) {
-                            return state.songs;
-                          },
-                          builder: (context, songs) {
-                            if (songs == null || songs.items?.isEmpty == true) {
-                              return const SizedBox.shrink();
-                            }
-                            return SongListWidget(
-                              songArrange: SongArrange.info,
-                              isScrollable: true,
-                              isShowIndex: false,
-                              sectionSong: songs,
-                            );
-                          },
-                        ),
-                        BlocSelector<SearchMusicBloc, SearchMusicState,
-                            SectionArtist?>(
-                          selector: (state) {
-                            return state.artists;
-                          },
-                          builder: (context, artists) {
-                            if (artists == null ||
-                                artists.items?.isEmpty == true) {
-                              return const SizedBox.shrink();
-                            }
-                            return ArtistListWidget(
-                              artistArrange: ArtistArrange.info,
-                              isScrollable: true,
-                              isShowIndex: false,
-                              sectionArtist: artists,
-                            );
-                          },
-                        ),
-                        BlocSelector<SearchMusicBloc, SearchMusicState,
-                            SectionPlaylist?>(
-                          selector: (state) {
-                            return state.playlists;
-                          },
-                          builder: (context, playlists) {
-                            if (playlists == null ||
-                                playlists.items?.isEmpty == true) {
-                              return const SizedBox.shrink();
-                            }
-                            return PlaylistListWidget(
-                              playlistArrange: PlaylistArrange.image,
-                              isScrollable: true,
-                              sectionPlaylist: playlists,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                : Center(
+            body: BlocBuilder<SearchMusicBloc, SearchMusicState>(
+              builder: (context, state) {
+                if (state.status![SearchMusicStatusKey.global.key] ==
+                    Status.loading) {
+                  return const Center(
+                      child: SpinKitPulse(
+                    color: ColorTheme.primary,
+                    size: 100,
+                  ));
+                }
+                if (state.query == null &&
+                    state.status![SearchMusicStatusKey.global.key] ==
+                        Status.idle) {
+                  return Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -295,7 +244,171 @@ class _SearchScreenState extends State<SearchScreen>
                         ),
                       ],
                     ),
+                  );
+                }
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      BlocSelector<SearchMusicBloc, SearchMusicState,
+                          SectionAll?>(
+                        selector: (state) {
+                          return state.all;
+                        },
+                        builder: (context, all) {
+                          if (all == null || all.items?.isEmpty == true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.sentiment_dissatisfied_outlined,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    r"Your request is too hard to find.",
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return SearchAllWidget(
+                            all: all,
+                            isShowIndex: false,
+                            isScrollable: true,
+                          );
+                        },
+                      ),
+                      BlocSelector<SearchMusicBloc, SearchMusicState,
+                          SectionSong?>(
+                        selector: (state) {
+                          return state.songs;
+                        },
+                        builder: (context, songs) {
+                          if (songs == null || songs.items?.isEmpty == true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.sentiment_dissatisfied_outlined,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    r"Your request is too hard to find.",
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return SongListWidget(
+                            songArrange: SongArrange.info,
+                            isScrollable: true,
+                            isShowIndex: false,
+                            sectionSong: songs,
+                          );
+                        },
+                      ),
+                      BlocSelector<SearchMusicBloc, SearchMusicState,
+                          SectionArtist?>(
+                        selector: (state) {
+                          return state.artists;
+                        },
+                        builder: (context, artists) {
+                          if (artists == null ||
+                              artists.items?.isEmpty == true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.sentiment_dissatisfied_outlined,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    r"Your request is too hard to find.",
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return ArtistListWidget(
+                            artistArrange: ArtistArrange.info,
+                            isScrollable: true,
+                            isShowIndex: false,
+                            sectionArtist: artists,
+                          );
+                        },
+                      ),
+                      BlocSelector<SearchMusicBloc, SearchMusicState,
+                          SectionPlaylist?>(
+                        selector: (state) {
+                          return state.playlists;
+                        },
+                        builder: (context, playlists) {
+                          if (playlists == null ||
+                              playlists.items?.isEmpty == true) {
+                            return Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.sentiment_dissatisfied_outlined,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    r"Your request is too hard to find.",
+                                    style: TextStyleTheme.ts15.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return PlaylistListWidget(
+                            playlistArrange: PlaylistArrange.image,
+                            isScrollable: true,
+                            sectionPlaylist: playlists,
+                          );
+                        },
+                      ),
+                    ],
                   ),
+                );
+              },
+            ),
           ),
         ),
       ),

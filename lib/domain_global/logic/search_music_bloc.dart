@@ -29,6 +29,9 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
   FutureOr<void> _searchAllByQuery(
       SearchMusicQueryEvent event, Emitter<SearchMusicState> emit) async {
     try {
+      if (state.query == event.query) {
+        return;
+      }
       emit(
         state.copyWith(
           status: updateMapStatus(
@@ -40,6 +43,7 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
               Status.loading,
             ],
           ),
+          query: event.query,
         ),
       );
       DebugLogger().log(event.query);

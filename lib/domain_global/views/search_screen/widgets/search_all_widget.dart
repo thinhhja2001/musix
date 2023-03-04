@@ -62,10 +62,10 @@ class SearchAllWidget extends StatelessWidget {
                       }
                       return CustomCardInfoWidget(
                         index: index,
-                        image: item.thumbnail!,
+                        image: item.thumbnail,
                         title: item.title!,
                         subTitle: item.artistsName,
-                        type: item.type.toString(),
+                        type: convertMusicType[item.type],
                         onCardPress: () {
                           if (item.type == MusicType.playlist) {
                             context

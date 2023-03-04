@@ -6,7 +6,7 @@ import '../../theme/theme.dart';
 
 class CustomCardInfoWidget extends StatelessWidget {
   final int index;
-  final String image;
+  final String? image;
   final String title;
 
   final String? subTitle;
@@ -21,7 +21,7 @@ class CustomCardInfoWidget extends StatelessWidget {
   const CustomCardInfoWidget({
     Key? key,
     required this.index,
-    required this.image,
+    this.image,
     required this.title,
     this.subTitle,
     this.type,
@@ -69,7 +69,8 @@ class CustomCardInfoWidget extends StatelessWidget {
                         3,
                       ),
                       child: CachedNetworkImage(
-                        imageUrl: image,
+                        imageUrl: image ??
+                            'https://images.unsplash.com/photo-1503248947681-3198a7abfcc9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
                         fit: BoxFit.scaleDown,
                         placeholder: (context, url) => ClipRRect(
                           borderRadius: BorderRadius.circular(12),

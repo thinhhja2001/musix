@@ -70,9 +70,9 @@ class PlaylistCardInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCardInfoWidget(
       index: index,
-      image: playlist.thumbnailM!,
+      image: playlist.thumbnailM,
       title: playlist.title!,
-      subTitle: playlist.artistsNames!,
+      subTitle: playlist.artistsNames,
       type: isShowType ? 'Playlist' : null,
       isShowIndex: isShowIndex,
       padding: 0,
@@ -101,9 +101,9 @@ class PlaylistCardImageWidget extends StatelessWidget {
     return CustomCardWidget(
       width: size ?? 240,
       height: size ?? 240,
-      image: playlist.thumbnailM!,
+      image: playlist.thumbnailM,
       title: playlist.title!,
-      subTitle: playlist.artistsNames!,
+      subTitle: playlist.artistsNames,
       onTap: onPress,
       titleTextStyle: TextStyleTheme.ts15.copyWith(
         fontWeight: FontWeight.w500,

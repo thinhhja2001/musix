@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../entities/artist/mini_artist.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
+import '../../entities/artist/mini_artist.dart';
 
 enum ArtistType {
   cardImage,
@@ -70,7 +70,7 @@ class ArtistCardInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCardInfoWidget(
       index: index,
-      image: artist.thumbnailM!,
+      image: artist.thumbnailM,
       title: artist.name!,
       type: isShowType ? 'Artist' : null,
       isShowIndex: isShowIndex,
@@ -100,7 +100,7 @@ class ArtistCardImageWidget extends StatelessWidget {
     return CustomCardWidget(
       width: size ?? 240,
       height: size ?? 240,
-      image: artist.thumbnailM!,
+      image: artist.thumbnailM,
       title: artist.name!,
       onTap: onPress,
       isShowTitle: true,
