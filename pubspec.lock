@@ -890,7 +890,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: a743eb10840308ab62ede8a9ee79759dd64d66e7
+      resolved-ref: d7e16802c37a34b49609b6e36d3bed97d693e294
       url: "https://github.com/thinhhja2001/zingmp3_api"
     source: git
     version: "1.0.0"

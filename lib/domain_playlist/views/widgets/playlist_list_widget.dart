@@ -25,6 +25,7 @@ class PlaylistListWidget extends StatelessWidget {
   final bool isShowType;
   final SectionPlaylist sectionPlaylist;
   final PlaylistArrange playlistArrange;
+  final VoidCallback? onScroll;
 
   const PlaylistListWidget({
     Key? key,
@@ -34,6 +35,7 @@ class PlaylistListWidget extends StatelessWidget {
     this.isShowType = false,
     required this.sectionPlaylist,
     required this.playlistArrange,
+    this.onScroll,
   }) : super(key: key);
 
   @override
@@ -55,6 +57,7 @@ class PlaylistListWidget extends StatelessWidget {
           sectionPlaylist: sectionPlaylist,
           isVerticalTitle: isVerticalTitle,
           isScrollable: isScrollable,
+          onScroll: onScroll,
         );
       case PlaylistArrange.carousel:
         return PlaylistCarouselWidget(
@@ -188,27 +191,52 @@ class PlaylistInfoWidget extends StatelessWidget {
   }
 }
 
-class PlaylistImageWidget extends StatelessWidget {
+class PlaylistImageWidget extends StatefulWidget {
   final bool isVerticalTitle;
   final bool isScrollable;
   final SectionPlaylist sectionPlaylist;
+  final VoidCallback? onScroll;
   const PlaylistImageWidget({
     super.key,
     this.isVerticalTitle = true,
     this.isScrollable = true,
     required this.sectionPlaylist,
+    this.onScroll,
   });
 
   @override
+  State<PlaylistImageWidget> createState() => _PlaylistImageWidgetState();
+}
+
+class _PlaylistImageWidgetState extends State<PlaylistImageWidget> {
+  late ScrollController controller;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    controller = ScrollController()..addListener(_onScroll);
+    super.initState();
+  }
+
+  void _onScroll() {
+    if (!controller.hasClients || _loading || widget.onScroll == null) return;
+    if (controller.position.extentAfter < 200) {
+      _loading = true;
+      widget.onScroll?.call();
+      Future.delayed(const Duration(seconds: 2), () => _loading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (isVerticalTitle) {
+    if (widget.isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (sectionPlaylist.title != null) ...[
+          if (widget.sectionPlaylist.title != null) ...[
             RotatedTextWidget(
-              text: sectionPlaylist.title!,
+              text: widget.sectionPlaylist.title!,
             ),
             const SizedBox(
               width: 8,
@@ -216,10 +244,11 @@ class PlaylistImageWidget extends StatelessWidget {
           ],
           Expanded(
             child: GridView.builder(
-              physics: isScrollable
+              controller: controller,
+              physics: widget.isScrollable
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
-              itemCount: sectionPlaylist.items!.length,
+              itemCount: widget.sectionPlaylist.items!.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
@@ -232,10 +261,10 @@ class PlaylistImageWidget extends StatelessWidget {
                 isShowType: false,
                 type: PlaylistType.cardImage,
                 size: 160,
-                playlist: sectionPlaylist.items![index],
+                playlist: widget.sectionPlaylist.items![index],
                 onPress: () {
                   context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
-                      sectionPlaylist.items![index].encodeId!));
+                      widget.sectionPlaylist.items![index].encodeId!));
                   Navigator.pushNamed(
                     context,
                     RoutingPath.playlistInfo,
@@ -248,7 +277,7 @@ class PlaylistImageWidget extends StatelessWidget {
       );
     } else {
       return SingleChildScrollView(
-        physics: isScrollable
+        physics: widget.isScrollable
             ? const BouncingScrollPhysics()
             : const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -256,9 +285,9 @@ class PlaylistImageWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (sectionPlaylist.title != null) ...[
+            if (widget.sectionPlaylist.title != null) ...[
               Text(
-                sectionPlaylist.title!,
+                widget.sectionPlaylist.title!,
                 style: TextStyleTheme.ts20.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w300,
@@ -271,7 +300,7 @@ class PlaylistImageWidget extends StatelessWidget {
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: sectionPlaylist.items!.length,
+              itemCount: widget.sectionPlaylist.items!.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
@@ -284,10 +313,10 @@ class PlaylistImageWidget extends StatelessWidget {
                 isShowType: false,
                 type: PlaylistType.cardImage,
                 size: 160,
-                playlist: sectionPlaylist.items![index],
+                playlist: widget.sectionPlaylist.items![index],
                 onPress: () {
                   context.read<PlaylistBloc>().add(PlaylistGetInfoEvent(
-                      sectionPlaylist.items![index].encodeId!));
+                      widget.sectionPlaylist.items![index].encodeId!));
                   Navigator.pushNamed(
                     context,
                     RoutingPath.playlistInfo,

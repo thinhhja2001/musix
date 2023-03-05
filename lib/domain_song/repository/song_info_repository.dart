@@ -1,11 +1,8 @@
-import 'dart:convert';
+import 'package:zing_mp3_api/zing_mp3_api.dart';
 
-import 'package:get_it/get_it.dart';
 import '../../config/register_dependency.dart';
-
 import '../models/models.dart';
 import 'repository.dart';
-import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 class SongInfoRepositoryImpl implements IRepository<SongInfoModel> {
   @override
@@ -31,10 +28,4 @@ class SongInfoRepositoryImpl implements IRepository<SongInfoModel> {
         .toList()
         .cast<SongInfoModel>();
   }
-}
-
-void printJson(Map<String, dynamic>? json) {
-  JsonEncoder encoder = JsonEncoder.withIndent('  ');
-  String prettyprint = encoder.convert(json);
-  print(prettyprint);
 }

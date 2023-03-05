@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_song/views/widgets.dart';
 
+import '../../../domain_user/views/screens.dart';
 import '../../../domain_video/views/screens/video_short_list_page_widget.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
-import 'utils/text_path.dart';
-import 'widgets/widgets.dart';
+import 'widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final homeTextPath = HomeTextPath();
     return Scaffold(
       backgroundColor: ColorTheme.background,
       persistentFooterButtons: [CurrentSongPlayerWidget()],
@@ -39,13 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: IndexedStack(
             index: indexBottomNavigation,
-            children: [
-              const HomeMusicPage(),
-              const ExplorePageWidget(),
-              SearchPageWidget(
-                homeTextPath: homeTextPath,
-              ),
-              const VideoShortListPageWidget(),
+            children: const [
+              HomeMusicPage(),
+              SizedBox.shrink(),
+              VideoShortListPageWidget(),
+              ProfileScreen(),
             ],
           ),
         ),

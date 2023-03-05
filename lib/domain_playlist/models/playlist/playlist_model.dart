@@ -73,7 +73,9 @@ class PlaylistModel {
     releaseDate = json['releaseDate'];
     sortDescription = json['sortDescription'];
     releasedAt = json['releasedAt'];
-    genreIds = json['genreIds'].cast<String>();
+    if (json['genreIds'] != null) {
+      genreIds = json['genreIds'].cast<String>();
+    }
     if (json['artists'] != null) {
       artists = <ArtistModel>[];
       json['artists'].forEach((v) {

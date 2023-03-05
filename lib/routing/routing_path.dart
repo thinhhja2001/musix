@@ -12,6 +12,9 @@ class RoutingPath {
   static const String changePassword = '$profile/changePassword';
   static const String editProfile = '$profile/edit';
 
+  // Search
+  static const String search = '$home/search';
+
   // Album - Topic - Playlist
   static const String hubInfo = '$home/hubInfo';
   static const String playlistInfo = '$home/playlistInfo';

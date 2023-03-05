@@ -75,7 +75,7 @@ class SongCardInfoWidget extends StatelessWidget {
       builder: (context, state) {
         return CustomCardInfoWidget(
           index: index,
-          image: song.thumbnailM!,
+          image: song.thumbnailM,
           title: song.title!,
           subTitle: song.artistsNames!,
           type: isShowType ? 'Song' : null,
@@ -116,7 +116,7 @@ class SongCardImageWidget extends StatelessWidget {
     return CustomCardWidget(
       width: size ?? 240,
       height: size ?? 240,
-      image: song.thumbnailM!,
+      image: song.thumbnailM,
       title: song.title!,
       subTitle: song.artistsNames!,
       onTap: onPress,

@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../config/exporter.dart';
-import '../../../config/exporter/bloc_exporter.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
-import '../../entities/entities.dart';
 import '../widgets.dart';
 
 enum ArtistArrange {
@@ -23,6 +21,7 @@ class ArtistListWidget extends StatelessWidget {
   final bool isShowType;
   final SectionArtist sectionArtist;
   final ArtistArrange artistArrange;
+  final VoidCallback? onScroll;
 
   const ArtistListWidget({
     Key? key,
@@ -32,6 +31,7 @@ class ArtistListWidget extends StatelessWidget {
     this.isShowType = false,
     required this.sectionArtist,
     required this.artistArrange,
+    this.onScroll,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,8 @@ class ArtistListWidget extends StatelessWidget {
           isVerticalTitle: isVerticalTitle,
           isShowType: isShowType,
           isScrollable: isScrollable,
-          isShowIndex: isShowType,
+          isShowIndex: isShowIndex,
+          onScroll: onScroll,
         );
       case ArtistArrange.carousel:
         return ArtistCarouselWidget(
@@ -58,12 +59,13 @@ class ArtistListWidget extends StatelessWidget {
   }
 }
 
-class ArtistInfoWidget extends StatelessWidget {
+class ArtistInfoWidget extends StatefulWidget {
   final bool isVerticalTitle;
   final bool isScrollable;
   final bool isShowIndex;
   final bool isShowType;
   final SectionArtist sectionArtist;
+  final VoidCallback? onScroll;
 
   const ArtistInfoWidget({
     super.key,
@@ -72,18 +74,42 @@ class ArtistInfoWidget extends StatelessWidget {
     this.isShowIndex = true,
     this.isShowType = true,
     required this.sectionArtist,
+    this.onScroll,
   });
 
   @override
+  State<ArtistInfoWidget> createState() => _ArtistInfoWidgetState();
+}
+
+class _ArtistInfoWidgetState extends State<ArtistInfoWidget> {
+  late ScrollController controller;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    controller = ScrollController()..addListener(_onScroll);
+    super.initState();
+  }
+
+  void _onScroll() {
+    if (!controller.hasClients || _loading || widget.onScroll == null) return;
+    if (controller.position.extentAfter < 200) {
+      _loading = true;
+      widget.onScroll?.call();
+      Future.delayed(const Duration(seconds: 2), () => _loading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (isVerticalTitle) {
+    if (widget.isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (sectionArtist.title != null) ...[
+          if (widget.sectionArtist.title != null) ...[
             RotatedTextWidget(
-              text: sectionArtist.title!,
+              text: widget.sectionArtist.title!,
             ),
             const SizedBox(
               width: 8,
@@ -91,26 +117,27 @@ class ArtistInfoWidget extends StatelessWidget {
           ],
           Expanded(
             child: SingleChildScrollView(
-              physics: isScrollable
+              physics: widget.isScrollable
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
+              controller: controller,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ...List.generate(
-                    sectionArtist.items!.length,
+                    widget.sectionArtist.items!.length,
                     (index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: ArtistCardWidget(
                         index: index + 1,
-                        isShowIndex: isShowIndex,
-                        isShowType: isShowType,
+                        isShowIndex: widget.isShowIndex,
+                        isShowType: widget.isShowType,
                         type: ArtistType.cardInfo,
-                        artist: sectionArtist.items![index],
+                        artist: widget.sectionArtist.items![index],
                         onPress: () {
                           context.read<ArtistBloc>().add(ArtistGetInfoEvent(
-                              sectionArtist.items![index].alias!));
+                              widget.sectionArtist.items![index].alias!));
                           Navigator.pushNamed(
                             context,
                             RoutingPath.artistInfo,
@@ -127,7 +154,7 @@ class ArtistInfoWidget extends StatelessWidget {
       );
     } else {
       return SingleChildScrollView(
-        physics: isScrollable
+        physics: widget.isScrollable
             ? const BouncingScrollPhysics()
             : const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -136,9 +163,9 @@ class ArtistInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (sectionArtist.title != null) ...[
+            if (widget.sectionArtist.title != null) ...[
               Text(
-                sectionArtist.title!,
+                widget.sectionArtist.title!,
                 style: TextStyleTheme.ts20.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w300,
@@ -149,18 +176,18 @@ class ArtistInfoWidget extends StatelessWidget {
               ),
             ],
             ...List.generate(
-              sectionArtist.items!.length,
+              widget.sectionArtist.items!.length,
               (index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ArtistCardWidget(
                   index: index + 1,
-                  isShowIndex: isShowIndex,
-                  isShowType: isShowType,
+                  isShowIndex: widget.isShowIndex,
+                  isShowType: widget.isShowType,
                   type: ArtistType.cardInfo,
-                  artist: sectionArtist.items![index],
+                  artist: widget.sectionArtist.items![index],
                   onPress: () {
-                    context.read<ArtistBloc>().add(
-                        ArtistGetInfoEvent(sectionArtist.items![index].alias!));
+                    context.read<ArtistBloc>().add(ArtistGetInfoEvent(
+                        widget.sectionArtist.items![index].alias!));
                     Navigator.pushNamed(
                       context,
                       RoutingPath.artistInfo,

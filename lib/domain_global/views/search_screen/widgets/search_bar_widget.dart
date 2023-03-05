@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/theme.dart';
+import '../../../../theme/theme.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final String hintText;
@@ -24,7 +24,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   void initState() {
     super.initState();
-    widget.recommends.sort((a, b) => a!.length.compareTo(b!.length));
+    if (widget.recommends.isNotEmpty) {
+      widget.recommends.sort((a, b) => a!.length.compareTo(b!.length));
+    }
     _searchController.addListener(() {
       widget.onTextChange?.call(_searchController.text);
     });
@@ -64,6 +66,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   children: [
                     Expanded(
                       child: TextField(
+                        autofocus: true,
                         controller: _searchController,
                         style: TextStyleTheme.ts15.copyWith(
                           color: Colors.white,
@@ -109,7 +112,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               ),
             ),
           ),
-          if (_isShowAdvance) ...[
+          if (_isShowAdvance && widget.recommends.isNotEmpty) ...[
             const SizedBox(
               height: 4,
             ),
@@ -171,7 +174,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               ),
             ),
           ],
-          if (!_isShowAdvance) ...[
+          if (!_isShowAdvance && widget.recommends.isNotEmpty) ...[
             const SizedBox(
               height: 8,
             ),

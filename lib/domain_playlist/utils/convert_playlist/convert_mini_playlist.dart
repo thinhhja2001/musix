@@ -5,10 +5,13 @@ MiniPlaylist? convertMiniPlaylistFromPlaylistModel(PlaylistModel? model) {
   if (model == null) {
     return null;
   }
+  if(model.title == null || model.encodeId == null){
+    return null;
+  }
   return MiniPlaylist(
     encodeId: model.encodeId,
     title: model.title,
-    thumbnailM: model.thumbnail,
+    thumbnailM: model.thumbnail ?? model.thumbnailM,
     artistsNames: model.artistsNames,
   );
 }
