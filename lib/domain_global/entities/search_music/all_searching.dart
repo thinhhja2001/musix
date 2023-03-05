@@ -4,19 +4,23 @@ import 'package:musix/utils/utils.dart';
 class SectionAll extends Equatable {
   final String? title;
   final List<AllSearching>? items;
+  final int? total;
 
   const SectionAll({
     this.title,
     this.items,
+    this.total,
   });
 
   SectionAll copyWith({
     String? title,
     List<AllSearching>? items,
+    int? total,
   }) {
     return SectionAll(
-      title: title,
-      items: items,
+      title: title ?? this.title,
+      items: items ?? this.items,
+      total: total ?? this.total,
     );
   }
 

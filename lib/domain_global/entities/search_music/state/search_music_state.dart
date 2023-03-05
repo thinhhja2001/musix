@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain_hub/entities/entities.dart';
-import '../../../../utils/enum/enum_status.dart';
+import '../../../../utils/utils.dart';
 import '../all_searching.dart';
 
 class SearchMusicState extends Equatable {
@@ -12,6 +12,7 @@ class SearchMusicState extends Equatable {
   final SectionArtist? artists;
   final SectionPlaylist? playlists;
   final SectionVideo? videos;
+  final Map<MusicType, int>? currentPage;
 
   const SearchMusicState({
     this.status,
@@ -21,6 +22,7 @@ class SearchMusicState extends Equatable {
     this.artists,
     this.playlists,
     this.videos,
+    this.currentPage,
   });
 
   SearchMusicState copyWith({
@@ -31,6 +33,7 @@ class SearchMusicState extends Equatable {
     SectionArtist? artists,
     SectionPlaylist? playlists,
     SectionVideo? videos,
+    Map<MusicType, int>? currentPage,
   }) {
     return SearchMusicState(
       status: status ?? this.status,
@@ -39,6 +42,8 @@ class SearchMusicState extends Equatable {
       songs: songs ?? this.songs,
       playlists: playlists ?? this.playlists,
       videos: videos ?? this.videos,
+      artists: artists ?? this.artists,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
@@ -46,6 +51,10 @@ class SearchMusicState extends Equatable {
   List<Object?> get props => [
         status,
         query,
+        all?.total,
+        songs?.total,
+        artists?.total,
+        playlists?.total,
       ];
 
   @override

@@ -43,7 +43,10 @@ SectionAll convertSectionAllFromSearchAllModel(SearchAllModel model) {
   }
 
   if (list.isNotEmpty) {
-    sectionAll = sectionAll.copyWith(items: list);
+    sectionAll = sectionAll.copyWith(
+      items: list,
+      total: list.length,
+    );
   }
   return sectionAll;
 }
@@ -54,13 +57,18 @@ SectionSong convertSectionSongFromSearchSongModel(SearchSongModel model) {
     items: [],
   );
   List<SongInfo> list = [];
+  int total = 0;
   if (model.data?.items != null) {
     for (var i in model.data!.items!) {
       list.add(convertSongInfoModel(i)!);
     }
+    total = model.data!.total!;
   }
   if (list.isNotEmpty) {
-    songs = songs.copyWith(items: list);
+    songs = songs.copyWith(
+      items: list,
+      total: total,
+    );
   }
   return songs;
 }
@@ -72,13 +80,18 @@ SectionPlaylist convertSectionPlaylistFromSearchPlaylistModel(
     items: [],
   );
   List<MiniPlaylist> list = [];
+  int total = 0;
   if (model.data?.items != null) {
     for (var i in model.data!.items!) {
       list.add(convertMiniPlaylistFromPlaylistModel(i)!);
     }
+    total = model.data!.total!;
   }
   if (list.isNotEmpty) {
-    playlists = playlists.copyWith(items: list);
+    playlists = playlists.copyWith(
+      items: list,
+      total: total,
+    );
   }
   return playlists;
 }
@@ -90,13 +103,18 @@ SectionArtist convertSectionArtistFromSearchArtistModel(
     items: [],
   );
   List<MiniArtist> list = [];
+  int total = 0;
   if (model.data?.items != null) {
     for (var i in model.data!.items!) {
       list.add(convertMiniArtist(i)!);
     }
+    total = model.data!.total!;
   }
   if (list.isNotEmpty) {
-    artists = artists.copyWith(items: list);
+    artists = artists.copyWith(
+      items: list,
+      total: total,
+    );
   }
   return artists;
 }

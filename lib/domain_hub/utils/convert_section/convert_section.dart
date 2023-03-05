@@ -20,6 +20,7 @@ SectionPlaylist? convertSectionPlaylistFromModel(SectionsModel sectionsModel) {
   return SectionPlaylist(
     title: sectionsModel.title,
     items: miniPlaylists,
+    total: miniPlaylists.length,
   );
 }
 
@@ -34,6 +35,7 @@ SectionArtist? convertSectionArtistFromModel(SectionsModel sectionsModel) {
   return SectionArtist(
     title: sectionsModel.title,
     items: miniArtists,
+    total: miniArtists.length,
   );
 }
 
@@ -47,18 +49,49 @@ SectionSong? convertSectionSongFromModel(SectionsModel sectionsModel) {
   return SectionSong(
     title: sectionsModel.title,
     items: songs,
+    total: songs.length,
   );
 }
 
 SectionVideo? convertSectionVideoFromModel(SectionsModel sectionsModel) {
-  if (sectionsModel.sectionType != 'song') return null;
+  if (sectionsModel.sectionType != 'video') return null;
 
-  List<VideoShort>? songs = (sectionsModel.items as List)
+  List<VideoShort>? videos = (sectionsModel.items as List)
       .map((jsonData) => convertVideoShortModel(jsonData))
       .toList();
 
   return SectionVideo(
     title: sectionsModel.title,
-    items: songs,
+    items: videos,
+    total: videos.length,
   );
+}
+
+SectionSong combineSectionSong(SectionSong a, SectionSong b, int total) {
+  SectionSong c = SectionSong(
+    title: a.title ?? b.title,
+    items: [...?a.items, ...?b.items],
+    total: total,
+  );
+  return c;
+}
+
+SectionArtist combineSectionArtist(
+    SectionArtist a, SectionArtist b, int total) {
+  SectionArtist c = SectionArtist(
+    title: a.title ?? b.title,
+    items: [...?a.items, ...?b.items],
+    total: total,
+  );
+  return c;
+}
+
+SectionPlaylist combineSectionPlaylist(
+    SectionPlaylist a, SectionPlaylist b, int total) {
+  SectionPlaylist c = SectionPlaylist(
+    title: a.title ?? b.title,
+    items: [...?a.items, ...?b.items],
+    total: total,
+  );
+  return c;
 }

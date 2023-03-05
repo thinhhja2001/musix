@@ -24,7 +24,6 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  int _currentIndex = 0;
   GlobalKey key = GlobalKey();
   Timer? searchOnStoppedTyping;
 
@@ -46,13 +45,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this)
-      ..addListener(() {
-        setState(() {
-          _currentIndex = _tabController.index;
-        });
-      });
-
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -68,6 +61,21 @@ class _SearchScreenState extends State<SearchScreen>
       key: key,
       backgroundColor: ColorTheme.background,
       persistentFooterButtons: [CurrentSongPlayerWidget()],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_sharp,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      ),
+      extendBodyBehindAppBar: true,
       body: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -285,7 +293,7 @@ class _SearchScreenState extends State<SearchScreen>
                           return SearchAllWidget(
                             all: all,
                             isShowIndex: false,
-                            isScrollable: true,
+                            isScrollable: false,
                           );
                         },
                       ),
@@ -322,8 +330,13 @@ class _SearchScreenState extends State<SearchScreen>
                           return SongListWidget(
                             songArrange: SongArrange.info,
                             isScrollable: true,
-                            isShowIndex: false,
+                            isShowIndex: true,
                             sectionSong: songs,
+                            onScroll: () {
+                              key.currentContext
+                                  ?.read<SearchMusicBloc>()
+                                  .add(const SearchMusicSongLoadMoreEvent());
+                            },
                           );
                         },
                       ),
@@ -361,8 +374,13 @@ class _SearchScreenState extends State<SearchScreen>
                           return ArtistListWidget(
                             artistArrange: ArtistArrange.info,
                             isScrollable: true,
-                            isShowIndex: false,
+                            isShowIndex: true,
                             sectionArtist: artists,
+                            onScroll: () {
+                              key.currentContext
+                                  ?.read<SearchMusicBloc>()
+                                  .add(const SearchMusicArtistLoadMoreEvent());
+                            },
                           );
                         },
                       ),
@@ -401,6 +419,10 @@ class _SearchScreenState extends State<SearchScreen>
                             playlistArrange: PlaylistArrange.image,
                             isScrollable: true,
                             sectionPlaylist: playlists,
+                            onScroll: () {
+                              key.currentContext?.read<SearchMusicBloc>().add(
+                                  const SearchMusicPlaylistLoadMoreEvent());
+                            },
                           );
                         },
                       ),

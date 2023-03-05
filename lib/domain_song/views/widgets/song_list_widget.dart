@@ -22,6 +22,7 @@ class SongListWidget extends StatelessWidget {
   final bool isShowTitle;
   final SectionSong sectionSong;
   final SongArrange songArrange;
+  final VoidCallback? onScroll;
 
   const SongListWidget({
     Key? key,
@@ -32,6 +33,7 @@ class SongListWidget extends StatelessWidget {
     this.isShowTitle = true,
     required this.sectionSong,
     required this.songArrange,
+    this.onScroll,
   }) : super(key: key);
 
   @override
@@ -46,8 +48,9 @@ class SongListWidget extends StatelessWidget {
           isVerticalTitle: isVerticalTitle,
           isShowType: isShowType,
           isScrollable: isScrollable,
-          isShowIndex: isShowType,
+          isShowIndex: isShowIndex,
           isShowTitle: isShowTitle,
+          onScroll: onScroll,
         );
       case SongArrange.carousel:
         return SongCarouselWidget(
@@ -58,7 +61,7 @@ class SongListWidget extends StatelessWidget {
   }
 }
 
-class SongInfoWidget extends StatelessWidget {
+class SongInfoWidget extends StatefulWidget {
   final bool isVerticalTitle;
   final bool isScrollable;
   final bool isShowIndex;
@@ -66,6 +69,7 @@ class SongInfoWidget extends StatelessWidget {
   final bool isShowTitle;
   final SectionSong sectionSong;
   final bool isFromPlaylist;
+  final VoidCallback? onScroll;
   const SongInfoWidget({
     super.key,
     this.isVerticalTitle = true,
@@ -75,18 +79,42 @@ class SongInfoWidget extends StatelessWidget {
     this.isShowTitle = true,
     this.isFromPlaylist = false,
     required this.sectionSong,
+    this.onScroll,
   });
 
   @override
+  State<SongInfoWidget> createState() => _SongInfoWidgetState();
+}
+
+class _SongInfoWidgetState extends State<SongInfoWidget> {
+  late ScrollController controller;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    controller = ScrollController()..addListener(_onScroll);
+    super.initState();
+  }
+
+  void _onScroll() {
+    if (!controller.hasClients || _loading || widget.onScroll == null) return;
+    if (controller.position.extentAfter < 200) {
+      _loading = true;
+      widget.onScroll?.call();
+      Future.delayed(const Duration(seconds: 2), () => _loading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (isVerticalTitle) {
+    if (widget.isVerticalTitle) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (sectionSong.title != null && isShowTitle) ...[
+          if (widget.sectionSong.title != null && widget.isShowTitle) ...[
             RotatedTextWidget(
-              text: sectionSong.title!,
+              text: widget.sectionSong.title!,
             ),
             const SizedBox(
               width: 8,
@@ -94,26 +122,27 @@ class SongInfoWidget extends StatelessWidget {
           ],
           Expanded(
             child: SingleChildScrollView(
-              physics: isScrollable
+              physics: widget.isScrollable
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
+              controller: controller,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ...List.generate(
-                    sectionSong.items!.length,
+                    widget.sectionSong.items!.length,
                     (index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: SongCardWidget(
                         index: index + 1,
-                        isShowIndex: isShowIndex,
-                        isShowType: isShowType,
+                        isShowIndex: widget.isShowIndex,
+                        isShowType: widget.isShowType,
                         type: SongType.cardInfo,
-                        song: sectionSong.items![index],
+                        song: widget.sectionSong.items![index],
                         onPress: () async {
                           context.read<SongBloc>().add(SongSetListSongInfoEvent(
-                                sectionSong.items ?? [],
+                                widget.sectionSong.items ?? [],
                               ));
                           context
                               .read<SongBloc>()
@@ -130,7 +159,7 @@ class SongInfoWidget extends StatelessWidget {
       );
     } else {
       return SingleChildScrollView(
-        physics: isScrollable
+        physics: widget.isScrollable
             ? const BouncingScrollPhysics()
             : const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -139,9 +168,9 @@ class SongInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (sectionSong.title != null && isShowTitle) ...[
+            if (widget.sectionSong.title != null && widget.isShowTitle) ...[
               Text(
-                sectionSong.title!,
+                widget.sectionSong.title!,
                 style: TextStyleTheme.ts20.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w300,
@@ -152,18 +181,18 @@ class SongInfoWidget extends StatelessWidget {
               ),
             ],
             ...List.generate(
-              sectionSong.items!.length,
+              widget.sectionSong.items!.length,
               (index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: SongCardWidget(
                   index: index + 1,
-                  isShowIndex: isShowIndex,
-                  isShowType: isShowType,
+                  isShowIndex: widget.isShowIndex,
+                  isShowType: widget.isShowType,
                   type: SongType.cardInfo,
-                  song: sectionSong.items![index],
+                  song: widget.sectionSong.items![index],
                   onPress: () async {
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
-                          sectionSong.items ?? [],
+                          widget.sectionSong.items ?? [],
                         ));
                     context
                         .read<SongBloc>()
