@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../theme/theme.dart';
+import '../../utils/utils.dart';
 
 class CustomCardWidget extends StatelessWidget {
   final VoidCallback? onTap;
@@ -41,8 +42,7 @@ class CustomCardWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: CachedNetworkImage(
               fit: BoxFit.fill,
-              imageUrl: image ??
-                  'https://images.unsplash.com/photo-1503248947681-3198a7abfcc9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
+              imageUrl: image ?? AssetPath.placeImage,
               placeholder: (context, url) => ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Shimmer.fromColors(

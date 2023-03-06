@@ -6,7 +6,7 @@ class SongInfoModel {
     this.thumbnailM,
     this.genreIds,
     this.albumId,
-    this.artistsId,
+    this.alias,
   });
   String? encodeId;
   String? title;
@@ -15,7 +15,7 @@ class SongInfoModel {
   String? thumbnailM;
   List<String>? genreIds;
   String? albumId;
-  List<String>? artistsId;
+  List<String>? alias;
 
   factory SongInfoModel.fromJson(
     Map<String, dynamic> songInfoJson,
@@ -32,9 +32,9 @@ class SongInfoModel {
               .toList()
               .cast<String>()
           : [],
-      artistsId: songInfoJson["artists"] != null
+      alias: songInfoJson["artists"] != null
           ? songInfoJson["artists"]
-              ?.map((artist) => artist["id"] as String)
+              ?.map((artist) => artist["alias"] as String)
               .toList()
               .cast<String>()
           : [],
@@ -47,7 +47,7 @@ class SongInfoModel {
         "artistsName": artistsNames,
         "thumbnailM": thumbnailM,
         "albumId": albumId,
-        "artistsId": artistsId,
+        "alias": alias,
         "genreIds": genreIds,
       };
 }
@@ -59,7 +59,7 @@ SongInfoModel sampleSong = SongInfoModel(
   genreIds: ["IWZ9Z08O", "IWZ9Z09B"],
   thumbnailM:
       "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_jpeg/cover/1/d/0/5/1d057df84228de726b09218407021004.jpg",
-  artistsId: ["IWZ9ZOOF"],
+  alias: ["eninem"],
   albumId: "ZWZAFD88",
 );
 

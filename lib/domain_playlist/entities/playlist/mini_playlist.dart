@@ -5,12 +5,14 @@ class MiniPlaylist extends Equatable {
   final String? title;
   final String? artistsNames;
   final String? thumbnailM;
+  final List<String>? artistAlias;
 
   const MiniPlaylist({
     this.encodeId,
     this.title,
     this.artistsNames,
     this.thumbnailM,
+    this.artistAlias,
   });
 
   MiniPlaylist copyWith({
@@ -18,12 +20,14 @@ class MiniPlaylist extends Equatable {
     String? title,
     String? artistsNames,
     String? thumbnailM,
+    List<String>? artistAlias,
   }) {
     return MiniPlaylist(
       encodeId: encodeId ?? this.encodeId,
       title: title ?? this.title,
       artistsNames: artistsNames ?? this.artistsNames,
       thumbnailM: thumbnailM ?? this.thumbnailM,
+      artistAlias: artistAlias ?? this.artistAlias,
     );
   }
 
@@ -33,6 +37,7 @@ class MiniPlaylist extends Equatable {
         title,
         artistsNames,
         thumbnailM,
+        artistAlias,
       ];
 
   @override

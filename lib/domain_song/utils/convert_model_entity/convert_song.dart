@@ -4,7 +4,7 @@ import '../../models/models.dart';
 SongInfo? convertSongInfoModel(SongInfoModel songInfoModel) => SongInfo(
     encodeId: songInfoModel.encodeId,
     albumId: songInfoModel.albumId,
-    artistsId: songInfoModel.artistsId,
+    artistsId: songInfoModel.alias,
     artistsNames: songInfoModel.artistsNames,
     genreIds: songInfoModel.genreIds,
     thumbnailM: songInfoModel.thumbnailM,
@@ -13,7 +13,7 @@ SongInfo? convertSongInfoModel(SongInfoModel songInfoModel) => SongInfo(
 SongInfoModel? convertSongInfo(SongInfo songInfo) => SongInfoModel(
     encodeId: songInfo.encodeId,
     albumId: songInfo.albumId,
-    artistsId: songInfo.artistsId,
+    alias: songInfo.artistsId,
     artistsNames: songInfo.artistsNames,
     genreIds: songInfo.genreIds,
     thumbnailM: songInfo.thumbnailM,
@@ -29,7 +29,7 @@ SongInfo? convertSongInfoFromJson(Map<String, dynamic>? json) {
   return SongInfo(
       encodeId: songInfoModel.encodeId,
       albumId: songInfoModel.albumId,
-      artistsId: songInfoModel.artistsId,
+      artistsId: songInfoModel.alias,
       artistsNames: songInfoModel.artistsNames,
       genreIds: songInfoModel.genreIds,
       thumbnailM: songInfoModel.thumbnailM,
