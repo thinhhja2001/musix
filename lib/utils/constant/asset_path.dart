@@ -36,4 +36,7 @@ class AssetPath {
   static const String shareIcon = '$_iconPath/share.svg';
   static const String shuffleIcon = '$_iconPath/shuffle.svg';
   static const String threeDotIcon = '$_iconPath/three_dot.svg';
+
+  static const String placeImage =
+      'https://images.unsplash.com/photo-1503248947681-3198a7abfcc9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80';
 }

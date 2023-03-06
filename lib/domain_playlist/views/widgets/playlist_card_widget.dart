@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../entities/entities.dart';
+import '../widgets.dart';
 
 enum PlaylistType {
   cardImage,
@@ -77,9 +78,15 @@ class PlaylistCardInfoWidget extends StatelessWidget {
       isShowIndex: isShowIndex,
       padding: 0,
       onCardPress: onPress,
-
-      /// TODO: code for button press
-      onButtonPress: () {},
+      onButtonPress: () => {
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (context) => ViewPlaylistDetailWidget(
+            playlist: playlist,
+          ),
+        )
+      },
     );
   }
 }

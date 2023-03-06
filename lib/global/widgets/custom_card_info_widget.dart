@@ -17,6 +17,7 @@ class CustomCardInfoWidget extends StatelessWidget {
   final bool isShowIndex;
   final double padding;
   final bool isActive;
+  final bool isShowAdditionButton;
 
   const CustomCardInfoWidget({
     Key? key,
@@ -29,6 +30,7 @@ class CustomCardInfoWidget extends StatelessWidget {
     this.onButtonPress,
     this.isActive = false,
     this.isShowIndex = false,
+    this.isShowAdditionButton = true,
     this.padding = 0,
   }) : super(key: key);
 
@@ -126,33 +128,39 @@ class CustomCardInfoWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Center(
-                  child: InkWell(
-                    onTap: onButtonPress,
-                    borderRadius: BorderRadius.circular(6),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 0.8,
-                          color: ColorTheme.primary,
+              if (isShowAdditionButton)
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: InkWell(
+                      onTap: onButtonPress,
+                      borderRadius: BorderRadius.circular(6),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0.8,
+                            color: ColorTheme.primary,
+                          ),
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      width: 24,
-                      height: 24,
-                      child: const Center(
-                        child: Icon(
-                          Icons.more_horiz,
-                          color: ColorTheme.primary,
-                          size: 16,
+                        width: 24,
+                        height: 24,
+                        child: const Center(
+                          child: Icon(
+                            Icons.more_horiz,
+                            color: ColorTheme.primary,
+                            size: 16,
+                          ),
                         ),
                       ),
                     ),
                   ),
+                )
+              else
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox.shrink(),
                 ),
-              )
             ],
           ),
         ),

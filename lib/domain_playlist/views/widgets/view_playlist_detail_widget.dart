@@ -1,26 +1,25 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/theme/color.dart';
+import 'package:musix/domain_playlist/entities/entities.dart';
 
 import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
-import '../../../theme/text_style.dart';
+import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
-import '../../entities/entities.dart';
 
-class ViewSongDetailWidget extends StatelessWidget {
-  const ViewSongDetailWidget({
+class ViewPlaylistDetailWidget extends StatelessWidget {
+  const ViewPlaylistDetailWidget({
     super.key,
-    required this.song,
+    required this.playlist,
   });
-  final SongInfo song;
+  final MiniPlaylist playlist;
   @override
   Widget build(BuildContext context) {
-    List<String> artists = song.artistsNames?.split(',') ?? [];
+    List<String> artists = playlist.artistsNames?.split(',') ?? [];
     bool isMultipleArtist = false;
-    if (artists.length != song.artistsId?.length) {
+    if (artists.length != playlist.artistAlias?.length) {
       isMultipleArtist = true;
     }
     return Container(
@@ -39,7 +38,7 @@ class ViewSongDetailWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              song.thumbnailM ?? AssetPath.placeImage,
+              playlist.thumbnailM ?? AssetPath.placeImage,
               height: 200,
               width: 200,
               fit: BoxFit.fill,
@@ -49,7 +48,7 @@ class ViewSongDetailWidget extends StatelessWidget {
             height: 20,
           ),
           Text(
-            song.title ?? "",
+            playlist.title ?? "",
             style: TextStyleTheme.ts20.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -63,12 +62,11 @@ class ViewSongDetailWidget extends StatelessWidget {
               children: <InlineSpan>[
                 if (artists.isEmpty || isMultipleArtist) ...[
                   TextSpan(
-                    text: song.artistsNames,
+                    text: playlist.artistsNames,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        context
-                            .read<ArtistBloc>()
-                            .add(ArtistGetInfoEvent(song.artistsId!.first));
+                        context.read<ArtistBloc>().add(
+                            ArtistGetInfoEvent(playlist.artistAlias!.first));
                         Navigator.of(context).pushNamed(
                           RoutingPath.artistInfo,
                         );
@@ -81,8 +79,8 @@ class ViewSongDetailWidget extends StatelessWidget {
                         text: artists[index],
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            context.read<ArtistBloc>().add(
-                                ArtistGetInfoEvent(song.artistsId![index]));
+                            context.read<ArtistBloc>().add(ArtistGetInfoEvent(
+                                playlist.artistAlias![index]));
                             Navigator.of(context).pushNamed(
                               RoutingPath.artistInfo,
                             );
@@ -104,14 +102,6 @@ class ViewSongDetailWidget extends StatelessWidget {
           DetailChildWidget(
             icon: Icons.favorite_outline,
             data: "Like",
-            onPress: () {},
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          DetailChildWidget(
-            icon: Icons.playlist_add,
-            data: "Add to playlist",
             onPress: () {},
           ),
           const SizedBox(

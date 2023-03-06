@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/exporter.dart';
+import '../../../../domain_song/entities/entities.dart';
 import '../../../../domain_song/views/widgets.dart';
 import '../../../../global/widgets/widgets.dart';
 import '../../../../routing/routing_path.dart';
@@ -23,6 +24,12 @@ class SearchAllWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<SongInfo> songs = [];
+    all.items?.forEach((element) {
+      element.type == MusicType.song
+          ? songs.add(convertSongInfoFromAllSearching(element))
+          : null;
+    });
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,7 +61,12 @@ class SearchAllWidget extends StatelessWidget {
                           onPress: () async {
                             context
                                 .read<SongBloc>()
-                                .add(SongStartPlayingSectionEvent(index));
+                                .add(SongSetListSongInfoEvent(
+                                  songs,
+                                ));
+                            context.read<SongBloc>().add(
+                                SongStartPlayingSectionEvent(songs.indexOf(
+                                    convertSongInfoFromAllSearching(item))));
                           },
                           index: index,
                           isShowType: true,
@@ -66,6 +78,7 @@ class SearchAllWidget extends StatelessWidget {
                         title: item.title!,
                         subTitle: item.artistsName,
                         type: convertMusicType[item.type],
+                        isShowAdditionButton: false,
                         onCardPress: () {
                           if (item.type == MusicType.playlist) {
                             context

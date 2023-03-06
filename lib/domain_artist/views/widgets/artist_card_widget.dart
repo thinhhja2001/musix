@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_artist/views/widgets.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
@@ -76,9 +77,16 @@ class ArtistCardInfoWidget extends StatelessWidget {
       isShowIndex: isShowIndex,
       padding: 0,
       onCardPress: onPress,
-
-      /// TODO: code for button press
-      onButtonPress: () {}, subTitle: '',
+      onButtonPress: () => {
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (context) => ViewArtistDetailWidget(
+            artist: artist,
+          ),
+        )
+      },
+      subTitle: '',
     );
   }
 }
