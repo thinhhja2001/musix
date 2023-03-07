@@ -35,7 +35,7 @@ class HomeMusicPage extends StatelessWidget {
                     SearchBarNavigationWidget(
                       hintText: r'What do you want to hear?',
                       onTap: () {
-                        Navigator.of(context).pushNamed(RoutingPath.search);
+                        Navigator.of(context).pushNamed(RoutingPath.searchSong);
                       },
                     ),
                     const SizedBox(

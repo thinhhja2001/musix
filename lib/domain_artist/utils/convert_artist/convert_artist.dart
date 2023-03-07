@@ -1,3 +1,5 @@
+import 'package:musix/domain_hub/model/model.dart';
+
 import '../../../domain_hub/utils/convert_section/convert_section.dart';
 
 import '../../../domain_hub/entities/entities.dart';

@@ -30,6 +30,7 @@ class VideoShortCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoBloc, VideoState>(builder: (context, state) {
+      print("video short is ${videoShort.artists?.first.thumbnailM}");
       return InkWell(
         onTap: () async {
           context.read<VideoBloc>().add(

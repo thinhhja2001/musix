@@ -18,3 +18,7 @@ class SearchMusicArtistLoadMoreEvent implements SearchMusicEvent {
 class SearchMusicPlaylistLoadMoreEvent implements SearchMusicEvent {
   const SearchMusicPlaylistLoadMoreEvent();
 }
+
+class SearchMusicVideoLoadMoreEvent implements SearchMusicEvent {}
+
+class SearchMusicChangeToVideoEvent implements SearchMusicEvent {}

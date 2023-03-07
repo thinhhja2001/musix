@@ -95,3 +95,11 @@ SectionPlaylist combineSectionPlaylist(
   );
   return c;
 }
+
+SectionVideo combineSectionVideo(SectionVideo a, SectionVideo b, int total) {
+  SectionVideo c = SectionVideo(
+      title: a.title ?? b.title,
+      items: [...?a.items, ...?b.items],
+      total: total);
+  return c;
+}

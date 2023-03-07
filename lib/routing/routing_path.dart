@@ -13,7 +13,8 @@ class RoutingPath {
   static const String editProfile = '$profile/edit';
 
   // Search
-  static const String search = '$home/search';
+  static const String searchSong = '$home/searchSong';
+  static const String searchVideo = '$home/searchVideo';
 
   // Album - Topic - Playlist
   static const String hubInfo = '$home/hubInfo';

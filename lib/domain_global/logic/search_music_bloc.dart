@@ -18,6 +18,8 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
     on<SearchMusicSongLoadMoreEvent>(_loadMoreSongs);
     on<SearchMusicPlaylistLoadMoreEvent>(_loadMorePlaylist);
     on<SearchMusicArtistLoadMoreEvent>(_loadMoreArtist);
+    on<SearchMusicChangeToVideoEvent>(_changeToVideoSearch);
+    on<SearchMusicVideoLoadMoreEvent>(_loadMoreVideo);
   }
 
   final SearchMusicRepo repo;
@@ -60,7 +62,8 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
           await repo.searchPlaylist(event.query, 1, _countPerPage);
       final responseArtists =
           await repo.searchArtist(event.query, 1, _countPerPage);
-
+      final responseVideo =
+          await repo.searchVideo(event.query, 1, _countPerPage);
       final sectionAll = convertSectionAllFromSearchAllModel(responseAll);
 
       final sectionSongs = convertSectionSongFromSearchSongModel(responseSongs);
@@ -68,7 +71,8 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
           convertSectionPlaylistFromSearchPlaylistModel(responsePlaylists);
       final sectionArtist =
           convertSectionArtistFromSearchArtistModel(responseArtists);
-
+      final sectionVideo =
+          convertSectionVideoFromSearchVideoModel(responseVideo);
       emit(state.copyWith(
         status: updateMapStatus(
           source: state.status,
@@ -83,6 +87,7 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
         songs: sectionSongs,
         playlists: sectionPlaylist,
         artists: sectionArtist,
+        videos: sectionVideo,
         currentPage: updateCurrentPage(
           source: state.currentPage,
           keys: [
@@ -392,6 +397,94 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
         ),
       ),
     );
+  }
+
+  FutureOr _loadMoreVideo(
+      SearchMusicVideoLoadMoreEvent event, Emitter emit) async {
+    if (state.videos?.items?.isEmpty == true) {
+      return;
+    }
+    if (state.currentPage![MusicType.video]! >= state.videos!.total!) {
+      return;
+    }
+    try {
+      emit(state.copyWith(
+          status: updateMapStatus(
+              source: state.status,
+              keys: [SearchMusicStatusKey.video.key],
+              status: [Status.loading])));
+      final page =
+          (state.currentPage![MusicType.video]! / _countPerPage).floor();
+      final response =
+          await repo.searchVideo(state.query!, page + 1, _countPerPage);
+      SectionVideo sectionVideo =
+          convertSectionVideoFromSearchVideoModel(response);
+      sectionVideo = combineSectionVideo(
+          state.videos!, sectionVideo, state.videos!.total!);
+
+      emit(state.copyWith(
+        status: updateMapStatus(
+          source: state.status,
+          keys: [
+            SearchMusicStatusKey.video.key,
+          ],
+          status: [
+            Status.success,
+          ],
+        ),
+        videos: sectionVideo,
+        currentPage: updateCurrentPage(
+          source: state.currentPage,
+          keys: [
+            MusicType.video,
+          ],
+          pages: [
+            sectionVideo.items?.length ?? 0,
+          ],
+        ),
+      ));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(
+            source: state.status,
+            keys: [
+              SearchMusicStatusKey.video.key,
+            ],
+            status: [
+              Status.error,
+            ],
+          ),
+        ),
+      );
+      addError(Exception("SearchMusicBloc _loadMoreVideo error $e"),
+          StackTrace.current);
+    }
+
+    emit(
+      state.copyWith(
+        status: updateMapStatus(
+          source: state.status,
+          keys: [
+            SearchMusicStatusKey.video.key,
+          ],
+          status: [
+            Status.idle,
+          ],
+        ),
+      ),
+    );
+  }
+
+  FutureOr<void> _changeToVideoSearch(
+      SearchMusicChangeToVideoEvent event, Emitter emit) async {
+    //initial state
+    emit(SearchMusicState(
+        status: {
+          SearchMusicStatusKey.global.key: Status.idle,
+        },
+        currentPage: updateCurrentPage(
+            source: state.currentPage, keys: [MusicType.video], pages: [0])));
   }
 }
 
