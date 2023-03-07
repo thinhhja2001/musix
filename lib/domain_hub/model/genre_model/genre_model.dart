@@ -21,7 +21,7 @@ class GenresModel {
     title = json['title'];
     alias = json['alias'];
     parent =
-    json['parent'] == null ? null : GenresModel.fromJson(json['parent']);
+        json['parent'] == null ? null : GenresModel.fromJson(json['parent']);
     if (json['child'] != null) {
       child = <GenresModel>[];
       json['child'].forEach((v) {

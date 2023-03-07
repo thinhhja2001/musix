@@ -1,6 +1,8 @@
 import 'package:musix/domain_hub/entities/entities.dart';
 import 'package:musix/domain_song/models/models.dart';
 import 'package:musix/domain_song/utils/convert_model_entity/convert_song.dart';
+import 'package:musix/domain_video/entities/video_short.dart';
+import 'package:musix/domain_video/utils/convert_video.dart';
 import 'package:musix/utils/enum/enum_music_type.dart';
 
 import '../../../domain_artist/entities/entities.dart';
@@ -71,6 +73,22 @@ SectionSong convertSectionSongFromSearchSongModel(SearchSongModel model) {
     );
   }
   return songs;
+}
+
+SectionVideo convertSectionVideoFromSearchVideoModel(SearchVideoModel model) {
+  SectionVideo videos = const SectionVideo(title: "Top Videos", items: []);
+  List<VideoShort> list = [];
+  int total = 0;
+  if (model.data?.items != null) {
+    for (var i in model.data!.items!) {
+      list.add(convertVideoShortModel(i));
+    }
+    total = model.data!.total!;
+  }
+  if (list.isNotEmpty) {
+    videos = videos.copyWith(items: list, total: total);
+  }
+  return videos;
 }
 
 SectionPlaylist convertSectionPlaylistFromSearchPlaylistModel(

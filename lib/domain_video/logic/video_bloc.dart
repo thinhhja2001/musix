@@ -74,7 +74,6 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   }
 
   FutureOr<void> _back(VideoBackEvent event, Emitter emit) async {
-    print("back event called");
     chewieController.videoPlayerController.pause();
     emit(
       state.copyWith(

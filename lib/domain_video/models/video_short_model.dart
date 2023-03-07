@@ -1,4 +1,7 @@
 import 'package:musix/domain_artist/models/get_artist_model/artist_model.dart';
+import 'package:musix/domain_video/entities/video_short.dart';
+
+import '../../domain_artist/utils/utils.dart';
 
 /// VideoShort is used for returning object in search query which won't have the videoUrl
 class VideoShortModel {
@@ -22,6 +25,7 @@ class VideoShortModel {
   });
 
   factory VideoShortModel.fromJson(Map<String, dynamic> json) {
+    print("artists is ${json["artists"]}");
     return VideoShortModel(
       encodeID: json["encodeId"],
       title: json["title"],
@@ -48,12 +52,12 @@ class VideoShortModel {
       };
 }
 
-final sampleVideoShort = VideoShortModel(
+final sampleVideoShort = VideoShort(
   encodeID: "ZW6CO0FA",
   title: "Khi Phải Quên Đi",
   artistsNames: "Phan Mạnh Quỳnh",
   artists: [
-    ArtistModel.fromJson({
+    convertArtistFromModel(ArtistModel.fromJson({
       "id": "IWZ98O7W",
       "name": "Phan Mạnh Quỳnh",
       "alias": "Phan-Manh-Quynh",
@@ -68,7 +72,7 @@ final sampleVideoShort = VideoShortModel(
       "national": null,
       "birthday": null,
       "realname": null
-    })
+    }))!
   ],
   thumbnailM:
       "https://photo-resize-zmp3.zmdcdn.me/w600_r300x169_jpeg/thumb_video/0/6/06b8b0c81dc95cbe5d1c764b6dc14b87_1405155254.jpg",
