@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_song/views/widgets.dart';
 
+import '../../../domain_social/views/screens/social_screen.dart';
 import '../../../domain_user/views/screens.dart';
 import '../../../domain_video/views/screens/video_short_list_page_widget.dart';
 import '../../../global/widgets/widgets.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             index: indexBottomNavigation,
             children: const [
               HomeMusicPage(),
-              SizedBox.shrink(),
+              SocialScreen(),
               VideoShortListPageWidget(),
               ProfileScreen(),
             ],

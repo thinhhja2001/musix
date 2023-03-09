@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain_hub/entities/entities.dart';
 import '../../../theme/text_style.dart';
+import '../../../theme/theme.dart';
 import '../widgets.dart';
 
 class SongTabWidget extends StatelessWidget {
@@ -26,6 +27,7 @@ class SongTabWidget extends StatelessWidget {
             RotatedBox(
               quarterTurns: -1,
               child: TabBar(
+                indicatorColor: ColorTheme.primary,
                 tabs: <Tab>[
                   ...List.generate(
                     items.length,
