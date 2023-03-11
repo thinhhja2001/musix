@@ -3,7 +3,9 @@ class AssetPath {
   static const String _iconPath = 'assets/images/icons';
 
   static const String signInCover = '$_imagePath/signin_cover.png';
+  static const String signInCover1 = '$_imagePath/sign_in_1.jpg';
   static const String signUpCover = '$_imagePath/signup_cover.png';
+  static const String signUpCover1 = '$_imagePath/sign_up_1.jpg';
   static const String acousticBg = '$_imagePath/acoustic_bg.jpg';
   static const String edmBg = '$_imagePath/edm_bg.jpg';
   static const String group5 = '$_imagePath/Group 5.png';

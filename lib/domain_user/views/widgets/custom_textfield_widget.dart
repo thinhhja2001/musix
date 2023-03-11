@@ -40,6 +40,8 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
             color: widget.darkTheme ? Colors.white : Colors.black,
             fontWeight: FontWeight.w400),
         decoration: InputDecoration(
+          fillColor: ColorTheme.background,
+          filled: true,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 4,
@@ -47,19 +49,19 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              color: ColorTheme.primary,
+              color: Colors.transparent,
             ),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              color: ColorTheme.primary,
+              color: Colors.transparent,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
-              color: ColorTheme.primary,
+              color: Colors.transparent,
             ),
           ),
           errorBorder: OutlineInputBorder(
