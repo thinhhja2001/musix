@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
 import '../domain_artist/views/screens.dart';
 import '../domain_global/views/screens.dart';
@@ -80,6 +81,11 @@ Route<dynamic> routeController(RouteSettings settings) {
         builder: (context) =>
             const SearchScreen(searchScreenType: SearchScreenType.video),
         // builder: (context) => const HomeScreen(),
+      );
+    case RoutingPath.viewComment:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const ViewCommentScreen(),
       );
     default:
       return MaterialPageRoute(

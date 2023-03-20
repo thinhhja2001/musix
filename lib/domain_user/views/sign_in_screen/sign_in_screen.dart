@@ -31,6 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Form(
       key: _formKey,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: ColorTheme.background,
         body: Stack(
           children: [

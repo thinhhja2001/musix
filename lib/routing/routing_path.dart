@@ -26,4 +26,8 @@ class RoutingPath {
   // Video
   static const String video = "/video";
   static const String videoDetailPage = "$video/detail";
+
+  // Social
+  static const String social = "/social";
+  static const String viewComment = "$social/commentView";
 }
