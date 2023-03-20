@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
+import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
 
 class InteractionListWidget extends StatelessWidget {
@@ -56,28 +58,35 @@ class _CommentButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorTheme.white.withOpacity(.2),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.comment,
-              color: ColorTheme.white.withOpacity(.7),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              "21.9K",
-              style: TextStyleTheme.ts14.copyWith(color: ColorTheme.white),
-            )
-          ],
+    return InkWell(
+      onTap: () => showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          builder: (_) => const ViewCommentScreen()),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: ColorTheme.white.withOpacity(.2),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.comment,
+                color: ColorTheme.white.withOpacity(.7),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                "21.9K",
+                style: TextStyleTheme.ts14.copyWith(color: ColorTheme.white),
+              )
+            ],
+          ),
         ),
       ),
     );
