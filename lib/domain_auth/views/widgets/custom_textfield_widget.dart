@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/theme.dart';
 
-enum CustomInputFieldType { text, phone, password }
-
 class CustomInputFieldWidget extends StatefulWidget {
   const CustomInputFieldWidget({
     Key? key,
-    required this.customInputFieldType,
+    required this.textInputType,
     required this.label,
     required this.controller,
     this.validation,
     this.darkTheme = true,
   }) : super(key: key);
-  final CustomInputFieldType customInputFieldType;
+  final TextInputType textInputType;
   final String label;
   final TextEditingController controller;
   final String? Function(String?)? validation;
@@ -32,10 +30,10 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
       child: TextFormField(
         cursorColor: ColorTheme.primary,
         controller: widget.controller,
-        obscureText:
-            widget.customInputFieldType == CustomInputFieldType.password
-                ? _isObscure
-                : false,
+        keyboardType: widget.textInputType,
+        obscureText: widget.textInputType == TextInputType.visiblePassword
+            ? _isObscure
+            : false,
         style: TextStyle(
             color: widget.darkTheme ? Colors.white : Colors.black,
             fontWeight: FontWeight.w400),
@@ -74,19 +72,18 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
             fontWeight: FontWeight.w400,
             color: Colors.red,
           ),
-          suffixIcon:
-              widget.customInputFieldType == CustomInputFieldType.password
-                  ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      },
-                      icon: Icon(
-                        _isObscure ? Icons.visibility_off : Icons.visibility,
-                        color: Colors.white,
-                      ))
-                  : null,
+          suffixIcon: widget.textInputType == TextInputType.visiblePassword
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                  icon: Icon(
+                    _isObscure ? Icons.visibility_off : Icons.visibility,
+                    color: Colors.white,
+                  ))
+              : null,
           label: Padding(
             padding: const EdgeInsets.only(top: 4, left: 8),
             child: Text(

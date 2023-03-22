@@ -8,20 +8,24 @@
 import 'dart:convert';
 
 import 'package:musix/domain_artist/models/get_artist_model/artist_model.dart';
+import 'package:musix/domain_auth/payload/request/login_request.dart';
 import 'package:musix/domain_song/repository/repository.dart';
+import 'package:musix/domain_auth/payload/request/register_request.dart';
+import 'package:musix/domain_auth/repo/auth_repo.dart';
+import 'package:musix/domain_auth/services/auth_service.dart';
 
 void main() async {
-  VideoRepositoryImpl videoRepositoryImpl = VideoRepositoryImpl();
-  // // SongInfoRepositoryImpl songInfoRepositoryImpl = SongInfoRepositoryImpl();
-  // // final songs = await songInfoRepositoryImpl.getByQuery("anh");
-  // // for (var song in songs) {
-  // //   printJson(song.toJson());
-  // // }
-  final videos = await videoRepositoryImpl.getByQuery("khi phai quen di");
-  // printJson(videos.toJson());
-  for (var video in videos) {
-    printJson(video.toJson());
-  }
+  AuthRepo authRepo = AuthRepo();
+
+  // var response = await authRepo.register(RegisterRequest(
+  //     username: "thinhhja2001",
+  //     fullName: "Nguyen Doan Thinh",
+  //     email: "thinhnguyendoan5122001@gmail.com",
+  //     password: "talavua5122001",
+  //     birthday: "05/12/2001",
+  //     phoneNumber: "032838445"));
+  var response = await authRepo
+      .login(LoginRequest(username: 'thinhhh', password: 'alksnlkfasn'));
 }
 
 void printJson(Map<String, dynamic>? json) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../domain_auth/views/widgets/custom_textfield_widget.dart';
 import '../../../../theme/theme.dart';
 
 import '../../widgets.dart';
@@ -51,7 +52,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   height: 12,
                 ),
                 CustomInputFieldWidget(
-                  customInputFieldType: CustomInputFieldType.password,
+                  textInputType: TextInputType.visiblePassword,
                   label: 'Old Password',
                   controller: _oldPasswordController,
                   validation: (value) {
@@ -65,7 +66,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   height: 12,
                 ),
                 CustomInputFieldWidget(
-                  customInputFieldType: CustomInputFieldType.password,
+                  textInputType: TextInputType.visiblePassword,
                   label: 'New Password',
                   controller: _newPasswordController,
                   validation: (value) {
