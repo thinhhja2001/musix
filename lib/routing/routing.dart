@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
 import '../domain_artist/views/screens.dart';
+import '../domain_auth/views/screens/sign_in_screen/sign_in_screen.dart';
+import '../domain_auth/views/screens/sign_up_screen/sign_up_screen.dart';
 import '../domain_global/views/screens.dart';
 import '../domain_hub/views/screens.dart';
 import '../domain_playlist/views/screens.dart';
@@ -16,7 +18,7 @@ Route<dynamic> routeController(RouteSettings settings) {
     case RoutingPath.signIn:
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => const SignInScreen(),
+        builder: (context) => SignInScreen(),
       );
     case RoutingPath.signUp:
       return MaterialPageRoute(

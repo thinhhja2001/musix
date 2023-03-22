@@ -4,6 +4,7 @@ class SignInTextPath {
       r'Welcome back to MusiX, its time to listen to the music you want and enjoy the music!';
 
   String get emailAddress => r'Email Address';
+  String get username => r'Username';
   String get password => r'Password';
 
   String get forgetPassword => r'Forgot your password?';
@@ -12,6 +13,8 @@ class SignInTextPath {
   String get notHaveAccount => r'Don’t Have Account?';
 
   String get emptyEmail => r'Email cannot be empty';
+  String get emptyUsername => r'Username cannot be empty';
   String get invalidEmail => r'Email invalid';
   String get emptyPassword => r'Password cannot be empty';
+  String get invalidUsername => r'Username must contains at least 5 character';
 }

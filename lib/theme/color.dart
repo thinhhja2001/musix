@@ -13,4 +13,6 @@ class ColorTheme {
   static const backgroundDarker = Color(0xff1E1C37);
 
   static const pink = Color(0xffE8BCD3);
+
+  static const error = Color(0xffff3333);
 }

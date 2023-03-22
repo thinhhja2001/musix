@@ -1,5 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import '../../../../domain_auth/views/widgets/custom_date_picker_widget.dart';
+import '../../../../domain_auth/views/widgets/custom_textfield_widget.dart';
 import 'change_password_widget.dart';
 import '../../../../theme/theme.dart';
 
@@ -84,7 +86,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               height: 12,
                             ),
                             CustomInputFieldWidget(
-                              customInputFieldType: CustomInputFieldType.text,
+                              textInputType: TextInputType.text,
                               label: 'Username',
                               controller: _userNameController,
                               validation: (value) {
@@ -98,7 +100,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               height: 12,
                             ),
                             CustomInputFieldWidget(
-                              customInputFieldType: CustomInputFieldType.text,
+                              textInputType: TextInputType.text,
                               label: 'Email',
                               controller: _emailController,
                               validation: (value) {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_auth/entities/state/auth_state.dart';
+import 'package:musix/domain_auth/logic/auth_bloc.dart';
+import 'package:musix/domain_auth/repo/auth_repo.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
 import '../utils/utils.dart';
@@ -19,6 +22,13 @@ class _MusixAppState extends State<MusixApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          lazy: false,
+          create: (context) => AuthBloc(
+            initialState: AuthState(),
+            authRepo: getIt.get<AuthRepo>(),
+          ),
+        ),
         BlocProvider(
           lazy: false,
           create: (context) => HomeMusicBloc(

@@ -7,9 +7,11 @@ class CustomButtonWidget extends StatelessWidget {
     Key? key,
     required this.onPress,
     required this.content,
+    this.isLoading,
   }) : super(key: key);
   final VoidCallback onPress;
   final String content;
+  final bool? isLoading;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -18,13 +20,17 @@ class CustomButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(backgroundColor: ColorTheme.primary),
         onPressed: onPress,
-        child: Text(
-          content,
-          style: TextStyleTheme.ts15.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        child: (isLoading != null && isLoading == true)
+            ? const CircularProgressIndicator(
+                color: ColorTheme.white,
+              )
+            : Text(
+                content,
+                style: TextStyleTheme.ts15.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
       ),
     );
   }

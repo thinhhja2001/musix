@@ -1,9 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-import '../../../theme/theme.dart';
-import '../../../utils/utils.dart';
-import '../widgets.dart';
+import '../../../../theme/theme.dart';
+import '../../../../utils/utils.dart';
+import '../../../../domain_user/views/widgets.dart';
+import '../../widgets/custom_button_widget.dart';
+import '../../widgets/custom_textfield_widget.dart';
 import 'utils/text_path.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -77,7 +79,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 height: 12,
               ),
               CustomInputFieldWidget(
-                customInputFieldType: CustomInputFieldType.text,
+                textInputType: TextInputType.emailAddress,
                 label: forgetPasswordTextPath.emailAddress,
                 controller: _emailController,
                 validation: (value) {
