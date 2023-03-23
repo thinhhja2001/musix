@@ -112,8 +112,9 @@ class EmailVerificationScreen extends StatelessWidget {
                                 height: 10,
                               ),
                               CustomButtonWidget(
-                                onPress: () => Navigator.pushNamed(
-                                    context, RoutingPath.home),
+                                onPress: () => Navigator.of(context)
+                                    .pushNamedAndRemoveUntil(RoutingPath.home,
+                                        (Route<dynamic> route) => false),
                                 content: "Go to Home",
                                 backgroundColor: Colors.blue,
                               ),
