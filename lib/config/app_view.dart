@@ -10,7 +10,7 @@ class MusixAppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutingPath.signIn,
+      initialRoute: RoutingPath.signUp,
       onGenerateRoute: routeController,
     );
   }

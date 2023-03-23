@@ -13,3 +13,8 @@ class AuthRegisterEvent extends AuthEvent {
   RegisterRequest request;
   AuthRegisterEvent(this.request);
 }
+
+class AuthResendVerificationEmailEvent extends AuthEvent {
+  String username;
+  AuthResendVerificationEmailEvent(this.username);
+}

@@ -2,6 +2,7 @@ class RoutingPath {
   // Authentication
   static const String signIn = '/signIn';
   static const String signUp = '/signUp';
+  static const String emailVerification = "/emailVerification";
   static const String forgetPassword = '/forgetPassword';
 
   // Main

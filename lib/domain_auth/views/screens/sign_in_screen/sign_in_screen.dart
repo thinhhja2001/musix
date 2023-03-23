@@ -49,7 +49,7 @@ class SignInScreen extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
-                                      AssetPath.signInCover1,
+                                      AssetPath.signInCover,
                                     ),
                                     fit: BoxFit.fill),
                               ),
