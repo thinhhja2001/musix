@@ -52,7 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.registerStatus == 200) {
-          ///TODO: Implement Navigator to Confirm Email Screen here
+          print("navigating to email verification screen");
+          Navigator.of(context).pushNamed(RoutingPath.emailVerification);
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -61,7 +62,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             key: _formKey,
             child: Scaffold(
               backgroundColor: ColorTheme.background,
-              resizeToAvoidBottomInset: false,
               body: Stack(
                 children: [
                   Column(
@@ -72,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
-                                    AssetPath.signUpCover1,
+                                    AssetPath.signUpCover,
                                   ),
                                   fit: BoxFit.fill),
                             ),

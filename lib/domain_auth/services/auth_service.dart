@@ -35,4 +35,11 @@ class AuthService implements IAuthService {
     );
     return response.data;
   }
+
+  @override
+  Future<Map<String, dynamic>> resendVerificationEmail(String username) async {
+    final url = "$databaseUrl/auth/resend/$username";
+    var response = await dio.post(url);
+    return response.data;
+  }
 }
