@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_auth/views/screens/email_verification_screen/email_verification_screen.dart';
+import 'package:musix/domain_auth/views/screens/reset_password_screen/reset_password_screen.dart';
 import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
 import '../domain_artist/views/screens.dart';
@@ -30,10 +31,15 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
           settings: settings,
           builder: (context) => const EmailVerificationScreen());
-    case RoutingPath.forgetPassword:
+    case RoutingPath.requestForgetOtp:
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => const ForgetPasswordScreen(),
+        builder: (context) => RequestForgetOTPScreen(),
+      );
+    case RoutingPath.resetPassword:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => ResetPasswordScreen(),
       );
     case RoutingPath.profile:
       return MaterialPageRoute(

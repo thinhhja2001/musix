@@ -146,7 +146,7 @@ class SignInScreen extends StatelessWidget {
                                       TextButton(
                                           onPressed: () {
                                             Navigator.pushNamed(context,
-                                                RoutingPath.forgetPassword);
+                                                RoutingPath.requestForgetOtp);
                                           },
                                           child: Text(
                                             signInTextPath.forgetPassword,

@@ -1,4 +1,4 @@
-class ForgetPasswordTextPath {
+class RequestForgetOtpTextPath {
   String get forgetPasswordTitle => r'Forget Password';
 
   String get instruction =>

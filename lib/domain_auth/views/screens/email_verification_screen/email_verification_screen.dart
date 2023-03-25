@@ -5,12 +5,9 @@ import 'package:get_it/get_it.dart';
 import 'package:musix/domain_auth/entities/event/auth_event.dart';
 import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
 import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/text_path.dart';
-import 'package:musix/domain_auth/views/screens/sign_in_screen/utils/text_path.dart';
 import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
 import 'package:musix/domain_user/models/user.dart';
 import 'package:musix/routing/routing_path.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';
@@ -30,7 +27,10 @@ class EmailVerificationScreen extends StatelessWidget {
             currentState.isResendEmailLoading == false);
       },
       listener: (context, state) {
-        if (state.resendEmailStatus == 200) showSnackBar(context);
+        if (state.resendEmailStatus == 200) {
+          showSnackBar(context,
+              content: "Email sent", contentType: ContentType.success);
+        }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:musix/domain_auth/payload/request/login_request.dart';
 import 'package:musix/domain_auth/payload/request/register_request.dart';
+import 'package:musix/domain_auth/payload/request/reset_password_request.dart';
 
 class AuthEvent {}
 
@@ -18,3 +19,17 @@ class AuthResendVerificationEmailEvent extends AuthEvent {
   String username;
   AuthResendVerificationEmailEvent(this.username);
 }
+
+class AuthRequestResetPasswordEvent extends AuthEvent {
+  String email;
+  AuthRequestResetPasswordEvent(this.email);
+}
+
+class AuthResetPasswordEvent extends AuthEvent {
+  ResetPasswordRequest request;
+  AuthResetPasswordEvent(this.request);
+}
+
+class AuthResetPasswordScreenBackEvent extends AuthEvent {}
+
+class AuthResetCurrentRequestPasswordStateEvent extends AuthEvent {}

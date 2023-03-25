@@ -4,6 +4,8 @@ class AssetPath {
 
   static const String signInCover = '$_imagePath/sign_in_bg.jpg';
   static const String signUpCover = '$_imagePath/signup_cover.png';
+  static const String forgotCover = '$_imagePath/forgot_bg.jpg';
+  static const String resetCover = '$_imagePath/reset_bg.jpg';
   static const String emailVerificationCover =
       '$_imagePath/email_verification_bg.jpg';
   static const String acousticBg = '$_imagePath/acoustic_bg.jpg';
