@@ -16,6 +16,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoginEvent>(_handleLoginEvent);
     on<AuthRegisterEvent>(_handleRegisterEvent);
     on<AuthResendVerificationEmailEvent>(_handleResendVerificationEmailEvent);
+    on<AuthRequestResetPasswordEvent>(_handleRequestResetPasswordEvent);
+    on<AuthResetPasswordEvent>(_handleResetPasswordEvent);
+    on<AuthResetPasswordScreenBackEvent>(_handleResetPasswordBackEvent);
+    on<AuthResetCurrentRequestPasswordStateEvent>(
+        _handleResetCurrentRequestPasswordStateEvent);
   }
   final AuthRepo authRepo;
   FutureOr<void> _handleLoginEvent(AuthLoginEvent event, Emitter emit) async {
@@ -35,7 +40,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     emit(state.copyWith(isRegisterLoading: false));
     if (response.status == 200) {
-      print(response.data?['user']['enabled']);
       final user = User.fromJson(response.data?['user']);
       GetIt.I.registerSingleton<User>(user);
     }
@@ -53,5 +57,43 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     emit(state.copyWith(
         resendEmailMsg: response.msg, resendEmailStatus: response.status));
+  }
+
+  FutureOr<void> _handleRequestResetPasswordEvent(
+      AuthRequestResetPasswordEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(isRequestResetLoading: true));
+    final response = await authRepo.requestResetOtp(event.email);
+    emit(state.copyWith(isRequestResetLoading: false));
+    if (response.status == 200) {
+      GetIt.I
+          .registerSingleton<String>(event.email, instanceName: "currentEmail");
+    }
+    emit(state.copyWith(
+        requestResetStatus: response.status, requestResetMsg: response.msg));
+  }
+
+  FutureOr<void> _handleResetPasswordEvent(
+      AuthResetPasswordEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(isResetLoading: true));
+
+    final response = await authRepo.resetPassword(event.request);
+
+    emit(state.copyWith(isResetLoading: false));
+    emit(state.copyWith(resetStatus: response.status, resetMsg: response.msg));
+  }
+
+  FutureOr<void> _handleResetPasswordBackEvent(
+      AuthResetPasswordScreenBackEvent event, Emitter<AuthState> emit) async {
+    GetIt.I.unregister<String>(instanceName: "currentEmail");
+    add(AuthResetCurrentRequestPasswordStateEvent());
+  }
+
+  FutureOr<void> _handleResetCurrentRequestPasswordStateEvent(
+      AuthResetCurrentRequestPasswordStateEvent event,
+      Emitter<AuthState> emit) {
+    emit(state.copyWith(
+        requestResetMsg: null,
+        requestResetStatus: null,
+        isRequestResetLoading: false));
   }
 }

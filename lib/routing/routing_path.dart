@@ -3,7 +3,8 @@ class RoutingPath {
   static const String signIn = '/signIn';
   static const String signUp = '/signUp';
   static const String emailVerification = "/emailVerification";
-  static const String forgetPassword = '/forgetPassword';
+  static const String requestForgetOtp = '/requestForgetOtp';
+  static const String resetPassword = '/resetPassword';
 
   // Main
   static const String home = '/home_music';

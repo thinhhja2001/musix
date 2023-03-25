@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/domain_auth/entities/state/auth_state.dart';
-import 'package:musix/domain_auth/logic/auth_bloc.dart';
 import 'package:musix/domain_auth/repo/auth_repo.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
