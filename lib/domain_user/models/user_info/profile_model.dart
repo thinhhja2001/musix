@@ -1,27 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
-class Profile {
+class ProfileModel {
   String fullName;
-  DateTime birthday;
+  String birthday;
   String? avatarUri;
   String phoneNumber;
-  Profile({
+  ProfileModel({
     required this.fullName,
     required this.birthday,
     this.avatarUri,
     required this.phoneNumber,
   });
 
-  Profile copyWith({
+  ProfileModel copyWith({
     String? fullName,
-    DateTime? birthday,
+    String? birthday,
     String? avatarUri,
     String? phoneNumber,
   }) {
-    return Profile(
+    return ProfileModel(
       fullName: fullName ?? this.fullName,
       birthday: birthday ?? this.birthday,
       avatarUri: avatarUri ?? this.avatarUri,
@@ -32,16 +29,16 @@ class Profile {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'fullName': fullName,
-      'birthday': birthday.millisecondsSinceEpoch,
+      'birthday': birthday,
       'avatarUri': avatarUri,
       'phoneNumber': phoneNumber,
     };
   }
 
-  factory Profile.fromJson(Map<String, dynamic> map) {
-    return Profile(
+  factory ProfileModel.fromJson(Map<String, dynamic> map) {
+    return ProfileModel(
       fullName: map['fullName'] as String,
-      birthday: DateFormat("dd/MM/yyyy").parse(map['birthday'] as String),
+      birthday: map['birthday'] as String,
       avatarUri: map['avatarUri'] != null ? map['avatarUri'] as String : null,
       phoneNumber: map['phoneNumber'] as String,
     );

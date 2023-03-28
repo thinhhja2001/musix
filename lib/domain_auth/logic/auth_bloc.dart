@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_auth/repo/auth_repo.dart';
-import 'package:musix/domain_user/models/user.dart';
+import 'package:musix/domain_user/models/user_info/user_model.dart';
 
 import '../entities/event/auth_event.dart';
 import '../entities/state/auth_state.dart';
@@ -40,8 +40,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     emit(state.copyWith(isRegisterLoading: false));
     if (response.status == 200) {
-      final user = User.fromJson(response.data?['user']);
-      GetIt.I.registerSingleton<User>(user);
+      final user = UserModel.fromJson(response.data?['user']);
+      GetIt.I.registerSingleton<UserModel>(user);
     }
     emit(
       state.copyWith(
