@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/domain_auth/repo/auth_repo.dart';
+import 'package:musix/domain_user/entities/entities.dart';
 import 'package:musix/domain_user/models/user_info/user_model.dart';
 
+import '../../domain_user/utils/convert_model_entity.dart';
 import '../entities/event/auth_event.dart';
 import '../entities/state/auth_state.dart';
 
@@ -29,7 +31,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoginLoading: false));
 
     emit(
-      state.copyWith(loginMsg: response.msg, loginStatus: response.status),
+      state.copyWith(
+        loginMsg: response.msg,
+        loginStatus: response.status,
+        jwtToken: response.data?["token"]["token"],
+        userId: response.data?["user"]["id"],
+      ),
     );
   }
 
@@ -41,11 +48,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isRegisterLoading: false));
     if (response.status == 200) {
       final user = UserModel.fromJson(response.data?['user']);
-      GetIt.I.registerSingleton<UserModel>(user);
+      GetIt.I.registerSingleton<User>(convertUserModelToUser(user));
     }
     emit(
       state.copyWith(
-          registerMsg: response.msg, registerStatus: response.status),
+        registerMsg: response.msg,
+        registerStatus: response.status,
+        jwtToken: response.data?["token"]["token"],
+        userId: response.data?["user"]["id"],
+      ),
     );
   }
 

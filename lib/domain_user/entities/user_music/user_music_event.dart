@@ -1,0 +1,3 @@
+class UserMusicEvent {
+  const UserMusicEvent();
+}

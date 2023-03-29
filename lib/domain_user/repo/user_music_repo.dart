@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:musix/global/repo/initial_repo.dart';
 
+import '../../utils/utils.dart';
 import '../models/models.dart';
 
 class UserMusicRepo extends InitialRepo {
@@ -25,7 +26,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return UserMusicModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -59,7 +61,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return SongsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -93,7 +96,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return SongsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -129,7 +133,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return PlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -165,7 +170,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return PlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -197,7 +203,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ArtistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -229,7 +236,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ArtistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -257,7 +265,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return OwnPlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -288,7 +297,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return OwnPlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -321,7 +331,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return OwnPlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -347,7 +358,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return OwnPlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -383,7 +395,8 @@ class UserMusicRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return OwnPlaylistsModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 }

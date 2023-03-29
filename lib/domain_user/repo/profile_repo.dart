@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:musix/global/repo/initial_repo.dart';
 
+import '../../utils/enum/error_data.dart';
 import '../models/models.dart';
 
 class ProfileRepo extends InitialRepo {
@@ -20,7 +21,8 @@ class ProfileRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ProfileResponseModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -47,7 +49,8 @@ class ProfileRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ProfileResponseModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -77,7 +80,8 @@ class ProfileRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ProfileResponseModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -105,7 +109,8 @@ class ProfileRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ProfileResponseModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 
@@ -131,7 +136,8 @@ class ProfileRepo extends InitialRepo {
     if (response.statusCode == 200) {
       return ProfileResponseModel.fromJson(response.data['data']);
     } else {
-      throw Exception("${response.statusCode}: ${response.data['msg']}");
+      throw ResponseException(
+          statusCode: response.statusCode, message: response.data['msg']);
     }
   }
 }
