@@ -37,7 +37,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
-            ProfileKey.global.name,
+            ProfileStatusKey.global.name,
           ], status: [
             Status.loading,
           ]),
@@ -49,7 +49,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.global.name,
+          ProfileStatusKey.global.name,
         ], status: [
           Status.success,
         ]),
@@ -58,7 +58,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on ResponseException catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.global.name,
+          ProfileStatusKey.global.name,
         ], status: [
           Status.error,
         ]),
@@ -70,7 +70,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on Exception catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.global.name,
+          ProfileStatusKey.global.name,
         ], status: [
           Status.error,
         ]),
@@ -82,7 +82,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
-        ProfileKey.global.name,
+        ProfileStatusKey.global.name,
       ], status: [
         Status.idle,
       ]),
@@ -95,7 +95,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
-            ProfileKey.uploadProfile.name,
+            ProfileStatusKey.uploadProfile.name,
           ], status: [
             Status.loading,
           ]),
@@ -111,7 +111,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.uploadProfile.name,
+          ProfileStatusKey.uploadProfile.name,
         ], status: [
           Status.success,
         ]),
@@ -120,7 +120,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on ResponseException catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.uploadProfile.name,
+          ProfileStatusKey.uploadProfile.name,
         ], status: [
           Status.error,
         ]),
@@ -132,7 +132,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on Exception catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.uploadProfile.name,
+          ProfileStatusKey.uploadProfile.name,
         ], status: [
           Status.error,
         ]),
@@ -144,7 +144,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
-        ProfileKey.uploadAvatar.name,
+        ProfileStatusKey.uploadAvatar.name,
       ], status: [
         Status.idle,
       ]),
@@ -157,7 +157,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
-            ProfileKey.uploadAvatar.name,
+            ProfileStatusKey.uploadAvatar.name,
           ], status: [
             Status.loading,
           ]),
@@ -166,7 +166,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
-            ProfileKey.uploadAvatar.name,
+            ProfileStatusKey.uploadAvatar.name,
           ], status: [
             Status.loading,
           ]),
@@ -180,7 +180,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.uploadAvatar.name,
+          ProfileStatusKey.uploadAvatar.name,
         ], status: [
           Status.success,
         ]),
@@ -189,7 +189,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on ResponseException catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.uploadAvatar.name,
+          ProfileStatusKey.uploadAvatar.name,
         ], status: [
           Status.error,
         ]),
@@ -201,7 +201,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on Exception catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.uploadAvatar.name,
+          ProfileStatusKey.uploadAvatar.name,
         ], status: [
           Status.error,
         ]),
@@ -213,7 +213,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
-        ProfileKey.uploadAvatar.name,
+        ProfileStatusKey.uploadAvatar.name,
       ], status: [
         Status.idle,
       ]),
@@ -226,7 +226,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
-            ProfileKey.changePassword.name,
+            ProfileStatusKey.changePassword.name,
           ], status: [
             Status.loading,
           ]),
@@ -241,7 +241,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.changePassword.name,
+          ProfileStatusKey.changePassword.name,
         ], status: [
           Status.success,
         ]),
@@ -250,7 +250,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on ResponseException catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.changePassword.name,
+          ProfileStatusKey.changePassword.name,
         ], status: [
           Status.error,
         ]),
@@ -262,7 +262,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on Exception catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.changePassword.name,
+          ProfileStatusKey.changePassword.name,
         ], status: [
           Status.error,
         ]),
@@ -274,7 +274,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
-        ProfileKey.changePassword.name,
+        ProfileStatusKey.changePassword.name,
       ], status: [
         Status.idle,
       ]),
@@ -287,7 +287,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
-            ProfileKey.followUser.name,
+            ProfileStatusKey.followUser.name,
           ], status: [
             Status.loading,
           ]),
@@ -301,7 +301,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.followUser.name,
+          ProfileStatusKey.followUser.name,
         ], status: [
           Status.success,
         ]),
@@ -310,7 +310,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on ResponseException catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.followUser.name,
+          ProfileStatusKey.followUser.name,
         ], status: [
           Status.error,
         ]),
@@ -322,7 +322,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on Exception catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
-          ProfileKey.followUser.name,
+          ProfileStatusKey.followUser.name,
         ], status: [
           Status.error,
         ]),
@@ -334,7 +334,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
-        ProfileKey.followUser.name,
+        ProfileStatusKey.followUser.name,
       ], status: [
         Status.idle,
       ]),

@@ -2,22 +2,26 @@ import '../../entities/entities.dart';
 import '../../models/models.dart';
 
 SongInfo? convertSongInfoModel(SongInfoModel songInfoModel) => SongInfo(
-    encodeId: songInfoModel.encodeId,
-    albumId: songInfoModel.albumId,
-    artistsId: songInfoModel.alias,
-    artistsNames: songInfoModel.artistsNames,
-    genreIds: songInfoModel.genreIds,
-    thumbnailM: songInfoModel.thumbnailM,
-    title: songInfoModel.title);
+      encodeId: songInfoModel.encodeId,
+      albumId: songInfoModel.albumId,
+      artistsId: songInfoModel.alias,
+      artistsNames: songInfoModel.artistsNames,
+      genreIds: songInfoModel.genreIds,
+      thumbnailM: songInfoModel.thumbnailM,
+      title: songInfoModel.title,
+      genreNames: songInfoModel.genreNames,
+    );
 
 SongInfoModel? convertSongInfo(SongInfo songInfo) => SongInfoModel(
-    encodeId: songInfo.encodeId,
-    albumId: songInfo.albumId,
-    alias: songInfo.artistsId,
-    artistsNames: songInfo.artistsNames,
-    genreIds: songInfo.genreIds,
-    thumbnailM: songInfo.thumbnailM,
-    title: songInfo.title);
+      encodeId: songInfo.encodeId,
+      albumId: songInfo.albumId,
+      alias: songInfo.artistsId,
+      artistsNames: songInfo.artistsNames,
+      genreIds: songInfo.genreIds,
+      thumbnailM: songInfo.thumbnailM,
+      title: songInfo.title,
+      genreNames: songInfo.genreNames,
+    );
 
 SongSource? convertSongSourceModel(SongSourceModel songSourceModel) =>
     SongSource(
@@ -27,11 +31,13 @@ SongInfo? convertSongInfoFromJson(Map<String, dynamic>? json) {
   if (json == null) return null;
   final songInfoModel = SongInfoModel.fromJson(json);
   return SongInfo(
-      encodeId: songInfoModel.encodeId,
-      albumId: songInfoModel.albumId,
-      artistsId: songInfoModel.alias,
-      artistsNames: songInfoModel.artistsNames,
-      genreIds: songInfoModel.genreIds,
-      thumbnailM: songInfoModel.thumbnailM,
-      title: songInfoModel.title);
+    encodeId: songInfoModel.encodeId,
+    albumId: songInfoModel.albumId,
+    artistsId: songInfoModel.alias,
+    artistsNames: songInfoModel.artistsNames,
+    genreIds: songInfoModel.genreIds,
+    thumbnailM: songInfoModel.thumbnailM,
+    title: songInfoModel.title,
+    genreNames: songInfoModel.genreNames,
+  );
 }

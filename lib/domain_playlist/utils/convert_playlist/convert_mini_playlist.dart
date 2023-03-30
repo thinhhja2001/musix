@@ -10,12 +10,15 @@ MiniPlaylist? convertMiniPlaylistFromPlaylistModel(PlaylistModel? model) {
   }
   List<String>? artistAlias =
       model.artists?.map((artist) => artist.alias!).toList();
+  List<String>? genres = model.genres?.map((e) => e.name!).toList();
   return MiniPlaylist(
     encodeId: model.encodeId,
     title: model.title,
     thumbnailM: model.thumbnail ?? model.thumbnailM,
     artistsNames: model.artistsNames,
     artistAlias: artistAlias,
+    genres: genres,
+    countSong: model.song?.total,
   );
 }
 

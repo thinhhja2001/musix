@@ -37,7 +37,7 @@ class UserMusicRepo extends InitialRepo {
     required String id,
     required String title,
     required String artistNames,
-    required String genreNames,
+    required String? genreNames,
   }) async {
     const url = '/music/song/favorite';
     var data = {
@@ -72,7 +72,7 @@ class UserMusicRepo extends InitialRepo {
     required String id,
     required String title,
     required String artistNames,
-    required String genreNames,
+    required String? genreNames,
   }) async {
     const url = '/music/song/dislike';
     var data = {
@@ -107,7 +107,7 @@ class UserMusicRepo extends InitialRepo {
     required String id,
     required String title,
     required String artistNames,
-    required String genreNames,
+    required String? genreNames,
     int? countSongs,
   }) async {
     const url = '/music/playlist/favorite';
@@ -144,7 +144,7 @@ class UserMusicRepo extends InitialRepo {
     required String id,
     required String title,
     required String artistNames,
-    required String genreNames,
+    required String? genreNames,
     int? countSongs,
   }) async {
     const url = '/music/playlist/dislike';
@@ -370,7 +370,7 @@ class UserMusicRepo extends InitialRepo {
     required String id,
     required String title,
     required String artistNames,
-    required String genreNames,
+    required String? genreNames,
   }) async {
     const url = '/music/playlist/uploadSong';
     var data = {

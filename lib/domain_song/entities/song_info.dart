@@ -9,6 +9,7 @@ class SongInfo extends Equatable {
     this.genreIds,
     this.albumId,
     this.artistsId,
+    this.genreNames,
   });
 
   final String? encodeId;
@@ -16,6 +17,7 @@ class SongInfo extends Equatable {
   final String? artistsNames;
   final String? thumbnailM;
   final List<String>? genreIds;
+  final List<String>? genreNames;
   final String? albumId;
   final List<String>? artistsId;
 
@@ -28,6 +30,7 @@ class SongInfo extends Equatable {
         genreIds,
         albumId,
         artistsId,
+        genreNames,
       ];
 
   @override
@@ -41,6 +44,7 @@ class SongInfo extends Equatable {
     genreIds,
     albumId,
     artistsId,
+    genreNames,
   }) =>
       SongInfo(
         encodeId: encodeId ?? this.encodeId,
@@ -50,5 +54,6 @@ class SongInfo extends Equatable {
         genreIds: genreIds ?? this.genreIds,
         albumId: albumId ?? this.albumId,
         artistsId: artistsId ?? this.artistsId,
+        genreNames: genreNames ?? this.genreNames,
       );
 }

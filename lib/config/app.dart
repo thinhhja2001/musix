@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_auth/entities/state/auth_state.dart';
-import 'package:musix/domain_auth/repo/auth_repo.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
 import '../utils/utils.dart';
@@ -39,6 +37,28 @@ class _MusixAppState extends State<MusixApp> {
             homeMusicRepo: getIt.get<HomeMusicRepo>(),
             hubRepo: getIt.get<HubRepo>(),
           )..add(const HomeMusicGetEvent()),
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => ProfileBloc(
+            initialState: ProfileState(
+              status: {
+                ProfileStatusKey.global.name: Status.idle,
+              },
+            ),
+            profileRepo: getIt.get<ProfileRepo>(),
+          ),
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => UserMusicBloc(
+            initialState: UserMusicState(
+              status: {
+                UserMusicStatusKey.global.name: Status.idle,
+              },
+            ),
+            userMusicRepo: getIt.get<UserMusicRepo>(),
+          ),
         ),
         BlocProvider(
           lazy: false,

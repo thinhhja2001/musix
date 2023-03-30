@@ -1,4 +1,4 @@
-enum ProfileKey {
+enum ProfileStatusKey {
   global,
   uploadAvatar,
   uploadProfile,

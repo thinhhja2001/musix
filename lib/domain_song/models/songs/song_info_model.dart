@@ -7,6 +7,7 @@ class SongInfoModel {
     this.genreIds,
     this.albumId,
     this.alias,
+    this.genreNames,
   });
   String? encodeId;
   String? title;
@@ -14,6 +15,7 @@ class SongInfoModel {
   // Use thumbnailM instead of thumbnail because it will have higher resolution
   String? thumbnailM;
   List<String>? genreIds;
+  List<String>? genreNames;
   String? albumId;
   List<String>? alias;
 
@@ -29,6 +31,12 @@ class SongInfoModel {
       genreIds: songInfoJson["genreIds"] != null
           ? songInfoJson["genreIds"]
               .map((genreId) => genreId as String)
+              .toList()
+              .cast<String>()
+          : [],
+      genreNames: songInfoJson["genres"] != null
+          ? songInfoJson["genres"]
+              .map((genre) => genre['name'] as String)
               .toList()
               .cast<String>()
           : [],
@@ -49,6 +57,7 @@ class SongInfoModel {
         "albumId": albumId,
         "alias": alias,
         "genreIds": genreIds,
+        "genreNames": genreNames,
       };
 }
 
