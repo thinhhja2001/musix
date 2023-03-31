@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/utils/utils.dart';
 
+import '../../domain_auth/logic/auth_bloc.dart';
 import '../entities/entities.dart';
 import '../repo/profile_repo.dart';
 import '../utils/convert_model_entity.dart';
@@ -10,15 +12,23 @@ import '../utils/convert_model_entity.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc({
     required ProfileState initialState,
+    required this.authBloc,
     required this.profileRepo,
   }) : super(initialState) {
+    authBloc.stream.listen((authState) {
+      debugPrint('AuthBloc Print: $authState');
+      if (authState.userId != null && authState.jwtToken != null) {
+        id = authState.userId!;
+        token = authState.jwtToken!;
+      }
+    });
     on<GetProfileEvent>(_getProfile);
     on<UploadProfileEvent>(_uploadProfile);
     on<UploadAvatarProfileEvent>(_uploadAvatar);
     on<ChangePasswordProfileEvent>(_changePassword);
     on<FollowUserProfileEvent>(_followUser);
   }
-
+  final AuthBloc authBloc;
   final ProfileRepo profileRepo;
   late String id;
   late String token;
@@ -34,6 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   FutureOr<void> _getProfile(
       GetProfileEvent event, Emitter<ProfileState> emit) async {
     try {
+      debugPrint('id: $id - token: $token');
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
@@ -43,8 +54,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ]),
         ),
       );
-      id = event.userId;
-      token = event.token;
       var userModel = await profileRepo.getProfile(token, id);
 
       emit(state.copyWith(
@@ -144,7 +153,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
-        ProfileStatusKey.uploadAvatar.name,
+        ProfileStatusKey.uploadProfile.name,
       ], status: [
         Status.idle,
       ]),

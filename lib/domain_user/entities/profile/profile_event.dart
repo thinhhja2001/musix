@@ -3,13 +3,7 @@ class ProfileEvent {
 }
 
 class GetProfileEvent implements ProfileEvent {
-  final String token;
-  final String userId;
-
-  const GetProfileEvent({
-    required this.token,
-    required this.userId,
-  });
+  const GetProfileEvent();
 }
 
 class UploadProfileEvent implements ProfileEvent {

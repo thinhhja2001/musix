@@ -9,20 +9,20 @@ import '../models/models.dart';
 
 class ProfileRepo extends InitialRepo {
   FutureOr<ProfileResponseModel> getProfile(String token, String id) async {
-    const url = "profile/info";
-
-    var response = await dio.get(
-      url,
-      options: Options(
-        headers: headerApplicationJson(token: token),
-      ),
-      data: {"id": id},
-    );
-    if (response.statusCode == 200) {
+    const url = "/profile/info";
+    try {
+      var response = await dio.get(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        data: {"id": id},
+      );
       return ProfileResponseModel.fromJson(response.data['data']);
-    } else {
+    } on DioError catch (e) {
       throw ResponseException(
-          statusCode: response.statusCode, message: response.data['msg']);
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
     }
   }
 
@@ -33,24 +33,25 @@ class ProfileRepo extends InitialRepo {
     String? phoneNumber,
     String? fullName,
   }) async {
-    const url = "profile/info";
-    Map<String, String> data = {"id": id};
-    if (birthday != null) data["birthday"] = birthday;
-    if (phoneNumber != null) data["phoneNumber"] = phoneNumber;
-    if (fullName != null) data["fullName"] = fullName;
+    try {
+      const url = "/profile/info";
+      Map<String, String> data = {"id": id};
+      if (birthday != null) data["birthday"] = birthday;
+      if (phoneNumber != null) data["phoneNumber"] = phoneNumber;
+      if (fullName != null) data["fullName"] = fullName;
 
-    var response = await dio.put(
-      url,
-      options: Options(
-        headers: headerApplicationJson(token: token),
-      ),
-      data: data,
-    );
-    if (response.statusCode == 200) {
+      var response = await dio.put(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        data: data,
+      );
       return ProfileResponseModel.fromJson(response.data['data']);
-    } else {
+    } on DioError catch (e) {
       throw ResponseException(
-          statusCode: response.statusCode, message: response.data['msg']);
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
     }
   }
 
@@ -59,29 +60,30 @@ class ProfileRepo extends InitialRepo {
     required String id,
     required List<int> avatar,
   }) async {
-    const url = "profile/avatar";
+    try {
+      const url = "/profile/avatar";
 
-    var data = FormData.fromMap({
-      'avatar': MultipartFile.fromBytes(
-        avatar,
-        filename: "image.png",
-        contentType: MediaType.parse('image/jpeg'),
-      ),
-      'id': id,
-    });
+      var data = FormData.fromMap({
+        'avatar': MultipartFile.fromBytes(
+          avatar,
+          filename: "image.png",
+          contentType: MediaType.parse('image/jpeg'),
+        ),
+        'id': id,
+      });
 
-    var response = await dio.put(
-      url,
-      options: Options(
-        headers: headerMultiFormData(token: token),
-      ),
-      data: data,
-    );
-    if (response.statusCode == 200) {
+      var response = await dio.put(
+        url,
+        options: Options(
+          headers: headerMultiFormData(token: token),
+        ),
+        data: data,
+      );
       return ProfileResponseModel.fromJson(response.data['data']);
-    } else {
+    } on DioError catch (e) {
       throw ResponseException(
-          statusCode: response.statusCode, message: response.data['msg']);
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
     }
   }
 
@@ -91,26 +93,27 @@ class ProfileRepo extends InitialRepo {
     required String password,
     required String newPassword,
   }) async {
-    const url = "profile/changePassword";
+    try {
+      const url = "/profile/changePassword";
 
-    var data = {
-      'id': id,
-      'password': password,
-      'newPassword': newPassword,
-    };
+      var data = {
+        'id': id,
+        'password': password,
+        'newPassword': newPassword,
+      };
 
-    var response = await dio.put(
-      url,
-      options: Options(
-        headers: headerApplicationJson(token: token),
-      ),
-      data: data,
-    );
-    if (response.statusCode == 200) {
+      var response = await dio.put(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        data: data,
+      );
       return ProfileResponseModel.fromJson(response.data['data']);
-    } else {
+    } on DioError catch (e) {
       throw ResponseException(
-          statusCode: response.statusCode, message: response.data['msg']);
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
     }
   }
 
@@ -119,25 +122,26 @@ class ProfileRepo extends InitialRepo {
     required String id,
     required String followId,
   }) async {
-    const url = "profile/follow";
+    try {
+      const url = "/profile/follow";
 
-    var data = {
-      'id': id,
-      'followId': followId,
-    };
+      var data = {
+        'id': id,
+        'followId': followId,
+      };
 
-    var response = await dio.put(
-      url,
-      options: Options(
-        headers: headerApplicationJson(token: token),
-      ),
-      data: data,
-    );
-    if (response.statusCode == 200) {
+      var response = await dio.put(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        data: data,
+      );
       return ProfileResponseModel.fromJson(response.data['data']);
-    } else {
+    } on DioError catch (e) {
       throw ResponseException(
-          statusCode: response.statusCode, message: response.data['msg']);
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
     }
   }
 }

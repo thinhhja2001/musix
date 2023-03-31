@@ -3,12 +3,7 @@ class UserMusicEvent {
 }
 
 class GetUserMusicEvent implements UserMusicEvent {
-  final String token;
-  final String username;
-  const GetUserMusicEvent({
-    required this.token,
-    required this.username,
-  });
+  const GetUserMusicEvent();
 }
 
 class FavoriteSongEvent implements UserMusicEvent {

@@ -36,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         loginStatus: response.status,
         jwtToken: response.data?["token"]["token"],
         userId: response.data?["user"]["id"],
+        username: response.data?["user"]["username"],
       ),
     );
   }
@@ -56,6 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         registerStatus: response.status,
         jwtToken: response.data?["token"]["token"],
         userId: response.data?["user"]["id"],
+        username: response.data?["user"]["username"],
       ),
     );
   }

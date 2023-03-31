@@ -19,6 +19,7 @@ class AuthState extends Equatable {
   bool? isResetLoading;
   String? jwtToken;
   String? userId;
+  String? username;
   AuthState({
     this.loginMsg,
     this.registerMsg,
@@ -37,6 +38,7 @@ class AuthState extends Equatable {
     this.isResetLoading,
     this.jwtToken,
     this.userId,
+    this.username,
   });
   AuthState copyWith({
     String? loginMsg,
@@ -56,6 +58,7 @@ class AuthState extends Equatable {
     bool? isResetLoading,
     String? jwtToken,
     String? userId,
+    String? username,
   }) =>
       AuthState(
         loginMsg: loginMsg ?? this.loginMsg,
@@ -76,6 +79,7 @@ class AuthState extends Equatable {
         isResetLoading: isResetLoading ?? this.isResetLoading,
         jwtToken: jwtToken ?? this.jwtToken,
         userId: userId ?? this.userId,
+        username: username ?? this.username,
       );
 
   @override
@@ -96,6 +100,8 @@ class AuthState extends Equatable {
         isRequestResetLoading,
         isResetLoading,
         jwtToken,
+        userId,
+        username,
       ];
 
   @override

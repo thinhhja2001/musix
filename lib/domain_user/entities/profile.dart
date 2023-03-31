@@ -32,7 +32,6 @@ class Profile extends Equatable {
         birthday,
         fullName,
         phoneNumber,
-        avatarUrl,
       ];
 
   @override

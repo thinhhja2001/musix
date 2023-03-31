@@ -41,17 +41,21 @@ class UserModel {
       email: data['email'] as String,
       enabled: data['enabled'] as bool,
       profile: ProfileModel.fromJson(data['profile'] as Map<String, dynamic>),
-      followings: List<UserModel>.from(
-        (data['followings'] as List).map(
-          (x) => x,
-        ),
-      ),
+      followings: data['followings'] != null
+          ? List<UserModel>.from(
+              (data['followings'] as List).map(
+                (x) => x,
+              ),
+            )
+          : [],
       role: data["role"] == "USER" ? UserRole.user : UserRole.admin,
-      followers: List<UserModel>.from(
-        (data['followers'] as List).map<UserModel>(
-          (x) => x,
-        ),
-      ),
+      followers: data['followers'] != null
+          ? List<UserModel>.from(
+              (data['followers'] as List).map<UserModel>(
+                (x) => x,
+              ),
+            )
+          : [],
     );
   }
 }

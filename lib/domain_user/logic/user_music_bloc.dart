@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain_auth/logic/auth_bloc.dart';
 import '../../utils/utils.dart';
 import '../entities/entities.dart';
 import '../repo/user_music_repo.dart';
@@ -10,8 +11,15 @@ import '../utils/convert_model_entity.dart';
 class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
   UserMusicBloc({
     required UserMusicState initialState,
+    required this.authBloc,
     required this.userMusicRepo,
   }) : super(initialState) {
+    authBloc.stream.listen((authState) {
+      if (authState.username != null && authState.jwtToken != null) {
+        username = authState.username!;
+        token = authState.jwtToken!;
+      }
+    });
     on<GetUserMusicEvent>(_getUserMusic);
     on<FavoritePlaylistEvent>(_favoritePlaylist);
     on<FavoriteArtistEvent>(_favoriteArtist);
@@ -25,7 +33,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     on<UploadSongOwnPlaylistEvent>(_uploadSongOwnPlaylist);
     on<RemoveOwnPlaylistEvent>(_removeOwnPlaylist);
   }
-
+  final AuthBloc authBloc;
   final UserMusicRepo userMusicRepo;
   late final String token;
   late final String username;
@@ -50,8 +58,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
-      username = event.username;
-      token = event.token;
       var userMusicModel =
           await userMusicRepo.getUserMusic(token: token, username: username);
 
