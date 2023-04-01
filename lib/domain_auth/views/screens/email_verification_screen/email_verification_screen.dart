@@ -6,7 +6,7 @@ import 'package:musix/domain_auth/entities/event/auth_event.dart';
 import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
 import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/text_path.dart';
 import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
-import 'package:musix/domain_user/models/user.dart';
+import 'package:musix/domain_user/models/user_info/user_model.dart';
 import 'package:musix/routing/routing_path.dart';
 
 import '../../../../theme/theme.dart';
@@ -20,7 +20,7 @@ class EmailVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final emailVerificationTextPath = EmailVerificationTextPath();
-    final currentUser = GetIt.I.get<User>();
+    final currentUser = GetIt.I.get<UserModel>();
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (prevState, currentState) {
         return (prevState.isResendEmailLoading == true &&

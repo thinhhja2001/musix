@@ -1,17 +1,17 @@
-import 'package:musix/domain_user/models/profile.dart';
+import 'package:musix/domain_user/models/user_info/profile_model.dart';
 
-import 'user_role.dart';
+import '../../utils/user_role.dart';
 
-class User {
+class UserModel {
   String id;
   String username;
   String email;
-  Profile profile;
+  ProfileModel profile;
   UserRole role;
   bool enabled;
   List followings;
   List followers;
-  User({
+  UserModel({
     required this.id,
     required this.username,
     required this.email,
@@ -34,24 +34,28 @@ class User {
     };
   }
 
-  factory User.fromJson(Map<String, dynamic> data) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> data) {
+    return UserModel(
       id: data['id'] as String,
       username: data['username'] as String,
       email: data['email'] as String,
       enabled: data['enabled'] as bool,
-      profile: Profile.fromJson(data['profile'] as Map<String, dynamic>),
-      followings: List<User>.from(
-        (data['followings'] as List).map(
-          (x) => x,
-        ),
-      ),
+      profile: ProfileModel.fromJson(data['profile'] as Map<String, dynamic>),
+      followings: data['followings'] != null
+          ? List<UserModel>.from(
+              (data['followings'] as List).map(
+                (x) => x,
+              ),
+            )
+          : [],
       role: data["role"] == "USER" ? UserRole.user : UserRole.admin,
-      followers: List<User>.from(
-        (data['followers'] as List).map<User>(
-          (x) => x,
-        ),
-      ),
+      followers: data['followers'] != null
+          ? List<UserModel>.from(
+              (data['followers'] as List).map<UserModel>(
+                (x) => x,
+              ),
+            )
+          : [],
     );
   }
 }

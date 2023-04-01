@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../domain_hub/entities/entities.dart';
 
+import '../../../config/exporter.dart';
+import '../../../domain_hub/entities/entities.dart';
 import '../../../domain_song/views/widgets.dart';
 import '../../../theme/theme.dart';
-import 'widgets/edit_profile_widget.dart';
+import 'widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -12,11 +14,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    String imgUser =
-        'https://plus.unsplash.com/premium_photo-1664303602827-655efc7415da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: ColorTheme.background,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -27,66 +28,63 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 width: size.width,
                 height: size.height * 0.4,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.white.withOpacity(0.01),
-                      Colors.white.withOpacity(0.5),
-                    ],
-                  ),
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(32),
                     bottomRight: Radius.circular(32),
                   ),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      imgUser,
-                    ),
-                    fit: BoxFit.fitHeight,
-                    opacity: 0.8,
-                  ),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 28,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.maybePop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new_sharp,
-                        color: Colors.white,
-                        size: 20,
+                    const ProfileAvatarWidget(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 28,
                       ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      'James Smith',
-                      style: TextStyleTheme.ts28.copyWith(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Spacer(),
+                          BlocSelector<ProfileBloc, ProfileState, String?>(
+                            selector: (state) {
+                              return state.user?.profile?.fullName;
+                            },
+                            builder: (context, fullName) {
+                              return Text(
+                                fullName ?? "Anonymous",
+                                style: TextStyleTheme.ts28.copyWith(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          BlocSelector<ProfileBloc, ProfileState, String?>(
+                            selector: (state) {
+                              return state.user?.profile?.birthday;
+                            },
+                            builder: (context, birthday) {
+                              return Text(
+                                birthday ?? "None",
+                                style: TextStyleTheme.ts14.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: ColorTheme.primaryLighten,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      '26 Jan 1992',
-                      style: TextStyleTheme.ts14.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: ColorTheme.primaryLighten,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
                     ),
                   ],
                 ),
@@ -103,6 +101,7 @@ class ProfileScreen extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {
                             showDialog(
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (context) =>
                                     const EditProfileWidget());

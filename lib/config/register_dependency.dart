@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_auth/repo/auth_repo.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import 'exporter/repo_exporter.dart';
@@ -25,4 +25,7 @@ FutureOr<void> registerDependency() async {
   getIt.registerLazySingleton<VideoRepositoryImpl>(() => VideoRepositoryImpl());
   getIt.registerLazySingleton<HomeMusicRepo>(() => HomeMusicRepo());
   getIt.registerLazySingleton<SearchMusicRepo>(() => SearchMusicRepo());
+  getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepo());
+  getIt.registerLazySingleton<UserMusicRepo>(() => UserMusicRepo());
+  getIt.registerLazySingleton<ImagePicker>(() => ImagePicker());
 }

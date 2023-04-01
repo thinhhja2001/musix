@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:musix/config/exporter.dart';
+import 'package:musix/global/widgets/widgets.dart';
+
 import '../../../../domain_auth/views/widgets/custom_textfield_widget.dart';
 import '../../../../theme/theme.dart';
-
-import '../../widgets.dart';
+import '../../../../utils/utils.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
   const ChangePasswordWidget({Key? key}) : super(key: key);
@@ -15,6 +20,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
   final _formKey = GlobalKey<FormState>();
   final _oldPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
+  String? _error;
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +83,64 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   },
                 ),
                 const SizedBox(
-                  height: 24,
+                  height: 12,
+                ),
+                BlocConsumer<ProfileBloc, ProfileState>(listener: (_, state) {
+                  if (state.status?[ProfileStatusKey.changePassword.name] ==
+                      Status.loading) {
+                    _error = null;
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const LoadingWidget();
+                        });
+                  } else if (state
+                          .status?[ProfileStatusKey.changePassword.name] ==
+                      Status.success) {
+                    Navigator.maybePop(context);
+                    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+                      Navigator.maybePop(context);
+                      Future.delayed(const Duration(milliseconds: 300)).then(
+                          (value) => Fluttertoast.showToast(
+                              msg: "Change Password Success",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: ColorTheme.primaryLighten,
+                              textColor: ColorTheme.backgroundDarker,
+                              fontSize: 12));
+                    });
+                  }
+                }, builder: (context, state) {
+                  if (state.status?[ProfileStatusKey.changePassword.name] ==
+                      Status.error) {
+                    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+                      Navigator.maybePop(context);
+                    });
+                    _error = state.error?.message;
+                  }
+                  return Text(
+                    _error ?? "",
+                    style: TextStyleTheme.ts10.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.red,
+                    ),
+                  );
+                }),
+                const SizedBox(
+                  height: 12,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() == true) {
+                      context
+                          .read<ProfileBloc>()
+                          .add(ChangePasswordProfileEvent(
+                            _oldPasswordController.text,
+                            _newPasswordController.text,
+                          ));
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ColorTheme.background,
                     padding: const EdgeInsets.all(12),

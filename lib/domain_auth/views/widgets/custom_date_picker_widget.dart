@@ -21,8 +21,8 @@ class CustomDatePickerWidget extends StatelessWidget {
   void _pickDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
-        initialDate: DateTime(2001),
-        firstDate: DateTime(1900),
+        initialDate: datePicker ?? DateTime(2001, 1, 1),
+        firstDate: DateTime(1900, 1, 1),
         lastDate: DateTime.now(),
         builder: (context, child) {
           return Theme(
