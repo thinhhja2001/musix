@@ -22,7 +22,7 @@ class ProfileState extends Equatable {
     return ProfileState(
       status: status ?? this.status,
       user: user ?? this.user,
-      error: error ?? this.error,
+      error: error,
     );
   }
 

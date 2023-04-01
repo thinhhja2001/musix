@@ -150,7 +150,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       addError(
           Exception("ProfileBloc _uploadProfile error $e"), StackTrace.current);
     }
-
+    await Future.delayed(const Duration(milliseconds: 200));
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
         ProfileStatusKey.uploadProfile.name,
@@ -219,7 +219,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       addError(
           Exception("ProfileBloc _uploadAvatar error $e"), StackTrace.current);
     }
-
+    await Future.delayed(const Duration(milliseconds: 200));
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
         ProfileStatusKey.uploadAvatar.name,
@@ -241,21 +241,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ]),
         ),
       );
-      var userModel = await profileRepo.changePassword(
+      var result = await profileRepo.changePassword(
         token: token,
         id: id,
         password: event.oldPassword,
         newPassword: event.newPassword,
       );
-
-      emit(state.copyWith(
-        status: updateMapStatus(source: state.status, keys: [
-          ProfileStatusKey.changePassword.name,
-        ], status: [
-          Status.success,
-        ]),
-        user: convertUserModelToUser(userModel.user!),
-      ));
+      if (result) {
+        emit(state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            ProfileStatusKey.changePassword.name,
+          ], status: [
+            Status.success,
+          ]),
+        ));
+      } else {
+        throw Exception("Process Failed");
+      }
     } on ResponseException catch (e) {
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -280,7 +282,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       addError(Exception("ProfileBloc _changePassword error $e"),
           StackTrace.current);
     }
-
+    await Future.delayed(const Duration(milliseconds: 200));
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
         ProfileStatusKey.changePassword.name,
@@ -340,7 +342,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       addError(
           Exception("ProfileBloc _followUser error $e"), StackTrace.current);
     }
-
+    await Future.delayed(const Duration(milliseconds: 100));
     emit(state.copyWith(
       status: updateMapStatus(source: state.status, keys: [
         ProfileStatusKey.followUser.name,

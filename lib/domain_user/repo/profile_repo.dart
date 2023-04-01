@@ -87,7 +87,7 @@ class ProfileRepo extends InitialRepo {
     }
   }
 
-  FutureOr<ProfileResponseModel> changePassword({
+  FutureOr<bool> changePassword({
     required String token,
     required String id,
     required String password,
@@ -102,14 +102,14 @@ class ProfileRepo extends InitialRepo {
         'newPassword': newPassword,
       };
 
-      var response = await dio.put(
+      var response = await dio.post(
         url,
         options: Options(
           headers: headerApplicationJson(token: token),
         ),
         data: data,
       );
-      return ProfileResponseModel.fromJson(response.data['data']);
+      return response.statusCode == 200 ? true : false;
     } on DioError catch (e) {
       throw ResponseException(
           statusCode: e.response?.statusCode,

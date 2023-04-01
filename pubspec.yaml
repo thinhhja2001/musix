@@ -46,6 +46,8 @@ dependencies:
   top_snackbar_flutter: ^3.0.0+1
   awesome_snackbar_content: ^0.1.1
   http_parser: ^4.0.2
+  fluttertoast: ^8.2.1
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   flutter_test:

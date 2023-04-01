@@ -1,9 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:musix/global/widgets/widgets.dart';
 
 import '../../../../config/exporter.dart';
 import '../../../../domain_auth/views/widgets/custom_date_picker_widget.dart';
@@ -26,7 +27,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   final _formKey = GlobalKey<FormState>();
   DateTime? _birthDay;
   String? _errorBirthday;
-  String? _avatarUrl;
+  String? _error;
 
   @override
   void initState() {
@@ -35,7 +36,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
       _userNameController.text = state.user!.profile!.fullName!;
       _emailController.text = state.user!.email!;
       _phoneController.text = state.user!.profile!.phoneNumber!;
-      _avatarUrl = state.user?.profile?.avatarUrl;
       if (state.user!.profile!.birthday!.contains('/')) {
         _birthDay =
             DateFormat("dd/MM/yyyy").parse(state.user!.profile!.birthday!);
@@ -57,9 +57,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: const EdgeInsets.only(left: 12, right: 12, bottom: 56),
-      alignment: AlignmentDirectional.bottomCenter,
+      alignment: AlignmentDirectional.center,
       backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -155,7 +155,57 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         error: _errorBirthday,
                       ),
                       const SizedBox(
-                        height: 24,
+                        height: 12,
+                      ),
+                      BlocConsumer<ProfileBloc, ProfileState>(
+                          listener: (_, state) {
+                        if (state
+                                .status?[ProfileStatusKey.uploadProfile.name] ==
+                            Status.loading) {
+                          _error = null;
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const LoadingWidget();
+                              });
+                        } else if (state
+                                .status?[ProfileStatusKey.uploadProfile.name] ==
+                            Status.success) {
+                          Navigator.maybePop(context);
+                          SchedulerBinding.instance
+                              .addPostFrameCallback((timeStamp) {
+                            Navigator.maybePop(context);
+                            Future.delayed(const Duration(milliseconds: 300))
+                                .then((value) => Fluttertoast.showToast(
+                                    msg: "Update Info Success",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: ColorTheme.primaryLighten,
+                                    textColor: ColorTheme.backgroundDarker,
+                                    fontSize: 12));
+                          });
+                        }
+                      }, builder: (context, state) {
+                        if (state
+                                .status?[ProfileStatusKey.uploadProfile.name] ==
+                            Status.error) {
+                          SchedulerBinding.instance
+                              .addPostFrameCallback((timeStamp) {
+                            Navigator.maybePop(context);
+                          });
+                          _error = state.error?.message;
+                        }
+                        return Text(
+                          _error ?? "",
+                          style: TextStyleTheme.ts10.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.red,
+                          ),
+                        );
+                      }),
+                      const SizedBox(
+                        height: 12,
                       ),
                       Row(
                         children: [
@@ -171,12 +221,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 ),
                               ),
                               child: SizedBox(
-                                height: 40,
+                                height: 30,
                                 width: double.maxFinite,
                                 child: Center(
                                   child: Text(
                                     'Back',
-                                    style: TextStyleTheme.ts20.copyWith(
+                                    style: TextStyleTheme.ts16.copyWith(
                                       color: ColorTheme.primary,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -209,12 +259,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 ),
                               ),
                               child: SizedBox(
-                                height: 40,
+                                height: 30,
                                 width: double.maxFinite,
                                 child: Center(
                                   child: Text(
                                     'Save',
-                                    style: TextStyleTheme.ts20.copyWith(
+                                    style: TextStyleTheme.ts16.copyWith(
                                       color: ColorTheme.backgroundDarker,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -259,44 +309,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              top: -130,
-              child: GestureDetector(
-                onTap: () {},
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(180),
-                  child: SizedBox(
-                    width: 140,
-                    height: 140,
-                    child: CachedNetworkImage(
-                      imageUrl: _avatarUrl ?? AssetPath.placeImage,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            BlocBuilder<ProfileBloc, ProfileState>(
-              builder: (context, state) {
-                if (state.status?[ProfileStatusKey.uploadProfile] ==
-                    Status.loading) {
-                  return const CircularProgressIndicator();
-                } else if (state.status?[ProfileStatusKey.uploadProfile] ==
-                    Status.success) {
-                  debugPrint('Call success');
-                  SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-                    Navigator.maybePop(context);
-                  });
-                  return const SizedBox.shrink();
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
             ),
           ],
         ),

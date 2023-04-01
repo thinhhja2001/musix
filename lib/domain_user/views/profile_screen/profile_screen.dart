@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -7,8 +6,7 @@ import '../../../config/exporter.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../domain_song/views/widgets.dart';
 import '../../../theme/theme.dart';
-import '../../../utils/utils.dart';
-import 'widgets/edit_profile_widget.dart';
+import 'widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -19,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: ColorTheme.background,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -38,40 +37,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(32),
-                        bottomRight: Radius.circular(32),
-                      ),
-                      child: ShaderMask(
-                        shaderCallback: (bound) {
-                          return LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                              Colors.white.withOpacity(0.01),
-                              Colors.white.withOpacity(0.4),
-                            ],
-                          ).createShader(bound);
-                        },
-                        blendMode: BlendMode.srcOver,
-                        child: BlocSelector<ProfileBloc, ProfileState, String?>(
-                          selector: (state) {
-                            return state.user?.profile?.avatarUrl;
-                          },
-                          builder: (context, imgUrl) {
-                            return CachedNetworkImage(
-                              imageUrl: imgUrl ?? AssetPath.placeImage,
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                              fit: BoxFit.fitWidth,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+                    const ProfileAvatarWidget(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
