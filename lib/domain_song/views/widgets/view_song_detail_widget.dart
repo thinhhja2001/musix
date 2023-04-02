@@ -15,7 +15,9 @@ class ViewSongDetailWidget extends StatelessWidget {
     super.key,
     required this.song,
   });
+
   final SongInfo song;
+
   @override
   Widget build(BuildContext context) {
     List<String> artists = song.artistsNames?.split(',') ?? [];
@@ -32,7 +34,7 @@ class ViewSongDetailWidget extends StatelessWidget {
           ),
         ),
       ),
-      padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
+      padding: const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -101,10 +103,25 @@ class ViewSongDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          DetailChildWidget(
-            icon: Icons.favorite_outline,
-            data: "Like",
-            onPress: () {},
+          BlocSelector<UserMusicBloc, UserMusicState, bool>(
+            selector: (state) {
+              List<String> songs = state.music?.favoriteSongs ?? [];
+              return songs.contains(song.encodeId);
+            },
+            builder: (context, isFavorite) {
+              return DetailChildWidget(
+                icon: isFavorite ? Icons.favorite : Icons.favorite_outline,
+                data: "Like",
+                onPress: () {
+                  context.read<UserMusicBloc>().add(FavoriteSongEvent(
+                        id: song.encodeId!,
+                        title: song.title!,
+                        artistNames: song.artistsNames!,
+                        genreNames: song.genreNames,
+                      ));
+                },
+              );
+            },
           ),
           const SizedBox(
             height: 12,
@@ -117,10 +134,27 @@ class ViewSongDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          DetailChildWidget(
-            icon: Icons.do_not_disturb_alt_outlined,
-            data: "Block",
-            onPress: () {},
+          BlocSelector<UserMusicBloc, UserMusicState, bool>(
+            selector: (state) {
+              List<String> songs = state.music?.dislikeSongs ?? [];
+              return songs.contains(song.encodeId);
+            },
+            builder: (context, isDislike) {
+              return DetailChildWidget(
+                icon: isDislike
+                    ? Icons.do_disturb_on
+                    : Icons.do_not_disturb_alt_outlined,
+                data: "Block",
+                onPress: () {
+                  context.read<UserMusicBloc>().add(DislikeSongEvent(
+                        id: song.encodeId!,
+                        title: song.title!,
+                        artistNames: song.artistsNames!,
+                        genreNames: song.genreNames,
+                      ));
+                },
+              );
+            },
           ),
           const SizedBox(
             height: 12,

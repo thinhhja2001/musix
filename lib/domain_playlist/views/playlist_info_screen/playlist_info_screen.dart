@@ -12,7 +12,6 @@ import '../../../domain_song/views/widgets/control_widgets/shuffle_button_widget
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
 import '../../entities/entities.dart';
-import '../../logic/playlist_bloc.dart';
 
 class PlaylistInfoScreen extends StatelessWidget {
   const PlaylistInfoScreen({
@@ -50,15 +49,51 @@ class PlaylistInfoScreen extends StatelessWidget {
               size: 24,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            splashColor: Colors.red.withOpacity(0.2),
-            tooltip: 'Favorite',
-            icon: Icon(
-              Icons.favorite,
-              color: Colors.red.withOpacity(0.8),
-              size: 24,
-            ),
+          BlocSelector<PlaylistBloc, PlaylistState, Playlist?>(
+            selector: (state) {
+              return state.playlist;
+            },
+            builder: (context, playlist) {
+              if (playlist != null) {
+                return BlocSelector<UserMusicBloc, UserMusicState, bool>(
+                  selector: (userMusicState) {
+                    List<String> playlists =
+                        userMusicState.music?.favoritePlaylists ?? [];
+                    return playlists.contains(playlist.encodeId);
+                  },
+                  builder: (context, isFavorite) {
+                    return IconButton(
+                      onPressed: () {
+                        context.read<UserMusicBloc>().add(FavoritePlaylistEvent(
+                              id: playlist.encodeId!,
+                              title: playlist.title!,
+                              artistNames: playlist.artistsNames!,
+                              genreNames: playlist.genres
+                                  ?.map((e) => e.title!)
+                                  .toList(),
+                            ));
+                      },
+                      splashColor: Colors.red.withOpacity(0.2),
+                      tooltip: 'Favorite',
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_outline,
+                        color: Colors.red.withOpacity(0.8),
+                        size: 24,
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.favorite_outline,
+                    color: Colors.red.withOpacity(0.8),
+                    size: 24,
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

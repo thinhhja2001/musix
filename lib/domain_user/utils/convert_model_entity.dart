@@ -42,11 +42,11 @@ UserMusic convertUserMusicModelToUserMusic(UserMusicModel userMusicModel) {
   var favoritePlaylists =
       userMusicModel.music?.favoritePlaylists?.map((e) => e.id!).toList();
   var favoriteArtists =
-      userMusicModel.music?.favoriteArtists?.map((e) => e.id!).toList();
+      userMusicModel.music?.favoriteArtists?.map((e) => e.alias!).toList();
   var dislikeSongs =
       userMusicModel.music?.dislikeSongs?.map((e) => e.id!).toList();
   var dislikeArtists =
-      userMusicModel.music?.dislikeArtists?.map((e) => e.id!).toList();
+      userMusicModel.music?.dislikeArtists?.map((e) => e.alias!).toList();
   var dislikePlaylist =
       userMusicModel.music?.dislikePlaylist?.map((e) => e.id!).toList();
   var ownPlaylists = userMusicModel.music?.ownPlaylists
@@ -69,7 +69,7 @@ List<String> convertSongsModelToList(SongsModel songsModel) {
 }
 
 List<String> convertArtistsModelToList(ArtistsModel artistsModel) {
-  var artists = artistsModel.artists!.map((e) => e.id!).toList();
+  var artists = artistsModel.artists!.map((e) => e.alias!).toList();
   return artists;
 }
 

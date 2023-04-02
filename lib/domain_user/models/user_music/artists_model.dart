@@ -1,15 +1,15 @@
 import '../models.dart';
 
 class ArtistsModel {
-  List<UserPlaylistModel>? artists;
+  List<UserArtistModel>? artists;
 
   ArtistsModel({this.artists});
 
   ArtistsModel.fromJson(Map<String, dynamic> json) {
     if (json['artists'] != null) {
-      artists = <UserPlaylistModel>[];
+      artists = <UserArtistModel>[];
       json['artists'].forEach((v) {
-        artists!.add(UserPlaylistModel.fromJson(v));
+        artists!.add(UserArtistModel.fromJson(v));
       });
     }
   }

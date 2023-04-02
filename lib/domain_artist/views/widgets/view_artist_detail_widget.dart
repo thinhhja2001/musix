@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
@@ -48,18 +50,48 @@ class ViewArtistDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          DetailChildWidget(
-            icon: Icons.favorite_outline,
-            data: "Like",
-            onPress: () {},
+          BlocSelector<UserMusicBloc, UserMusicState, bool>(
+            selector: (state) {
+              List<String> artists = state.music?.favoriteArtists ?? [];
+              return artists.contains(artist.alias);
+            },
+            builder: (context, isFollow) {
+              return DetailChildWidget(
+                icon: isFollow ? Icons.favorite : Icons.favorite_outline,
+                data: "Follow",
+                onPress: () {
+                  context.read<UserMusicBloc>().add(FavoriteArtistEvent(
+                        id: artist.id!,
+                        name: artist.name!,
+                        alias: artist.alias!,
+                      ));
+                },
+              );
+            },
           ),
           const SizedBox(
             height: 12,
           ),
-          DetailChildWidget(
-            icon: Icons.do_not_disturb_alt_outlined,
-            data: "Block",
-            onPress: () {},
+          BlocSelector<UserMusicBloc, UserMusicState, bool>(
+            selector: (state) {
+              List<String> artists = state.music?.dislikeArtists ?? [];
+              return artists.contains(artist.alias);
+            },
+            builder: (context, isDislike) {
+              return DetailChildWidget(
+                icon: isDislike
+                    ? Icons.do_disturb_on
+                    : Icons.do_not_disturb_alt_outlined,
+                data: "Block",
+                onPress: () {
+                  context.read<UserMusicBloc>().add(DislikeArtistEvent(
+                        id: artist.id!,
+                        name: artist.name!,
+                        alias: artist.alias!,
+                      ));
+                },
+              );
+            },
           ),
           const SizedBox(
             height: 12,

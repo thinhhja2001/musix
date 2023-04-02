@@ -1,22 +1,19 @@
 import 'package:equatable/equatable.dart';
+
 import '../../../domain_hub/entities/entities.dart';
 
 class HomeMusic extends Equatable {
   final SectionPlaylist? recommendPlaylist;
   final SectionSong? recommendSongs;
   final List<Hub>? hubs;
-  final SectionPlaylist? newPlaylists;
-  final SectionPlaylist? randomPlaylist;
-  final SectionArtist? representArtists;
+  final List<SectionPlaylist>? sectionPlaylists;
   final List<SectionSong>? newReleaseSongs;
 
   const HomeMusic({
     this.recommendPlaylist,
     this.recommendSongs,
     this.hubs,
-    this.newPlaylists,
-    this.randomPlaylist,
-    this.representArtists,
+    this.sectionPlaylists,
     this.newReleaseSongs,
   });
 
@@ -24,28 +21,22 @@ class HomeMusic extends Equatable {
     SectionPlaylist? recommendPlaylist,
     SectionSong? recommendSongs,
     List<Hub>? hubs,
-    SectionPlaylist? newPlaylists,
-    SectionPlaylist? randomPlaylist,
-    SectionArtist? representArtists,
+    List<SectionPlaylist>? sectionPlaylists,
     List<SectionSong>? newReleaseSongs,
   }) {
     return HomeMusic(
       recommendPlaylist: recommendPlaylist ?? this.recommendPlaylist,
       recommendSongs: recommendSongs ?? this.recommendSongs,
       hubs: hubs ?? this.hubs,
-      newPlaylists: newPlaylists ?? this.newPlaylists,
-      randomPlaylist: randomPlaylist ?? this.randomPlaylist,
-      representArtists: representArtists ?? this.representArtists,
+      sectionPlaylists: sectionPlaylists ?? this.sectionPlaylists,
       newReleaseSongs: newReleaseSongs ?? this.newReleaseSongs,
     );
   }
 
   @override
   List<Object?> get props => [
-        representArtists,
-        hubs,
-        newPlaylists,
-        randomPlaylist,
-        newReleaseSongs,
+        hubs?.length,
+        sectionPlaylists?.length,
+        newReleaseSongs?.length,
       ];
 }

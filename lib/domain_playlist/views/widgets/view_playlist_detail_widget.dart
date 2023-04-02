@@ -99,18 +99,50 @@ class ViewPlaylistDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          DetailChildWidget(
-            icon: Icons.favorite_outline,
-            data: "Like",
-            onPress: () {},
+          BlocSelector<UserMusicBloc, UserMusicState, bool>(
+            selector: (state) {
+              List<String> playlists = state.music?.favoriteSongs ?? [];
+              return playlists.contains(playlist.encodeId);
+            },
+            builder: (context, isFavorite) {
+              return DetailChildWidget(
+                icon: isFavorite ? Icons.favorite : Icons.favorite_outline,
+                data: "Like",
+                onPress: () {
+                  context.read<UserMusicBloc>().add(FavoritePlaylistEvent(
+                        id: playlist.encodeId!,
+                        title: playlist.title!,
+                        artistNames: playlist.artistsNames!,
+                        genreNames: playlist.genres,
+                      ));
+                },
+              );
+            },
           ),
           const SizedBox(
             height: 12,
           ),
-          DetailChildWidget(
-            icon: Icons.do_not_disturb_alt_outlined,
-            data: "Block",
-            onPress: () {},
+          BlocSelector<UserMusicBloc, UserMusicState, bool>(
+            selector: (state) {
+              List<String> playlists = state.music?.favoriteSongs ?? [];
+              return playlists.contains(playlist.encodeId);
+            },
+            builder: (context, isDislike) {
+              return DetailChildWidget(
+                icon: isDislike
+                    ? Icons.do_disturb_on
+                    : Icons.do_not_disturb_alt_outlined,
+                data: "Block",
+                onPress: () {
+                  context.read<UserMusicBloc>().add(DislikePlaylistEvent(
+                        id: playlist.encodeId!,
+                        title: playlist.title!,
+                        artistNames: playlist.artistsNames!,
+                        genreNames: playlist.genres,
+                      ));
+                },
+              );
+            },
           ),
           const SizedBox(
             height: 12,

@@ -116,7 +116,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
-      gerneNames = gerneNames?.substring(0, gerneNames.length - 2);
+
       var songModels = await userMusicRepo.favoriteSong(
           token: token,
           username: username,
@@ -182,7 +182,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
-      gerneNames = gerneNames?.substring(0, gerneNames.length - 2);
+
       var songModels = await userMusicRepo.dislikeSong(
           token: token,
           username: username,
@@ -376,7 +376,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
-      gerneNames = gerneNames?.substring(0, gerneNames.length - 2);
+
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
         username: username,
@@ -445,7 +445,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
-      gerneNames = gerneNames?.substring(0, gerneNames.length - 2);
+
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
         username: username,
@@ -709,7 +709,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
-      gerneNames = gerneNames?.substring(0, gerneNames.length - 2);
+
       var ownPlaylistsModel = await userMusicRepo.uploadSongOwnPlaylist(
         token: token,
         username: username,
