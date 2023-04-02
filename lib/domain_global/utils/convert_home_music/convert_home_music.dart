@@ -7,37 +7,17 @@ import '../../models/model.dart';
 HomeMusic? convertFromGetHomeModel(GetHomeModel model) {
   if (model.data == null) return null;
   HomeMusic homeMusic = const HomeMusic(
-    randomPlaylist: SectionPlaylist(title: '', items: []),
-    newPlaylists: SectionPlaylist(title: '', items: []),
-    representArtists: SectionArtist(title: '', items: []),
+    sectionPlaylists: [],
     newReleaseSongs: [],
   );
+  List<SectionPlaylist> sectionPlaylists = [];
   for (int i = 0; i < model.data!.items!.length; i++) {
     SectionsModel section = model.data!.items![i];
-    if (section.sectionType == 'playlist' &&
-        section.sectionId == 'hAutoTheme2') {
-      SectionPlaylist? sPlaylist = convertSectionPlaylistFromModel(section)!;
-      sPlaylist = sPlaylist.copyWith(title: 'Gần đây');
-      homeMusic = homeMusic.copyWith(
-        newPlaylists: sPlaylist,
-      );
-      continue;
-    }
-    if (section.sectionType == 'playlist' &&
-        section.sectionId!.contains('hAlbum')) {
-      SectionPlaylist sPlaylist = convertSectionPlaylistFromModel(section)!;
-      sPlaylist = sPlaylist.copyWith(title: 'Ngẫu nhiên');
-      homeMusic = homeMusic.copyWith(
-        randomPlaylist: sPlaylist,
-      );
-      continue;
-    }
-    if (section.sectionType == 'artistSpotlight') {
-      SectionArtist sArtist = convertSectionArtistFromModel(section)!;
-      sArtist = sArtist.copyWith(title: 'Nghệ sĩ tuần');
-      homeMusic = homeMusic.copyWith(
-        representArtists: sArtist,
-      );
+    if (section.sectionType == 'playlist') {
+      if (section.items != null) {
+        SectionPlaylist? sPlaylist = convertSectionPlaylistFromModel(section)!;
+        sectionPlaylists.add(sPlaylist);
+      }
       continue;
     }
     if (section.sectionType == 'new-release') {
@@ -48,5 +28,6 @@ HomeMusic? convertFromGetHomeModel(GetHomeModel model) {
       );
     }
   }
+  homeMusic = homeMusic.copyWith(sectionPlaylists: sectionPlaylists);
   return homeMusic;
 }

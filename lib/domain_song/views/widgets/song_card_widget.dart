@@ -88,6 +88,7 @@ class SongCardInfoWidget extends StatelessWidget {
             showModalBottomSheet(
               context: context,
               backgroundColor: Colors.transparent,
+              isScrollControlled: true,
               builder: (context) => ViewSongDetailWidget(
                 song: song,
               ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:musix/global/repo/initial_repo.dart';
 
@@ -192,7 +193,7 @@ class UserMusicRepo extends InitialRepo {
           "alias": alias,
         }
       };
-
+      debugPrint('$data');
       var response = await dio.put(
         url,
         data: data,

@@ -66,7 +66,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   children: [
                     Expanded(
                       child: TextField(
-                        autofocus: true,
                         controller: _searchController,
                         style: TextStyleTheme.ts15.copyWith(
                           color: Colors.white,

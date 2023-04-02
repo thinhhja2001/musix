@@ -4,12 +4,11 @@ import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../../config/exporter/bloc_exporter.dart';
+import '../../../config/exporter.dart';
 import '../../../domain_playlist/views/widgets.dart';
 import '../../../domain_song/views/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/enum/enum_status.dart';
-import '../../entities/entities.dart';
 
 class ArtistInfoScreen extends StatefulWidget {
   const ArtistInfoScreen({Key? key}) : super(key: key);
@@ -48,16 +47,6 @@ class _ArtistInfoScreenState extends State<ArtistInfoScreen> {
             icon: Icon(
               MdiIcons.download,
               color: Colors.white.withOpacity(0.8),
-              size: 24,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            splashColor: Colors.red.withOpacity(0.2),
-            tooltip: 'Favorite',
-            icon: Icon(
-              Icons.favorite,
-              color: Colors.red.withOpacity(0.8),
               size: 24,
             ),
           ),
@@ -159,29 +148,51 @@ class _ArtistInfoScreenState extends State<ArtistInfoScreen> {
                                   height: 12,
                                 ),
                                 ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      context
+                                          .read<UserMusicBloc>()
+                                          .add(FavoriteArtistEvent(
+                                            id: info.id!,
+                                            name: info.name!,
+                                            alias: info.alias!,
+                                          ));
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: ColorTheme.primary,
                                     ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          'Follow',
-                                          style: TextStyleTheme.ts16.copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        const Icon(
-                                          Icons.add,
-                                          size: 16,
-                                          color: Colors.white,
-                                        )
-                                      ],
+                                    child: BlocSelector<UserMusicBloc,
+                                        UserMusicState, bool>(
+                                      selector: (userMusicState) {
+                                        List<String> artists = userMusicState
+                                                .music?.favoriteArtists ??
+                                            [];
+                                        return artists.contains(info.alias);
+                                      },
+                                      builder: (context, isFollow) {
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              isFollow ? 'Followed' : 'Follow',
+                                              style:
+                                                  TextStyleTheme.ts16.copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            Icon(
+                                              isFollow
+                                                  ? Icons.check
+                                                  : Icons.add,
+                                              size: 16,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        );
+                                      },
                                     )),
                               ],
                             ),

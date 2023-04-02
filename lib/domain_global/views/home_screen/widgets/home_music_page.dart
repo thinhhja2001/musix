@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/routing/routing_path.dart';
 
 import '../../../../config/exporter.dart';
-import '../../../../domain_artist/views/widgets.dart';
 import '../../../../domain_hub/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../domain_song/views/widgets.dart';
@@ -41,33 +40,19 @@ class HomeMusicPage extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    PlaylistListWidget(
-                      sectionPlaylist: homeMusic.newPlaylists!,
-                      playlistArrange: PlaylistArrange.carousel,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
                     HubListWidget(
                       title: 'Topics',
                       hubs: homeMusic.hubs!,
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    ArtistListWidget(
-                      sectionArtist: homeMusic.representArtists!,
-                      artistArrange: ArtistArrange.carousel,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    PlaylistListWidget(
-                      sectionPlaylist: homeMusic.randomPlaylist!,
-                      playlistArrange: PlaylistArrange.carousel,
-                    ),
-                    const SizedBox(
-                      height: 24,
+                    ...List.generate(
+                      homeMusic.sectionPlaylists!.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: PlaylistListWidget(
+                          sectionPlaylist: homeMusic.sectionPlaylists![index],
+                          playlistArrange: PlaylistArrange.carousel,
+                        ),
+                      ),
                     ),
                     SongTabWidget(
                       items: homeMusic.newReleaseSongs!.reversed.toList(),
