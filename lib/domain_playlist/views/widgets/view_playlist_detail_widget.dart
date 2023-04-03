@@ -101,7 +101,7 @@ class ViewPlaylistDetailWidget extends StatelessWidget {
           ),
           BlocSelector<UserMusicBloc, UserMusicState, bool>(
             selector: (state) {
-              List<String> playlists = state.music?.favoriteSongs ?? [];
+              List<String> playlists = state.music?.favoritePlaylists ?? [];
               return playlists.contains(playlist.encodeId);
             },
             builder: (context, isFavorite) {
@@ -124,7 +124,7 @@ class ViewPlaylistDetailWidget extends StatelessWidget {
           ),
           BlocSelector<UserMusicBloc, UserMusicState, bool>(
             selector: (state) {
-              List<String> playlists = state.music?.favoriteSongs ?? [];
+              List<String> playlists = state.music?.dislikePlaylists ?? [];
               return playlists.contains(playlist.encodeId);
             },
             builder: (context, isDislike) {

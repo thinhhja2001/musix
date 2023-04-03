@@ -18,6 +18,7 @@ class CustomCardInfoWidget extends StatelessWidget {
   final double padding;
   final bool isActive;
   final bool isShowAdditionButton;
+  final Widget? additionWidget;
 
   const CustomCardInfoWidget({
     Key? key,
@@ -32,6 +33,7 @@ class CustomCardInfoWidget extends StatelessWidget {
     this.isShowIndex = false,
     this.isShowAdditionButton = true,
     this.padding = 0,
+    this.additionWidget,
   }) : super(key: key);
 
   @override
@@ -157,9 +159,9 @@ class CustomCardInfoWidget extends StatelessWidget {
                   ),
                 )
               else
-                const Expanded(
+                Expanded(
                   flex: 1,
-                  child: SizedBox.shrink(),
+                  child: additionWidget ?? const SizedBox.shrink(),
                 ),
             ],
           ),
