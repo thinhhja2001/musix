@@ -199,7 +199,7 @@ class ProfileScreen extends StatelessWidget {
                             builder: (context, dislikePlaylists) {
                               return LibraryButtonWidget(
                                 title: 'Block Playlist',
-                                icon: MdiIcons.music,
+                                icon: MdiIcons.musicOff,
                                 onTap: () {
                                   context.read<PlaylistsBloc>().add(
                                       GetPlaylistsEvent(
@@ -222,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
                             builder: (context, favoriteArtists) {
                               return LibraryButtonWidget(
                                 title: 'Favorite Artist',
-                                icon: MdiIcons.music,
+                                icon: MdiIcons.accountStarOutline,
                                 onTap: () {
                                   context.read<ArtistsBloc>().add(
                                       GetArtistsEvent(
@@ -245,7 +245,7 @@ class ProfileScreen extends StatelessWidget {
                             builder: (context, dislikeArtists) {
                               return LibraryButtonWidget(
                                 title: 'Block Artist',
-                                icon: MdiIcons.music,
+                                icon: MdiIcons.accountRemoveOutline,
                                 onTap: () {
                                   context.read<ArtistsBloc>().add(
                                       GetArtistsEvent(
@@ -260,18 +260,46 @@ class ProfileScreen extends StatelessWidget {
                           const SizedBox(
                             height: 24,
                           ),
-                          LibraryButtonWidget(
-                            title: 'Favorite Song',
-                            icon: MdiIcons.music,
-                            onTap: () {},
+                          BlocSelector<UserMusicBloc, UserMusicState,
+                              List<String>>(
+                            selector: (state) {
+                              return state.music?.favoriteSongs ?? [];
+                            },
+                            builder: (context, favoriteSongs) {
+                              return LibraryButtonWidget(
+                                title: 'Favorite Song',
+                                icon: MdiIcons.musicClefTreble,
+                                onTap: () {
+                                  context.read<SongsBloc>().add(GetSongsEvent(
+                                      songIds: favoriteSongs,
+                                      title: 'Favorite Song'));
+                                  Navigator.of(context)
+                                      .pushNamed(RoutingPath.songsInfo);
+                                },
+                              );
+                            },
                           ),
                           const SizedBox(
                             height: 24,
                           ),
-                          LibraryButtonWidget(
-                            title: 'Dislike Song',
-                            icon: MdiIcons.music,
-                            onTap: () {},
+                          BlocSelector<UserMusicBloc, UserMusicState,
+                              List<String>>(
+                            selector: (state) {
+                              return state.music?.dislikeSongs ?? [];
+                            },
+                            builder: (context, dislikeSongs) {
+                              return LibraryButtonWidget(
+                                title: 'Dislike Song',
+                                icon: MdiIcons.musicAccidentalDoubleSharp,
+                                onTap: () {
+                                  context.read<SongsBloc>().add(GetSongsEvent(
+                                      songIds: dislikeSongs,
+                                      title: 'Dislike Song'));
+                                  Navigator.of(context)
+                                      .pushNamed(RoutingPath.songsInfo);
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),

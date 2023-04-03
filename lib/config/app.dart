@@ -141,6 +141,16 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          create: (context) => SongsBloc(
+            initialState: SongsState(
+              status: {
+                SongStatusKey.global.key: Status.idle,
+              },
+            ),
+            songRepo: getIt.get<SongInfoRepositoryImpl>(),
+          ),
+        ),
+        BlocProvider(
           create: (context) => VideoBloc(
             initialState: VideoState(
               status: {VideoStatusKey.global.key: Status.idle},

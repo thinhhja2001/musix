@@ -27,6 +27,9 @@ class RoutingPath {
   static const String artistInfo = '$home/artistInfo';
   static const String artistsInfo = '$home/artistsInfo';
 
+  // Song
+  static const String songsInfo = '$home/songsInfo';
+
   // Video
   static const String video = "/video";
   static const String videoDetailPage = "$video/detail";
