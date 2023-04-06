@@ -9,6 +9,7 @@ import '../domain_auth/views/screens/sign_up_screen/sign_up_screen.dart';
 import '../domain_global/views/screens.dart';
 import '../domain_hub/views/screens.dart';
 import '../domain_playlist/views/screens.dart';
+import '../domain_song/views/screens.dart';
 import '../domain_user/views/screens.dart';
 import '../domain_video/views/screens/video_detail_page_widget.dart';
 import 'routing_path.dart';
@@ -62,10 +63,25 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const PlaylistInfoScreen(),
       );
+    case RoutingPath.playlistsInfo:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const PlaylistsInfoScreen(),
+      );
     case RoutingPath.artistInfo:
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => const ArtistInfoScreen(),
+      );
+    case RoutingPath.artistsInfo:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const ArtistsInfoScreen(),
+      );
+    case RoutingPath.songsInfo:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const SongsInfoScreen(),
       );
     case RoutingPath.changePassword:
       return MaterialPageRoute(
