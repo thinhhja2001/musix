@@ -8,6 +8,7 @@ class PostModel {
     required this.thumbnailId,
     required this.thumbnailUrl,
     required this.comments,
+    required this.fileName,
     required this.dateCreated,
     required this.lastModified,
     required this.likedBy,
@@ -21,6 +22,7 @@ class PostModel {
   String fileId;
   String thumbnailId;
   String thumbnailUrl;
+  String fileName;
   List<String> comments;
   int dateCreated;
   int lastModified;
@@ -31,6 +33,7 @@ class PostModel {
         id: json["id"],
         ownerId: json["ownerId"],
         ownerUsername: json["ownerUsername"],
+        fileName: json["fileName"],
         content: json["content"],
         fileId: json["fileId"],
         thumbnailId: json["thumbnailId"],
@@ -48,6 +51,7 @@ class PostModel {
         "ownerUsername": ownerUsername,
         "content": content,
         "fileId": fileId,
+        "fileName": fileName,
         "thumbnailId": thumbnailId,
         "thumbnailUrl": thumbnailUrl,
         "comments": List<dynamic>.from(comments.map((x) => x)),

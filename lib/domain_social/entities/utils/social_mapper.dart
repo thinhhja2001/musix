@@ -68,6 +68,7 @@ class SocialMapper {
     }
     return Post(
         id: postModel.id,
+        fileName: postModel.fileName,
         comments: comments,
         content: postModel.content,
         dateCreated: postModel.dateCreated,

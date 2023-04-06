@@ -8,6 +8,7 @@ class Post extends Equatable {
   final User? user;
   final String? content;
   final String? fileId;
+  final String? fileName;
   final String? thumbnailId;
   final String? thumbnailUrl;
   final List<Comment>? comments;
@@ -20,6 +21,7 @@ class Post extends Equatable {
     this.user,
     this.content,
     this.fileId,
+    this.fileName,
     this.thumbnailId,
     this.thumbnailUrl,
     this.comments,
@@ -40,6 +42,7 @@ class Post extends Equatable {
     int? lastModified,
     List<User>? likedBy,
     String? fileUrl,
+    String? fileName,
   }) =>
       Post(
         id: id ?? this.id,
@@ -53,6 +56,7 @@ class Post extends Equatable {
         lastModified: lastModified ?? this.lastModified,
         likedBy: likedBy ?? this.likedBy,
         fileUrl: fileUrl ?? this.fileUrl,
+        fileName: fileName ?? this.fileName,
       );
   @override
   List<Object?> get props => [
@@ -67,6 +71,7 @@ class Post extends Equatable {
         lastModified,
         likedBy,
         fileUrl,
+        fileName,
       ];
   @override
   bool? get stringify => true;

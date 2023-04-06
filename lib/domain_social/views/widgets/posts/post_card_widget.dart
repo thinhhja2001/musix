@@ -1,10 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
+import 'package:musix/domain_social/views/widgets/posts/social_video_player_widget.dart';
+import 'package:musix/domain_user/utils/constant_utils.dart';
+import 'package:musix/domain_video/entities/video_detail.dart';
+import 'package:musix/domain_video/utils/methods.dart';
+import 'package:musix/domain_video/views/widgets/video_player/video_player_widget.dart';
 import 'package:musix/utils/functions/function_utils.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../theme/theme.dart';
+import '../../../utils/custom_social_media_control.dart';
 import 'hashtag_widget.dart';
 import 'interaction_widget.dart';
 
@@ -16,8 +24,26 @@ class PostCardWidget extends StatelessWidget {
   final Post post;
   @override
   Widget build(BuildContext context) {
-    final user = post.user;
+    Future<ChewieController> buildChewieController() async {
+      VideoPlayerController videoPlayerController =
+          VideoPlayerController.network(post.fileUrl!);
+      await videoPlayerController.initialize();
+      return ChewieController(
+          videoPlayerController: videoPlayerController,
+          showControls: true,
+          customControls: CustomSocialMediaControl(
+            title: post.fileName!,
+            singer: post.user!.username!,
+          ),
+          materialProgressColors: ChewieProgressColors(
+            playedColor: ColorTheme.primary,
+            bufferedColor: Colors.grey,
+            backgroundColor: Colors.white,
+          ),
+          allowFullScreen: true);
+    }
 
+    final user = post.user;
     return SizedBox(
       width: double.infinity,
       height: 450,
@@ -33,28 +59,17 @@ class PostCardWidget extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(
-                            width: double.infinity,
-                            placeholder: (context, url) => Shimmer.fromColors(
-                                  baseColor: ColorTheme.background,
-                                  highlightColor: ColorTheme.backgroundDarker,
-                                  child: const Material(
-                                    color: Colors.white,
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      height: 240,
-                                    ),
-                                  ),
-                                ),
-                            fit: BoxFit.fill,
-                            imageUrl: post.thumbnailUrl ?? ""),
-                      ),
-                    ],
-                  ),
+                  child: FutureBuilder<ChewieController>(
+                      future: buildChewieController(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: SocialVideoPlayerWidget(
+                                  controller: snapshot.data!));
+                        }
+                        return Container();
+                      }),
                 ),
                 Expanded(
                     child: SizedBox(
@@ -72,8 +87,7 @@ class PostCardWidget extends StatelessWidget {
                               radius: 30,
                               backgroundColor: Colors.transparent,
                               backgroundImage: NetworkImage(
-                                user!.profile!.avatarUrl ??
-                                    "https://res.cloudinary.com/musix-cloud/image/upload/v1680776471/default_avatar_asqchd.png",
+                                user!.profile!.avatarUrl ?? defaultAvatarUrl,
                               ),
                             ),
                             const SizedBox(

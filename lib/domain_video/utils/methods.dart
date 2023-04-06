@@ -9,14 +9,16 @@ import '../views/widgets/custom/custom_material_control.dart';
 ChewieController createChewieController({
   required VideoPlayerController controller,
   required VideoDetail videoDetail,
+  Widget? customControls,
 }) {
   return ChewieController(
       videoPlayerController: controller,
       showControls: true,
-      customControls: CustomMaterialControls(
-        title: videoDetail.title ?? "",
-        singer: videoDetail.artistsNames ?? "",
-      ),
+      customControls: customControls ??
+          CustomMaterialControls(
+            title: videoDetail.title ?? "",
+            singer: videoDetail.artistsNames ?? "",
+          ),
       materialProgressColors: ChewieProgressColors(
         playedColor: ColorTheme.primary,
         bufferedColor: Colors.grey,

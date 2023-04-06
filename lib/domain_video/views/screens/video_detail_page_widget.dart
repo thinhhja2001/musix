@@ -2,15 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:musix/domain_video/entities/event/video_event.dart';
 import 'package:musix/domain_video/views/widgets/video_player/video_short_card_widget.dart';
 import 'package:musix/routing/routing_path.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../config/exporter/bloc_exporter.dart';
 import '../../../config/exporter/state_exporter.dart';
 import '../../../theme/theme.dart';
-import '../../entities/state/video_state.dart';
-import '../../logic/video_bloc.dart';
 import '../widgets/next_video_list_widget.dart';
 import '../widgets/video_player/video_detail_card_widget.dart';
 
