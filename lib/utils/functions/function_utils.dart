@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
@@ -47,4 +48,27 @@ void printJson(Map<String, dynamic>? json) {
   JsonEncoder encoder = const JsonEncoder.withIndent('  ');
   String prettyprint = encoder.convert(json);
   debugPrint(prettyprint);
+}
+
+String readTimestamp(int timestamp) {
+  var now = DateTime.now();
+  var format = DateFormat('HH:mm a');
+  var date = DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+  var diff = date.difference(now);
+  var time = '';
+
+  if (diff.inSeconds <= 0 ||
+      diff.inSeconds > 0 && diff.inMinutes == 0 ||
+      diff.inMinutes > 0 && diff.inHours == 0 ||
+      diff.inHours > 0 && diff.inDays == 0) {
+    time = "Today at ${format.format(date)}";
+  } else {
+    if (diff.inDays == 1) {
+      time = '${diff.inDays}DAY AGO';
+    } else {
+      time = '${diff.inDays}DAYS AGO';
+    }
+  }
+
+  return time;
 }

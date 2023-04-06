@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../theme/color.dart';
+import '../../../../entities/state/social_state.dart';
+import '../../../../logic/social_bloc.dart';
 import '../post_card_widget.dart';
 
 class JustForYouListWidget extends StatelessWidget {
@@ -7,17 +11,26 @@ class JustForYouListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      separatorBuilder: (context, index) {
-        return const SizedBox(
-          height: 24,
-        );
-      },
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return const PostCardWidget();
+    return BlocBuilder<SocialBloc, SocialState>(
+      builder: (context, state) {
+        return state.justForYouPosts != null
+            ? ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 24,
+                  );
+                },
+                itemCount: state.justForYouPosts!.length,
+                itemBuilder: (context, index) {
+                  return PostCardWidget(
+                      post: state.justForYouPosts!.elementAt(index));
+                },
+              )
+            : const CircularProgressIndicator(
+                color: ColorTheme.primary,
+              );
       },
     );
   }
