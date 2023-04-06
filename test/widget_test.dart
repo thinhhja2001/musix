@@ -7,25 +7,21 @@
 
 import 'dart:convert';
 
-import 'package:musix/domain_artist/models/get_artist_model/artist_model.dart';
-import 'package:musix/domain_auth/payload/request/login_request.dart';
-import 'package:musix/domain_song/repository/repository.dart';
-import 'package:musix/domain_auth/payload/request/register_request.dart';
-import 'package:musix/domain_auth/repo/auth_repo.dart';
-import 'package:musix/domain_auth/services/auth_service.dart';
+import 'package:get_it/get_it.dart';
+import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
+import 'package:musix/domain_social/repository/post/post_repo.dart';
+import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 void main() async {
-  AuthRepo authRepo = AuthRepo();
+  GetIt.I.registerFactoryAsync<ZingMP3APIV2>(() => ZingMP3APIV2.createAsync());
 
-  // var response = await authRepo.register(RegisterRequest(
-  //     username: "thinhhja2001",
-  //     fullName: "Nguyen Doan Thinh",
-  //     email: "thinhnguyendoan5122001@gmail.com",
-  //     password: "talavua5122001",
-  //     birthday: "05/12/2001",
-  //     phoneNumber: "032838445"));
-  var response = await authRepo
-      .login(LoginRequest(username: 'thinhhh', password: 'alksnlkfasn'));
+  PostRepo repo = PostRepo();
+  var response = await repo.modifyPost(
+      postId: "642c487cca1b275728d79a3c",
+      postRegistryModel: PostRegistryModel(content: "modify from flutter"),
+      token:
+          "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA");
+  printJson(response.toJson());
 }
 
 void printJson(Map<String, dynamic>? json) {
