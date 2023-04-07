@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
-import 'package:musix/domain_social/views/widgets/posts/social_video_player_widget.dart';
+import 'package:musix/domain_social/views/widgets/posts/post_shimmer_loading_widget.dart';
+import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
 import 'package:musix/domain_user/utils/constant_utils.dart';
 import 'package:musix/domain_video/entities/video_detail.dart';
 import 'package:musix/domain_video/utils/methods.dart';
@@ -24,25 +25,6 @@ class PostCardWidget extends StatelessWidget {
   final Post post;
   @override
   Widget build(BuildContext context) {
-    Future<ChewieController> buildChewieController() async {
-      VideoPlayerController videoPlayerController =
-          VideoPlayerController.network(post.fileUrl!);
-      await videoPlayerController.initialize();
-      return ChewieController(
-          videoPlayerController: videoPlayerController,
-          showControls: true,
-          customControls: CustomSocialMediaControl(
-            title: post.fileName!,
-            singer: post.user!.username!,
-          ),
-          materialProgressColors: ChewieProgressColors(
-            playedColor: ColorTheme.primary,
-            bufferedColor: Colors.grey,
-            backgroundColor: Colors.white,
-          ),
-          allowFullScreen: true);
-    }
-
     final user = post.user;
     return SizedBox(
       width: double.infinity,
@@ -59,17 +41,15 @@ class PostCardWidget extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: FutureBuilder<ChewieController>(
-                      future: buildChewieController(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: SocialVideoPlayerWidget(
-                                  controller: snapshot.data!));
-                        }
-                        return Container();
-                      }),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: SocialDataPlayerWidget(
+                      thumbnailUrl: post.thumbnailUrl!,
+                      dataUrl: post.fileUrl!,
+                      artistName: user?.username ?? "Unknown",
+                      title: post.fileName!,
+                    ),
+                  ),
                 ),
                 Expanded(
                     child: SizedBox(

@@ -5,6 +5,7 @@ import '../../../../../theme/color.dart';
 import '../../../../entities/state/social_state.dart';
 import '../../../../logic/social_bloc.dart';
 import '../post_card_widget.dart';
+import '../post_shimmer_loading_widget.dart';
 
 class TrendingListWidget extends StatelessWidget {
   const TrendingListWidget({super.key});
@@ -28,8 +29,20 @@ class TrendingListWidget extends StatelessWidget {
                       post: state.trendingPosts!.elementAt(index));
                 },
               )
-            : const CircularProgressIndicator(
-                color: ColorTheme.primary,
+            : ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 24,
+                  );
+                },
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  return const PostShimmerLoadingWidget(
+                    padding: EdgeInsets.all(8.0),
+                  );
+                },
               );
       },
     );
