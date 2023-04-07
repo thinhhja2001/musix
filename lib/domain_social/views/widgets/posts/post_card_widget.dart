@@ -3,7 +3,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
 import 'package:musix/domain_social/views/widgets/posts/post_shimmer_loading_widget.dart';
-import 'package:musix/domain_social/views/widgets/posts/social_video_player_widget.dart';
+import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
 import 'package:musix/domain_user/utils/constant_utils.dart';
 import 'package:musix/domain_video/entities/video_detail.dart';
 import 'package:musix/domain_video/utils/methods.dart';
@@ -43,7 +43,7 @@ class PostCardWidget extends StatelessWidget {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: SocialVideoPlayerWidget(
+                    child: SocialDataPlayerWidget(
                       thumbnailUrl: post.thumbnailUrl!,
                       dataUrl: post.fileUrl!,
                       artistName: user?.username ?? "Unknown",

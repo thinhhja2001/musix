@@ -6,8 +6,8 @@ import 'package:video_player/video_player.dart';
 import '../../../../theme/theme.dart';
 import '../../../utils/custom_social_media_control.dart';
 
-class SocialVideoPlayerWidget extends StatefulWidget {
-  SocialVideoPlayerWidget({
+class SocialDataPlayerWidget extends StatefulWidget {
+  SocialDataPlayerWidget({
     Key? key,
     required this.dataUrl,
     required this.title,
@@ -19,11 +19,10 @@ class SocialVideoPlayerWidget extends StatefulWidget {
   final String title;
   final String artistName;
   @override
-  State<SocialVideoPlayerWidget> createState() =>
-      _SocialVideoPlayerWidgetState();
+  State<SocialDataPlayerWidget> createState() => _SocialDataPlayerWidgetState();
 }
 
-class _SocialVideoPlayerWidgetState extends State<SocialVideoPlayerWidget> {
+class _SocialDataPlayerWidgetState extends State<SocialDataPlayerWidget> {
   late ChewieController chewieController;
   bool isStartPlayingVideo = false;
 
