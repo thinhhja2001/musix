@@ -12,16 +12,20 @@ import 'package:musix/theme/theme.dart';
 import 'package:musix/utils/utils.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ProfileAvatarWidget extends StatefulWidget {
-  const ProfileAvatarWidget({
+class OwnPlaylistThumbnailWidget extends StatefulWidget {
+  final String playlistId;
+  const OwnPlaylistThumbnailWidget({
+    required this.playlistId,
     super.key,
   });
 
   @override
-  State<ProfileAvatarWidget> createState() => _ProfileAvatarWidgetState();
+  State<OwnPlaylistThumbnailWidget> createState() =>
+      _OwnPlaylistThumbnailWidgetState();
 }
 
-class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
+class _OwnPlaylistThumbnailWidgetState
+    extends State<OwnPlaylistThumbnailWidget> {
   bool isChoosing = false;
   final imagePicker = ImagePicker();
   XFile? image;
@@ -53,7 +57,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                       children: [
                         Center(
                           child: Text(
-                            'Upload Avatar',
+                            'Upload Playlist Thumbnail',
                             style: TextStyleTheme.ts20.copyWith(
                               color: ColorTheme.white,
                               fontWeight: FontWeight.w500,
@@ -63,10 +67,10 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                         const SizedBox(
                           height: 12,
                         ),
-                        BlocConsumer<ProfileBloc, ProfileState>(
+                        BlocConsumer<UserMusicBloc, UserMusicState>(
                             listener: (_, state) {
                           if (state.status?[
-                                  ProfileStatusKey.uploadAvatar.name] ==
+                                  UserMusicStatusKey.ownPlaylist.name] ==
                               Status.loading) {
                             _error = null;
                             showDialog(
@@ -75,7 +79,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                                   return const LoadingWidget();
                                 });
                           } else if (state.status?[
-                                  ProfileStatusKey.uploadAvatar.name] ==
+                                  UserMusicStatusKey.ownPlaylist.name] ==
                               Status.success) {
                             Navigator.maybePop(context);
                             SchedulerBinding.instance
@@ -86,7 +90,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                               });
                               Future.delayed(const Duration(milliseconds: 300))
                                   .then((value) => Fluttertoast.showToast(
-                                      msg: "Update Avatar Success",
+                                      msg: "Update Thumbnail Success",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1,
@@ -98,7 +102,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                           }
                         }, builder: (context, state) {
                           if (state.status?[
-                                  ProfileStatusKey.uploadAvatar.name] ==
+                                  UserMusicStatusKey.ownPlaylist.name] ==
                               Status.error) {
                             SchedulerBinding.instance
                                 .addPostFrameCallback((timeStamp) {
@@ -157,8 +161,11 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                                   image!.readAsBytes().then((value) {
                                     List<int> imgByte = value.toList();
                                     context
-                                        .read<ProfileBloc>()
-                                        .add(UploadAvatarProfileEvent(imgByte));
+                                        .read<UserMusicBloc>()
+                                        .add(UploadThumbnailOwnPlaylistEvent(
+                                          thumbnail: imgByte,
+                                          playlistId: 'widget.playlistId,',
+                                        ));
                                   });
                                   image = null;
                                 },
@@ -217,9 +224,12 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                   File(image!.path),
                   fit: BoxFit.fitWidth,
                 )
-              : BlocSelector<ProfileBloc, ProfileState, String?>(
+              : BlocSelector<UserMusicBloc, UserMusicState, String?>(
                   selector: (state) {
-                    return state.user?.profile?.avatarUrl;
+                    return state.music?.ownPlaylists
+                        ?.firstWhere(
+                            (element) => element.id == widget.playlistId)
+                        .thumbnail;
                   },
                   builder: (context, imgUrl) {
                     return CachedNetworkImage(

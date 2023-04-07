@@ -64,6 +64,17 @@ class _MusixAppState extends State<MusixApp> {
         ),
         BlocProvider(
           lazy: false,
+          create: (context) => OwnPlaylistBloc(
+            initialState: OwnPlaylistState(
+              status: {
+                OwnPlaylistStatusKey.global.name: Status.idle,
+              },
+            ),
+            songRepo: getIt.get<SongInfoRepositoryImpl>(),
+          ),
+        ),
+        BlocProvider(
+          lazy: false,
           create: (context) => SearchMusicBloc(
             initialState: SearchMusicState(
               status: {

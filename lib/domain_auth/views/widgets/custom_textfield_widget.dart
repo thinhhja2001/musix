@@ -10,12 +10,14 @@ class CustomInputFieldWidget extends StatefulWidget {
     required this.controller,
     this.validation,
     this.darkTheme = true,
+    this.maxLines,
   }) : super(key: key);
   final TextInputType textInputType;
   final String label;
   final TextEditingController controller;
   final String? Function(String?)? validation;
   final bool darkTheme;
+  final int? maxLines;
   @override
   State<CustomInputFieldWidget> createState() => _CustomInputFieldWidgetState();
 }
@@ -34,6 +36,7 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
         obscureText: widget.textInputType == TextInputType.visiblePassword
             ? _isObscure
             : false,
+        maxLines: widget.maxLines,
         style: TextStyle(
             color: widget.darkTheme ? Colors.white : Colors.black,
             fontWeight: FontWeight.w400),
