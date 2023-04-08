@@ -294,6 +294,17 @@ class ProfileScreen extends StatelessWidget {
                             );
                           },
                         ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        LibraryButtonWidget(
+                          title: 'Own Playlists',
+                          icon: MdiIcons.musicBoxMultiple,
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RoutingPath.ownPlaylists);
+                          },
+                        ),
                       ],
                     ),
                   ),

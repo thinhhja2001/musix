@@ -74,6 +74,7 @@ class _OwnPlaylistThumbnailWidgetState
                               Status.loading) {
                             _error = null;
                             showDialog(
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (context) {
                                   return const LoadingWidget();
@@ -240,10 +241,13 @@ class _OwnPlaylistThumbnailWidgetState
                         child: Material(
                           color: Colors.white,
                           child: SizedBox(
-                            width: context.size?.width,
+                            width: MediaQuery.of(context).size.width,
+                            height: 400,
                           ),
                         ),
                       ),
+                      width: MediaQuery.of(context).size.width,
+                      height: 400,
                       errorWidget: (context, url, error) =>
                           const Center(child: Icon(Icons.error)),
                       fit: BoxFit.fitWidth,

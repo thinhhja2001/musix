@@ -7,6 +7,7 @@ import 'package:musix/domain_hub/entities/entities.dart';
 import 'package:musix/domain_song/views/widgets.dart';
 import 'package:musix/domain_song/views/widgets/control_widgets/shuffle_button_widget.dart';
 import 'package:musix/domain_user/views/own_playlist_screen/widgets/own_playlist_thumbnail_widget.dart';
+import 'package:musix/domain_user/views/own_playlists_screen/widgets.dart';
 import 'package:musix/theme/theme.dart';
 import 'package:musix/utils/utils.dart';
 
@@ -18,7 +19,6 @@ class OwnPlaylistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final ownPlaylistId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       backgroundColor: ColorTheme.background,
       persistentFooterButtons: [CurrentSongPlayerWidget()],
@@ -68,10 +68,12 @@ class OwnPlaylistScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              context.read<UserMusicBloc>().add(RemoveOwnPlaylistEvent(
-                    ownPlaylistId,
-                  ));
-              Navigator.maybePop(context);
+              showDialog(
+                  context: context,
+                  builder: (context) => RemoveOwnPlaylistWidget(
+                        playlistId:
+                            BlocProvider.of<OwnPlaylistBloc>(context).state.id!,
+                      )).then((value) => Navigator.of(context).maybePop());
             },
             splashColor: Colors.red.withOpacity(0.2),
             tooltip: 'Remove Playlist',
@@ -180,18 +182,23 @@ class OwnPlaylistScreen extends StatelessWidget {
                                 width: 8,
                               ),
                               IconButton(
-                                onPressed: () {
-                                  context.read<SongBloc>().add(
-                                      SongSetListSongInfoEvent(state.songs));
+                                onPressed: state.songs == null ||
+                                        state.songs?.isEmpty == true
+                                    ? null
+                                    : () {
+                                        context.read<SongBloc>().add(
+                                            SongSetListSongInfoEvent(
+                                                state.songs));
 
-                                  ///Passing nul will start playing the song base on current state of
-                                  ///@isShuffle in SongBloc
-                                  ///If @isShuffle is true, generate a random index and start playing at the index.
-                                  ///If @isShuffle is false, start playing the section at the index of 0
-                                  context.read<SongBloc>().add(
-                                        SongStartPlayingSectionEvent(null),
-                                      );
-                                },
+                                        ///Passing nul will start playing the song base on current state of
+                                        ///@isShuffle in SongBloc
+                                        ///If @isShuffle is true, generate a random index and start playing at the index.
+                                        ///If @isShuffle is false, start playing the section at the index of 0
+                                        context.read<SongBloc>().add(
+                                              SongStartPlayingSectionEvent(
+                                                  null),
+                                            );
+                                      },
                                 icon: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(180),
@@ -215,7 +222,7 @@ class OwnPlaylistScreen extends StatelessWidget {
                           ),
                           Text(
                             state.description ?? "",
-                            style: TextStyleTheme.ts14.copyWith(
+                            style: TextStyleTheme.ts16.copyWith(
                               fontWeight: FontWeight.w400,
                               color: const Color(0xffE8BCD3),
                             ),
@@ -228,12 +235,21 @@ class OwnPlaylistScreen extends StatelessWidget {
                           const SizedBox(
                             height: 12,
                           ),
-                          SongListWidget(
-                            sectionSong: SectionSong(items: state.songs),
-                            isScrollable: false,
-                            isShowIndex: true,
-                            songArrange: SongArrange.info,
-                          ),
+                          if (state.songs == null || state.songs!.isEmpty) ...[
+                            Text(
+                              'There is no songs in list',
+                              style: TextStyleTheme.ts16.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ] else
+                            SongListWidget(
+                              sectionSong: SectionSong(items: state.songs),
+                              isScrollable: false,
+                              isShowIndex: true,
+                              songArrange: SongArrange.info,
+                            ),
                         ],
                       ),
                     ),

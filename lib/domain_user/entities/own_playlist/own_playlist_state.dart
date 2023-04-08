@@ -1,15 +1,16 @@
+import 'package:equatable/equatable.dart';
 import 'package:musix/domain_song/entities/entities.dart';
 import 'package:musix/utils/utils.dart';
 
-class OwnPlaylistState {
-  Map<String, Status>? status;
-  String? id;
-  String? title;
-  String? description;
-  String? thumbnail;
-  List<SongInfo>? songs;
+class OwnPlaylistState extends Equatable {
+  final Map<String, Status>? status;
+  final String? id;
+  final String? title;
+  final String? description;
+  final String? thumbnail;
+  final List<SongInfo>? songs;
 
-  OwnPlaylistState({
+  const OwnPlaylistState({
     this.status,
     this.id,
     this.title,
@@ -32,6 +33,20 @@ class OwnPlaylistState {
       title: title ?? this.title,
       description: description ?? this.description,
       thumbnail: thumbnail ?? this.thumbnail,
+      songs: songs ?? this.songs,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        status,
+        id,
+        title,
+        description,
+        thumbnail,
+        songs?.length,
+      ];
+
+  @override
+  bool? get stringify => true;
 }

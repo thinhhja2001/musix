@@ -43,7 +43,6 @@ class OwnPlaylistBloc extends Bloc<OwnPlaylistEvent, OwnPlaylistState> {
         final song = convertSongInfoModel(response);
         songs.add(song!);
       }
-
       emit(
         state.copyWith(
           status: updateMapStatus(

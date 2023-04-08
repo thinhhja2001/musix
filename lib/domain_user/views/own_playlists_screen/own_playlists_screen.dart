@@ -10,8 +10,8 @@ import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
 import 'widgets.dart';
 
-class OwnPlaylistScreen extends StatelessWidget {
-  const OwnPlaylistScreen({Key? key}) : super(key: key);
+class OwnPlaylistsScreen extends StatelessWidget {
+  const OwnPlaylistsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,20 @@ class OwnPlaylistScreen extends StatelessWidget {
             size: 20,
           ),
         ),
+        title: Text(
+          'Own Playlists',
+          style: TextStyleTheme.ts20.copyWith(
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => const AddNewOwnPlaylistWidget());
+            },
             splashColor: Colors.white24,
             tooltip: 'Create New Playlist',
             icon: Icon(
@@ -95,10 +106,12 @@ class OwnPlaylistScreen extends StatelessWidget {
                           title: playlists[index].title!,
                           padding: 0,
                           onCardPress: () {
+                            context
+                                .read<OwnPlaylistBloc>()
+                                .add(GetOwnPlaylistEvent(playlists[index]));
                             Navigator.pushNamed(
                               context,
-                              RoutingPath.playlistInfo,
-                              arguments: playlists[index],
+                              RoutingPath.ownPlaylist,
                             );
                           },
                           isShowAdditionButton: false,

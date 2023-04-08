@@ -10,7 +10,7 @@ class CustomInputFieldWidget extends StatefulWidget {
     required this.controller,
     this.validation,
     this.darkTheme = true,
-    this.maxLines,
+    this.maxLines = 1,
   }) : super(key: key);
   final TextInputType textInputType;
   final String label;
@@ -45,7 +45,7 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
           filled: true,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
-            vertical: 4,
+            vertical: 12,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),

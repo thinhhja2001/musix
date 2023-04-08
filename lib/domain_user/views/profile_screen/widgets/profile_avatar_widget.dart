@@ -230,7 +230,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                         child: Material(
                           color: Colors.white,
                           child: SizedBox(
-                            width: context.size?.width,
+                            width: MediaQuery.of(context).size.width,
                           ),
                         ),
                       ),
