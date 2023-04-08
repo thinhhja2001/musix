@@ -1,8 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../theme/color.dart';
 
 Future<PaletteGenerator> updatePaletteGenerator(String imageUrl) async {
   final paletteGenerator = await PaletteGenerator.fromImageProvider(
@@ -48,3 +53,34 @@ void printJson(Map<String, dynamic>? json) {
   String prettyprint = encoder.convert(json);
   debugPrint(prettyprint);
 }
+
+String readTimestamp(int timestamp) {
+  var now = DateTime.now();
+  var hourFormat = DateFormat('HH:mm a');
+  var dateCreated = DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+  var diff = dateCreated.difference(now);
+  var time = '';
+  var diffInDate = now.day - dateCreated.day;
+  if (diffInDate == 0) {
+    return "Today at ${hourFormat.format(dateCreated)}";
+  } else if (diffInDate == 1) {
+    return "Yesterday at ${hourFormat.format(dateCreated)}";
+  } else if (diffInDate < 7) {
+    return "$diffInDate days ago";
+  }
+  var dateFormat = DateFormat.yMMMd();
+  return dateFormat.format(dateCreated);
+}
+
+Widget shimmerLoadingEffect({required double width, double? height}) =>
+    Shimmer.fromColors(
+      baseColor: ColorTheme.background,
+      highlightColor: ColorTheme.backgroundDarker,
+      child: Material(
+        color: Colors.white,
+        child: SizedBox(
+          width: width,
+          height: height ?? 240,
+        ),
+      ),
+    );

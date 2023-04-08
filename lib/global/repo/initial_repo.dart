@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:musix/config/environment.dart';
 import 'package:musix/config/register_dependency.dart';
+import 'package:musix/domain_auth/utils/dio_utils.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 class InitialRepo {
@@ -14,6 +15,7 @@ class InitialRepo {
 
   void _initDio() {
     final options = BaseOptions(
+      validateStatus: validateStatus,
       baseUrl: Environment.databaseUrl,
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),

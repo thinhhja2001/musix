@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:musix/global/repo/initial_repo.dart';
+import 'package:musix/utils/functions/function_utils.dart';
 
 import '../../utils/enum/error_data.dart';
 import '../models/models.dart';
