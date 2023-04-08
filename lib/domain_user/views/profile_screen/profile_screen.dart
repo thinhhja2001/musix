@@ -15,312 +15,315 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: ColorTheme.background,
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: size.width,
-                height: size.height * 0.4,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(32),
-                    bottomRight: Radius.circular(32),
-                  ),
-                ),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const ProfileAvatarWidget(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 28,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Spacer(),
-                          BlocSelector<ProfileBloc, ProfileState, String?>(
-                            selector: (state) {
-                              return state.user?.profile?.fullName;
-                            },
-                            builder: (context, fullName) {
-                              return Text(
-                                fullName ?? "Anonymous",
-                                style: TextStyleTheme.ts28.copyWith(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          BlocSelector<ProfileBloc, ProfileState, String?>(
-                            selector: (state) {
-                              return state.user?.profile?.birthday;
-                            },
-                            builder: (context, birthday) {
-                              return Text(
-                                birthday ?? "None",
-                                style: TextStyleTheme.ts14.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: ColorTheme.primaryLighten,
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: size.width,
+              height: size.height * 0.4,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(32),
+                  bottomRight: Radius.circular(32),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  const ProfileAvatarWidget(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 28,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (context) =>
-                                    const EditProfileWidget());
+                        const Spacer(),
+                        BlocSelector<ProfileBloc, ProfileState, String?>(
+                          selector: (state) {
+                            return state.user?.profile?.fullName;
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorTheme.primaryLighten,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 16),
-                            child: Text(
-                              'Setting',
-                              style: TextStyleTheme.ts16.copyWith(
+                          builder: (context, fullName) {
+                            return Text(
+                              fullName ?? "Anonymous",
+                              style: TextStyleTheme.ts28.copyWith(
+                                fontSize: 24,
                                 fontWeight: FontWeight.w400,
-                                color: ColorTheme.backgroundDarker,
+                                color: Colors.white,
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white.withOpacity(0.14),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 16),
-                            child: Text(
-                              'Logout',
-                              style: TextStyleTheme.ts16.copyWith(
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        BlocSelector<ProfileBloc, ProfileState, String?>(
+                          selector: (state) {
+                            return state.user?.profile?.birthday;
+                          },
+                          builder: (context, birthday) {
+                            return Text(
+                              birthday ?? "None",
+                              style: TextStyleTheme.ts14.copyWith(
                                 fontWeight: FontWeight.w400,
-                                color: ColorTheme.primary,
+                                color: ColorTheme.primaryLighten,
                               ),
-                            ),
-                          ),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 8,
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      width: size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
-                        color: Colors.white,
-                      ),
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            'My Library',
-                            style: TextStyleTheme.ts20.copyWith(
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) => const EditProfileWidget());
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorTheme.primaryLighten,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                          child: Text(
+                            'Setting',
+                            style: TextStyleTheme.ts16.copyWith(
+                              fontWeight: FontWeight.w400,
                               color: ColorTheme.backgroundDarker,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(
-                            height: 36,
-                          ),
-                          BlocSelector<UserMusicBloc, UserMusicState,
-                              List<String>>(
-                            selector: (state) {
-                              return state.music?.favoritePlaylists ?? [];
-                            },
-                            builder: (context, favoritePlaylists) {
-                              return LibraryButtonWidget(
-                                title: 'Favorite Playlist',
-                                icon: MdiIcons.music,
-                                onTap: () {
-                                  context.read<PlaylistsBloc>().add(
-                                      GetPlaylistsEvent(
-                                          playlistIds: favoritePlaylists,
-                                          title: 'Favorite Playlist'));
-                                  Navigator.of(context)
-                                      .pushNamed(RoutingPath.playlistsInfo);
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          BlocSelector<UserMusicBloc, UserMusicState,
-                              List<String>>(
-                            selector: (state) {
-                              return state.music?.dislikePlaylists ?? [];
-                            },
-                            builder: (context, dislikePlaylists) {
-                              return LibraryButtonWidget(
-                                title: 'Block Playlist',
-                                icon: MdiIcons.musicOff,
-                                onTap: () {
-                                  context.read<PlaylistsBloc>().add(
-                                      GetPlaylistsEvent(
-                                          playlistIds: dislikePlaylists,
-                                          title: 'Block Playlist'));
-                                  Navigator.of(context)
-                                      .pushNamed(RoutingPath.playlistsInfo);
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          BlocSelector<UserMusicBloc, UserMusicState,
-                              List<String>>(
-                            selector: (state) {
-                              return state.music?.favoriteArtists ?? [];
-                            },
-                            builder: (context, favoriteArtists) {
-                              return LibraryButtonWidget(
-                                title: 'Favorite Artist',
-                                icon: MdiIcons.accountStarOutline,
-                                onTap: () {
-                                  context.read<ArtistsBloc>().add(
-                                      GetArtistsEvent(
-                                          aliasList: favoriteArtists,
-                                          title: 'Favorite Artist'));
-                                  Navigator.of(context)
-                                      .pushNamed(RoutingPath.artistsInfo);
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          BlocSelector<UserMusicBloc, UserMusicState,
-                              List<String>>(
-                            selector: (state) {
-                              return state.music?.dislikeArtists ?? [];
-                            },
-                            builder: (context, dislikeArtists) {
-                              return LibraryButtonWidget(
-                                title: 'Block Artist',
-                                icon: MdiIcons.accountRemoveOutline,
-                                onTap: () {
-                                  context.read<ArtistsBloc>().add(
-                                      GetArtistsEvent(
-                                          aliasList: dislikeArtists,
-                                          title: 'Block Artist'));
-                                  Navigator.of(context)
-                                      .pushNamed(RoutingPath.artistsInfo);
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          BlocSelector<UserMusicBloc, UserMusicState,
-                              List<String>>(
-                            selector: (state) {
-                              return state.music?.favoriteSongs ?? [];
-                            },
-                            builder: (context, favoriteSongs) {
-                              return LibraryButtonWidget(
-                                title: 'Favorite Song',
-                                icon: MdiIcons.musicClefTreble,
-                                onTap: () {
-                                  context.read<SongsBloc>().add(GetSongsEvent(
-                                      songIds: favoriteSongs,
-                                      title: 'Favorite Song'));
-                                  Navigator.of(context)
-                                      .pushNamed(RoutingPath.songsInfo);
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          BlocSelector<UserMusicBloc, UserMusicState,
-                              List<String>>(
-                            selector: (state) {
-                              return state.music?.dislikeSongs ?? [];
-                            },
-                            builder: (context, dislikeSongs) {
-                              return LibraryButtonWidget(
-                                title: 'Dislike Song',
-                                icon: MdiIcons.musicAccidentalDoubleSharp,
-                                onTap: () {
-                                  context.read<SongsBloc>().add(GetSongsEvent(
-                                      songIds: dislikeSongs,
-                                      title: 'Dislike Song'));
-                                  Navigator.of(context)
-                                      .pushNamed(RoutingPath.songsInfo);
-                                },
-                              );
-                            },
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const SongListWidget(
-                      sectionSong: SectionSong(
-                        title: 'Recent Songs',
-                        items: [],
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white.withOpacity(0.14),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                          child: Text(
+                            'Logout',
+                            style: TextStyleTheme.ts16.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: ColorTheme.primary,
+                            ),
+                          ),
+                        ),
                       ),
-                      isScrollable: false,
-                      isShowIndex: true,
-                      songArrange: SongArrange.info,
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Container(
+                    width: size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: Colors.white,
                     ),
-                  ],
-                ),
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          'My Library',
+                          style: TextStyleTheme.ts20.copyWith(
+                            color: ColorTheme.backgroundDarker,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 36,
+                        ),
+                        BlocSelector<UserMusicBloc, UserMusicState,
+                            List<String>>(
+                          selector: (state) {
+                            return state.music?.favoritePlaylists ?? [];
+                          },
+                          builder: (context, favoritePlaylists) {
+                            return LibraryButtonWidget(
+                              title: 'Favorite Playlist',
+                              icon: MdiIcons.music,
+                              onTap: () {
+                                context.read<PlaylistsBloc>().add(
+                                    GetPlaylistsEvent(
+                                        playlistIds: favoritePlaylists,
+                                        title: 'Favorite Playlist'));
+                                Navigator.of(context)
+                                    .pushNamed(RoutingPath.playlistsInfo);
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BlocSelector<UserMusicBloc, UserMusicState,
+                            List<String>>(
+                          selector: (state) {
+                            return state.music?.dislikePlaylists ?? [];
+                          },
+                          builder: (context, dislikePlaylists) {
+                            return LibraryButtonWidget(
+                              title: 'Block Playlist',
+                              icon: MdiIcons.musicOff,
+                              onTap: () {
+                                context.read<PlaylistsBloc>().add(
+                                    GetPlaylistsEvent(
+                                        playlistIds: dislikePlaylists,
+                                        title: 'Block Playlist'));
+                                Navigator.of(context)
+                                    .pushNamed(RoutingPath.playlistsInfo);
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BlocSelector<UserMusicBloc, UserMusicState,
+                            List<String>>(
+                          selector: (state) {
+                            return state.music?.favoriteArtists ?? [];
+                          },
+                          builder: (context, favoriteArtists) {
+                            return LibraryButtonWidget(
+                              title: 'Favorite Artist',
+                              icon: MdiIcons.accountStarOutline,
+                              onTap: () {
+                                context.read<ArtistsBloc>().add(GetArtistsEvent(
+                                    aliasList: favoriteArtists,
+                                    title: 'Favorite Artist'));
+                                Navigator.of(context)
+                                    .pushNamed(RoutingPath.artistsInfo);
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BlocSelector<UserMusicBloc, UserMusicState,
+                            List<String>>(
+                          selector: (state) {
+                            return state.music?.dislikeArtists ?? [];
+                          },
+                          builder: (context, dislikeArtists) {
+                            return LibraryButtonWidget(
+                              title: 'Block Artist',
+                              icon: MdiIcons.accountRemoveOutline,
+                              onTap: () {
+                                context.read<ArtistsBloc>().add(GetArtistsEvent(
+                                    aliasList: dislikeArtists,
+                                    title: 'Block Artist'));
+                                Navigator.of(context)
+                                    .pushNamed(RoutingPath.artistsInfo);
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BlocSelector<UserMusicBloc, UserMusicState,
+                            List<String>>(
+                          selector: (state) {
+                            return state.music?.favoriteSongs ?? [];
+                          },
+                          builder: (context, favoriteSongs) {
+                            return LibraryButtonWidget(
+                              title: 'Favorite Song',
+                              icon: MdiIcons.musicClefTreble,
+                              onTap: () {
+                                context.read<SongsBloc>().add(GetSongsEvent(
+                                    songIds: favoriteSongs,
+                                    title: 'Favorite Song'));
+                                Navigator.of(context)
+                                    .pushNamed(RoutingPath.songsInfo);
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BlocSelector<UserMusicBloc, UserMusicState,
+                            List<String>>(
+                          selector: (state) {
+                            return state.music?.dislikeSongs ?? [];
+                          },
+                          builder: (context, dislikeSongs) {
+                            return LibraryButtonWidget(
+                              title: 'Dislike Song',
+                              icon: MdiIcons.musicAccidentalDoubleSharp,
+                              onTap: () {
+                                context.read<SongsBloc>().add(GetSongsEvent(
+                                    songIds: dislikeSongs,
+                                    title: 'Dislike Song'));
+                                Navigator.of(context)
+                                    .pushNamed(RoutingPath.songsInfo);
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        LibraryButtonWidget(
+                          title: 'Own Playlists',
+                          icon: MdiIcons.musicBoxMultiple,
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RoutingPath.ownPlaylists);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const SongListWidget(
+                    sectionSong: SectionSong(
+                      title: 'Recent Songs',
+                      items: [],
+                    ),
+                    isScrollable: false,
+                    isShowIndex: true,
+                    songArrange: SongArrange.info,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

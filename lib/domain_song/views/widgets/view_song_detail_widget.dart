@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_user/views/own_playlists_screen/widgets.dart';
 import 'package:musix/theme/color.dart';
 
 import '../../../config/exporter.dart';
@@ -129,7 +130,13 @@ class ViewSongDetailWidget extends StatelessWidget {
           DetailChildWidget(
             icon: Icons.playlist_add,
             data: "Add to playlist",
-            onPress: () {},
+            onPress: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => SaveSongOwnPlaylistWidget(
+                        song: song,
+                      ));
+            },
           ),
           const SizedBox(
             height: 12,
