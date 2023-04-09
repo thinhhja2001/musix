@@ -1,14 +1,23 @@
 import '../entities/entities.dart';
 import '../models/models.dart';
 
+User convertMiniUserModelToUser(MiniUserModel miniUserModel) {
+  return User(
+    id: miniUserModel.id,
+    profile: convertProfileModelToProfile(miniUserModel.profile),
+  );
+}
+
 User convertUserModelToUser(UserModel userModel) {
   return User(
     id: userModel.id,
     username: userModel.username,
     email: userModel.email,
     enable: userModel.enabled,
-    followings: userModel.followings,
-    followers: userModel.followers,
+    followings:
+        userModel.followings.map((e) => convertMiniUserModelToUser(e)).toList(),
+    followers:
+        userModel.followers.map((e) => convertMiniUserModelToUser(e)).toList(),
     profile: convertProfileModelToProfile(userModel.profile),
   );
 }

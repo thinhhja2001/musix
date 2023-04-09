@@ -11,15 +11,33 @@ import '../models/models.dart';
 class UserMusicRepo extends InitialRepo {
   FutureOr<UserMusicModel> getUserMusic({
     required String token,
-    required String username,
   }) async {
     try {
       const url = '/music';
-      var data = {'username': username};
 
       var response = await dio.get(
         url,
-        data: data,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      return UserMusicModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<UserMusicModel> getOtherUserMusic({
+    required String token,
+    required String username,
+  }) async {
+    try {
+      final url = '/music/$username';
+
+      var response = await dio.get(
+        url,
         options: Options(
           headers: headerApplicationJson(token: token),
         ),
@@ -34,7 +52,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<SongsModel> favoriteSong({
     required String token,
-    required String username,
     required String id,
     required String title,
     required String artistNames,
@@ -43,7 +60,6 @@ class UserMusicRepo extends InitialRepo {
     try {
       const url = '/music/song/favorite';
       var data = {
-        "username": username,
         "song": {
           "id": id,
           "title": title,
@@ -69,7 +85,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<SongsModel> dislikeSong({
     required String token,
-    required String username,
     required String id,
     required String title,
     required String artistNames,
@@ -78,7 +93,6 @@ class UserMusicRepo extends InitialRepo {
     try {
       const url = '/music/song/dislike';
       var data = {
-        "username": username,
         "song": {
           "id": id,
           "title": title,
@@ -104,7 +118,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<PlaylistsModel> favoritePlaylist({
     required String token,
-    required String username,
     required String id,
     required String title,
     required String artistNames,
@@ -114,7 +127,6 @@ class UserMusicRepo extends InitialRepo {
     try {
       const url = '/music/playlist/favorite';
       var data = {
-        "username": username,
         "playlist": {
           "id": id,
           "title": title,
@@ -141,7 +153,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<PlaylistsModel> dislikePlaylist({
     required String token,
-    required String username,
     required String id,
     required String title,
     required String artistNames,
@@ -151,7 +162,6 @@ class UserMusicRepo extends InitialRepo {
     try {
       const url = '/music/playlist/dislike';
       var data = {
-        "username": username,
         "playlist": {
           "id": id,
           "title": title,
@@ -178,7 +188,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<ArtistsModel> favoriteArtist({
     required String token,
-    required String username,
     required String id,
     required String name,
     required String alias,
@@ -186,7 +195,6 @@ class UserMusicRepo extends InitialRepo {
     try {
       const url = '/music/artist/favorite';
       var data = {
-        "username": username,
         "artist": {
           "id": id,
           "name": name,
@@ -211,7 +219,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<ArtistsModel> dislikeArtist({
     required String token,
-    required String username,
     required String id,
     required String name,
     required String alias,
@@ -219,7 +226,6 @@ class UserMusicRepo extends InitialRepo {
     try {
       const url = '/music/artist/dislike';
       var data = {
-        "username": username,
         "artist": {
           "id": id,
           "name": name,
@@ -244,14 +250,12 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<OwnPlaylistsModel> createOwnPlaylist({
     required String token,
-    required String username,
     required String title,
     String? sortDescription,
   }) async {
     try {
-      const url = '/music/playlist/create';
+      const url = '/music/ownPlaylist';
       var data = {
-        "username": username,
         "title": title,
       };
       if (sortDescription != null) data['sortDescription'] = sortDescription;
@@ -273,17 +277,13 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<OwnPlaylistsModel> changeOwnPlaylist({
     required String token,
-    required String username,
     required String playlistId,
     String? title,
     String? sortDescription,
   }) async {
     try {
-      const url = '/music/playlist/changeProfile';
-      var data = {
-        "username": username,
-        "playlistId": playlistId,
-      };
+      final url = '/music/ownPlaylist/$playlistId/changeProfile';
+      var data = {};
 
       if (title != null) data["title"] = title;
       if (sortDescription != null) data['sortDescription'] = sortDescription;
@@ -305,12 +305,11 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<OwnPlaylistsModel> uploadThumbnailOwnPlaylist({
     required String token,
-    required String username,
     required String playlistId,
     required List<int> thumbnail,
   }) async {
     try {
-      const url = '/music/playlist/uploadThumbnail';
+      final url = '/music/ownPlaylist/$playlistId/uploadThumbnail';
 
       var data = FormData.fromMap({
         'thumbnail': MultipartFile.fromBytes(
@@ -318,8 +317,6 @@ class UserMusicRepo extends InitialRepo {
           filename: "image.png",
           contentType: MediaType.parse('image/jpeg'),
         ),
-        'username': username,
-        'playlistId': playlistId,
       });
 
       var response = await dio.put(
@@ -339,19 +336,13 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<OwnPlaylistsModel> removeOwnPlaylist({
     required String token,
-    required String username,
     required String playlistId,
   }) async {
     try {
-      const url = "/music/playlist/remove";
-      var data = {
-        "username": username,
-        "playlistId": playlistId,
-      };
+      final url = "/music/ownPlaylist/$playlistId";
 
       var response = await dio.delete(
         url,
-        data: data,
         options: Options(
           headers: headerApplicationJson(token: token),
         ),
@@ -366,7 +357,6 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<OwnPlaylistsModel> uploadSongOwnPlaylist({
     required String token,
-    required String username,
     required String playlistId,
     required String id,
     required String title,
@@ -374,10 +364,8 @@ class UserMusicRepo extends InitialRepo {
     required String? genreNames,
   }) async {
     try {
-      const url = '/music/playlist/uploadSong';
+      final url = '/music/ownPlaylist/$playlistId/uploadSong';
       var data = {
-        "username": username,
-        "playlistId": playlistId,
         "song": {
           "id": id,
           "title": title,

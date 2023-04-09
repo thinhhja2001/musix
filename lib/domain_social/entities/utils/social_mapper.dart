@@ -28,11 +28,11 @@ class SocialMapper {
     List<User> userLiked = List.empty(growable: true);
     List userLikedIds = commentModel.likedBy;
     ProfileResponseModel ownerUserModel =
-        await profileRepo.getProfile(testToken, commentModel.ownerId);
+        await profileRepo.getOtherProfile(testToken, commentModel.ownerId);
     User owner = convertUserModelToUser(ownerUserModel.user!);
     for (var userId in userLikedIds) {
       ProfileResponseModel profileResponseModel =
-          await profileRepo.getProfile(testToken, userId);
+          await profileRepo.getOtherProfile(testToken, userId);
 
       User user = convertUserModelToUser(profileResponseModel.user!);
       userLiked.add(user);
@@ -56,13 +56,13 @@ class SocialMapper {
         await listCommentFromListCommentModel(commentsModel);
 
     ProfileResponseModel ownerUserModel =
-        await profileRepo.getProfile(testToken, postModel.ownerId);
+        await profileRepo.getOtherProfile(testToken, postModel.ownerId);
     User owner = convertUserModelToUser(ownerUserModel.user!);
 
     List<User> userLiked = List.empty(growable: true);
     for (var userId in postModel.likedBy) {
       ProfileResponseModel profileResponseModel =
-          await profileRepo.getProfile(testToken, userId);
+          await profileRepo.getOtherProfile(testToken, userId);
       User user = convertUserModelToUser(profileResponseModel.user!);
       userLiked.add(user);
     }

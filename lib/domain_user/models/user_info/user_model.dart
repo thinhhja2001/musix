@@ -9,8 +9,8 @@ class UserModel {
   ProfileModel profile;
   UserRole role;
   bool enabled;
-  List followings;
-  List followers;
+  List<MiniUserModel> followings;
+  List<MiniUserModel> followers;
   UserModel({
     required this.id,
     required this.username,
@@ -35,27 +35,52 @@ class UserModel {
   }
 
   factory UserModel.fromJson(Map<String, dynamic> data) {
+    var followings = <MiniUserModel>[];
+    if (data['followings'] != null) {
+      data['followings'].forEach((v) {
+        followings.add(MiniUserModel.fromJson(v));
+      });
+    }
+
+    var followers = <MiniUserModel>[];
+    if (data['followers'] != null) {
+      data['followers'].forEach((v) {
+        followers.add(MiniUserModel.fromJson(v));
+      });
+    }
     return UserModel(
       id: data['id'] as String,
       username: data['username'] as String,
       email: data['email'] as String,
       enabled: data['enabled'] as bool,
       profile: ProfileModel.fromJson(data['profile'] as Map<String, dynamic>),
-      followings: data['followings'] != null
-          ? List<UserModel>.from(
-              (data['followings'] as List).map(
-                (x) => x,
-              ),
-            )
-          : [],
+      followings: followings,
       role: data["role"] == "USER" ? UserRole.user : UserRole.admin,
-      followers: data['followers'] != null
-          ? List<UserModel>.from(
-              (data['followers'] as List).map<UserModel>(
-                (x) => x,
-              ),
-            )
-          : [],
+      followers: followers,
+    );
+  }
+}
+
+class MiniUserModel {
+  String id;
+  ProfileModel profile;
+
+  MiniUserModel({
+    required this.id,
+    required this.profile,
+  });
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'profile': profile.toJson(),
+    };
+  }
+
+  factory MiniUserModel.fromJson(Map<String, dynamic> data) {
+    return MiniUserModel(
+      id: data['id'] as String,
+      profile: ProfileModel.fromJson(data['profile'] as Map<String, dynamic>),
     );
   }
 }

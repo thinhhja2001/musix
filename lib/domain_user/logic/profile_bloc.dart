@@ -18,7 +18,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     authBloc.stream.listen((authState) {
       debugPrint('AuthBloc Print: $authState');
       if (authState.userId != null && authState.jwtToken != null) {
-        id = authState.userId!;
         token = authState.jwtToken!;
       }
     });
@@ -30,7 +29,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
   final AuthBloc authBloc;
   final ProfileRepo profileRepo;
-  late String id;
   late String token;
 
   //----------------------------------------------------------------------------
@@ -44,7 +42,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   FutureOr<void> _getProfile(
       GetProfileEvent event, Emitter<ProfileState> emit) async {
     try {
-      debugPrint('id: $id - token: $token');
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
@@ -54,7 +51,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ]),
         ),
       );
-      var userModel = await profileRepo.getProfile(token, id);
+      var userModel = await profileRepo.getProfile(token);
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -112,7 +109,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       var userModel = await profileRepo.uploadProfile(
         token: token,
-        id: id,
         phoneNumber: event.phoneNumber,
         fullName: event.fullName,
         birthday: event.birthday,
@@ -183,7 +179,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       var userModel = await profileRepo.uploadAvatar(
         token: token,
-        id: id,
         avatar: event.avatar,
       );
 
@@ -243,7 +238,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       var result = await profileRepo.changePassword(
         token: token,
-        id: id,
         password: event.oldPassword,
         newPassword: event.newPassword,
       );
@@ -306,7 +300,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
       var userModel = await profileRepo.followUser(
         token: token,
-        id: id,
         followId: event.followUserId,
       );
 

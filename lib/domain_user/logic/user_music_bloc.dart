@@ -16,7 +16,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
       if (authState.username != null && authState.jwtToken != null) {
-        username = authState.username!;
         token = authState.jwtToken!;
       }
     });
@@ -37,7 +36,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
   final AuthBloc authBloc;
   final UserMusicRepo userMusicRepo;
   late final String token;
-  late final String username;
 
   //----------------------------------------------------------------------------
   @override
@@ -59,8 +57,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
-      var userMusicModel =
-          await userMusicRepo.getUserMusic(token: token, username: username);
+      var userMusicModel = await userMusicRepo.getUserMusic(token: token);
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -120,7 +117,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var songModels = await userMusicRepo.favoriteSong(
           token: token,
-          username: username,
           id: event.id,
           title: event.title,
           artistNames: event.artistNames,
@@ -186,7 +182,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var songModels = await userMusicRepo.dislikeSong(
           token: token,
-          username: username,
           id: event.id,
           title: event.title,
           artistNames: event.artistNames,
@@ -250,7 +245,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var artistModels = await userMusicRepo.favoriteArtist(
         token: token,
-        username: username,
         id: event.id,
         name: event.name,
         alias: event.alias,
@@ -314,7 +308,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var artistModels = await userMusicRepo.favoriteArtist(
         token: token,
-        username: username,
         id: event.id,
         name: event.name,
         alias: event.alias,
@@ -380,7 +373,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
-        username: username,
         id: event.id,
         title: event.title,
         artistNames: event.artistNames,
@@ -449,7 +441,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
-        username: username,
         id: event.id,
         title: event.title,
         artistNames: event.artistNames,
@@ -516,7 +507,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.createOwnPlaylist(
         token: token,
-        username: username,
         title: event.title,
         sortDescription: event.sortDescription,
       );
@@ -580,7 +570,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.changeOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
         title: event.title,
         sortDescription: event.sortDescription,
@@ -646,7 +635,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.uploadThumbnailOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
         thumbnail: event.thumbnail,
       );
@@ -714,7 +702,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       for (var playlistId in event.playlistIds) {
         var ownPlaylistsModel = await userMusicRepo.uploadSongOwnPlaylist(
           token: token,
-          username: username,
           playlistId: playlistId,
           id: event.id,
           title: event.title,
@@ -786,7 +773,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var ownPlaylistsModel = await userMusicRepo.uploadSongOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
         id: event.id,
         title: event.title,
@@ -854,7 +840,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.removeOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
       );
 
