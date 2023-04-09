@@ -1,19 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
-import 'package:musix/domain_social/views/widgets/posts/post_shimmer_loading_widget.dart';
 import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
 import 'package:musix/domain_user/utils/constant_utils.dart';
-import 'package:musix/domain_video/entities/video_detail.dart';
-import 'package:musix/domain_video/utils/methods.dart';
-import 'package:musix/domain_video/views/widgets/video_player/video_player_widget.dart';
 import 'package:musix/utils/functions/function_utils.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../../../theme/theme.dart';
-import '../../../utils/custom_social_media_control.dart';
 import 'hashtag_widget.dart';
 import 'interaction_widget.dart';
 

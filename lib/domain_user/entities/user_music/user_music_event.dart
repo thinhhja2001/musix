@@ -125,8 +125,23 @@ class UploadSongOwnPlaylistEvent implements UserMusicEvent {
   final String title;
   final List<String>? genreNames;
   final String artistNames;
-  final String playlistId;
+  final List<String> playlistIds;
   const UploadSongOwnPlaylistEvent({
+    required this.playlistIds,
+    required this.id,
+    required this.title,
+    this.genreNames,
+    required this.artistNames,
+  });
+}
+
+class RemoveSongOwnPlaylistEvent implements UserMusicEvent {
+  final String id;
+  final String title;
+  final List<String>? genreNames;
+  final String artistNames;
+  final String playlistId;
+  const RemoveSongOwnPlaylistEvent({
     required this.playlistId,
     required this.id,
     required this.title,

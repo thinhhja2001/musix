@@ -1,6 +1,6 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../state/social_state.dart';
+import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
 
 class SocialEvent {}
 
@@ -27,7 +27,17 @@ class SocialGetListPostFollowingEvent extends SocialEvent {
   SocialGetListPostFollowingEvent();
 }
 
-class SocialAddCreatePostThumbnailEvent extends SocialEvent {
-  XFile? thumbnail;
-  SocialAddCreatePostThumbnailEvent(this.thumbnail);
+class SocialAddPostThumbnailEvent extends SocialEvent {
+  PlatformFile? thumbnail;
+  SocialAddPostThumbnailEvent(this.thumbnail);
+}
+
+class SocialAddPostDataSourceEvent extends SocialEvent {
+  PlatformFile dataSource;
+  SocialAddPostDataSourceEvent(this.dataSource);
+}
+
+class SocialCreatePostEvent extends SocialEvent {
+  PostRegistryModel postRegistryModel;
+  SocialCreatePostEvent(this.postRegistryModel);
 }

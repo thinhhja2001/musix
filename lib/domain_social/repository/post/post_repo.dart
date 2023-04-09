@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:musix/domain_auth/utils/dio_utils.dart';
 import 'package:musix/domain_social/models/comment/request/create_comment_request.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
 import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
@@ -93,19 +94,37 @@ class PostRepo extends InitialRepo
   @override
   Future<PostResponseModel> createNewPost(
       PostRegistryModel postRegistryModel, String token) async {
+    if (postRegistryModel.file != null && postRegistryModel.thumbnail != null) {
+      print("all condition is true");
+    }
+    if (postRegistryModel.file == null) {
+      print("file is null");
+    }
+    if (postRegistryModel.thumbnail == null) {
+      print("thumbnail is null");
+    }
+    print('file path ${postRegistryModel.file!.path}');
     var data = FormData.fromMap({
       "content": postRegistryModel.content,
+      "fileName": postRegistryModel.name,
       "file": MultipartFile.fromFileSync(postRegistryModel.file!.path),
       "thumbnail": MultipartFile.fromFileSync(postRegistryModel.thumbnail!.path)
     });
-    var response = await dio.post(
-      _baseUrl,
-      data: data,
-      options: Options(
-        headers: headerMultiFormData(token: token),
-      ),
-    );
-    return PostResponseModel.fromJson(response.data);
+    print("data is $data");
+    try {
+      final response = await dio.post(
+        _baseUrl,
+        data: data,
+        options: Options(
+          headers: headerMultiFormData(token: token),
+        ),
+      );
+      print("statusCode ${response.statusCode}");
+      return PostResponseModel.fromJson(response.data);
+    } catch (e, s) {
+      print("Exception is ${e.toString()}");
+      return PostResponseModel(status: 404, msg: 'error');
+    }
   }
 
   @override

@@ -94,6 +94,16 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const EditProfileScreen(),
       );
+    case RoutingPath.ownPlaylists:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const OwnPlaylistsScreen(),
+      );
+    case RoutingPath.ownPlaylist:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const OwnPlaylistScreen(),
+      );
     case RoutingPath.videoDetailPage:
       return MaterialPageRoute(
           settings: settings,

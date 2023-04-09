@@ -18,69 +18,67 @@ class ViewCommentScreen extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Comment",
-                  style: TextStyleTheme.ts28.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Comment",
+                style: TextStyleTheme.ts28.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "58",
-                  style: TextStyleTheme.ts16.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withOpacity(.7),
-                  ),
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.filter_list,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemBuilder: (_, __) => const CommentCardWidget(),
-                separatorBuilder: (_, __) => const SizedBox(
-                  height: 10,
-                ),
-                itemCount: 10,
               ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                "58",
+                style: TextStyleTheme.ts16.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white.withOpacity(.7),
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.filter_list,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (_, __) => const CommentCardWidget(),
+              separatorBuilder: (_, __) => const SizedBox(
+                height: 10,
+              ),
+              itemCount: 10,
             ),
-            CommentFieldWidget()
-          ],
-        ),
+          ),
+          CommentFieldWidget()
+        ],
       ),
     );
   }

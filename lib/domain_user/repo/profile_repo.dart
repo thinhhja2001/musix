@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:musix/global/repo/initial_repo.dart';
-import 'package:musix/utils/functions/function_utils.dart';
 
 import '../../utils/enum/error_data.dart';
 import '../models/models.dart';
 
 class ProfileRepo extends InitialRepo {
-  FutureOr<ProfileResponseModel> getProfile(String token, String id) async {
+  FutureOr<ProfileResponseModel> getProfile(String token) async {
     const url = "/profile/info";
     try {
       var response = await dio.get(
@@ -17,7 +16,24 @@ class ProfileRepo extends InitialRepo {
         options: Options(
           headers: headerApplicationJson(token: token),
         ),
-        data: {"id": id},
+      );
+      return ProfileResponseModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<ProfileResponseModel> getOtherProfile(
+      String token, String id) async {
+    final url = "/profile/$id";
+    try {
+      var response = await dio.get(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
       );
       return ProfileResponseModel.fromJson(response.data['data']);
     } on DioError catch (e) {
@@ -29,14 +45,13 @@ class ProfileRepo extends InitialRepo {
 
   FutureOr<ProfileResponseModel> uploadProfile({
     required String token,
-    required String id,
     String? birthday,
     String? phoneNumber,
     String? fullName,
   }) async {
     try {
       const url = "/profile/info";
-      Map<String, String> data = {"id": id};
+      Map<String, String> data = {};
       if (birthday != null) data["birthday"] = birthday;
       if (phoneNumber != null) data["phoneNumber"] = phoneNumber;
       if (fullName != null) data["fullName"] = fullName;
@@ -58,7 +73,6 @@ class ProfileRepo extends InitialRepo {
 
   FutureOr<ProfileResponseModel> uploadAvatar({
     required String token,
-    required String id,
     required List<int> avatar,
   }) async {
     try {
@@ -70,7 +84,6 @@ class ProfileRepo extends InitialRepo {
           filename: "image.png",
           contentType: MediaType.parse('image/jpeg'),
         ),
-        'id': id,
       });
 
       var response = await dio.put(
@@ -90,7 +103,6 @@ class ProfileRepo extends InitialRepo {
 
   FutureOr<bool> changePassword({
     required String token,
-    required String id,
     required String password,
     required String newPassword,
   }) async {
@@ -98,7 +110,6 @@ class ProfileRepo extends InitialRepo {
       const url = "/profile/changePassword";
 
       var data = {
-        'id': id,
         'password': password,
         'newPassword': newPassword,
       };
@@ -120,23 +131,16 @@ class ProfileRepo extends InitialRepo {
 
   FutureOr<ProfileResponseModel> followUser({
     required String token,
-    required String id,
     required String followId,
   }) async {
     try {
-      const url = "/profile/follow";
-
-      var data = {
-        'id': id,
-        'followId': followId,
-      };
+      final url = "/profile/follow/$followId";
 
       var response = await dio.put(
         url,
         options: Options(
           headers: headerApplicationJson(token: token),
         ),
-        data: data,
       );
       return ProfileResponseModel.fromJson(response.data['data']);
     } on DioError catch (e) {

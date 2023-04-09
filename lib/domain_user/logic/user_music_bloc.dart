@@ -16,7 +16,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
       if (authState.username != null && authState.jwtToken != null) {
-        username = authState.username!;
         token = authState.jwtToken!;
       }
     });
@@ -31,12 +30,12 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     on<ChangeOwnPlaylistEvent>(_changeOwnPlaylist);
     on<UploadThumbnailOwnPlaylistEvent>(_uploadThumbnailOwnPlaylist);
     on<UploadSongOwnPlaylistEvent>(_uploadSongOwnPlaylist);
+    on<RemoveSongOwnPlaylistEvent>(_removeSongOwnPlaylist);
     on<RemoveOwnPlaylistEvent>(_removeOwnPlaylist);
   }
   final AuthBloc authBloc;
   final UserMusicRepo userMusicRepo;
   late final String token;
-  late final String username;
 
   //----------------------------------------------------------------------------
   @override
@@ -58,8 +57,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
-      var userMusicModel =
-          await userMusicRepo.getUserMusic(token: token, username: username);
+      var userMusicModel = await userMusicRepo.getUserMusic(token: token);
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -119,7 +117,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var songModels = await userMusicRepo.favoriteSong(
           token: token,
-          username: username,
           id: event.id,
           title: event.title,
           artistNames: event.artistNames,
@@ -185,7 +182,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var songModels = await userMusicRepo.dislikeSong(
           token: token,
-          username: username,
           id: event.id,
           title: event.title,
           artistNames: event.artistNames,
@@ -249,7 +245,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var artistModels = await userMusicRepo.favoriteArtist(
         token: token,
-        username: username,
         id: event.id,
         name: event.name,
         alias: event.alias,
@@ -313,7 +308,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var artistModels = await userMusicRepo.favoriteArtist(
         token: token,
-        username: username,
         id: event.id,
         name: event.name,
         alias: event.alias,
@@ -379,7 +373,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
-        username: username,
         id: event.id,
         title: event.title,
         artistNames: event.artistNames,
@@ -448,7 +441,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
 
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
-        username: username,
         id: event.id,
         title: event.title,
         artistNames: event.artistNames,
@@ -515,7 +507,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.createOwnPlaylist(
         token: token,
-        username: username,
         title: event.title,
         sortDescription: event.sortDescription,
       );
@@ -579,7 +570,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.changeOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
         title: event.title,
         sortDescription: event.sortDescription,
@@ -645,7 +635,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.uploadThumbnailOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
         thumbnail: event.thumbnail,
       );
@@ -709,16 +698,18 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
-
-      var ownPlaylistsModel = await userMusicRepo.uploadSongOwnPlaylist(
-        token: token,
-        username: username,
-        playlistId: event.playlistId,
-        id: event.id,
-        title: event.title,
-        artistNames: event.artistNames,
-        genreNames: gerneNames,
-      );
+      List<OwnPlaylist> ownPlaylists = [];
+      for (var playlistId in event.playlistIds) {
+        var ownPlaylistsModel = await userMusicRepo.uploadSongOwnPlaylist(
+          token: token,
+          playlistId: playlistId,
+          id: event.id,
+          title: event.title,
+          artistNames: event.artistNames,
+          genreNames: gerneNames,
+        );
+        ownPlaylists = convertOwnPlaylistsModelToList(ownPlaylistsModel);
+      }
 
       emit(state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -727,7 +718,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           Status.success,
         ]),
         music: state.music?.copyWith(
-          ownPlaylists: convertOwnPlaylistsModelToList(ownPlaylistsModel),
+          ownPlaylists: ownPlaylists,
         ),
       ));
     } on ResponseException catch (e) {
@@ -766,6 +757,75 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     ));
   }
 
+  FutureOr<void> _removeSongOwnPlaylist(
+      RemoveSongOwnPlaylistEvent event, Emitter<UserMusicState> emit) async {
+    try {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.ownPlaylist.name,
+          ], status: [
+            Status.loading,
+          ]),
+        ),
+      );
+      var gerneNames = event.genreNames?.join(", ");
+
+      var ownPlaylistsModel = await userMusicRepo.uploadSongOwnPlaylist(
+        token: token,
+        playlistId: event.playlistId,
+        id: event.id,
+        title: event.title,
+        artistNames: event.artistNames,
+        genreNames: gerneNames,
+      );
+
+      emit(state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          UserMusicStatusKey.ownPlaylist.name,
+        ], status: [
+          Status.success,
+        ]),
+        music: state.music?.copyWith(
+          ownPlaylists: convertOwnPlaylistsModelToList(ownPlaylistsModel),
+        ),
+      ));
+    } on ResponseException catch (e) {
+      emit(state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          UserMusicStatusKey.ownPlaylist.name,
+        ], status: [
+          Status.error,
+        ]),
+        error: e,
+      ));
+
+      addError(
+          Exception(
+              "UserMusicBloc _removeSongOwnPlaylist error ${e.toString()}"),
+          StackTrace.current);
+    } on Exception catch (e) {
+      emit(state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          UserMusicStatusKey.ownPlaylist.name,
+        ], status: [
+          Status.error,
+        ]),
+      ));
+
+      addError(Exception("UserMusicBloc _removeSongOwnPlaylist error $e"),
+          StackTrace.current);
+    }
+
+    emit(state.copyWith(
+      status: updateMapStatus(source: state.status, keys: [
+        UserMusicStatusKey.ownPlaylist.name,
+      ], status: [
+        Status.idle,
+      ]),
+    ));
+  }
+
   FutureOr<void> _removeOwnPlaylist(
       RemoveOwnPlaylistEvent event, Emitter<UserMusicState> emit) async {
     try {
@@ -780,7 +840,6 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var ownPlaylistsModel = await userMusicRepo.removeOwnPlaylist(
         token: token,
-        username: username,
         playlistId: event.playlistId,
       );
 

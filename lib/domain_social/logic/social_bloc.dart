@@ -27,7 +27,9 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialGetListPostFollowingEvent>(_handleGetListPostFollowingEvent);
     on<SocialGetCommentsByPostIdEvent>(_handleGetCommentsByPostId);
     on<SocialGetPostEvent>(_handleGetPostEvent);
-    on<SocialAddCreatePostThumbnailEvent>(_handleAddCreatePostThumbnailEvent);
+    on<SocialAddPostThumbnailEvent>(_handleAddPostThumbnailEvent);
+    on<SocialAddPostDataSourceEvent>(_handleAddPostDataSourceEvent);
+    on<SocialCreatePostEvent>(_handleCreatePostEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -77,15 +79,29 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
       SocialGetListPostFollowingEvent event, Emitter<SocialState> emit) async {
     List<PostModel> postsModel = await postRepo.getAllPosts(testToken);
     //TODO Implemnent get list post of type following
+    print("following post is");
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
+    print(posts);
     emit(state.copyWith(followingPosts: posts));
   }
 
-  FutureOr<void> _handleAddCreatePostThumbnailEvent(
-      SocialAddCreatePostThumbnailEvent event,
-      Emitter<SocialState> emit) async {
-    final thumbnailAsBytes = await event.thumbnail?.readAsBytes();
-    emit(state.copyWith(createPostThumbnail: thumbnailAsBytes));
+  FutureOr<void> _handleAddPostThumbnailEvent(
+      SocialAddPostThumbnailEvent event, Emitter<SocialState> emit) async {
+    emit(state.copyWith(createPostThumbnail: event.thumbnail));
+  }
+
+  FutureOr<void> _handleAddPostDataSourceEvent(
+      SocialAddPostDataSourceEvent event, Emitter<SocialState> emit) async {
+    emit(state.copyWith(sourceData: event.dataSource));
+  }
+
+  FutureOr<void> _handleCreatePostEvent(
+      SocialCreatePostEvent event, Emitter<SocialState> emit) async {
+    emit(state.copyWith(isCreatingPost: true));
+    final response =
+        await postRepo.createNewPost(event.postRegistryModel, testToken);
+    print('response is ${response.msg}');
+    emit(state.copyWith(isCreatingPost: false));
   }
 }
