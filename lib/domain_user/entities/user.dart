@@ -10,8 +10,8 @@ class User extends Equatable {
   final Profile? profile;
   final UserRole? role;
   final bool? enable;
-  final List? followers;
-  final List? followings;
+  final List<User>? followers;
+  final List<User>? followings;
 
   const User({
     this.id,
@@ -31,8 +31,8 @@ class User extends Equatable {
     Profile? profile,
     UserRole? role,
     bool? enable,
-    List? followers,
-    List? followings,
+    List<User>? followers,
+    List<User>? followings,
   }) {
     return User(
       id: id ?? this.id,
