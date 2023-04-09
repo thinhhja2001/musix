@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 import '../state/social_state.dart';
 
 class SocialEvent {}
@@ -23,4 +25,9 @@ class SocialGetListPostTrendingEvent extends SocialEvent {
 
 class SocialGetListPostFollowingEvent extends SocialEvent {
   SocialGetListPostFollowingEvent();
+}
+
+class SocialAddCreatePostThumbnailEvent extends SocialEvent {
+  XFile? thumbnail;
+  SocialAddCreatePostThumbnailEvent(this.thumbnail);
 }

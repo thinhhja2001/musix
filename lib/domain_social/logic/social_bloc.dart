@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:musix/domain_social/entities/comment/comment.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
 import 'package:musix/domain_social/entities/utils/social_mapper.dart';
@@ -26,6 +27,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialGetListPostFollowingEvent>(_handleGetListPostFollowingEvent);
     on<SocialGetCommentsByPostIdEvent>(_handleGetCommentsByPostId);
     on<SocialGetPostEvent>(_handleGetPostEvent);
+    on<SocialAddCreatePostThumbnailEvent>(_handleAddCreatePostThumbnailEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -52,7 +54,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostJustForYouEvent(
       SocialGetListPostJustForYouEvent event, Emitter<SocialState> emit) async {
-    print('getting list just 4 u');
     List<PostModel> postsModel = await postRepo.getAllPosts(testToken);
     //TODO Implemnent get list post of type just for you
     List<Post> posts =
@@ -79,5 +80,12 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
     emit(state.copyWith(followingPosts: posts));
+  }
+
+  FutureOr<void> _handleAddCreatePostThumbnailEvent(
+      SocialAddCreatePostThumbnailEvent event,
+      Emitter<SocialState> emit) async {
+    final thumbnailAsBytes = await event.thumbnail?.readAsBytes();
+    emit(state.copyWith(createPostThumbnail: thumbnailAsBytes));
   }
 }

@@ -39,7 +39,7 @@ dependencies:
   provider: ^6.0.5
   text_scroll: ^0.1.2
   shimmer: ^2.0.0
-  flutter_svg: ^1.0.3
+  flutter_svg: ^1.1.6
   flutter_spinkit: ^5.1.0
   flutter_flip_card: ^0.0.4
   dio: ^5.0.3
@@ -48,7 +48,9 @@ dependencies:
   http_parser: ^4.0.2
   fluttertoast: ^8.2.1
   image_picker: ^0.8.7+1
-  file_picker: ^5.2.6
+  file_picker: ^5.2.7
+  font_awesome_pro_flutter: ^0.0.3
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -88,3 +90,6 @@ flutter:
         - asset: assets/fonts/Gotham/300I.otf
           weight: 300
           style: italic
+    - family: NotoMusic
+      fonts:
+        - asset: assets/fonts/NotoMusic/NotoMusic-Regular.ttf
