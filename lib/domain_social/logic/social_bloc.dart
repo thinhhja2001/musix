@@ -33,6 +33,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialRemovePostThumbnailEvent>(_handleRemovePostThumbnailEvent);
     on<SocialRemovePostDataSourceEvent>(_handleRemovePostDataSourceEvent);
     on<SocialCreatePostBackEvent>(_handleSocialCreatePostBackEvent);
+    on<SocialUpdateCreatePostStatus>(_handleSocialUpdateCreatePostStatus);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -82,7 +83,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
       SocialGetListPostFollowingEvent event, Emitter<SocialState> emit) async {
     List<PostModel> postsModel = await postRepo.getAllPosts(testToken);
     //TODO Implemnent get list post of type following
-    print("following post is");
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
     print(posts);
@@ -104,7 +104,8 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     emit(state.copyWith(isCreatingPost: true));
     final response =
         await postRepo.createNewPost(event.postRegistryModel, testToken);
-    print('response is ${response.msg}');
+    print("create post status ${response.status}");
+    add(SocialUpdateCreatePostStatus(response.status));
     emit(state.copyWith(isCreatingPost: false));
   }
 
@@ -124,5 +125,11 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
       SocialCreatePostBackEvent event, Emitter<SocialState> emit) {
     add(SocialRemovePostThumbnailEvent());
     add(SocialRemovePostDataSourceEvent());
+    add(SocialUpdateCreatePostStatus(null));
+  }
+
+  FutureOr<void> _handleSocialUpdateCreatePostStatus(
+      SocialUpdateCreatePostStatus event, Emitter<SocialState> emit) {
+    emit(state.copyWith(createPostStatus: () => event.status));
   }
 }

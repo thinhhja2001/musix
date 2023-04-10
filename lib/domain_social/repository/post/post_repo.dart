@@ -94,23 +94,12 @@ class PostRepo extends InitialRepo
   @override
   Future<PostResponseModel> createNewPost(
       PostRegistryModel postRegistryModel, String token) async {
-    if (postRegistryModel.file != null && postRegistryModel.thumbnail != null) {
-      print("all condition is true");
-    }
-    if (postRegistryModel.file == null) {
-      print("file is null");
-    }
-    if (postRegistryModel.thumbnail == null) {
-      print("thumbnail is null");
-    }
-    print('file path ${postRegistryModel.file!.path}');
     var data = FormData.fromMap({
       "content": postRegistryModel.content,
       "fileName": postRegistryModel.name,
       "file": MultipartFile.fromFileSync(postRegistryModel.file!.path),
       "thumbnail": MultipartFile.fromFileSync(postRegistryModel.thumbnail!.path)
     });
-    print("data is $data");
     try {
       final response = await dio.post(
         _baseUrl,
@@ -119,7 +108,6 @@ class PostRepo extends InitialRepo
           headers: headerMultiFormData(token: token),
         ),
       );
-      print("statusCode ${response.statusCode}");
       return PostResponseModel.fromJson(response.data);
     } catch (e, s) {
       print("Exception is ${e.toString()}");

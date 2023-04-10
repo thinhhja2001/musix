@@ -47,3 +47,8 @@ class SocialRemovePostThumbnailEvent extends SocialEvent {}
 class SocialRemovePostDataSourceEvent extends SocialEvent {}
 
 class SocialCreatePostBackEvent extends SocialEvent {}
+
+class SocialUpdateCreatePostStatus extends SocialEvent {
+  int? status;
+  SocialUpdateCreatePostStatus(this.status);
+}
