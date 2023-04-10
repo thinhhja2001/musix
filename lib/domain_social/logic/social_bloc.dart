@@ -30,6 +30,9 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialAddPostThumbnailEvent>(_handleAddPostThumbnailEvent);
     on<SocialAddPostDataSourceEvent>(_handleAddPostDataSourceEvent);
     on<SocialCreatePostEvent>(_handleCreatePostEvent);
+    on<SocialRemovePostThumbnailEvent>(_handleRemovePostThumbnailEvent);
+    on<SocialRemovePostDataSourceEvent>(_handleRemovePostDataSourceEvent);
+    on<SocialCreatePostBackEvent>(_handleSocialCreatePostBackEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -88,12 +91,12 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleAddPostThumbnailEvent(
       SocialAddPostThumbnailEvent event, Emitter<SocialState> emit) async {
-    emit(state.copyWith(createPostThumbnail: event.thumbnail));
+    emit(state.copyWith(createPostThumbnail: () => event.thumbnail));
   }
 
   FutureOr<void> _handleAddPostDataSourceEvent(
       SocialAddPostDataSourceEvent event, Emitter<SocialState> emit) async {
-    emit(state.copyWith(sourceData: event.dataSource));
+    emit(state.copyWith(sourceData: () => event.dataSource));
   }
 
   FutureOr<void> _handleCreatePostEvent(
@@ -103,5 +106,23 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
         await postRepo.createNewPost(event.postRegistryModel, testToken);
     print('response is ${response.msg}');
     emit(state.copyWith(isCreatingPost: false));
+  }
+
+  FutureOr<void> _handleRemovePostThumbnailEvent(
+      SocialRemovePostThumbnailEvent event, Emitter<SocialState> emit) {
+    emit(state.copyWith(createPostThumbnail: () => null));
+  }
+
+  FutureOr<void> _handleRemovePostDataSourceEvent(
+      SocialRemovePostDataSourceEvent event, Emitter<SocialState> emit) {
+    emit(state.copyWith(
+      sourceData: () => null,
+    ));
+  }
+
+  FutureOr<void> _handleSocialCreatePostBackEvent(
+      SocialCreatePostBackEvent event, Emitter<SocialState> emit) {
+    add(SocialRemovePostThumbnailEvent());
+    add(SocialRemovePostDataSourceEvent());
   }
 }

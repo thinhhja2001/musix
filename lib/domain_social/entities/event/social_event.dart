@@ -28,7 +28,7 @@ class SocialGetListPostFollowingEvent extends SocialEvent {
 }
 
 class SocialAddPostThumbnailEvent extends SocialEvent {
-  PlatformFile? thumbnail;
+  XFile? thumbnail;
   SocialAddPostThumbnailEvent(this.thumbnail);
 }
 
@@ -41,3 +41,9 @@ class SocialCreatePostEvent extends SocialEvent {
   PostRegistryModel postRegistryModel;
   SocialCreatePostEvent(this.postRegistryModel);
 }
+
+class SocialRemovePostThumbnailEvent extends SocialEvent {}
+
+class SocialRemovePostDataSourceEvent extends SocialEvent {}
+
+class SocialCreatePostBackEvent extends SocialEvent {}

@@ -10,7 +10,7 @@ class SocialState extends Equatable {
   final List<Post>? trendingPosts;
   final List<Post>? followingPosts;
   final Post? currentPost;
-  final PlatformFile? createPostThumbnail;
+  final XFile? createPostThumbnail;
   final PlatformFile? sourceData;
   final bool? isCreatingPost;
   const SocialState({
@@ -28,8 +28,8 @@ class SocialState extends Equatable {
     List<Post>? trendingPosts,
     List<Post>? followingPosts,
     Post? currentPost,
-    PlatformFile? createPostThumbnail,
-    PlatformFile? sourceData,
+    XFile? Function()? createPostThumbnail,
+    PlatformFile? Function()? sourceData,
     bool? isCreatingPost,
   }) =>
       SocialState(
@@ -37,8 +37,10 @@ class SocialState extends Equatable {
         trendingPosts: trendingPosts ?? this.trendingPosts,
         followingPosts: followingPosts ?? this.followingPosts,
         currentPost: currentPost ?? this.currentPost,
-        createPostThumbnail: createPostThumbnail ?? this.createPostThumbnail,
-        sourceData: sourceData ?? this.sourceData,
+        createPostThumbnail: createPostThumbnail != null
+            ? createPostThumbnail()
+            : this.createPostThumbnail,
+        sourceData: sourceData != null ? sourceData() : this.sourceData,
         isCreatingPost: isCreatingPost ?? this.isCreatingPost,
       );
 

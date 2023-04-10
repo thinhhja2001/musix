@@ -33,7 +33,9 @@ class RequestForgetOTPScreen extends StatelessWidget {
       listener: (context, state) {
         if (state.requestResetStatus == 200) {
           showSnackBar(context,
-              content: "Email sent", contentType: ContentType.success);
+              title: "Success",
+              content: "Email sent",
+              contentType: ContentType.success);
           context
               .read<AuthBloc>()
               .add(AuthResetCurrentRequestPasswordStateEvent());

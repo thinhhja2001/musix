@@ -129,8 +129,7 @@ Route<dynamic> routeController(RouteSettings settings) {
       );
     case RoutingPath.createNewPost:
       return MaterialPageRoute(
-          settings: settings,
-          builder: (context) => const CreateNewPostScreen());
+          settings: settings, builder: (context) => CreateNewPostScreen());
     default:
       return MaterialPageRoute(
         settings: settings,

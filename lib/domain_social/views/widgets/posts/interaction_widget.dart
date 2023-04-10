@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
-import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
 
 class InteractionListWidget extends StatelessWidget {

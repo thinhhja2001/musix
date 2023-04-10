@@ -37,6 +37,7 @@ class ResetPasswordScreen extends StatelessWidget {
       },
       listener: (context, state) {
         showSnackBar(context,
+            title: "Success",
             content: "Password changed, you can now login using new password",
             contentType: ContentType.success);
         Navigator.of(context).pushNamed(RoutingPath.signIn);
