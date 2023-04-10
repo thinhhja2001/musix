@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_social/entities/state/social_state.dart';
-import 'package:musix/domain_social/repository/comment/comment_repo.dart';
-import 'package:musix/domain_social/repository/post/post_repo.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
 import '../utils/utils.dart';
@@ -178,7 +175,17 @@ class _MusixAppState extends State<MusixApp> {
             commentRepo: getIt.get<CommentRepo>(),
             postRepo: getIt.get<PostRepo>(),
           ),
-        )
+        ),
+        BlocProvider(
+          create: (context) => CommentBloc(
+            initialState: CommentState(
+              status: {
+                SongStatusKey.global.key: Status.idle,
+              },
+            ),
+            commentRepo: getIt.get<CommentRepo>(),
+          ),
+        ),
       ],
       child: const MusixAppView(),
     );

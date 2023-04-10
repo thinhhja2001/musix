@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter.dart';
+import 'package:musix/domain_social/entities/entities.dart';
 import 'package:musix/domain_social/views/widgets/comments/comment_card_widget.dart';
 import 'package:musix/theme/theme.dart';
 
@@ -36,20 +39,38 @@ class ViewCommentScreen extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Text(
-                "58",
-                style: TextStyleTheme.ts16.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white.withOpacity(.7),
-                ),
+              BlocSelector<CommentBloc, CommentState, int>(
+                selector: (state) {
+                  return state.comments?.length ?? 0;
+                },
+                builder: (context, total) {
+                  return Text(
+                    "$total",
+                    style: TextStyleTheme.ts16.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white.withOpacity(.7),
+                    ),
+                  );
+                },
               ),
               const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.filter_list,
-                  color: Colors.white,
-                ),
+              BlocSelector<CommentBloc, CommentState, bool>(
+                selector: (state) {
+                  return state.isFilter ?? false;
+                },
+                builder: (context, isFilter) {
+                  return IconButton(
+                    onPressed: () {
+                      context
+                          .read<CommentBloc>()
+                          .add(FilterCommentEvent(!isFilter));
+                    },
+                    icon: Icon(
+                      isFilter ? Icons.filter_list_off : Icons.filter_list,
+                      color: Colors.white,
+                    ),
+                  );
+                },
               ),
               const SizedBox(
                 width: 8,
@@ -67,14 +88,32 @@ class ViewCommentScreen extends StatelessWidget {
             height: 10,
           ),
           Expanded(
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemBuilder: (_, __) => const CommentCardWidget(),
-              separatorBuilder: (_, __) => const SizedBox(
-                height: 10,
-              ),
-              itemCount: 10,
+            child: BlocSelector<CommentBloc, CommentState, List<Comment>>(
+              selector: (state) {
+                return state.comments ?? [];
+              },
+              builder: (context, comments) {
+                if (comments.isEmpty) {
+                  return Text(
+                    'There is no comments in this post',
+                    style: TextStyleTheme.ts16.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  );
+                }
+                return ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (_, index) => CommentCardWidget(
+                    comment: comments[index],
+                  ),
+                  separatorBuilder: (_, __) => const SizedBox(
+                    height: 10,
+                  ),
+                  itemCount: comments.length,
+                );
+              },
             ),
           ),
           CommentFieldWidget()

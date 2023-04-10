@@ -1,0 +1,4 @@
+enum CommentStatusKey {
+  global,
+  update,
+}

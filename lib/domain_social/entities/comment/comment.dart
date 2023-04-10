@@ -48,9 +48,9 @@ class Comment extends Equatable {
   List<Object?> get props => [
         id,
         user,
-        replies,
+        replies?.length,
         likeCount,
-        likedBy,
+        likedBy?.length,
         dateCreated,
         content,
         lastModified,

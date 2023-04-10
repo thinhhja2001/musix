@@ -27,7 +27,7 @@ class ProfileRepo extends InitialRepo {
 
   FutureOr<ProfileResponseModel> getOtherProfile(
       String token, String id) async {
-    final url = "/profile/info/$id";
+    final url = "/profile/$id";
     try {
       var response = await dio.get(
         url,

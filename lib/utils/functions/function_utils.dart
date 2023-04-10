@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:musix/utils/utils.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -84,3 +84,26 @@ Widget shimmerLoadingEffect({required double width, double? height}) =>
         ),
       ),
     );
+
+String convertMillisecondToDateString(int milliseconds) {
+  var diff = DateTime.now().millisecondsSinceEpoch - milliseconds;
+
+  if (diff > DatePeriods.month) {
+    // it was at least a month ago
+    var date = (diff / DatePeriods.month).floor();
+    return "${date == 1 ? 'a month' : '$date months'} ago";
+  } else if (diff > DatePeriods.week) {
+    var date = (diff / DatePeriods.week).floor();
+    return "${date == 1 ? 'a week' : '$date weeks'} ago";
+  } else if (diff > DatePeriods.day) {
+    var date = (diff / DatePeriods.day).floor();
+    return "${date == 1 ? 'a day' : '$date days'} ago";
+  } else if (diff > DatePeriods.hour) {
+    var date = (diff / DatePeriods.hour).floor();
+    return "${date == 1 ? 'a hour' : '$date hours'} ago";
+  } else if (diff > DatePeriods.minute) {
+    var date = (diff / DatePeriods.minute).floor();
+    return "${date == 1 ? 'a minute' : '$date minutes'} ago";
+  }
+  return "Just now";
+}
