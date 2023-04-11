@@ -7,7 +7,7 @@ import '../../../../theme/theme.dart';
 import '../../../utils/custom_social_media_control.dart';
 
 class SocialDataPlayerWidget extends StatefulWidget {
-  SocialDataPlayerWidget({
+  const SocialDataPlayerWidget({
     Key? key,
     required this.dataUrl,
     required this.title,

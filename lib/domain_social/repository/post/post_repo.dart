@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:musix/domain_auth/utils/dio_utils.dart';
 import 'package:musix/domain_social/models/comment/request/create_comment_request.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
 import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
@@ -85,7 +86,7 @@ class PostRepo extends InitialRepo
   @override
   Future<PostResponseModel> likeOrDislikePost(
       String postId, String token) async {
-    var response = await dio.put("$_baseUrl/$postId",
+    var response = await dio.put("$_baseUrl/like/$postId",
         options: Options(headers: headerApplicationJson(token: token)));
     return PostResponseModel.fromJson(response.data);
   }
@@ -95,17 +96,23 @@ class PostRepo extends InitialRepo
       PostRegistryModel postRegistryModel, String token) async {
     var data = FormData.fromMap({
       "content": postRegistryModel.content,
+      "fileName": postRegistryModel.name,
       "file": MultipartFile.fromFileSync(postRegistryModel.file!.path),
       "thumbnail": MultipartFile.fromFileSync(postRegistryModel.thumbnail!.path)
     });
-    var response = await dio.post(
-      _baseUrl,
-      data: data,
-      options: Options(
-        headers: headerMultiFormData(token: token),
-      ),
-    );
-    return PostResponseModel.fromJson(response.data);
+    try {
+      final response = await dio.post(
+        _baseUrl,
+        data: data,
+        options: Options(
+          headers: headerMultiFormData(token: token),
+        ),
+      );
+      return PostResponseModel.fromJson(response.data);
+    } catch (e, s) {
+      print("Exception is ${e.toString()}");
+      return PostResponseModel(status: 404, msg: 'error');
+    }
   }
 
   @override
@@ -119,6 +126,7 @@ class PostRepo extends InitialRepo
       "file": postRegistryModel.file != null
           ? MultipartFile.fromFileSync(postRegistryModel.file!.path)
           : null,
+      "fileName": postRegistryModel.name,
       "thumbnail": postRegistryModel.thumbnail != null
           ? MultipartFile.fromFileSync(postRegistryModel.thumbnail!.path)
           : null

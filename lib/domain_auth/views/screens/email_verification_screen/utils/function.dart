@@ -2,7 +2,9 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
 void showSnackBar(BuildContext context,
-    {required String content, required ContentType contentType}) {
+    {required String content,
+    required ContentType contentType,
+    required String title}) {
   final snackBar = SnackBar(
     /// need to set following properties for best effect of awesome_snackbar_content
     elevation: 0,
@@ -10,7 +12,7 @@ void showSnackBar(BuildContext context,
     backgroundColor: Colors.transparent,
 
     content: AwesomeSnackbarContent(
-      title: 'Success',
+      title: title,
 
       message: content,
 

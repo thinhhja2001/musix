@@ -29,7 +29,9 @@ class EmailVerificationScreen extends StatelessWidget {
       listener: (context, state) {
         if (state.resendEmailStatus == 200) {
           showSnackBar(context,
-              content: "Email sent", contentType: ContentType.success);
+              title: "Success",
+              content: "Email sent",
+              contentType: ContentType.success);
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(

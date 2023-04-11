@@ -1,21 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
-import 'package:musix/domain_social/views/widgets/posts/post_shimmer_loading_widget.dart';
 import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
 import 'package:musix/domain_user/utils/constant_utils.dart';
-import 'package:musix/domain_video/entities/video_detail.dart';
-import 'package:musix/domain_video/utils/methods.dart';
-import 'package:musix/domain_video/views/widgets/video_player/video_player_widget.dart';
 import 'package:musix/utils/functions/function_utils.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:video_player/video_player.dart';
 
+import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
-import '../../../utils/custom_social_media_control.dart';
 import 'hashtag_widget.dart';
 import 'interaction_widget.dart';
+import 'more_list_widget/modify_post_action_widget.dart';
 
 class PostCardWidget extends StatelessWidget {
   const PostCardWidget({
@@ -92,6 +85,16 @@ class PostCardWidget extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                _showMoreListWidget(context, post: post);
+                              },
+                              icon: const Icon(
+                                Icons.more_vert,
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         ),
@@ -107,7 +110,7 @@ class PostCardWidget extends StatelessWidget {
                         ),
                         const HashtagWidget(),
                         const Spacer(),
-                        const InteractionListWidget(),
+                        InteractionListWidget(post: post),
                       ],
                     ),
                   ),
@@ -118,5 +121,26 @@ class PostCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<dynamic> _showMoreListWidget(
+    BuildContext context, {
+    required Post post,
+  }) {
+    return showModalBottomSheet(
+        backgroundColor: ColorTheme.backgroundDarker,
+        context: context,
+        builder: (ctx) {
+          return ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (_, __) => ModifyPostActionWidget(
+                    icon: Icons.edit,
+                    text: "Modify Post",
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(RoutingPath.modifyPost, arguments: post),
+                  ),
+              separatorBuilder: (_, __) => const SizedBox(height: 5),
+              itemCount: 1);
+        });
   }
 }

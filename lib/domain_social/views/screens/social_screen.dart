@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:musix/config/exporter/bloc_exporter.dart';
-import 'package:musix/domain_global/views/home_screen/widgets/search_bar_navigator_widget.dart';
 import 'package:musix/domain_social/entities/event/social_event.dart';
 import 'package:musix/domain_social/views/widgets/posts/list_widget/following_list_widget.dart';
 import 'package:musix/domain_social/views/widgets/posts/list_widget/trending_list_widget.dart';
 import 'package:musix/theme/theme.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../widgets/posts/create_post_widget/create_post_widget.dart';
 import '../widgets/posts/list_widget/just_for_you_list_widget.dart';
-import '../widgets/story_list_widget.dart';
 
 class SocialScreen extends StatelessWidget {
   const SocialScreen({super.key});
@@ -25,21 +26,45 @@ class SocialScreen extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              children: const [
-                Expanded(
-                    child: SearchBarNavigationWidget(
-                        hintText: "What do you want to hear")),
-                // CircleAvatar(
-                //   radius: 30,
-                //   backgroundImage: NetworkImage(
-                //       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"),
-                // ),
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: SvgPicture.asset(
+                    "assets/images/icons/musiX.svg",
+                    height: 60,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Shimmer.fromColors(
+                    baseColor: ColorTheme.white,
+                    highlightColor: ColorTheme.primary,
+                    child: Text(
+                      "Musix",
+                      style: TextStyleTheme.ts18.copyWith(
+                          fontFamily: "NotoMusic",
+                          color: ColorTheme.primary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.search,
+                      color: ColorTheme.white,
+                    ))
               ],
             ),
             const SizedBox(
               height: 20,
             ),
-            const StoryListWidget(),
+            const CreatePostBarWidget(),
+            const SizedBox(
+              height: 10,
+            ),
+            // const StoryListWidget(),
             Expanded(
               child: DefaultTabController(
                 length: 3,

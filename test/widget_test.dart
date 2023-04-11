@@ -16,12 +16,12 @@ void main() async {
   GetIt.I.registerFactoryAsync<ZingMP3APIV2>(() => ZingMP3APIV2.createAsync());
 
   PostRepo repo = PostRepo();
-  var response = await repo.modifyPost(
-      postId: "642c487cca1b275728d79a3c",
-      postRegistryModel: PostRegistryModel(content: "modify from flutter"),
-      token:
-          "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA");
-  printJson(response.toJson());
+  // var response = await repo.modifyPost(
+  //     postId: "642c487cca1b275728d79a3c",
+  //     postRegistryModel: PostRegistryModel(content: "modify from flutter"),
+  //     token:
+  //         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA");
+  // printJson(response.toJson());
 }
 
 void printJson(Map<String, dynamic>? json) {
