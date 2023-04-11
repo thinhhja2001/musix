@@ -136,7 +136,8 @@ class _SelectThumbnailWidgetState extends State<SelectThumbnailWidget> {
                         .pickImage(source: ImageSource.gallery)
                         .then(
                           (value) => context.read<SocialBloc>().add(
-                                SocialAddPostThumbnailEvent(value),
+                                SocialAddPostThumbnailEvent(
+                                    value != null ? File(value.path) : null),
                               ),
                         );
                   },
@@ -152,7 +153,8 @@ class _SelectThumbnailWidgetState extends State<SelectThumbnailWidget> {
                         .pickImage(source: ImageSource.camera)
                         .then(
                           (value) => context.read<SocialBloc>().add(
-                                SocialAddPostThumbnailEvent(value),
+                                SocialAddPostThumbnailEvent(
+                                    value != null ? File(value.path) : null),
                               ),
                         );
                   },

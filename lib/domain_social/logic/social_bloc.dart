@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musix/domain_social/entities/comment/comment.dart';
@@ -34,6 +35,9 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialRemovePostDataSourceEvent>(_handleRemovePostDataSourceEvent);
     on<SocialCreatePostBackEvent>(_handleSocialCreatePostBackEvent);
     on<SocialUpdateCreatePostStatus>(_handleSocialUpdateCreatePostStatus);
+    on<SocialModifyPostEvent>(_handleModifyPostEvent);
+    on<SocialUpdateModifyPostStatus>(_handleModifyPostStatus);
+    on<SocialModifyPostBackEvent>(_handleModifyPostBackEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -104,7 +108,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     emit(state.copyWith(isCreatingPost: true));
     final response =
         await postRepo.createNewPost(event.postRegistryModel, testToken);
-    print("create post status ${response.status}");
     add(SocialUpdateCreatePostStatus(response.status));
     emit(state.copyWith(isCreatingPost: false));
   }
@@ -131,5 +134,28 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
   FutureOr<void> _handleSocialUpdateCreatePostStatus(
       SocialUpdateCreatePostStatus event, Emitter<SocialState> emit) {
     emit(state.copyWith(createPostStatus: () => event.status));
+  }
+
+  FutureOr<void> _handleModifyPostEvent(
+      SocialModifyPostEvent event, Emitter<SocialState> emit) async {
+    emit(state.copyWith(isModifyingPost: true));
+    final response = await postRepo.modifyPost(
+        postId: event.postId,
+        postRegistryModel: event.postRegistryModel,
+        token: testToken);
+    add(SocialUpdateModifyPostStatus(response.status));
+    emit(state.copyWith(isModifyingPost: false));
+  }
+
+  FutureOr<void> _handleModifyPostStatus(
+      SocialUpdateModifyPostStatus event, Emitter<SocialState> emit) {
+    emit(state.copyWith(modifyingPostStatus: () => event.status));
+  }
+
+  FutureOr<void> _handleModifyPostBackEvent(
+      SocialModifyPostBackEvent event, Emitter<SocialState> emit) {
+    add(SocialRemovePostThumbnailEvent());
+    add(SocialRemovePostDataSourceEvent());
+    add(SocialUpdateModifyPostStatus(null));
   }
 }

@@ -42,7 +42,8 @@ class _SelectVideoWidgetState extends State<SelectVideoWidget> {
                     if (result != null)
                       {
                         context.read<SocialBloc>().add(
-                            SocialAddPostDataSourceEvent(result.files.first))
+                            SocialAddPostDataSourceEvent(
+                                File(result.files.first.path!)))
                       }
                   },
                 );
@@ -50,7 +51,7 @@ class _SelectVideoWidgetState extends State<SelectVideoWidget> {
           child: state.sourceData == null
               ? const _SelectVideoWidget()
               : FutureBuilder<ChewieController>(
-                  future: createChewieController(File(state.sourceData!.path!)),
+                  future: createChewieController(state.sourceData!),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ClipRRect(

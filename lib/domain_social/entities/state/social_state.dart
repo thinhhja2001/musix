@@ -10,10 +10,12 @@ class SocialState extends Equatable {
   final List<Post>? trendingPosts;
   final List<Post>? followingPosts;
   final Post? currentPost;
-  final XFile? createPostThumbnail;
-  final PlatformFile? sourceData;
+  final File? createPostThumbnail;
+  final File? sourceData;
   final bool? isCreatingPost;
   final int? createPostStatus;
+  final bool? isModifyingPost;
+  final int? modifyingPostStatus;
   const SocialState({
     this.justForYouPosts,
     this.trendingPosts,
@@ -23,6 +25,8 @@ class SocialState extends Equatable {
     this.createPostThumbnail,
     this.isCreatingPost,
     this.createPostStatus,
+    this.isModifyingPost,
+    this.modifyingPostStatus,
   });
 
   SocialState copyWith({
@@ -30,10 +34,12 @@ class SocialState extends Equatable {
     List<Post>? trendingPosts,
     List<Post>? followingPosts,
     Post? currentPost,
-    XFile? Function()? createPostThumbnail,
-    PlatformFile? Function()? sourceData,
+    File? Function()? createPostThumbnail,
+    File? Function()? sourceData,
     bool? isCreatingPost,
     int? Function()? createPostStatus,
+    bool? isModifyingPost,
+    int? Function()? modifyingPostStatus,
   }) =>
       SocialState(
           justForYouPosts: justForYouPosts ?? this.justForYouPosts,
@@ -47,7 +53,11 @@ class SocialState extends Equatable {
           isCreatingPost: isCreatingPost ?? this.isCreatingPost,
           createPostStatus: createPostStatus != null
               ? createPostStatus()
-              : this.createPostStatus);
+              : this.createPostStatus,
+          isModifyingPost: isModifyingPost ?? this.isModifyingPost,
+          modifyingPostStatus: modifyingPostStatus != null
+              ? modifyingPostStatus()
+              : this.modifyingPostStatus);
 
   @override
   List<Object?> get props => [
@@ -59,7 +69,9 @@ class SocialState extends Equatable {
         sourceData,
         isCreatingPost,
         createPostStatus,
+        isModifyingPost,
+        modifyingPostStatus
       ];
   @override
-  bool? get stringify => true;
+  bool? get stringify => false;
 }

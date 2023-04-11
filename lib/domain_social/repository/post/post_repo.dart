@@ -126,6 +126,7 @@ class PostRepo extends InitialRepo
       "file": postRegistryModel.file != null
           ? MultipartFile.fromFileSync(postRegistryModel.file!.path)
           : null,
+      "fileName": postRegistryModel.name,
       "thumbnail": postRegistryModel.thumbnail != null
           ? MultipartFile.fromFileSync(postRegistryModel.thumbnail!.path)
           : null

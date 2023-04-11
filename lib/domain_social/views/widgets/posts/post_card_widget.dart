@@ -4,9 +4,11 @@ import 'package:musix/domain_social/views/widgets/posts/social_data_player_widge
 import 'package:musix/domain_user/utils/constant_utils.dart';
 import 'package:musix/utils/functions/function_utils.dart';
 
+import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
 import 'hashtag_widget.dart';
 import 'interaction_widget.dart';
+import 'more_list_widget/modify_post_action_widget.dart';
 
 class PostCardWidget extends StatelessWidget {
   const PostCardWidget({
@@ -83,6 +85,16 @@ class PostCardWidget extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                _showMoreListWidget(context, post: post);
+                              },
+                              icon: const Icon(
+                                Icons.more_vert,
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         ),
@@ -109,5 +121,26 @@ class PostCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<dynamic> _showMoreListWidget(
+    BuildContext context, {
+    required Post post,
+  }) {
+    return showModalBottomSheet(
+        backgroundColor: ColorTheme.backgroundDarker,
+        context: context,
+        builder: (ctx) {
+          return ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (_, __) => ModifyPostActionWidget(
+                    icon: Icons.edit,
+                    text: "Modify Post",
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(RoutingPath.modifyPost, arguments: post),
+                  ),
+              separatorBuilder: (_, __) => const SizedBox(height: 5),
+              itemCount: 1);
+        });
   }
 }
