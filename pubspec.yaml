@@ -52,6 +52,7 @@ dependencies:
   font_awesome_pro_flutter: ^0.0.3
   dotted_border: ^2.0.0+3
   flutter_cache_manager: ^3.3.0
+  like_button: ^2.0.5
 
 dev_dependencies:
   flutter_test:

@@ -38,6 +38,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialModifyPostEvent>(_handleModifyPostEvent);
     on<SocialUpdateModifyPostStatus>(_handleModifyPostStatus);
     on<SocialModifyPostBackEvent>(_handleModifyPostBackEvent);
+    on<SocialLikeOrDislikePostEvent>(_handleLikeOrDislikePostEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -157,5 +158,12 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     add(SocialRemovePostThumbnailEvent());
     add(SocialRemovePostDataSourceEvent());
     add(SocialUpdateModifyPostStatus(null));
+  }
+
+  FutureOr<void> _handleLikeOrDislikePostEvent(
+      SocialLikeOrDislikePostEvent event, Emitter<SocialState> emit) async {
+    print("post id is ${event.postId}");
+    final response = await postRepo.likeOrDislikePost(event.postId, testToken);
+    print("response is ${response.status}");
   }
 }

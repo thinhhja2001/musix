@@ -110,7 +110,7 @@ class PostCardWidget extends StatelessWidget {
                         ),
                         const HashtagWidget(),
                         const Spacer(),
-                        const InteractionListWidget(),
+                        InteractionListWidget(post: post),
                       ],
                     ),
                   ),

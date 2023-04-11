@@ -70,3 +70,8 @@ class SocialUpdateModifyPostStatus extends SocialEvent {
 }
 
 class SocialModifyPostBackEvent extends SocialEvent {}
+
+class SocialLikeOrDislikePostEvent extends SocialEvent {
+  String postId;
+  SocialLikeOrDislikePostEvent(this.postId);
+}

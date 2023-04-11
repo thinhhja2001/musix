@@ -66,6 +66,7 @@ class SocialMapper {
       User user = convertUserModelToUser(profileResponseModel.user!);
       userLiked.add(user);
     }
+    print("user liked ${userLiked.length}");
     return Post(
         id: postModel.id,
         fileName: postModel.fileName,

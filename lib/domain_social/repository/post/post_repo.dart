@@ -86,7 +86,7 @@ class PostRepo extends InitialRepo
   @override
   Future<PostResponseModel> likeOrDislikePost(
       String postId, String token) async {
-    var response = await dio.put("$_baseUrl/$postId",
+    var response = await dio.put("$_baseUrl/like/$postId",
         options: Options(headers: headerApplicationJson(token: token)));
     return PostResponseModel.fromJson(response.data);
   }

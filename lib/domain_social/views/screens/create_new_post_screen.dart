@@ -8,7 +8,6 @@ import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
 import 'package:musix/domain_auth/views/widgets/custom_textfield_widget.dart';
 import 'package:musix/domain_social/entities/event/social_event.dart';
 import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
-import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/color.dart';
 import 'package:musix/theme/text_style.dart';
 
