@@ -171,12 +171,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                           ? PostActionWidget(
                               icon: Icons.delete,
                               text: "Delete Post",
-                              onTap: () => {
-                                context
-                                    .read<SocialBloc>()
-                                    .add(SocialDeletePostEvent(post)),
-                                Navigator.pop(context),
-                              },
+                              onTap: () => _buildAlertDialog(context, post),
                             )
                           : Container(),
                       const PostActionWidget(
@@ -188,5 +183,52 @@ class _PostCardWidgetState extends State<PostCardWidget> {
             },
           );
         });
+  }
+
+  Future<void> _buildAlertDialog(BuildContext context, Post post) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorTheme.background,
+          title: Text(
+            'Are you want to delete?',
+            style: TextStyleTheme.ts22.copyWith(color: Colors.white),
+          ),
+          content: Text(
+            'This action cannot be undone',
+            style: TextStyleTheme.ts20.copyWith(color: Colors.white),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(
+                'Cancel',
+                style: TextStyleTheme.ts16.copyWith(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(
+                'Delete',
+                style: TextStyleTheme.ts16.copyWith(color: Colors.red),
+              ),
+              onPressed: () {
+                context.read<SocialBloc>().add(SocialDeletePostEvent(post));
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
