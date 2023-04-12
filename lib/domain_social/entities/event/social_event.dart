@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
 
+import '../post/post.dart';
+
 class SocialEvent {}
 
 class SocialGetPostEvent extends SocialEvent {
@@ -74,4 +76,9 @@ class SocialModifyPostBackEvent extends SocialEvent {}
 class SocialLikeOrDislikePostEvent extends SocialEvent {
   String postId;
   SocialLikeOrDislikePostEvent(this.postId);
+}
+
+class SocialDeletePostEvent extends SocialEvent {
+  Post post;
+  SocialDeletePostEvent(this.post);
 }

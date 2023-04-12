@@ -1,24 +1,39 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
+import 'package:musix/domain_social/entities/event/social_event.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
+import 'package:musix/domain_social/logic/social_bloc.dart';
 import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
 import 'package:musix/domain_user/utils/constant_utils.dart';
 import 'package:musix/utils/functions/function_utils.dart';
 
+import '../../../../domain_user/entities/profile/profile_state.dart';
+import '../../../../domain_user/logic/profile_bloc.dart';
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
 import 'hashtag_widget.dart';
-import 'interaction_widget.dart';
-import 'more_list_widget/modify_post_action_widget.dart';
+import 'interaction_widget/interaction_widget.dart';
+import 'more_list_widget/post_action_widget.dart';
 
-class PostCardWidget extends StatelessWidget {
+class PostCardWidget extends StatefulWidget {
   const PostCardWidget({
     super.key,
     required this.post,
   });
   final Post post;
+
+  @override
+  State<PostCardWidget> createState() => _PostCardWidgetState();
+}
+
+class _PostCardWidgetState extends State<PostCardWidget> {
+  bool isHide = false;
+
   @override
   Widget build(BuildContext context) {
-    final user = post.user;
+    final user = widget.post.user;
     return SizedBox(
       width: double.infinity,
       height: 450,
@@ -37,10 +52,10 @@ class PostCardWidget extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: SocialDataPlayerWidget(
-                      thumbnailUrl: post.thumbnailUrl!,
-                      dataUrl: post.fileUrl!,
+                      thumbnailUrl: widget.post.thumbnailUrl!,
+                      dataUrl: widget.post.fileUrl!,
                       artistName: user?.username ?? "Unknown",
-                      title: post.fileName!,
+                      title: widget.post.fileName!,
                     ),
                   ),
                 ),
@@ -78,7 +93,7 @@ class PostCardWidget extends StatelessWidget {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Text(
-                                  readTimestamp(post.dateCreated!),
+                                  readTimestamp(widget.post.dateCreated!),
                                   style: TextStyleTheme.ts14.copyWith(
                                     color: ColorTheme.white,
                                     fontWeight: FontWeight.w400,
@@ -89,7 +104,7 @@ class PostCardWidget extends StatelessWidget {
                             const Spacer(),
                             IconButton(
                               onPressed: () {
-                                _showMoreListWidget(context, post: post);
+                                _showMoreListWidget(context, post: widget.post);
                               },
                               icon: const Icon(
                                 Icons.more_vert,
@@ -100,7 +115,7 @@ class PostCardWidget extends StatelessWidget {
                         ),
                         //Title
                         Text(
-                          post.content ?? "",
+                          widget.post.content ?? "",
                           maxLines: 2,
                           style: TextStyleTheme.ts16
                               .copyWith(color: ColorTheme.white),
@@ -110,7 +125,7 @@ class PostCardWidget extends StatelessWidget {
                         ),
                         const HashtagWidget(),
                         const Spacer(),
-                        InteractionListWidget(post: post),
+                        InteractionListWidget(post: widget.post),
                       ],
                     ),
                   ),
@@ -128,19 +143,50 @@ class PostCardWidget extends StatelessWidget {
     required Post post,
   }) {
     return showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         backgroundColor: ColorTheme.backgroundDarker,
         context: context,
         builder: (ctx) {
-          return ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (_, __) => ModifyPostActionWidget(
-                    icon: Icons.edit,
-                    text: "Modify Post",
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(RoutingPath.modifyPost, arguments: post),
+          return BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorTheme.background),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      post.user == state.user
+                          ? PostActionWidget(
+                              icon: Icons.edit,
+                              text: "Modify Post",
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  RoutingPath.modifyPost,
+                                  arguments: post),
+                            )
+                          : Container(),
+                      post.user == state.user
+                          ? PostActionWidget(
+                              icon: Icons.delete,
+                              text: "Delete Post",
+                              onTap: () => {
+                                context
+                                    .read<SocialBloc>()
+                                    .add(SocialDeletePostEvent(post)),
+                                Navigator.pop(context),
+                              },
+                            )
+                          : Container(),
+                      const PostActionWidget(
+                          text: 'Save Post', icon: Icons.bookmark_border)
+                    ],
                   ),
-              separatorBuilder: (_, __) => const SizedBox(height: 5),
-              itemCount: 1);
+                ),
+              );
+            },
+          );
         });
   }
 }

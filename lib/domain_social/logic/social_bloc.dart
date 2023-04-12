@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:musix/domain_social/entities/comment/comment.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
 import 'package:musix/domain_social/entities/utils/social_mapper.dart';
@@ -39,6 +38,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialUpdateModifyPostStatus>(_handleModifyPostStatus);
     on<SocialModifyPostBackEvent>(_handleModifyPostBackEvent);
     on<SocialLikeOrDislikePostEvent>(_handleLikeOrDislikePostEvent);
+    on<SocialDeletePostEvent>(_handleDeletePostEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
@@ -69,8 +69,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     //TODO Implemnent get list post of type just for you
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
-    print('just 4 u posts');
-    print(posts);
+    debugPrint("$posts");
     emit(state.copyWith(justForYouPosts: posts));
   }
 
@@ -90,7 +89,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     //TODO Implemnent get list post of type following
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
-    print(posts);
+    debugPrint("$posts");
     emit(state.copyWith(followingPosts: posts));
   }
 
@@ -162,8 +161,41 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleLikeOrDislikePostEvent(
       SocialLikeOrDislikePostEvent event, Emitter<SocialState> emit) async {
-    print("post id is ${event.postId}");
+    debugPrint("post id is ${event.postId}");
     final response = await postRepo.likeOrDislikePost(event.postId, testToken);
-    print("response is ${response.status}");
+    debugPrint("response is ${response.status}");
+  }
+
+  FutureOr<void> _handleDeletePostEvent(
+      SocialDeletePostEvent event, Emitter<SocialState> emit) async {
+    print(
+        "state just 4 u length before deleting ${state.justForYouPosts?.length}");
+    final response = await postRepo.deletePost(event.post.id!, testToken);
+    print(response.msg);
+    emit(state.copyWith(deletePostStatus: () => response.status));
+    if (response.status == 200) {
+      List<Post> followingPosts = List.empty(growable: true);
+      List<Post> justForYouPosts = List.empty(growable: true);
+      List<Post> trendingPosts = List.empty(growable: true);
+      for (var post in state.followingPosts!) {
+        followingPosts.add(post);
+      }
+      for (var post in state.justForYouPosts!) {
+        justForYouPosts.add(post);
+      }
+      for (var post in state.trendingPosts!) {
+        trendingPosts.add(post);
+      }
+
+      followingPosts.remove(event.post);
+      justForYouPosts.remove(event.post);
+      trendingPosts.remove(event.post);
+
+      emit(state.copyWith(
+          followingPosts: followingPosts,
+          trendingPosts: trendingPosts,
+          justForYouPosts: justForYouPosts));
+    }
+    emit(state.copyWith(deletePostStatus: () => null));
   }
 }

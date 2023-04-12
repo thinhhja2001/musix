@@ -13,6 +13,14 @@ class JustForYouListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SocialBloc, SocialState>(
+      buildWhen: (previous, current) {
+        if (previous.justForYouPosts?.length !=
+            current.justForYouPosts?.length) {
+          print("build now");
+        }
+        return previous.justForYouPosts?.length !=
+            current.justForYouPosts?.length;
+      },
       builder: (context, state) {
         return state.justForYouPosts != null
             ? ListView.separated(
