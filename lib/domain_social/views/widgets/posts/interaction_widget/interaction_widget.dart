@@ -6,11 +6,11 @@ import 'package:musix/config/exporter/state_exporter.dart';
 import 'package:musix/domain_social/entities/event/social_event.dart';
 import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
-import '../../../../theme/theme.dart';
-import '../../../entities/post/post.dart';
-import 'interaction_widget/comment_button_widget.dart';
-import 'interaction_widget/like_button_widget.dart';
-import 'interaction_widget/share_button_widget.dart';
+import '../../../../../theme/theme.dart';
+import '../../../../entities/post/post.dart';
+import 'comment_button_widget.dart';
+import 'like_button_widget.dart';
+import 'share_button_widget.dart';
 
 class InteractionListWidget extends StatelessWidget {
   const InteractionListWidget({super.key, required this.post});

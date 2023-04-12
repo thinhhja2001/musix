@@ -12,15 +12,5 @@ abstract class IPostRepo<T, E> {
     required String token,
   });
   Future<T> likeOrDislikePost(String postId, String token);
-  Future<T> addComment({
-    required String postId,
-    required CreateCommentModel createCommentModel,
-    required String token,
-  });
-  Future<T> deleteComment({
-    required String postId,
-    required String commentId,
-    required String token,
-  });
   Future<T> deletePost(String postId, String token);
 }

@@ -24,88 +24,71 @@ class LikeButtonWidget extends StatelessWidget {
         return FutureBuilder<Post>(
             future: _getPost(postId),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorTheme.white.withOpacity(.2),
-                  ),
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: LikeButton(
-                          isLiked: snapshot.data!.likedBy!.contains(state.user)
-                              ? true
-                              : false,
-                          onTap: (isLiked) async {
-                            if (snapshot.data!.likedBy == null) {
-                              return false;
-                            }
-                            context
-                                .read<SocialBloc>()
-                                .add(SocialLikeOrDislikePostEvent(postId));
-                            if (snapshot.data!.likedBy!.contains(state.user)) {
-                              snapshot.data!.likedBy!.remove(state.user);
-                              return false;
-                            } else {
-                              snapshot.data!.likedBy!.add(state.user!);
-                            }
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorTheme.white.withOpacity(.2),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: snapshot.hasData
+                        ? LikeButton(
+                            isLiked:
+                                snapshot.data!.likedBy!.contains(state.user)
+                                    ? true
+                                    : false,
+                            onTap: (isLiked) async {
+                              if (snapshot.data!.likedBy == null) {
+                                return false;
+                              }
+                              context
+                                  .read<SocialBloc>()
+                                  .add(SocialLikeOrDislikePostEvent(postId));
+                              if (snapshot.data!.likedBy!
+                                  .contains(state.user)) {
+                                snapshot.data!.likedBy!.remove(state.user);
+                                return false;
+                              } else {
+                                snapshot.data!.likedBy!.add(state.user!);
+                              }
 
-                            return true;
-                          },
-                          circleColor: const CircleColor(
-                              start: Colors.red, end: Colors.red),
-                          bubblesColor: BubblesColor(
-                            dotPrimaryColor: Colors.red.shade200,
-                            dotSecondaryColor: Colors.red,
-                          ),
-                          likeBuilder: (_) {
-                            if (snapshot.data!.likedBy == null ||
-                                !snapshot.data!.likedBy!.contains(state.user) ||
-                                snapshot.data!.likedBy!.isEmpty) {
+                              return true;
+                            },
+                            circleColor: const CircleColor(
+                                start: Colors.red, end: Colors.red),
+                            bubblesColor: BubblesColor(
+                              dotPrimaryColor: Colors.red.shade200,
+                              dotSecondaryColor: Colors.red,
+                            ),
+                            likeBuilder: (_) {
+                              if (snapshot.data!.likedBy == null ||
+                                  !snapshot.data!.likedBy!
+                                      .contains(state.user) ||
+                                  snapshot.data!.likedBy!.isEmpty) {
+                                return const Icon(
+                                  Icons.favorite_outline,
+                                  color: Colors.white,
+                                );
+                              }
                               return const Icon(
-                                Icons.favorite_outline,
-                                color: Colors.white,
+                                Icons.favorite,
+                                color: Colors.red,
                               );
-                            }
-                            return const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            );
-                          },
-                          likeCount: snapshot.data!.likedBy?.length ?? 0,
-                          countBuilder:
-                              (int? count, bool isLiked, String text) {
-                            var color = isLiked ? Colors.red : Colors.white;
-                            Widget result;
-                            result = Text(
-                              text,
-                              style: TextStyle(color: color),
-                            );
+                            },
+                            likeCount: snapshot.data!.likedBy?.length ?? 0,
+                            countBuilder:
+                                (int? count, bool isLiked, String text) {
+                              var color = isLiked ? Colors.red : Colors.white;
+                              Widget result;
+                              result = Text(
+                                text,
+                                style: TextStyle(color: color),
+                              );
 
-                            return result;
-                          })),
-                );
-              }
-              return LikeButton(
-                  circleColor:
-                      const CircleColor(start: Colors.red, end: Colors.red),
-                  bubblesColor: BubblesColor(
-                    dotPrimaryColor: Colors.red.shade200,
-                    dotSecondaryColor: Colors.red,
-                  ),
-                  likeBuilder: (_) {
-                    return const Icon(
-                      Icons.favorite_outline,
-                      color: Colors.white,
-                    );
-                  },
-                  likeCount: snapshot.data!.likedBy?.length ?? 0,
-                  countBuilder: (int? count, bool isLiked, String text) {
-                    return const Text(
-                      '0',
-                      style: TextStyle(color: Colors.white),
-                    );
-                  });
+                              return result;
+                            })
+                        : const _LikeButtonWithNoData()),
+              );
             });
       },
     );
@@ -115,5 +98,32 @@ class LikeButtonWidget extends StatelessWidget {
     final postModel = await PostRepo().getPostById(postId, testToken);
     final post = await SocialMapper().postFromPostModel(postModel!);
     return post;
+  }
+}
+
+class _LikeButtonWithNoData extends StatelessWidget {
+  const _LikeButtonWithNoData();
+
+  @override
+  Widget build(BuildContext context) {
+    return LikeButton(
+        circleColor: const CircleColor(start: Colors.red, end: Colors.red),
+        bubblesColor: BubblesColor(
+          dotPrimaryColor: Colors.red.shade200,
+          dotSecondaryColor: Colors.red,
+        ),
+        likeBuilder: (_) {
+          return const Icon(
+            Icons.favorite_outline,
+            color: Colors.white,
+          );
+        },
+        likeCount: 0,
+        countBuilder: (int? count, bool isLiked, String text) {
+          return const Text(
+            '0',
+            style: TextStyle(color: Colors.white),
+          );
+        });
   }
 }

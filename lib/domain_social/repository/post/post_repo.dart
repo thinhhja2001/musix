@@ -12,40 +12,6 @@ import 'package:musix/global/repo/initial_repo.dart';
 class PostRepo extends InitialRepo
     implements IPostRepo<PostResponseModel, PostModel> {
   final _baseUrl = "/social/post";
-  @override
-  Future<PostResponseModel> addComment({
-    required String postId,
-    required CreateCommentModel createCommentModel,
-    required String token,
-  }) async {
-    var response = await dio.post(
-      "$_baseUrl/comment/$postId",
-      data: createCommentModel.toJson(),
-      options: Options(
-        headers: headerApplicationJson(token: token),
-      ),
-    );
-    return PostResponseModel.fromJson(response.data);
-  }
-
-  @override
-  Future<PostResponseModel> deleteComment({
-    required String postId,
-    required String commentId,
-    required String token,
-  }) async {
-    var response = await dio.delete(
-      "$_baseUrl/comment/delete",
-      data: {
-        "postId": postId,
-        "commentId": commentId,
-      },
-      options: Options(
-        headers: headerApplicationJson(token: token),
-      ),
-    );
-    return PostResponseModel.fromJson(response.data);
-  }
 
   @override
   Future<PostResponseModel> deletePost(String postId, String token) async {
