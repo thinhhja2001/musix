@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/domain_auth/views/widgets/custom_textfield_widget.dart';
-import 'package:musix/theme/theme.dart';
-import 'package:musix/utils/utils.dart';
+import '../../../../config/exporter.dart';
+import '../../../../domain_auth/views/widgets/custom_textfield_widget.dart';
+import '../../../../theme/theme.dart';
+import '../../../../utils/utils.dart';
 
 import '../../../../global/widgets/loading_widget.dart';
 

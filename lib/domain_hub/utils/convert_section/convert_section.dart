@@ -1,4 +1,4 @@
-import 'package:musix/domain_video/utils/convert_video.dart';
+import '../../../domain_video/utils/convert_video.dart';
 
 import '../../../domain_artist/entities/entities.dart';
 import '../../../domain_artist/utils/utils.dart';

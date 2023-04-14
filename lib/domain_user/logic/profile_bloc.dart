@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/utils/utils.dart';
+import '../../utils/utils.dart';
 
 import '../../domain_auth/logic/auth_bloc.dart';
 import '../entities/entities.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_social/entities/state/social_state.dart';
-import 'package:musix/domain_social/repository/comment/comment_repo.dart';
-import 'package:musix/domain_social/repository/post/post_repo.dart';
+import '../domain_social/entities/state/social_state.dart';
+import '../domain_social/repository/comment/comment_repo.dart';
+import '../domain_social/repository/post/post_repo.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
 import '../utils/utils.dart';

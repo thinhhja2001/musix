@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_artist/views/widgets.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../entities/artist/mini_artist.dart';
+import '../widgets.dart';
 
 enum ArtistType {
   cardImage,

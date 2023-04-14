@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:musix/domain_social/entities/post/post.dart';
+import '../post/post.dart';
 
 class SocialState extends Equatable {
   final List<Post>? justForYouPosts;

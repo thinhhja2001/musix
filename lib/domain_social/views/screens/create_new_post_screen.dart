@@ -4,12 +4,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
-import 'package:musix/domain_auth/views/widgets/custom_textfield_widget.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
-import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/text_style.dart';
+import '../../../domain_auth/views/widgets/custom_button_widget.dart';
+import '../../../domain_auth/views/widgets/custom_textfield_widget.dart';
+import '../../entities/event/social_event.dart';
+import '../../models/post/request/post_registry_model.dart';
+import '../../../theme/color.dart';
+import '../../../theme/text_style.dart';
 
 import '../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
 import '../../entities/state/social_state.dart';

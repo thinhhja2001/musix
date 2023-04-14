@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
-import 'package:musix/domain_auth/views/widgets/custom_textfield_widget.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
-import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
-import 'package:musix/theme/color.dart';
-import 'package:musix/theme/text_style.dart';
+import '../../../domain_auth/views/widgets/custom_button_widget.dart';
+import '../../../domain_auth/views/widgets/custom_textfield_widget.dart';
+import '../../entities/event/social_event.dart';
+import '../../models/post/request/post_registry_model.dart';
+import '../../../theme/color.dart';
+import '../../../theme/text_style.dart';
 
 import '../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
 import '../../entities/post/post.dart';

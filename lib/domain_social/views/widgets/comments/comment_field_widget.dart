@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_social/views/widgets/comments/send_comment_button_widget.dart';
+import 'send_comment_button_widget.dart';
 
 import '../../../../theme/theme.dart';
 import 'comment_input_widget.dart';

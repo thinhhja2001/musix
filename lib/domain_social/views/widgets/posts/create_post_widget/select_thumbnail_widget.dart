@@ -4,8 +4,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:musix/config/exporter/bloc_exporter.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
+import '../../../../../config/exporter/bloc_exporter.dart';
+import '../../../../entities/event/social_event.dart';
 
 import '../../../../../theme/theme.dart';
 import '../../../../entities/state/social_state.dart';

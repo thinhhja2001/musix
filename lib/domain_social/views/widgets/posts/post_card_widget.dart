@@ -1,13 +1,13 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
-import 'package:musix/domain_social/entities/post/post.dart';
-import 'package:musix/domain_social/logic/social_bloc.dart';
-import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
-import 'package:musix/domain_user/utils/constant_utils.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
+import '../../../entities/event/social_event.dart';
+import '../../../entities/post/post.dart';
+import '../../../logic/social_bloc.dart';
+import 'social_data_player_widget.dart';
+import '../../../../domain_user/utils/constant_utils.dart';
+import '../../../../utils/functions/function_utils.dart';
 
 import '../../../../domain_user/entities/profile/profile_state.dart';
 import '../../../../domain_user/logic/profile_bloc.dart';

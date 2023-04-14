@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musix/domain_song/services/play_next_pre_handller.dart';
+import '../services/play_next_pre_handller.dart';
 
 import '../../utils/utils.dart';
 import '../entities/entities.dart';

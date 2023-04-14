@@ -1,9 +1,9 @@
-import 'package:musix/domain_hub/entities/entities.dart';
-import 'package:musix/domain_song/models/models.dart';
-import 'package:musix/domain_song/utils/convert_model_entity/convert_song.dart';
-import 'package:musix/domain_video/entities/video_short.dart';
-import 'package:musix/domain_video/utils/convert_video.dart';
-import 'package:musix/utils/enum/enum_music_type.dart';
+import '../../../domain_hub/entities/entities.dart';
+import '../../../domain_song/models/models.dart';
+import '../../../domain_song/utils/convert_model_entity/convert_song.dart';
+import '../../../domain_video/entities/video_short.dart';
+import '../../../domain_video/utils/convert_video.dart';
+import '../../../utils/enum/enum_music_type.dart';
 
 import '../../../domain_artist/entities/entities.dart';
 import '../../../domain_artist/models/models.dart';

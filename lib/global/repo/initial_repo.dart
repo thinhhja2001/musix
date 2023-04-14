@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:musix/config/environment.dart';
-import 'package:musix/config/register_dependency.dart';
-import 'package:musix/domain_auth/utils/dio_utils.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
+
+import '../../config/environment.dart';
+import '../../config/register_dependency.dart';
+import '../../domain_auth/utils/dio_utils.dart';
 
 class InitialRepo {
   final Future<ZingMP3APIV2> apiZingMP3 = getIt.getAsync<ZingMP3APIV2>();

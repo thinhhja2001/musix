@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/global/widgets/widgets.dart';
-import 'package:musix/theme/theme.dart';
+import '../../../../config/exporter.dart';
+import '../../../../global/widgets/widgets.dart';
+import '../../../../theme/theme.dart';
 
 import '../../../../utils/utils.dart';
 

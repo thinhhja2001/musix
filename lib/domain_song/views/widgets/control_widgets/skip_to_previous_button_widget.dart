@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter/state_exporter.dart';
+import '../../../../config/exporter/state_exporter.dart';
 
 import '../../../../config/exporter/bloc_exporter.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_social/views/widgets/comments/comment_card_widget.dart';
-import 'package:musix/theme/theme.dart';
+import '../widgets/comments/comment_card_widget.dart';
+import '../../../theme/theme.dart';
 
 import '../widgets/comments/comment_field_widget.dart';
 

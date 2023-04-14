@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:musix/domain_song/views/widgets.dart';
-import 'package:musix/theme/theme.dart';
 
 import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
+import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
 import '../current_song_player_screen/current_song_player_screen.dart';
+import '../widgets.dart';
 
 class SongsInfoScreen extends StatelessWidget {
   const SongsInfoScreen({Key? key}) : super(key: key);

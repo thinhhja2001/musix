@@ -13,9 +13,10 @@ import 'package:chewie/src/models/option_item.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
-import '../../../../theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../../../theme/theme.dart';
 
 class CustomSocialMediaControl extends StatefulWidget {
   const CustomSocialMediaControl({

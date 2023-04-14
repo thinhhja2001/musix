@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/domain_artist/entities/entities.dart';
+import '../../config/exporter.dart';
+import '../entities/entities.dart';
 
 import '../../utils/utils.dart';
 import '../utils/convert_mini_artist.dart';

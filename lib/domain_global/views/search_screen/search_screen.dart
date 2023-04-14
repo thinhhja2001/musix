@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:musix/domain_video/views/widgets/video_short_list_widget.dart';
+import '../../../domain_video/views/widgets/video_short_list_widget.dart';
 
 import '../../../config/exporter.dart';
 import '../../../domain_artist/views/widgets.dart';

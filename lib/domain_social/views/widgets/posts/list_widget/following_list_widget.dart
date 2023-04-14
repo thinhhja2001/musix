@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/utils/functions/function_utils.dart';
-import 'package:shimmer/shimmer.dart';
 
-import '../../../../../theme/color.dart';
 import '../../../../entities/state/social_state.dart';
 import '../../../../logic/social_bloc.dart';
 import '../post_card_widget.dart';

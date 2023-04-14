@@ -2,12 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_auth/entities/event/auth_event.dart';
-import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
-import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/text_path.dart';
-import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
-import 'package:musix/domain_user/models/user_info/user_model.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../../../entities/event/auth_event.dart';
+import 'utils/function.dart';
+import 'utils/text_path.dart';
+import '../../widgets/custom_button_widget.dart';
+import '../../../../domain_user/models/user_info/user_model.dart';
+import '../../../../routing/routing_path.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';

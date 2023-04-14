@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_social/entities/comment/comment.dart';
-import 'package:musix/domain_social/entities/post/post.dart';
-import 'package:musix/domain_social/entities/utils/social_mapper.dart';
-import 'package:musix/domain_social/models/comment/comment_model.dart';
-import 'package:musix/domain_social/models/post/post_model.dart';
-import 'package:musix/domain_social/repository/comment/comment_repo.dart';
+import '../entities/comment/comment.dart';
+import '../entities/post/post.dart';
+import '../entities/utils/social_mapper.dart';
+import '../models/comment/comment_model.dart';
+import '../models/post/post_model.dart';
+import '../repository/comment/comment_repo.dart';
 
 import '../entities/event/social_event.dart';
 import '../entities/state/social_state.dart';

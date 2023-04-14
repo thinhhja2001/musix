@@ -6,10 +6,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/global/widgets/widgets.dart';
-import 'package:musix/theme/theme.dart';
-import 'package:musix/utils/utils.dart';
+import '../../../../config/exporter.dart';
+import '../../../../global/widgets/widgets.dart';
+import '../../../../theme/theme.dart';
+import '../../../../utils/utils.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OwnPlaylistThumbnailWidget extends StatefulWidget {

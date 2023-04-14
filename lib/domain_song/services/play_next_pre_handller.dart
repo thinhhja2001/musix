@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:musix/domain_song/entities/entities.dart';
+import '../entities/entities.dart';
 
 class PlayNextPreHandler {
   List<SongInfo> listSongInfo;
