@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../models/post/request/post_registry_model.dart';
 
 import '../post/post.dart';
@@ -82,3 +80,9 @@ class SocialDeletePostEvent extends SocialEvent {
   Post post;
   SocialDeletePostEvent(this.post);
 }
+
+class SocialFollowingPostLoadMoreEvent extends SocialEvent {}
+
+class SocialJust4YouPostLoadMoreEvent extends SocialEvent {}
+
+class SocialTrendingPostLoadMoreEvent extends SocialEvent {}

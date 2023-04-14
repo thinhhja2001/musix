@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../theme/color.dart';
+import '../../../../entities/event/social_event.dart';
 import '../../../../entities/state/social_state.dart';
 import '../../../../logic/social_bloc.dart';
 import '../post_card_widget.dart';
 import '../post_shimmer_loading_widget.dart';
 
-class TrendingListWidget extends StatelessWidget {
+class TrendingListWidget extends StatefulWidget {
   const TrendingListWidget({super.key});
+
+  @override
+  State<TrendingListWidget> createState() => _TrendingListWidgetState();
+}
+
+class _TrendingListWidgetState extends State<TrendingListWidget> {
+  late ScrollController scrollController;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
+
+    scrollController = ScrollController()..addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (!scrollController.hasClients || _loading) return;
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      _loading = true;
+      context.read<SocialBloc>().add(SocialTrendingPostLoadMoreEvent());
+      _loading = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +42,7 @@ class TrendingListWidget extends StatelessWidget {
       builder: (context, state) {
         return state.trendingPosts != null
             ? ListView.separated(
+                controller: scrollController,
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 separatorBuilder: (context, index) {

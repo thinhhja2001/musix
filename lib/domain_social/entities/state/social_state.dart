@@ -17,6 +17,7 @@ class SocialState extends Equatable {
   final bool? isModifyingPost;
   final int? modifyingPostStatus;
   final int? deletePostStatus;
+
   const SocialState({
     this.justForYouPosts,
     this.trendingPosts,
@@ -45,25 +46,26 @@ class SocialState extends Equatable {
     int? Function()? deletePostStatus,
   }) =>
       SocialState(
-          justForYouPosts: justForYouPosts ?? this.justForYouPosts,
-          trendingPosts: trendingPosts ?? this.trendingPosts,
-          followingPosts: followingPosts ?? this.followingPosts,
-          currentPost: currentPost ?? this.currentPost,
-          createPostThumbnail: createPostThumbnail != null
-              ? createPostThumbnail()
-              : this.createPostThumbnail,
-          sourceData: sourceData != null ? sourceData() : this.sourceData,
-          isCreatingPost: isCreatingPost ?? this.isCreatingPost,
-          createPostStatus: createPostStatus != null
-              ? createPostStatus()
-              : this.createPostStatus,
-          isModifyingPost: isModifyingPost ?? this.isModifyingPost,
-          modifyingPostStatus: modifyingPostStatus != null
-              ? modifyingPostStatus()
-              : this.modifyingPostStatus,
-          deletePostStatus: deletePostStatus != null
-              ? deletePostStatus()
-              : this.deletePostStatus);
+        justForYouPosts: justForYouPosts ?? this.justForYouPosts,
+        trendingPosts: trendingPosts ?? this.trendingPosts,
+        followingPosts: followingPosts ?? this.followingPosts,
+        currentPost: currentPost ?? this.currentPost,
+        createPostThumbnail: createPostThumbnail != null
+            ? createPostThumbnail()
+            : this.createPostThumbnail,
+        sourceData: sourceData != null ? sourceData() : this.sourceData,
+        isCreatingPost: isCreatingPost ?? this.isCreatingPost,
+        createPostStatus: createPostStatus != null
+            ? createPostStatus()
+            : this.createPostStatus,
+        isModifyingPost: isModifyingPost ?? this.isModifyingPost,
+        modifyingPostStatus: modifyingPostStatus != null
+            ? modifyingPostStatus()
+            : this.modifyingPostStatus,
+        deletePostStatus: deletePostStatus != null
+            ? deletePostStatus()
+            : this.deletePostStatus,
+      );
 
   @override
   List<Object?> get props => [
@@ -77,7 +79,7 @@ class SocialState extends Equatable {
         createPostStatus,
         isModifyingPost,
         modifyingPostStatus,
-        deletePostStatus
+        deletePostStatus,
       ];
   @override
   bool? get stringify => false;

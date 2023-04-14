@@ -32,8 +32,8 @@ class PostRepo extends InitialRepo
   @override
   Future<List<PostModel>> getPostsByUsername({
     required String username,
-    int page = 0,
-    int size = 5,
+    required int page,
+    required int size,
     required String token,
   }) async {
     var response = await dio.get(_baseUrl,
@@ -119,8 +119,11 @@ class PostRepo extends InitialRepo
   }
 
   @override
-  Future<List<PostModel>> getPosts(
-      {int page = 0, int size = 5, required String token}) async {
+  Future<List<PostModel>> getPosts({
+    required int page,
+    required int size,
+    required String token,
+  }) async {
     var response = await dio.get("$_baseUrl/posts",
         options: Options(
           headers: headerApplicationJson(token: token),

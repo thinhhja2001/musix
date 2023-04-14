@@ -39,10 +39,17 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialModifyPostBackEvent>(_handleModifyPostBackEvent);
     on<SocialLikeOrDislikePostEvent>(_handleLikeOrDislikePostEvent);
     on<SocialDeletePostEvent>(_handleDeletePostEvent);
+    on<SocialJust4YouPostLoadMoreEvent>(_handleJust4YouPostLoadMoreEvent);
+    on<SocialFollowingPostLoadMoreEvent>(_handleFollowingPostLoadMoreEvent);
+    on<SocialTrendingPostLoadMoreEvent>(_handleTrendingPostLoadMoreEvent);
   }
   final CommentRepo commentRepo;
   final PostRepo postRepo;
   final SocialMapper socialMapper = SocialMapper();
+  final int _countPerPage = 2;
+  int _followingPostCurrentPage = 0;
+  int _just4YouPostCurrentPage = 0;
+  int _trendingPostCurrentPage = 0;
   FutureOr<void> _handleGetCommentsByPostId(
       SocialGetCommentsByPostIdEvent event, Emitter<SocialState> emit) async {
     List<CommentModel> commentModels =
@@ -65,8 +72,12 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostJustForYouEvent(
       SocialGetListPostJustForYouEvent event, Emitter<SocialState> emit) async {
-    List<PostModel> postsModel = await postRepo.getAllPosts(testToken);
     //TODO Implemnent get list post of type just for you
+    List<PostModel> postsModel = await postRepo.getPosts(
+      page: _just4YouPostCurrentPage,
+      size: _countPerPage,
+      token: testToken,
+    );
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
     debugPrint("$posts");
@@ -75,8 +86,12 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostTrendingEvent(
       SocialGetListPostTrendingEvent event, Emitter<SocialState> emit) async {
-    List<PostModel> postsModel = await postRepo.getAllPosts(testToken);
     //TODO Implemnent get list post of type trending
+    List<PostModel> postsModel = await postRepo.getPosts(
+      page: _trendingPostCurrentPage,
+      size: _countPerPage,
+      token: testToken,
+    );
 
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
@@ -85,8 +100,12 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostFollowingEvent(
       SocialGetListPostFollowingEvent event, Emitter<SocialState> emit) async {
-    List<PostModel> postsModel = await postRepo.getAllPosts(testToken);
     //TODO Implemnent get list post of type following
+    List<PostModel> postsModel = await postRepo.getPosts(
+      page: _just4YouPostCurrentPage,
+      size: _countPerPage,
+      token: testToken,
+    );
     List<Post> posts =
         await socialMapper.listPostsFromListPostsModel(postsModel);
     debugPrint("$posts");
@@ -168,10 +187,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleDeletePostEvent(
       SocialDeletePostEvent event, Emitter<SocialState> emit) async {
-    print(
-        "state just 4 u length before deleting ${state.justForYouPosts?.length}");
     final response = await postRepo.deletePost(event.post.id!, testToken);
-    print(response.msg);
     emit(state.copyWith(deletePostStatus: () => response.status));
     if (response.status == 200) {
       List<Post> followingPosts = List.empty(growable: true);
@@ -197,5 +213,44 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
           justForYouPosts: justForYouPosts));
     }
     emit(state.copyWith(deletePostStatus: () => null));
+  }
+
+  FutureOr<void> _handleJust4YouPostLoadMoreEvent(
+      SocialJust4YouPostLoadMoreEvent event, Emitter<SocialState> emit) async {
+    final postsModel = await postRepo.getPosts(
+        token: testToken,
+        page: ++_just4YouPostCurrentPage,
+        size: _countPerPage);
+    if (postsModel.isNotEmpty) {
+      final posts = await socialMapper.listPostsFromListPostsModel(postsModel);
+      emit(state
+          .copyWith(justForYouPosts: [...?state.justForYouPosts, ...posts]));
+    }
+  }
+
+  FutureOr<void> _handleFollowingPostLoadMoreEvent(
+      SocialFollowingPostLoadMoreEvent event, Emitter<SocialState> emit) async {
+    final postsModel = await postRepo.getPosts(
+        token: testToken,
+        page: ++_followingPostCurrentPage,
+        size: _countPerPage);
+    if (postsModel.isNotEmpty) {
+      final posts = await socialMapper.listPostsFromListPostsModel(postsModel);
+      emit(
+          state.copyWith(followingPosts: [...?state.followingPosts, ...posts]));
+    }
+  }
+
+  FutureOr<void> _handleTrendingPostLoadMoreEvent(
+      SocialTrendingPostLoadMoreEvent event, Emitter<SocialState> emit) async {
+    final postsModel = await postRepo.getPosts(
+        token: testToken,
+        page: ++_trendingPostCurrentPage,
+        size: _countPerPage);
+    if (postsModel.isNotEmpty) {
+      final posts = await socialMapper.listPostsFromListPostsModel(postsModel);
+
+      emit(state.copyWith(trendingPosts: [...?state.trendingPosts, ...posts]));
+    }
   }
 }

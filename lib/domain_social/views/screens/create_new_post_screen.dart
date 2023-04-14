@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain_auth/views/widgets/custom_button_widget.dart';
 import '../../../domain_auth/views/widgets/custom_textfield_widget.dart';

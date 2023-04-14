@@ -4,14 +4,14 @@ abstract class IPostRepo<T, E> {
   Future<E?> getPostById(String postId, String token);
   Future<List<E>> getAllPosts(String token);
   Future<List<E>> getPosts({
-    int page = 0,
-    int size = 5,
+    required int page,
+    required int size,
     required String token,
   });
   Future<List<E>> getPostsByUsername({
     required String username,
-    int page = 0,
-    int size = 5,
+    required int page,
+    required int size,
     required String token,
   });
   Future<T> createNewPost(PostRegistryModel postRegistryModel, String token);

@@ -19,9 +19,6 @@ class SocialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SocialBloc>().add(SocialGetListPostJustForYouEvent());
-    context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
-    context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
     return BlocListener<SocialBloc, SocialState>(
       listener: (context, state) {
         if (state.deletePostStatus == 200) {
