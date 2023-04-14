@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:musix/domain_social/repository/comment/comment_repo.dart';
-import 'package:musix/domain_social/repository/post/post_repo.dart';
+import '../domain_social/repository/comment/comment_repo.dart';
+import '../domain_social/repository/post/post_repo.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import 'exporter/repo_exporter.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter/bloc_exporter.dart';
-import 'package:musix/config/exporter/state_exporter.dart';
+
+import '../../../config/exporter/bloc_exporter.dart';
+import '../../../config/exporter/state_exporter.dart';
 import '../../../domain_global/views/home_screen/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../models/models.dart';
-
 import '../widgets/video_short_list_widget.dart';
 
 class VideoShortListPageWidget extends StatelessWidget {

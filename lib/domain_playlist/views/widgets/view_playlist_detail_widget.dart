@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_playlist/entities/entities.dart';
 
 import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
+import '../../entities/entities.dart';
 
 class ViewPlaylistDetailWidget extends StatelessWidget {
   const ViewPlaylistDetailWidget({

@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:musix/domain_social/models/comment/comment_model.dart';
-import 'package:musix/domain_social/models/comment/request/modify_comment_request.dart';
-import 'package:musix/domain_social/models/comment/request/create_comment_request.dart';
-import 'package:musix/domain_social/models/comment/response/comment_response_model.dart';
-import 'package:musix/domain_social/repository/comment/i_comment_repo.dart';
-import 'package:musix/global/repo/initial_repo.dart';
+import '../../models/comment/comment_model.dart';
+import '../../models/comment/request/modify_comment_request.dart';
+import '../../models/comment/request/create_comment_request.dart';
+import '../../models/comment/response/comment_response_model.dart';
+import 'i_comment_repo.dart';
+import '../../../global/repo/initial_repo.dart';
 
 class CommentRepo extends InitialRepo
     implements ICommentRepo<CommentResponseModel, CommentModel> {

@@ -2,12 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:musix/config/exporter/bloc_exporter.dart';
-import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
-import 'package:musix/domain_social/views/widgets/posts/list_widget/following_list_widget.dart';
-import 'package:musix/domain_social/views/widgets/posts/list_widget/trending_list_widget.dart';
-import 'package:musix/theme/theme.dart';
+import '../../../config/exporter/bloc_exporter.dart';
+import '../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
+import '../../entities/event/social_event.dart';
+import '../widgets/posts/list_widget/following_list_widget.dart';
+import '../widgets/posts/list_widget/trending_list_widget.dart';
+import '../../../theme/theme.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../entities/state/social_state.dart';
@@ -19,9 +19,6 @@ class SocialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SocialBloc>().add(SocialGetListPostJustForYouEvent());
-    context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
-    context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
     return BlocListener<SocialBloc, SocialState>(
       listener: (context, state) {
         if (state.deletePostStatus == 200) {

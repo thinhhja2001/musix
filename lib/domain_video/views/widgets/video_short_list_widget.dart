@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_video/views/widgets/video_player/video_short_card_widget.dart';
 
 import '../../../global/widgets/widgets.dart';
 import '../../entities/video_short.dart';
+import 'video_player/video_short_card_widget.dart';
 
 enum VideoShortListType { carousel, list }
 

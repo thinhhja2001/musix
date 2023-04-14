@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/domain_auth/entities/event/auth_event.dart';
-import 'package:musix/domain_auth/payload/request/login_request.dart';
+import '../../../../config/exporter.dart';
+import '../../../entities/event/auth_event.dart';
+import '../../../payload/request/login_request.dart';
 
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/color.dart';

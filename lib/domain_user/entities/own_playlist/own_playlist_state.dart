@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_song/entities/entities.dart';
-import 'package:musix/utils/utils.dart';
+import '../../../domain_song/entities/entities.dart';
+import '../../../utils/utils.dart';
 
 class OwnPlaylistState extends Equatable {
   final Map<String, Status>? status;

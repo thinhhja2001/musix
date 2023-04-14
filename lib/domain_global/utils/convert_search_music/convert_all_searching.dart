@@ -1,8 +1,8 @@
-import 'package:musix/domain_artist/entities/artist/mini_artist.dart';
-import 'package:musix/domain_global/entities/entities.dart';
-import 'package:musix/domain_playlist/entities/entities.dart';
-import 'package:musix/domain_song/entities/entities.dart';
-import 'package:musix/domain_video/entities/video_short.dart';
+import '../../../domain_artist/entities/artist/mini_artist.dart';
+import '../../entities/entities.dart';
+import '../../../domain_playlist/entities/entities.dart';
+import '../../../domain_song/entities/entities.dart';
+import '../../../domain_video/entities/video_short.dart';
 
 SongInfo convertSongInfoFromAllSearching(AllSearching allSearching) {
   return SongInfo(

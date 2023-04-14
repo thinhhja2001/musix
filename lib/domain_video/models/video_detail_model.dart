@@ -1,4 +1,4 @@
-import 'package:musix/domain_video/models/models.dart';
+import 'models.dart';
 
 import '../../domain_artist/models/models.dart';
 

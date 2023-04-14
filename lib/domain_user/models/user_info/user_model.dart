@@ -1,4 +1,4 @@
-import 'package:musix/domain_user/models/user_info/profile_model.dart';
+import 'profile_model.dart';
 
 import '../../utils/user_role.dart';
 

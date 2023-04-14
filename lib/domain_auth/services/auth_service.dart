@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:musix/domain_auth/payload/request/login_request.dart';
-import 'package:musix/domain_auth/payload/request/register_request.dart';
-import 'package:musix/domain_auth/payload/request/reset_password_request.dart';
-import 'package:musix/domain_auth/services/i_auth_service.dart';
-import 'package:musix/domain_auth/utils/dio_utils.dart';
+import '../payload/request/login_request.dart';
+import '../payload/request/register_request.dart';
+import '../payload/request/reset_password_request.dart';
+import 'i_auth_service.dart';
+import '../utils/dio_utils.dart';
 
 import '../../config/exporter/environment_exporter.dart';
 

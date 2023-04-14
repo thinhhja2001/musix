@@ -1,14 +1,14 @@
-import 'package:musix/domain_auth/payload/request/reset_password_request.dart';
-import 'package:musix/domain_auth/payload/response/resend_email_response.dart';
-import 'package:musix/domain_auth/payload/request/register_request.dart';
-import 'package:musix/domain_auth/payload/request/login_request.dart';
-import 'package:musix/domain_auth/payload/response/i_response.dart';
-import 'package:musix/domain_auth/payload/response/login_response.dart';
-import 'package:musix/domain_auth/payload/response/register_response.dart';
-import 'package:musix/domain_auth/payload/response/reset_response.dart';
-import 'package:musix/domain_auth/repo/i_auth_repo.dart';
-import 'package:musix/domain_auth/services/auth_service.dart';
-import 'package:musix/domain_auth/services/i_auth_service.dart';
+import '../payload/request/reset_password_request.dart';
+import '../payload/response/resend_email_response.dart';
+import '../payload/request/register_request.dart';
+import '../payload/request/login_request.dart';
+import '../payload/response/i_response.dart';
+import '../payload/response/login_response.dart';
+import '../payload/response/register_response.dart';
+import '../payload/response/reset_response.dart';
+import 'i_auth_repo.dart';
+import '../services/auth_service.dart';
+import '../services/i_auth_service.dart';
 
 import '../payload/response/request_reset_response.dart';
 

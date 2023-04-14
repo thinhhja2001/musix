@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../../../../routing/routing_path.dart';
 
 import '../../../../config/exporter.dart';
 import '../../../../domain_hub/views/widgets.dart';

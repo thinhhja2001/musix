@@ -1,7 +1,7 @@
-import '../../model/model.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import '../../../config/register_dependency.dart';
+import '../../model/model.dart';
 
 class GenreRepo {
   Future<GetGerneModel> getGenreById(String id) async {

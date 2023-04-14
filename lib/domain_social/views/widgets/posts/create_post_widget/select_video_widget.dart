@@ -5,8 +5,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../../../entities/event/social_event.dart';
+import '../../../../../utils/functions/function_utils.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../../theme/theme.dart';

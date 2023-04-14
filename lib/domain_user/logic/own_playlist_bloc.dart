@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/domain_song/entities/entities.dart';
-import 'package:musix/domain_song/utils/utils.dart';
+import '../../config/exporter.dart';
+import '../../domain_song/entities/entities.dart';
+import '../../domain_song/utils/utils.dart';
 
 import '../../utils/utils.dart';
 

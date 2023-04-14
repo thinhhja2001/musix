@@ -1,10 +1,19 @@
-import 'package:musix/domain_social/models/comment/request/create_comment_request.dart';
-import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
+import '../../models/post/request/post_registry_model.dart';
 
 abstract class IPostRepo<T, E> {
   Future<E?> getPostById(String postId, String token);
   Future<List<E>> getAllPosts(String token);
-  Future<List<E>> getPostsByUsername(String username, String token);
+  Future<List<E>> getPosts({
+    required int page,
+    required int size,
+    required String token,
+  });
+  Future<List<E>> getPostsByUsername({
+    required String username,
+    required int page,
+    required int size,
+    required String token,
+  });
   Future<T> createNewPost(PostRegistryModel postRegistryModel, String token);
   Future<T> modifyPost({
     required String postId,

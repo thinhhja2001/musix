@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
-import 'package:musix/domain_social/entities/utils/social_mapper.dart';
-import 'package:musix/domain_social/repository/post/post_repo.dart';
+import '../../../../entities/utils/social_mapper.dart';
+import '../../../../repository/post/post_repo.dart';
 
 import '../../../../../domain_user/entities/profile/profile_state.dart';
 import '../../../../../domain_user/logic/profile_bloc.dart';

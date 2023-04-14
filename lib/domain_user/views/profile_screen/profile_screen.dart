@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../../../routing/routing_path.dart';
 
 import '../../../config/exporter.dart';
 import '../../../domain_hub/entities/entities.dart';

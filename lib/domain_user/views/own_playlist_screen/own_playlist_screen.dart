@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/domain_hub/entities/entities.dart';
-import 'package:musix/domain_song/views/widgets.dart';
-import 'package:musix/domain_song/views/widgets/control_widgets/shuffle_button_widget.dart';
-import 'package:musix/domain_user/views/own_playlist_screen/widgets/own_playlist_thumbnail_widget.dart';
-import 'package:musix/domain_user/views/own_playlists_screen/widgets.dart';
-import 'package:musix/theme/theme.dart';
-import 'package:musix/utils/utils.dart';
+import '../../../config/exporter.dart';
+import '../../../domain_hub/entities/entities.dart';
+import '../../../domain_song/views/widgets.dart';
+import '../../../domain_song/views/widgets/control_widgets/shuffle_button_widget.dart';
+import 'widgets/own_playlist_thumbnail_widget.dart';
+import '../own_playlists_screen/widgets.dart';
+import '../../../theme/theme.dart';
+import '../../../utils/utils.dart';
 
 import 'widgets/edit_own_playlist_widget.dart';
 

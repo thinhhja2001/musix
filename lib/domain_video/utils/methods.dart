@@ -1,9 +1,9 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import '../entities/video_detail.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../theme/theme.dart';
+import '../entities/video_detail.dart';
 import '../views/widgets/custom/custom_material_control.dart';
 
 ChewieController createChewieController({
