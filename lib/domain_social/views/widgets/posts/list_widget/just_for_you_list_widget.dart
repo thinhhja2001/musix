@@ -14,7 +14,8 @@ class JustForYouListWidget extends StatefulWidget {
   State<JustForYouListWidget> createState() => _JustForYouListWidgetState();
 }
 
-class _JustForYouListWidgetState extends State<JustForYouListWidget> {
+class _JustForYouListWidgetState extends State<JustForYouListWidget>
+    with AutomaticKeepAliveClientMixin {
   late ScrollController scrollController;
   bool _loading = false;
   @override
@@ -37,6 +38,7 @@ class _JustForYouListWidgetState extends State<JustForYouListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<SocialBloc, SocialState>(
       buildWhen: (previous, current) {
         if (previous.justForYouPosts?.length !=
@@ -79,4 +81,7 @@ class _JustForYouListWidgetState extends State<JustForYouListWidget> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
