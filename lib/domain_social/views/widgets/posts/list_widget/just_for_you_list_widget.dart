@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../theme/color.dart';
 import '../../../../entities/state/social_state.dart';
 import '../../../../logic/social_bloc.dart';
+import '../interaction_widget.dart';
 import '../post_card_widget.dart';
 import '../post_shimmer_loading_widget.dart';
 
@@ -25,8 +25,11 @@ class JustForYouListWidget extends StatelessWidget {
                 },
                 itemCount: state.justForYouPosts!.length,
                 itemBuilder: (context, index) {
-                  return PostCardWidget(
-                      post: state.justForYouPosts!.elementAt(index));
+                  return PostInheritedWidget(
+                    post: state.justForYouPosts!.elementAt(index),
+                    child: PostCardWidget(
+                        post: state.justForYouPosts!.elementAt(index)),
+                  );
                 },
               )
             : ListView.separated(

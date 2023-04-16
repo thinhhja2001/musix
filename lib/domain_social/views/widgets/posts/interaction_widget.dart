@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/domain_social/entities/entities.dart';
 import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
 
-import '../../../../routing/routing_path.dart';
+import '../../../../config/exporter.dart';
 import '../../../../theme/theme.dart';
 
+class PostInheritedWidget extends InheritedWidget {
+  final Post? post;
+
+  const PostInheritedWidget({
+    super.key,
+    required this.post,
+    required super.child,
+  });
+
+  @override
+  bool updateShouldNotify(covariant PostInheritedWidget oldWidget) {
+    return post != null && oldWidget.post != post;
+  }
+
+  static PostInheritedWidget? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<PostInheritedWidget>();
+  }
+}
+
 class InteractionListWidget extends StatelessWidget {
-  const InteractionListWidget({super.key});
+  const InteractionListWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +81,21 @@ class _CommentButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final post = PostInheritedWidget.of(context)?.post;
     return InkWell(
-      onTap: () => showModalBottomSheet(
-          context: context,
-          backgroundColor: Colors.transparent,
-          isScrollControlled: true,
-          builder: (_) => const ViewCommentScreen()),
+      onTap: post != null
+          ? () {
+              context.read<CommentBloc>().add(GetCommentsEvent(
+                    postId: post.id!,
+                    comments: post.comments ?? [],
+                  ));
+              showModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  isScrollControlled: true,
+                  builder: (_) => const ViewCommentScreen());
+            }
+          : null,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -82,7 +114,7 @@ class _CommentButtonWidget extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                "21.9K",
+                "${post?.comments?.length ?? 0}",
                 style: TextStyleTheme.ts14.copyWith(color: ColorTheme.white),
               )
             ],

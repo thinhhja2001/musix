@@ -102,7 +102,7 @@ class CommentCardWidget extends StatelessWidget {
                   //     style: TextStyleTheme.ts14
                   //         .copyWith(color: ColorTheme.primary),
                   //   ),
-                  // )
+                  // ),
                 ],
               ),
             ),

@@ -180,9 +180,10 @@ class _MusixAppState extends State<MusixApp> {
           create: (context) => CommentBloc(
             initialState: CommentState(
               status: {
-                SongStatusKey.global.key: Status.idle,
+                CommentStatusKey.global.name: Status.idle,
               },
             ),
+            authBloc: context.read<AuthBloc>(),
             commentRepo: getIt.get<CommentRepo>(),
           ),
         ),

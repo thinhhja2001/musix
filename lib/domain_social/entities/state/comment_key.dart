@@ -1,4 +1,4 @@
 enum CommentStatusKey {
   global,
-  update,
+  single,
 }

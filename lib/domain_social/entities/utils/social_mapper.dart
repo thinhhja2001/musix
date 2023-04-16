@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:get_it/get_it.dart';
 import 'package:musix/config/exporter/repo_exporter.dart';
 import 'package:musix/domain_social/entities/comment/comment.dart';
 import 'package:musix/domain_social/logic/social_bloc.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
-import 'package:musix/domain_social/repository/comment/comment_repo.dart';
 import 'package:musix/domain_user/entities/entities.dart';
 import 'package:musix/domain_user/models/models.dart';
 import 'package:musix/domain_user/utils/convert_model_entity.dart';
