@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../domain_social/entities/state/social_state.dart';
-import '../domain_social/repository/comment/comment_repo.dart';
-import '../domain_social/repository/post/post_repo.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
 import '../utils/utils.dart';
@@ -143,6 +140,7 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => SongBloc(
             musixAudioHandler: getIt.get<MusixAudioHandler>(),
             initialState: SongState(
@@ -155,6 +153,7 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => SongsBloc(
             initialState: SongsState(
               status: {
@@ -165,6 +164,7 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => VideoBloc(
             initialState: VideoState(
               status: {VideoStatusKey.global.key: Status.idle},
@@ -173,12 +173,26 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => SocialBloc(
             initialState: const SocialState(),
             commentRepo: getIt.get<CommentRepo>(),
+            authBloc: context.read<AuthBloc>(),
             postRepo: getIt.get<PostRepo>(),
           ),
-        )
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => CommentBloc(
+            initialState: CommentState(
+              status: {
+                CommentStatusKey.global.name: Status.idle,
+              },
+            ),
+            authBloc: context.read<AuthBloc>(),
+            commentRepo: getIt.get<CommentRepo>(),
+          ),
+        ),
       ],
       child: const MusixAppView(),
     );

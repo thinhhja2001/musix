@@ -2,6 +2,6 @@
 ///
 ///Adding this function to DioOption to avoid that exception
 bool validateStatus(int? statusCode) {
-  if (statusCode == null) return false;
+  if (statusCode != 200) return false;
   return true;
 }

@@ -4,9 +4,10 @@ import '../../../../../theme/theme.dart';
 import '../../../../entities/post/post.dart';
 
 class ShareButtonWidget extends StatelessWidget {
+  final Post post;
   const ShareButtonWidget({
     super.key,
-    required Post post,
+    required this.post,
   });
 
   @override

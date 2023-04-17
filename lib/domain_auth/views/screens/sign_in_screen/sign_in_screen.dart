@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../config/exporter.dart';
-import '../../../entities/event/auth_event.dart';
-import '../../../payload/request/login_request.dart';
 
+import '../../../../config/exporter.dart';
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/color.dart';
 import '../../../../theme/text_style.dart';
 import '../../../../utils/constant/asset_path.dart';
+import '../../../entities/event/auth_event.dart';
+import '../../../payload/request/login_request.dart';
 import '../../widgets/custom_button_widget.dart';
 import '../../widgets/custom_error_box.dart';
 import '../../widgets/custom_textfield_widget.dart';
@@ -16,8 +17,10 @@ import 'utils/text_path.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController =
+      TextEditingController(text: "usertest");
+  final TextEditingController _passwordController =
+      TextEditingController(text: "123456");
   final _formKey = GlobalKey<FormState>();
   final signInTextPath = SignInTextPath();
 
@@ -25,8 +28,10 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(listener: (context, state) {
       if (state.loginStatus == 200) {
-        context.read<ProfileBloc>().add(const GetProfileEvent());
-        context.read<UserMusicBloc>().add(const GetUserMusicEvent());
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          context.read<ProfileBloc>().add(const GetProfileEvent());
+          context.read<UserMusicBloc>().add(const GetUserMusicEvent());
+        });
         Navigator.pushNamedAndRemoveUntil(
             context, RoutingPath.home, (Route<dynamic> route) => false);
       }

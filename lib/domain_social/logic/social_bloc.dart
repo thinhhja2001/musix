@@ -1,27 +1,30 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../entities/comment/comment.dart';
-import '../entities/post/post.dart';
-import '../entities/utils/social_mapper.dart';
-import '../models/comment/comment_model.dart';
-import '../models/post/post_model.dart';
-import '../repository/comment/comment_repo.dart';
+import 'package:musix/config/exporter.dart';
+import 'package:musix/domain_social/entities/comment/comment.dart';
+import 'package:musix/domain_social/entities/post/post.dart';
+import 'package:musix/domain_social/entities/utils/social_mapper.dart';
+import 'package:musix/domain_social/models/comment/comment_model.dart';
+import 'package:musix/domain_social/models/post/post_model.dart';
 
-import '../entities/event/social_event.dart';
-import '../entities/state/social_state.dart';
-import '../repository/post/post_repo.dart';
-
-const testToken =
+const testTokenConst =
     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA";
 
 class SocialBloc extends Bloc<SocialEvent, SocialState> {
   SocialBloc({
     required SocialState initialState,
+    required this.authBloc,
     required this.commentRepo,
     required this.postRepo,
   }) : super(initialState) {
+    authBloc.stream.listen((authState) {
+      if (authState.username != null && authState.jwtToken != null) {
+        testToken = authState.jwtToken!;
+        socialMapper = SocialMapper(testToken);
+      }
+    });
     on<SocialGetListPostJustForYouEvent>(_handleGetListPostJustForYouEvent);
     on<SocialGetListPostTrendingEvent>(_handleGetListPostTrendingEvent);
     on<SocialGetListPostFollowingEvent>(_handleGetListPostFollowingEvent);
@@ -44,12 +47,14 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     on<SocialTrendingPostLoadMoreEvent>(_handleTrendingPostLoadMoreEvent);
   }
   final CommentRepo commentRepo;
+  final AuthBloc authBloc;
   final PostRepo postRepo;
-  final SocialMapper socialMapper = SocialMapper();
   final int _countPerPage = 2;
   int _followingPostCurrentPage = 0;
   int _just4YouPostCurrentPage = 0;
   int _trendingPostCurrentPage = 0;
+  late final String testToken;
+  late final SocialMapper socialMapper;
   FutureOr<void> _handleGetCommentsByPostId(
       SocialGetCommentsByPostIdEvent event, Emitter<SocialState> emit) async {
     List<CommentModel> commentModels =
