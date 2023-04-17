@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_auth/views/screens/email_verification_screen/email_verification_screen.dart';
-import 'package:musix/domain_auth/views/screens/reset_password_screen/reset_password_screen.dart';
-import 'package:musix/domain_social/views/screens/view_comment_screen.dart';
+import '../domain_auth/views/screens/email_verification_screen/email_verification_screen.dart';
+import '../domain_auth/views/screens/reset_password_screen/reset_password_screen.dart';
+import '../domain_social/views/screens/create_new_post_screen.dart';
+import '../domain_social/views/screens/modify_post_screen.dart';
+import '../domain_social/views/screens/view_comment_screen.dart';
 
 import '../domain_artist/views/screens.dart';
 import '../domain_auth/views/screens/sign_in_screen/sign_in_screen.dart';
@@ -9,6 +11,7 @@ import '../domain_auth/views/screens/sign_up_screen/sign_up_screen.dart';
 import '../domain_global/views/screens.dart';
 import '../domain_hub/views/screens.dart';
 import '../domain_playlist/views/screens.dart';
+import '../domain_social/entities/post/post.dart';
 import '../domain_song/views/screens.dart';
 import '../domain_user/views/screens.dart';
 import '../domain_video/views/screens/video_detail_page_widget.dart';
@@ -125,6 +128,15 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => const ViewCommentScreen(),
+      );
+    case RoutingPath.createNewPost:
+      return MaterialPageRoute(
+          settings: settings, builder: (context) => CreateNewPostScreen());
+    case RoutingPath.modifyPost:
+      final post = settings.arguments as Post;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => ModifyPostScreen(post: post),
       );
     default:
       return MaterialPageRoute(

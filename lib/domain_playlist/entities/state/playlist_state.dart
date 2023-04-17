@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../entities.dart';
-import '../../../utils/enum/enum_status.dart';
-import '../../../utils/enum/enum_status.dart';
 
+import '../../../utils/enum/enum_status.dart';
 import '../entities.dart';
 
 class PlaylistState extends Equatable {

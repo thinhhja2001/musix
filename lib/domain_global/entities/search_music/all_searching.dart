@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/utils/utils.dart';
+import '../../../utils/utils.dart';
 
 class SectionAll extends Equatable {
   final String? title;

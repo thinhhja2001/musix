@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter/state_exporter.dart';
-import 'package:musix/utils/enum/enum_music_type.dart';
+import '../../config/exporter/state_exporter.dart';
+import '../../utils/enum/enum_music_type.dart';
 
 late SearchMusicState state;
 FutureOr _loadMoreVideo(

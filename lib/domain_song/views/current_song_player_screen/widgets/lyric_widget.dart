@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_song/utils/widget_util/text_scroll_widget.dart';
-import 'package:musix/domain_song/views/widgets/control_widgets/repeat_button_widget.dart';
+import '../../../utils/widget_util/text_scroll_widget.dart';
+import '../../widgets/control_widgets/repeat_button_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../../theme/color.dart';

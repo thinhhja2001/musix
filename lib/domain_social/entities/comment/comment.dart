@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_user/entities/entities.dart';
+import '../../../domain_user/entities/entities.dart';
 
 class Comment extends Equatable {
   final String? id;

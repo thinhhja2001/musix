@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/config/exporter/repo_exporter.dart';
@@ -73,6 +71,7 @@ class SocialMapper {
       User user = convertUserModelToUser(profileResponseModel.user!);
       userLiked.add(user);
     }
+    debugPrint("user liked ${userLiked.length}");
     return Post(
         id: postModel.id,
         fileName: postModel.fileName,

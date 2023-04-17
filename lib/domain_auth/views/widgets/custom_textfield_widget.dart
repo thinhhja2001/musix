@@ -11,6 +11,7 @@ class CustomInputFieldWidget extends StatefulWidget {
     this.validation,
     this.darkTheme = true,
     this.maxLines = 1,
+    this.maxLength,
   }) : super(key: key);
   final TextInputType textInputType;
   final String label;
@@ -18,6 +19,7 @@ class CustomInputFieldWidget extends StatefulWidget {
   final String? Function(String?)? validation;
   final bool darkTheme;
   final int? maxLines;
+  final int? maxLength;
   @override
   State<CustomInputFieldWidget> createState() => _CustomInputFieldWidgetState();
 }
@@ -37,6 +39,7 @@ class _CustomInputFieldWidgetState extends State<CustomInputFieldWidget> {
             ? _isObscure
             : false,
         maxLines: widget.maxLines,
+        maxLength: widget.maxLength,
         style: TextStyle(
             color: widget.darkTheme ? Colors.white : Colors.black,
             fontWeight: FontWeight.w400),

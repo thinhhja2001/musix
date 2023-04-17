@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_hub/utils/convert_section/convert_section.dart';
+import '../../domain_hub/utils/convert_section/convert_section.dart';
 
 import '../../domain_hub/entities/entities.dart';
 import '../../utils/utils.dart';

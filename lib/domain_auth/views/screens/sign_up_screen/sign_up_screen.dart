@@ -2,9 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:musix/domain_auth/entities/event/auth_event.dart';
-import 'package:musix/domain_auth/payload/request/register_request.dart';
-import 'package:musix/domain_auth/utils/functions.dart';
+import '../../../entities/event/auth_event.dart';
+import '../../../payload/request/register_request.dart';
+import '../../../utils/functions.dart';
 
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';

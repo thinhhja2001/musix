@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/theme/color.dart';
 
 import '../../../../config/exporter/bloc_exporter.dart';
 import '../../../../config/exporter/state_exporter.dart';
+import '../../../../theme/color.dart';
 
 class ShuffleButtonWidget extends StatelessWidget {
   const ShuffleButtonWidget({

@@ -1,31 +1,39 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_social/entities/post/post.dart';
-import 'package:musix/domain_social/views/widgets/posts/post_shimmer_loading_widget.dart';
-import 'package:musix/domain_social/views/widgets/posts/social_data_player_widget.dart';
-import 'package:musix/domain_user/utils/constant_utils.dart';
-import 'package:musix/domain_video/entities/video_detail.dart';
-import 'package:musix/domain_video/utils/methods.dart';
-import 'package:musix/domain_video/views/widgets/video_player/video_player_widget.dart';
-import 'package:musix/utils/functions/function_utils.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
+import '../../../entities/event/social_event.dart';
+import '../../../entities/post/post.dart';
+import '../../../logic/social_bloc.dart';
+import 'social_data_player_widget.dart';
+import '../../../../domain_user/utils/constant_utils.dart';
+import '../../../../utils/functions/function_utils.dart';
 
+import '../../../../domain_user/entities/profile/profile_state.dart';
+import '../../../../domain_user/logic/profile_bloc.dart';
+import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
-import '../../../utils/custom_social_media_control.dart';
 import 'hashtag_widget.dart';
-import 'interaction_widget.dart';
+import 'interaction_widget/interaction_widget.dart';
+import 'more_list_widget/post_action_widget.dart';
 
-class PostCardWidget extends StatelessWidget {
+class PostCardWidget extends StatefulWidget {
   const PostCardWidget({
     super.key,
     required this.post,
   });
   final Post post;
+
+  @override
+  State<PostCardWidget> createState() => _PostCardWidgetState();
+}
+
+class _PostCardWidgetState extends State<PostCardWidget> {
+  bool isHide = false;
+
   @override
   Widget build(BuildContext context) {
-    final user = post.user;
+    final user = widget.post.user;
     return SizedBox(
       width: double.infinity,
       height: 450,
@@ -44,10 +52,10 @@ class PostCardWidget extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: SocialDataPlayerWidget(
-                      thumbnailUrl: post.thumbnailUrl!,
-                      dataUrl: post.fileUrl!,
+                      thumbnailUrl: widget.post.thumbnailUrl!,
+                      dataUrl: widget.post.fileUrl!,
                       artistName: user?.username ?? "Unknown",
-                      title: post.fileName!,
+                      title: widget.post.fileName!,
                     ),
                   ),
                 ),
@@ -85,19 +93,29 @@ class PostCardWidget extends StatelessWidget {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Text(
-                                  readTimestamp(post.dateCreated!),
+                                  readTimestamp(widget.post.dateCreated!),
                                   style: TextStyleTheme.ts14.copyWith(
                                     color: ColorTheme.white,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ],
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                _showMoreListWidget(context, post: widget.post);
+                              },
+                              icon: const Icon(
+                                Icons.more_vert,
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         ),
                         //Title
                         Text(
-                          post.content ?? "",
+                          widget.post.content ?? "",
                           maxLines: 2,
                           style: TextStyleTheme.ts16
                               .copyWith(color: ColorTheme.white),
@@ -107,7 +125,7 @@ class PostCardWidget extends StatelessWidget {
                         ),
                         const HashtagWidget(),
                         const Spacer(),
-                        const InteractionListWidget(),
+                        InteractionListWidget(post: widget.post),
                       ],
                     ),
                   ),
@@ -117,6 +135,100 @@ class PostCardWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Future<dynamic> _showMoreListWidget(
+    BuildContext context, {
+    required Post post,
+  }) {
+    return showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        backgroundColor: ColorTheme.backgroundDarker,
+        context: context,
+        builder: (ctx) {
+          return BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorTheme.background),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      post.user == state.user
+                          ? PostActionWidget(
+                              icon: Icons.edit,
+                              text: "Modify Post",
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  RoutingPath.modifyPost,
+                                  arguments: post),
+                            )
+                          : Container(),
+                      post.user == state.user
+                          ? PostActionWidget(
+                              icon: Icons.delete,
+                              text: "Delete Post",
+                              onTap: () => _buildAlertDialog(context, post),
+                            )
+                          : Container(),
+                      const PostActionWidget(
+                          text: 'Save Post', icon: Icons.bookmark_border)
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  Future<void> _buildAlertDialog(BuildContext context, Post post) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorTheme.background,
+          title: Text(
+            'Are you want to delete?',
+            style: TextStyleTheme.ts22.copyWith(color: Colors.white),
+          ),
+          content: Text(
+            'This action cannot be undone',
+            style: TextStyleTheme.ts20.copyWith(color: Colors.white),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(
+                'Cancel',
+                style: TextStyleTheme.ts16.copyWith(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(
+                'Delete',
+                style: TextStyleTheme.ts16.copyWith(color: Colors.red),
+              ),
+              onPressed: () {
+                context.read<SocialBloc>().add(SocialDeletePostEvent(post));
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

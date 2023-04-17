@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:musix/global/repo/initial_repo.dart';
+import '../../global/repo/initial_repo.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 import '../models/model.dart';

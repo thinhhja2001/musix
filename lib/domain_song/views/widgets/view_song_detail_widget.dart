@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/domain_user/views/own_playlists_screen/widgets.dart';
-import 'package:musix/theme/color.dart';
+import '../../../domain_user/views/own_playlists_screen/widgets.dart';
+import '../../../theme/color.dart';
 
 import '../../../config/exporter.dart';
 import '../../../global/widgets/widgets.dart';

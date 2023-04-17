@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:musix/domain_artist/entities/artist/artist.dart';
+import '../../domain_artist/entities/artist/artist.dart';
 
 class VideoShort extends Equatable {
   final String? encodeID;

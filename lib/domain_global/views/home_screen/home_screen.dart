@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/domain_song/views/widgets.dart';
+import '../../../domain_song/views/widgets.dart';
 
 import '../../../domain_social/views/screens/social_screen.dart';
 import '../../../domain_user/views/screens.dart';

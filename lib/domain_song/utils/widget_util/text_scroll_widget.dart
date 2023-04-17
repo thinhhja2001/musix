@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musix/theme/text_style.dart';
+import '../../../theme/text_style.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 Widget defaultTextScrollWidget({required String text, TextStyle? textStyle}) {

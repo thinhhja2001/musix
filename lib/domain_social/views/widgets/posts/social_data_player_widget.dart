@@ -1,13 +1,13 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:musix/domain_video/views/widgets/center_play_pause_button.dart';
+import '../../../../domain_video/views/widgets/center_play_pause_button.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../utils/custom_social_media_control.dart';
 
 class SocialDataPlayerWidget extends StatefulWidget {
-  SocialDataPlayerWidget({
+  const SocialDataPlayerWidget({
     Key? key,
     required this.dataUrl,
     required this.title,

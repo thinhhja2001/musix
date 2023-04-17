@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:musix/global/repo/initial_repo.dart';
+import '../../global/repo/initial_repo.dart';
 
 import '../../utils/utils.dart';
 import '../models/models.dart';

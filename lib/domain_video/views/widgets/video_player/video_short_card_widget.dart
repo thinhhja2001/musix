@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:musix/config/exporter/bloc_exporter.dart';
-import 'package:musix/config/exporter/state_exporter.dart';
-import 'package:musix/domain_artist/entities/artist/artist.dart';
-import 'package:musix/domain_video/views/screens/video_detail_page_widget.dart';
-import 'package:musix/routing/routing_path.dart';
-import 'package:musix/utils/functions/function_utils.dart';
+import '../../../../config/exporter/bloc_exporter.dart';
+import '../../../../config/exporter/state_exporter.dart';
+import '../../../../domain_artist/entities/artist/artist.dart';
+import '../../screens/video_detail_page_widget.dart';
+import '../../../../routing/routing_path.dart';
+import '../../../../utils/functions/function_utils.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../theme/theme.dart';

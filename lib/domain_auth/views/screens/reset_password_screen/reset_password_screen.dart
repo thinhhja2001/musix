@@ -2,10 +2,10 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_auth/entities/event/auth_event.dart';
-import 'package:musix/domain_auth/payload/request/reset_password_request.dart';
-import 'package:musix/domain_auth/views/screens/email_verification_screen/utils/function.dart';
-import 'package:musix/domain_auth/views/screens/reset_password_screen/utils/text_path.dart';
+import '../../../entities/event/auth_event.dart';
+import '../../../payload/request/reset_password_request.dart';
+import '../email_verification_screen/utils/function.dart';
+import 'utils/text_path.dart';
 
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
@@ -37,6 +37,7 @@ class ResetPasswordScreen extends StatelessWidget {
       },
       listener: (context, state) {
         showSnackBar(context,
+            title: "Success",
             content: "Password changed, you can now login using new password",
             contentType: ContentType.success);
         Navigator.of(context).pushNamed(RoutingPath.signIn);

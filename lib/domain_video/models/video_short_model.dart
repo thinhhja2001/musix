@@ -1,5 +1,5 @@
-import 'package:musix/domain_artist/models/get_artist_model/artist_model.dart';
-import 'package:musix/domain_video/entities/video_short.dart';
+import '../../domain_artist/models/get_artist_model/artist_model.dart';
+import '../entities/video_short.dart';
 
 import '../../domain_artist/utils/utils.dart';
 

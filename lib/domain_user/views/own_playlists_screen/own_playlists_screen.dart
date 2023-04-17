@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:musix/config/exporter.dart';
-import 'package:musix/global/widgets/widgets.dart';
-import 'package:musix/routing/routing_path.dart';
+import '../../../config/exporter.dart';
+import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
 
 import '../../../domain_song/views/widgets.dart';
 import '../../../theme/theme.dart';

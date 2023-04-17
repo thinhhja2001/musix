@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:musix/global/widgets/widgets.dart';
+import '../../../../global/widgets/widgets.dart';
 
 import '../../../../config/exporter.dart';
 import '../../../../domain_auth/views/widgets/custom_date_picker_widget.dart';
