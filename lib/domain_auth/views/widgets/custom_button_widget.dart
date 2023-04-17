@@ -9,15 +9,17 @@ class CustomButtonWidget extends StatelessWidget {
     required this.content,
     this.isLoading,
     this.backgroundColor,
+    this.width,
   }) : super(key: key);
   final VoidCallback onPress;
   final String content;
   final bool? isLoading;
   final Color? backgroundColor;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: width ?? double.infinity,
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
