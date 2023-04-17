@@ -54,13 +54,11 @@ class SocialMapper {
 
   Future<Post> postFromPostModel(PostModel postModel) async {
     List<CommentModel> commentsModel = [];
-    for (var element in postModel.comments) {
-      try {
-        var commentModel = await commentRepo.getComment(element, token);
-        commentsModel.add(commentModel);
-      } catch (e) {
-        debugPrint(e.toString());
-      }
+    try {
+      commentsModel =
+          await commentRepo.getCommentsByPostId(postModel.id, token);
+    } catch (e) {
+      debugPrint(e.toString());
     }
     List<Comment> comments =
         await listCommentFromListCommentModel(commentsModel);

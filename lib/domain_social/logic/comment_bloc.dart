@@ -27,6 +27,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     on<LikeCommentEvent>(_likeComment);
     on<DeleteCommentEvent>(_deleteComment);
     on<RelyCommentEvent>(_relyComment);
+    on<GetRelyCommentsEvent>(_getRelyComments);
   }
   final AuthBloc authBloc;
   final CommentRepo commentRepo;
@@ -51,6 +52,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   FutureOr<void> _filterComments(
       FilterCommentEvent event, Emitter<CommentState> emit) async {
+    var comments = state.comments;
     emit(
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -62,9 +64,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       ),
     );
     if (event.turnOnFilter) {
-      var oldComments = state.comments;
-      state.comments
-          ?.sort((a, b) => (a.dateCreated ?? 0).compareTo(b.dateCreated ?? 0));
+      comments?.sort(
+          (a, b) => (a.lastModified ?? 0).compareTo(b.lastModified ?? 0));
 
       emit(
         state.copyWith(
@@ -73,11 +74,12 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
           ], status: [
             Status.success,
           ]),
-          oldComments: oldComments,
-          comments: state.comments,
+          comments: comments,
         ),
       );
     } else {
+      comments
+          ?.sort((a, b) => (a.dateCreated ?? 0).compareTo(b.dateCreated ?? 0));
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
@@ -85,8 +87,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
           ], status: [
             Status.success,
           ]),
-          oldComments: state.comments,
-          comments: state.oldComments,
+          comments: comments,
         ),
       );
     }
@@ -162,7 +163,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   FutureOr<void> _likeComment(
       LikeCommentEvent event, Emitter<CommentState> emit) async {
-    var comments = state.comments ?? [];
+    var comments =
+        event.isRely ? state.relyComments ?? [] : state.comments ?? [];
     emit(
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -178,16 +180,29 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       var comment = await socialMapper.commentFromCommentModel(commentModel);
       comments[comments.indexWhere((element) => element.id == comment.id)] =
           comment;
-      emit(
-        state.copyWith(
-          status: updateMapStatus(source: state.status, keys: [
-            CommentStatusKey.single.name,
-          ], status: [
-            Status.success,
-          ]),
-          comments: comments,
-        ),
-      );
+      if (event.isRely) {
+        emit(
+          state.copyWith(
+            status: updateMapStatus(source: state.status, keys: [
+              CommentStatusKey.single.name,
+            ], status: [
+              Status.success,
+            ]),
+            relyComments: comments,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: updateMapStatus(source: state.status, keys: [
+              CommentStatusKey.single.name,
+            ], status: [
+              Status.success,
+            ]),
+            comments: comments,
+          ),
+        );
+      }
     } on ResponseException catch (e) {
       emit(
         state.copyWith(
@@ -217,35 +232,48 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   FutureOr<void> _relyComment(
       RelyCommentEvent event, Emitter<CommentState> emit) async {
-    var comments = state.comments ?? [];
+    var replyComments = state.relyComments ?? [];
     emit(
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
           CommentStatusKey.single.name,
+          CommentStatusKey.rely.name,
         ], status: [
+          Status.loading,
           Status.loading,
         ]),
       ),
     );
     try {
-      var commentModel = await commentRepo.replyComment(
+      var replyCommentModel = await commentRepo.replyComment(
           event.commentId,
           CreateCommentModel(
             content: event.content,
             postId: state.postId,
           ),
           token);
+      var replyComment =
+          await socialMapper.commentFromCommentModel(replyCommentModel);
+      replyComments.add(replyComment);
+
+      var commentsParent = state.comments ?? [];
+      var commentModel =
+          await commentRepo.getComment(state.selectedCommentId!, token);
       var comment = await socialMapper.commentFromCommentModel(commentModel);
-      comments[comments.indexWhere((element) => element.id == comment.id)] =
-          comment;
+      commentsParent[commentsParent
+          .indexWhere((element) => element.id == comment.id)] = comment;
+
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
             CommentStatusKey.single.name,
+            CommentStatusKey.rely.name,
           ], status: [
             Status.success,
+            Status.success,
           ]),
-          comments: comments,
+          relyComments: replyComments,
+          comments: commentsParent,
         ),
       );
     } on ResponseException catch (e) {
@@ -253,7 +281,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
             CommentStatusKey.single.name,
+            CommentStatusKey.rely.name,
           ], status: [
+            Status.error,
             Status.error,
           ]),
           error: e,
@@ -268,7 +298,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
           CommentStatusKey.single.name,
+          CommentStatusKey.rely.name,
         ], status: [
+          Status.idle,
           Status.idle,
         ]),
       ),
@@ -277,7 +309,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   FutureOr<void> _editComment(
       EditCommentEvent event, Emitter<CommentState> emit) async {
-    var comments = state.comments ?? [];
+    var comments =
+        event.isRely ? state.relyComments ?? [] : state.comments ?? [];
     emit(
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -297,16 +330,29 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       var comment = await socialMapper.commentFromCommentModel(commentModel);
       comments[comments.indexWhere((element) => element.id == comment.id)] =
           comment;
-      emit(
-        state.copyWith(
-          status: updateMapStatus(source: state.status, keys: [
-            CommentStatusKey.single.name,
-          ], status: [
-            Status.success,
-          ]),
-          comments: comments,
-        ),
-      );
+      if (event.isRely) {
+        emit(
+          state.copyWith(
+            status: updateMapStatus(source: state.status, keys: [
+              CommentStatusKey.single.name,
+            ], status: [
+              Status.success,
+            ]),
+            relyComments: comments,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: updateMapStatus(source: state.status, keys: [
+              CommentStatusKey.single.name,
+            ], status: [
+              Status.success,
+            ]),
+            comments: comments,
+          ),
+        );
+      }
     } on ResponseException catch (e) {
       emit(
         state.copyWith(
@@ -336,7 +382,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   FutureOr<void> _deleteComment(
       DeleteCommentEvent event, Emitter<CommentState> emit) async {
-    var comments = state.comments ?? [];
+    var comments =
+        event.isRely ? state.relyComments ?? [] : state.comments ?? [];
     emit(
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
@@ -347,20 +394,46 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       ),
     );
     try {
-      var response = await commentRepo.deleteComment(event.commentId, token);
-      if (response) {
-        comments.removeWhere((e) => e.id == event.commentId);
+      if (event.isRely) {
+        var responseRely = await commentRepo.deleteReplyComment(
+            state.selectedCommentId!, event.commentId, token);
+        if (responseRely) {
+          comments.removeWhere((e) => e.id == event.commentId);
+        }
+        var commentsParent = state.comments ?? [];
+        var commentModel =
+            await commentRepo.getComment(state.selectedCommentId!, token);
+        var comment = await socialMapper.commentFromCommentModel(commentModel);
+        commentsParent[commentsParent
+            .indexWhere((element) => element.id == comment.id)] = comment;
+        emit(
+          state.copyWith(
+            status: updateMapStatus(source: state.status, keys: [
+              CommentStatusKey.single.name,
+            ], status: [
+              Status.success,
+            ]),
+            comments: commentsParent,
+            relyComments: comments,
+          ),
+        );
+      } else {
+        var responseRely = await commentRepo.deleteComment(
+            event.commentId, state.postId!, token);
+        if (responseRely) {
+          comments.removeWhere((e) => e.id == event.commentId);
+        }
+        emit(
+          state.copyWith(
+            status: updateMapStatus(source: state.status, keys: [
+              CommentStatusKey.single.name,
+            ], status: [
+              Status.success,
+            ]),
+            comments: comments,
+          ),
+        );
       }
-      emit(
-        state.copyWith(
-          status: updateMapStatus(source: state.status, keys: [
-            CommentStatusKey.single.name,
-          ], status: [
-            Status.success,
-          ]),
-          comments: comments,
-        ),
-      );
     } on ResponseException catch (e) {
       emit(
         state.copyWith(
@@ -381,6 +454,63 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       state.copyWith(
         status: updateMapStatus(source: state.status, keys: [
           CommentStatusKey.single.name,
+        ], status: [
+          Status.idle,
+        ]),
+      ),
+    );
+  }
+
+  FutureOr<void> _getRelyComments(
+      GetRelyCommentsEvent event, Emitter<CommentState> emit) async {
+    emit(
+      state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          CommentStatusKey.rely.name,
+        ], status: [
+          Status.loading,
+        ]),
+        selectedCommentId: event.comment,
+      ),
+    );
+    try {
+      var relies = <Comment>[];
+      var commentModels =
+          await commentRepo.getReplyCommentsByCommentId(event.comment, token);
+      for (var commentModel in commentModels) {
+        var comment = await socialMapper.commentFromCommentModel(commentModel);
+        relies.add(comment);
+      }
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            CommentStatusKey.rely.name,
+          ], status: [
+            Status.success,
+          ]),
+          relyComments: relies,
+        ),
+      );
+    } on ResponseException catch (e) {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            CommentStatusKey.rely.name,
+          ], status: [
+            Status.error,
+          ]),
+          error: e,
+        ),
+      );
+
+      addError(Exception("CommentBloc _getRelyComment error ${e.toString()}"),
+          StackTrace.current);
+    }
+
+    emit(
+      state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          CommentStatusKey.rely.name,
         ], status: [
           Status.idle,
         ]),

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_social/views/widgets/comments/send_comment_button_widget.dart';
 import 'package:musix/utils/utils.dart';
@@ -9,8 +8,10 @@ import 'package:musix/utils/utils.dart';
 import '../../../../theme/theme.dart';
 
 class CommentFieldWidget extends StatefulWidget {
+  final bool isRely;
   const CommentFieldWidget({
     super.key,
+    this.isRely = false,
   });
 
   @override
@@ -18,8 +19,13 @@ class CommentFieldWidget extends StatefulWidget {
 }
 
 class _CommentFieldWidgetState extends State<CommentFieldWidget> {
-  final TextEditingController textEditingController =
-      GetIt.I.get<TextEditingController>();
+  final TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +63,10 @@ class _CommentFieldWidgetState extends State<CommentFieldWidget> {
                 maxLines: 1,
               )),
         ),
-        SendCommentButtonWidget(textEditingController: textEditingController)
+        SendCommentButtonWidget(
+          textEditingController: textEditingController,
+          isReply: widget.isRely,
+        )
       ],
     );
   }

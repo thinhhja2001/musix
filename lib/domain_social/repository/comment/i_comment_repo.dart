@@ -9,5 +9,7 @@ abstract class ICommentRepo<T, E> {
   Future<E> modifyComment(ModifyCommentModel modifyCommentModel, String token);
   Future<E> replyComment(
       String commentId, CreateCommentModel createCommentModel, String token);
-  Future<T> deleteComment(String commentId, String token);
+  Future<T> deleteComment(String commentId, String postId, String token);
+  Future<T> deleteReplyComment(String commentId, String replyId, String token);
+  Future<List<E>> getReplyCommentsByCommentId(String commentId, String token);
 }

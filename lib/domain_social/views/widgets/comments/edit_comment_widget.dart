@@ -8,9 +8,11 @@ import '../../../../theme/theme.dart';
 
 class EditCommentWidget extends StatefulWidget {
   final Comment comment;
+  final bool isReply;
   const EditCommentWidget({
     super.key,
     required this.comment,
+    this.isReply = false,
   });
 
   @override
@@ -81,6 +83,7 @@ class _EditCommentWidgetState extends State<EditCommentWidget> {
                     context.read<CommentBloc>().add(EditCommentEvent(
                           content: textEditingController.text,
                           commentId: widget.comment.id!,
+                          isRely: widget.isReply,
                         ));
                     Future.delayed(const Duration(milliseconds: 300))
                         .whenComplete(() => Navigator.of(context).maybePop());

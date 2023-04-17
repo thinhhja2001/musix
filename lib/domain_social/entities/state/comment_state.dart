@@ -7,18 +7,18 @@ class CommentState extends Equatable {
   final Map<String, Status>? status;
   final String? postId;
   final List<Comment>? comments;
-  final Comment? selectedComment;
+  final String? selectedCommentId;
   final bool? isFilter;
-  final List<Comment>? oldComments;
+  final List<Comment>? relyComments;
   final ResponseException? error;
 
   const CommentState({
     this.status,
     this.postId,
     this.comments,
-    this.selectedComment,
+    this.selectedCommentId,
     this.isFilter,
-    this.oldComments,
+    this.relyComments,
     this.error,
   });
 
@@ -26,18 +26,18 @@ class CommentState extends Equatable {
     Map<String, Status>? status,
     String? postId,
     List<Comment>? comments,
-    Comment? selectedComment,
+    String? selectedCommentId,
     bool? isFilter,
-    List<Comment>? oldComments,
+    List<Comment>? relyComments,
     ResponseException? error,
   }) {
     return CommentState(
       status: status ?? this.status,
       postId: postId ?? this.postId,
       comments: comments ?? this.comments,
-      selectedComment: selectedComment ?? this.selectedComment,
+      selectedCommentId: selectedCommentId ?? this.selectedCommentId,
+      relyComments: relyComments ?? this.relyComments,
       isFilter: isFilter ?? this.isFilter,
-      oldComments: oldComments ?? this.oldComments,
       error: error,
     );
   }
@@ -47,7 +47,8 @@ class CommentState extends Equatable {
         status,
         postId,
         comments?.length,
-        selectedComment,
+        relyComments?.length,
+        selectedCommentId,
         isFilter,
       ];
 

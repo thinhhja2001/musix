@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_social/entities/entities.dart';
+import 'package:musix/domain_social/views/widgets/comments/rely_comment_widget.dart';
 import 'package:musix/utils/utils.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../theme/theme.dart';
 import 'edit_comment_widget.dart';
 
 class CommentCardWidget extends StatelessWidget {
   final Comment comment;
+  final bool isRely;
+  final bool isShowReply;
   const CommentCardWidget({
     super.key,
     required this.comment,
+    this.isRely = false,
+    this.isShowReply = true,
   });
 
   @override
@@ -26,22 +30,8 @@ class CommentCardWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 12,
-            child: CachedNetworkImage(
-              imageUrl:
-                  comment.user?.profile?.avatarUrl ?? AssetPath.placeImage,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: ColorTheme.background,
-                highlightColor: ColorTheme.backgroundDarker,
-                child: Material(
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                ),
-              ),
-              errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
-              fit: BoxFit.fitWidth,
+            backgroundImage: CachedNetworkImageProvider(
+              comment.user?.profile?.avatarUrl ?? AssetPath.userUnknowImage,
             ),
           ),
           Expanded(
@@ -69,7 +59,7 @@ class CommentCardWidget extends StatelessWidget {
                         onTap: () {
                           context
                               .read<CommentBloc>()
-                              .add(LikeCommentEvent(comment.id!));
+                              .add(LikeCommentEvent(comment.id!, isRely));
                         },
                         child: BlocSelector<ProfileBloc, ProfileState, bool>(
                           selector: (state) {
@@ -104,81 +94,102 @@ class CommentCardWidget extends StatelessWidget {
                               .copyWith(color: ColorTheme.white),
                         ),
                       ),
-                      // const Icon(
-                      //   Icons.thumb_down_off_alt_outlined,
-                      //   color: ColorTheme.white,
-                      //   size: 10,
-                      // ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Icon(
-                        Icons.comment_outlined,
-                        size: 12,
-                        color: ColorTheme.white,
-                      )
+                      if (!isRely && isShowReply) ...[
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const Icon(
+                          Icons.comment_outlined,
+                          size: 12,
+                          color: ColorTheme.white,
+                        )
+                      ],
                     ],
                   ),
-                  // TextButton(
-                  //   onPressed: () {},
-                  //   style: ButtonStyle(
-                  //     overlayColor: MaterialStatePropertyAll(
-                  //       ColorTheme.primary.withOpacity(.2),
-                  //     ),
-                  //   ),
-                  //   child: Text(
-                  //     "15 replies",
-                  //     style: TextStyleTheme.ts14
-                  //         .copyWith(color: ColorTheme.primary),
-                  //   ),
-                  // ),
+                  if (!isRely && isShowReply) ...[
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .read<CommentBloc>()
+                            .add(GetRelyCommentsEvent(comment: comment.id!));
+                        showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                            builder: (context) => RelyCommentWidget(
+                                  comment: comment,
+                                ));
+                      },
+                      style: ButtonStyle(
+                        overlayColor: MaterialStatePropertyAll(
+                          ColorTheme.primary.withOpacity(.2),
+                        ),
+                      ),
+                      child: Text(
+                        "${comment.replies?.length ?? 0} replies",
+                        style: TextStyleTheme.ts14
+                            .copyWith(color: ColorTheme.primary),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
           ),
-          PopupMenuButton(
-            color: ColorTheme.background,
-            offset: const Offset(-32, -8),
-            child: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onSelected: (value) {
-              if (value == 0) {
-                showDialog(
-                    context: context,
-                    builder: (context) => EditCommentWidget(comment: comment));
-              } else if (value == 1) {
-                context
-                    .read<CommentBloc>()
-                    .add(DeleteCommentEvent(comment.id!));
-              }
+          BlocSelector<ProfileBloc, ProfileState, bool>(
+            selector: (state) {
+              return state.user?.id == comment.user?.id;
             },
-            itemBuilder: (BuildContext bc) {
-              return [
-                PopupMenuItem(
-                  value: 0,
-                  child: Center(
-                    child: Text(
-                      "Edit",
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: Colors.white,
+            builder: (context, isOwner) {
+              if (!isOwner) return const SizedBox.shrink();
+              return PopupMenuButton(
+                color: ColorTheme.background,
+                offset: const Offset(-32, -8),
+                child: const Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
+                onSelected: (value) {
+                  if (value == 0) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => EditCommentWidget(
+                              comment: comment,
+                              isReply: isRely,
+                            ));
+                  } else if (value == 1) {
+                    context
+                        .read<CommentBloc>()
+                        .add(DeleteCommentEvent(comment.id!, isRely));
+                  }
+                },
+                itemBuilder: (BuildContext bc) {
+                  return [
+                    PopupMenuItem(
+                      value: 0,
+                      child: Center(
+                        child: Text(
+                          "Edit",
+                          style: TextStyleTheme.ts14.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 1,
-                  child: Center(
-                    child: Text(
-                      "Delete",
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: Colors.redAccent,
+                    PopupMenuItem(
+                      value: 1,
+                      child: Center(
+                        child: Text(
+                          "Delete",
+                          style: TextStyleTheme.ts14.copyWith(
+                            color: Colors.redAccent,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ];
+                  ];
+                },
+              );
             },
           )
         ],

@@ -47,13 +47,42 @@ class CommentRepo extends InitialRepo
   }
 
   @override
-  Future<bool> deleteComment(String commentId, String token) async {
+  Future<bool> deleteComment(
+      String commentId, String postId, String token) async {
     try {
+      var data = {
+        "commentId": commentId,
+        "postId": postId,
+      };
       await dio.delete(
-        "$_baseUrl/$commentId",
+        _baseUrl,
         options: Options(
           headers: headerApplicationJson(token: token),
         ),
+        data: data,
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  @override
+  Future<bool> deleteReplyComment(
+      String commentId, String replyId, String token) async {
+    try {
+      var data = {
+        "commentId": commentId,
+        "replyId": replyId,
+      };
+      await dio.delete(
+        "$_baseUrl/reply",
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        data: data,
       );
       return true;
     } on DioError catch (e) {
@@ -123,9 +152,23 @@ class CommentRepo extends InitialRepo
   Future<List<CommentModel>> getCommentsByPostId(
       String postId, String token) async {
     try {
-      var response = await dio.get("$_baseUrl/post/$postId",
+      var response = await dio.get("$_baseUrl/byPost/$postId",
           options: Options(headers: headerApplicationJson(token: token)));
-      if (response.statusCode != 200) return List<CommentModel>.empty();
+      return List<CommentModel>.from(response.data['data']['comments']
+          .map((comment) => CommentModel.fromJson(comment)));
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  @override
+  Future<List<CommentModel>> getReplyCommentsByCommentId(
+      String commentId, String token) async {
+    try {
+      var response = await dio.get("$_baseUrl/reply/byComment/$commentId",
+          options: Options(headers: headerApplicationJson(token: token)));
       return List<CommentModel>.from(response.data['data']['comments']
           .map((comment) => CommentModel.fromJson(comment)));
     } on DioError catch (e) {

@@ -26,24 +26,35 @@ class CreateCommentEvent implements CommentEvent {
 class EditCommentEvent implements CommentEvent {
   final String content;
   final String commentId;
+  final bool isRely;
   const EditCommentEvent({
     required this.content,
     required this.commentId,
+    this.isRely = false,
   });
 }
 
 class DeleteCommentEvent implements CommentEvent {
   final String commentId;
-  const DeleteCommentEvent(this.commentId);
+  final bool isRely;
+  const DeleteCommentEvent(this.commentId, [this.isRely = false]);
 }
 
 class LikeCommentEvent implements CommentEvent {
   final String commentId;
-  const LikeCommentEvent(this.commentId);
+  final bool isRely;
+  const LikeCommentEvent(this.commentId, [this.isRely = false]);
 }
 
 class RelyCommentEvent implements CommentEvent {
   final String commentId;
   final String content;
   const RelyCommentEvent(this.commentId, this.content);
+}
+
+class GetRelyCommentsEvent implements CommentEvent {
+  final String comment;
+  const GetRelyCommentsEvent({
+    required this.comment,
+  });
 }

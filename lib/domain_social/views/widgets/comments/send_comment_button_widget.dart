@@ -5,9 +5,11 @@ import 'package:musix/config/exporter.dart';
 import '../../../../theme/theme.dart';
 
 class SendCommentButtonWidget extends StatelessWidget {
+  final bool isReply;
   const SendCommentButtonWidget({
     super.key,
     required this.textEditingController,
+    this.isReply = false,
   });
 
   final TextEditingController textEditingController;
@@ -18,9 +20,16 @@ class SendCommentButtonWidget extends StatelessWidget {
       onPressed: () {
         if (textEditingController.text.isNotEmpty) {
           FocusManager.instance.primaryFocus?.unfocus();
-          context
-              .read<CommentBloc>()
-              .add(CreateCommentEvent(textEditingController.text));
+          if (isReply) {
+            context.read<CommentBloc>().add(RelyCommentEvent(
+                BlocProvider.of<CommentBloc>(context).state.selectedCommentId!,
+                textEditingController.text));
+          } else {
+            context
+                .read<CommentBloc>()
+                .add(CreateCommentEvent(textEditingController.text));
+          }
+
           textEditingController.clear();
         }
       },
