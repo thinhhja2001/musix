@@ -61,17 +61,17 @@ class Post extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        user,
-        content,
-        fileId,
-        thumbnailId,
-        thumbnailUrl,
+        // user,
+        // content,
+        // fileId,
+        // thumbnailId,
+        // thumbnailUrl,
         comments,
-        dateCreated,
-        lastModified,
-        likedBy,
-        fileUrl,
-        fileName,
+        // dateCreated,
+        // lastModified,
+        // likedBy,
+        // fileUrl,
+        // fileName,
       ];
   @override
   bool? get stringify => true;

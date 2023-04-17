@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/config/exporter/repo_exporter.dart';
 import 'package:musix/domain_social/entities/comment/comment.dart';
-import 'package:musix/domain_social/logic/social_bloc.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
 import 'package:musix/domain_user/entities/entities.dart';
 import 'package:musix/domain_user/models/models.dart';
@@ -15,6 +15,8 @@ import '../post/post.dart';
 class SocialMapper {
   final profileRepo = GetIt.I.get<ProfileRepo>();
   final commentRepo = GetIt.I.get<CommentRepo>();
+  String token;
+  SocialMapper(this.token);
   Future<List<Comment>> listCommentFromListCommentModel(
       List<CommentModel> commentModels) async {
     List<Comment> comments = List.empty(growable: true);
@@ -29,11 +31,11 @@ class SocialMapper {
     List<User> userLiked = List.empty(growable: true);
     List userLikedIds = commentModel.likedBy;
     ProfileResponseModel ownerUserModel =
-        await profileRepo.getOtherProfile(testToken, commentModel.ownerId);
+        await profileRepo.getOtherProfile(token, commentModel.ownerId);
     User owner = convertUserModelToUser(ownerUserModel.user!);
     for (var userId in userLikedIds) {
       ProfileResponseModel profileResponseModel =
-          await profileRepo.getOtherProfile(testToken, userId);
+          await profileRepo.getOtherProfile(token, userId);
 
       User user = convertUserModelToUser(profileResponseModel.user!);
       userLiked.add(user);
@@ -51,19 +53,25 @@ class SocialMapper {
   }
 
   Future<Post> postFromPostModel(PostModel postModel) async {
-    List<CommentModel> commentsModel =
-        await commentRepo.getCommentsByPostId(postModel.id, testToken);
+    List<CommentModel> commentsModel = [];
+    for (var element in postModel.comments) {
+      try {
+        var commentModel = await commentRepo.getComment(element, token);
+        commentsModel.add(commentModel);
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
     List<Comment> comments =
         await listCommentFromListCommentModel(commentsModel);
-
     ProfileResponseModel ownerUserModel =
-        await profileRepo.getOtherProfile(testToken, postModel.ownerId);
+        await profileRepo.getOtherProfile(token, postModel.ownerId);
     User owner = convertUserModelToUser(ownerUserModel.user!);
 
     List<User> userLiked = List.empty(growable: true);
     for (var userId in postModel.likedBy) {
       ProfileResponseModel profileResponseModel =
-          await profileRepo.getOtherProfile(testToken, userId);
+          await profileRepo.getOtherProfile(token, userId);
       User user = convertUserModelToUser(profileResponseModel.user!);
       userLiked.add(user);
     }

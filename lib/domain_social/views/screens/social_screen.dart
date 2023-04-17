@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:musix/config/exporter/bloc_exporter.dart';
 import 'package:musix/domain_global/views/home_screen/widgets/search_bar_navigator_widget.dart';
-import 'package:musix/domain_social/entities/event/social_event.dart';
 import 'package:musix/domain_social/views/widgets/posts/list_widget/following_list_widget.dart';
 import 'package:musix/domain_social/views/widgets/posts/list_widget/trending_list_widget.dart';
 import 'package:musix/theme/theme.dart';
@@ -15,9 +12,9 @@ class SocialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SocialBloc>().add(SocialGetListPostJustForYouEvent());
-    context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
-    context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
+    // context.read<SocialBloc>().add(SocialGetListPostJustForYouEvent());
+    // context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
+    // context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
     return Scaffold(
       backgroundColor: ColorTheme.background,
       body: Padding(

@@ -18,7 +18,7 @@ void main() async {
 Future<void> bootstrap() async {
   final debugLogger = DebugLogger();
   FlutterError.onError = (details) {
-    debugLogger.log(details.exceptionAsString(), details.stack);
+    debugLogger.error(details.exceptionAsString(), details.stack);
   };
   Bloc.observer = AppObserver();
   //Need to use await here to avoid facing the GetIt plugin error like https://stackoverflow.com/questions/61131822/flutter-getit-plugin-no-type-xxx-is-registered-inside-getit
@@ -29,7 +29,8 @@ Future<void> bootstrap() async {
       const MusixApp(),
     ),
     (error, stackTrace) {
-      debugLogger.log(error.toString());
+      debugLogger.error("ERROR: ${error.toString()}\n${stackTrace.toString()}",
+          error, stackTrace);
     },
   );
 }

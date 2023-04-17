@@ -140,6 +140,7 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => SongBloc(
             musixAudioHandler: getIt.get<MusixAudioHandler>(),
             initialState: SongState(
@@ -152,6 +153,7 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => SongsBloc(
             initialState: SongsState(
               status: {
@@ -162,6 +164,7 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => VideoBloc(
             initialState: VideoState(
               status: {VideoStatusKey.global.key: Status.idle},
@@ -170,13 +173,16 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => SocialBloc(
             initialState: const SocialState(),
             commentRepo: getIt.get<CommentRepo>(),
+            authBloc: context.read<AuthBloc>(),
             postRepo: getIt.get<PostRepo>(),
           ),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => CommentBloc(
             initialState: CommentState(
               status: {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_auth/entities/event/auth_event.dart';
@@ -16,8 +17,10 @@ import 'utils/text_path.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController =
+      TextEditingController(text: "usertest");
+  final TextEditingController _passwordController =
+      TextEditingController(text: "123456");
   final _formKey = GlobalKey<FormState>();
   final signInTextPath = SignInTextPath();
 
@@ -25,8 +28,13 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(listener: (context, state) {
       if (state.loginStatus == 200) {
-        context.read<ProfileBloc>().add(const GetProfileEvent());
-        context.read<UserMusicBloc>().add(const GetUserMusicEvent());
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          context.read<ProfileBloc>().add(const GetProfileEvent());
+          context.read<UserMusicBloc>().add(const GetUserMusicEvent());
+          context.read<SocialBloc>().add(SocialGetListPostJustForYouEvent());
+          context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
+          context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
+        });
         Navigator.pushNamedAndRemoveUntil(
             context, RoutingPath.home, (Route<dynamic> route) => false);
       }

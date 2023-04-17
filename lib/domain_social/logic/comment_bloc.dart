@@ -15,8 +15,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     required this.commentRepo,
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
-      if (authState.jwtToken != null) {
+      if (authState.username != null && authState.jwtToken != null) {
         token = authState.jwtToken!;
+        socialMapper = SocialMapper(token);
       }
     });
     on<GetCommentsEvent>(_getComments);
@@ -29,8 +30,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   }
   final AuthBloc authBloc;
   final CommentRepo commentRepo;
-  late String token;
-  final SocialMapper socialMapper = SocialMapper();
+  late final String token;
+  late final SocialMapper socialMapper;
 
   //----------------------------------------------------------------------------
   @override
@@ -175,7 +176,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       var commentModel =
           await commentRepo.likeOrDislikeComment(event.commentId, token);
       var comment = await socialMapper.commentFromCommentModel(commentModel);
-      comments.add(comment);
+      comments[comments.indexWhere((element) => element.id == comment.id)] =
+          comment;
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
@@ -234,7 +236,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
           ),
           token);
       var comment = await socialMapper.commentFromCommentModel(commentModel);
-      comments.add(comment);
+      comments[comments.indexWhere((element) => element.id == comment.id)] =
+          comment;
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
@@ -292,7 +295,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
           ),
           token);
       var comment = await socialMapper.commentFromCommentModel(commentModel);
-      comments.add(comment);
+      comments[comments.indexWhere((element) => element.id == comment.id)] =
+          comment;
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter.dart';
 
 import '../../../../theme/theme.dart';
 
@@ -14,7 +16,13 @@ class SendCommentButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        ///Implement sending logic here
+        if (textEditingController.text.isNotEmpty) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          context
+              .read<CommentBloc>()
+              .add(CreateCommentEvent(textEditingController.text));
+          textEditingController.clear();
+        }
       },
       icon: Icon(
         Icons.send,

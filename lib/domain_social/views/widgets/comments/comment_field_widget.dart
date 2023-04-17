@@ -1,12 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_social/views/widgets/comments/send_comment_button_widget.dart';
+import 'package:musix/utils/utils.dart';
 
 import '../../../../theme/theme.dart';
-import 'comment_input_widget.dart';
 
 class CommentFieldWidget extends StatefulWidget {
-  CommentFieldWidget({
+  const CommentFieldWidget({
     super.key,
   });
 
@@ -22,31 +25,36 @@ class _CommentFieldWidgetState extends State<CommentFieldWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CircleAvatar(
-          radius: 10,
-          backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"),
+        BlocSelector<ProfileBloc, ProfileState, String>(
+          selector: (state) {
+            return state.user?.profile?.avatarUrl ?? AssetPath.userUnknowImage;
+          },
+          builder: (context, image) {
+            return CircleAvatar(
+              radius: 10,
+              backgroundImage: CachedNetworkImageProvider(image),
+            );
+          },
         ),
         Expanded(
           child: Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: InkWell(
-                onTap: () => showModalBottomSheet(
-                    context: context, builder: (_) => CommentInputWidget()),
-                child: TextField(
-                  onChanged: (_) => setState(() {}),
-                  style: TextStyleTheme.ts14.copyWith(
-                    color: ColorTheme.white,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "Add Comment",
-                    hintStyle: TextStyleTheme.ts14.copyWith(
-                      color: ColorTheme.white.withOpacity(.7),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Add comment",
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: ColorTheme.primary,
                     ),
                   ),
-                  enabled: false,
-                  controller: textEditingController,
+                  hintStyle: TextStyleTheme.ts16.copyWith(
+                    color: ColorTheme.white.withOpacity(.7),
+                  ),
                 ),
+                style: TextStyleTheme.ts16.copyWith(color: ColorTheme.white),
+                enabled: true,
+                controller: textEditingController,
+                maxLines: 1,
               )),
         ),
         SendCommentButtonWidget(textEditingController: textEditingController)

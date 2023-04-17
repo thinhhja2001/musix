@@ -123,7 +123,7 @@ class CommentRepo extends InitialRepo
   Future<List<CommentModel>> getCommentsByPostId(
       String postId, String token) async {
     try {
-      var response = await dio.post("$_baseUrl/post/$postId",
+      var response = await dio.get("$_baseUrl/post/$postId",
           options: Options(headers: headerApplicationJson(token: token)));
       if (response.statusCode != 200) return List<CommentModel>.empty();
       return List<CommentModel>.from(response.data['data']['comments']
