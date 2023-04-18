@@ -37,7 +37,7 @@ class _TrendingListWidgetState extends State<TrendingListWidget>
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       _loading = true;
-      context.read<SocialBloc>().add(SocialTrendingPostLoadMoreEvent());
+      context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
       _loading = false;
     }
   }

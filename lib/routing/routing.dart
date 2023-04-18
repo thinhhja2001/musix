@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/views/screens/profile_social_screen.dart';
+import 'package:musix/domain_user/entities/entities.dart';
+import 'package:musix/domain_user/entities/profile.dart';
 import '../domain_auth/views/screens/email_verification_screen/email_verification_screen.dart';
 import '../domain_auth/views/screens/reset_password_screen/reset_password_screen.dart';
 import '../domain_social/views/screens/create_new_post_screen.dart';
@@ -140,9 +142,10 @@ Route<dynamic> routeController(RouteSettings settings) {
         builder: (context) => ModifyPostScreen(post: post),
       );
     case RoutingPath.profileSocial:
+      final user = settings.arguments as User;
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => ProfileSocialScreen(),
+        builder: (context) => ProfileSocialScreen(user: user),
       );
     default:
       return MaterialPageRoute(

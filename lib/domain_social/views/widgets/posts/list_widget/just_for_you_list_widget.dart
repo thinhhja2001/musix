@@ -31,7 +31,7 @@ class _JustForYouListWidgetState extends State<JustForYouListWidget>
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       _loading = true;
-      context.read<SocialBloc>().add(SocialJust4YouPostLoadMoreEvent());
+      context.read<SocialBloc>().add(SocialGetListPostJustForYouEvent());
       _loading = false;
     }
   }

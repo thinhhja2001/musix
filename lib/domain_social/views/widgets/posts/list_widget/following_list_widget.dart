@@ -30,7 +30,7 @@ class _FollowingListWidgetState extends State<FollowingListWidget>
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       _loading = true;
-      context.read<SocialBloc>().add(SocialFollowingPostLoadMoreEvent());
+      context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
       _loading = false;
     }
   }
