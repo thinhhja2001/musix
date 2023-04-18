@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
-import '../../../../entities/utils/social_mapper.dart';
-import '../../../../repository/post/post_repo.dart';
 
 import '../../../../../domain_user/entities/profile/profile_state.dart';
 import '../../../../../domain_user/logic/profile_bloc.dart';
 import '../../../../../theme/color.dart';
 import '../../../../entities/event/social_event.dart';
 import '../../../../entities/post/post.dart';
+import '../../../../entities/utils/social_mapper.dart';
 import '../../../../logic/social_bloc.dart';
+import '../../../../repository/post/post_repo.dart';
 
 class LikeButtonWidget extends StatelessWidget {
   const LikeButtonWidget({
@@ -95,8 +95,9 @@ class LikeButtonWidget extends StatelessWidget {
   }
 
   Future<Post> _getPost(String postId) async {
-    final postModel = await PostRepo().getPostById(postId, testToken);
-    final post = await SocialMapper().postFromPostModel(postModel!);
+    final postModel = await PostRepo().getPostById(postId, testTokenConst);
+    final post =
+        await SocialMapper(testTokenConst).postFromPostModel(postModel!);
     return post;
   }
 }

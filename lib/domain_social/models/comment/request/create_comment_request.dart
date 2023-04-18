@@ -1,26 +1,21 @@
 class CreateCommentModel {
-  String content;
+  String? postId;
+  String? content;
+
   CreateCommentModel({
-    required this.content,
+    this.postId,
+    this.content,
   });
 
-  CreateCommentModel copyWith({
-    String? content,
-  }) {
-    return CreateCommentModel(
-      content: content ?? this.content,
-    );
+  CreateCommentModel.fromJson(dynamic json) {
+    postId = json['postId'];
+    content = json['content'];
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'content': content,
-    };
-  }
-
-  factory CreateCommentModel.fromJson(Map<String, dynamic> map) {
-    return CreateCommentModel(
-      content: map['content'] as String,
-    );
+    final map = <String, dynamic>{};
+    map['postId'] = postId;
+    map['content'] = content;
+    return map;
   }
 }

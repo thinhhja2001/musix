@@ -1,22 +1,39 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter.dart';
+import 'package:musix/domain_social/entities/entities.dart';
+import 'package:musix/domain_social/views/widgets/comments/rely_comment_widget.dart';
+import 'package:musix/utils/utils.dart';
 
 import '../../../../theme/theme.dart';
+import 'edit_comment_widget.dart';
 
 class CommentCardWidget extends StatelessWidget {
-  const CommentCardWidget({super.key});
+  final Comment comment;
+  final bool isRely;
+  final bool isShowReply;
+  const CommentCardWidget({
+    super.key,
+    required this.comment,
+    this.isRely = false,
+    this.isShowReply = true,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CircleAvatar(
-              radius: 10,
-              backgroundImage: NetworkImage(
-                  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80")),
+          CircleAvatar(
+            radius: 12,
+            backgroundImage: CachedNetworkImageProvider(
+              comment.user?.profile?.avatarUrl ?? AssetPath.userUnknowImage,
+            ),
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -24,13 +41,13 @@ class CommentCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "thinhhja201 · 3 months ago",
-                    style: TextStyleTheme.ts12
+                    "${comment.user?.profile?.fullName ?? "Anonymous"} · ${convertMillisecondToDateString(comment.dateCreated ?? DateTime.now().millisecondsSinceEpoch)}",
+                    style: TextStyleTheme.ts14
                         .copyWith(color: ColorTheme.white.withOpacity(.7)),
                   ),
                   Text(
-                    "the best song I've ever heard",
-                    style: TextStyleTheme.ts12.copyWith(
+                    "${comment.content}",
+                    style: TextStyleTheme.ts14.copyWith(
                       color: ColorTheme.white,
                     ),
                   ),
@@ -38,57 +55,143 @@ class CommentCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.thumb_up_alt,
-                        color: ColorTheme.white,
-                        size: 10,
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .read<CommentBloc>()
+                              .add(LikeCommentEvent(comment.id!, isRely));
+                        },
+                        child: BlocSelector<ProfileBloc, ProfileState, bool>(
+                          selector: (state) {
+                            try {
+                              var user = comment.likedBy?.firstWhere(
+                                  (element) => element.id == state.user?.id);
+                              if (user != null) {
+                                return true;
+                              } else {
+                                return false;
+                              }
+                            } on StateError {
+                              return false;
+                            }
+                          },
+                          builder: (context, isLiked) {
+                            return Icon(
+                              Icons.thumb_up_alt,
+                              color: isLiked
+                                  ? ColorTheme.primary
+                                  : ColorTheme.white,
+                              size: 12,
+                            );
+                          },
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0),
                         child: Text(
-                          "50",
-                          style: TextStyleTheme.ts10
+                          "${comment.likeCount ?? 0}",
+                          style: TextStyleTheme.ts12
                               .copyWith(color: ColorTheme.white),
                         ),
                       ),
-                      const Icon(
-                        Icons.thumb_down_off_alt_outlined,
-                        color: ColorTheme.white,
-                        size: 10,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Icon(
-                        Icons.comment_outlined,
-                        size: 10,
-                        color: ColorTheme.white,
-                      )
+                      if (!isRely && isShowReply) ...[
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const Icon(
+                          Icons.comment_outlined,
+                          size: 12,
+                          color: ColorTheme.white,
+                        )
+                      ],
                     ],
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      overlayColor: MaterialStatePropertyAll(
-                        ColorTheme.primary.withOpacity(.2),
+                  if (!isRely && isShowReply) ...[
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .read<CommentBloc>()
+                            .add(GetRelyCommentsEvent(comment: comment.id!));
+                        showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                            builder: (context) => RelyCommentWidget(
+                                  comment: comment,
+                                ));
+                      },
+                      style: ButtonStyle(
+                        overlayColor: MaterialStatePropertyAll(
+                          ColorTheme.primary.withOpacity(.2),
+                        ),
+                      ),
+                      child: Text(
+                        "${comment.replies?.length ?? 0} replies",
+                        style: TextStyleTheme.ts14
+                            .copyWith(color: ColorTheme.primary),
                       ),
                     ),
-                    child: Text(
-                      "15 replies",
-                      style: TextStyleTheme.ts14
-                          .copyWith(color: ColorTheme.primary),
-                    ),
-                  )
+                  ],
                 ],
               ),
             ),
           ),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.more_vert,
-                color: Colors.white,
-              ))
+          BlocSelector<ProfileBloc, ProfileState, bool>(
+            selector: (state) {
+              return state.user?.id == comment.user?.id;
+            },
+            builder: (context, isOwner) {
+              if (!isOwner) return const SizedBox.shrink();
+              return PopupMenuButton(
+                color: ColorTheme.background,
+                offset: const Offset(-32, -8),
+                child: const Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
+                onSelected: (value) {
+                  if (value == 0) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => EditCommentWidget(
+                              comment: comment,
+                              isReply: isRely,
+                            ));
+                  } else if (value == 1) {
+                    context
+                        .read<CommentBloc>()
+                        .add(DeleteCommentEvent(comment.id!, isRely));
+                  }
+                },
+                itemBuilder: (BuildContext bc) {
+                  return [
+                    PopupMenuItem(
+                      value: 0,
+                      child: Center(
+                        child: Text(
+                          "Edit",
+                          style: TextStyleTheme.ts14.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: Center(
+                        child: Text(
+                          "Delete",
+                          style: TextStyleTheme.ts14.copyWith(
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ];
+                },
+              );
+            },
+          )
         ],
       ),
     );
