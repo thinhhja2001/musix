@@ -14,7 +14,8 @@ class TrendingListWidget extends StatefulWidget {
   State<TrendingListWidget> createState() => _TrendingListWidgetState();
 }
 
-class _TrendingListWidgetState extends State<TrendingListWidget> {
+class _TrendingListWidgetState extends State<TrendingListWidget>
+    with AutomaticKeepAliveClientMixin {
   late ScrollController scrollController;
   bool _loading = false;
 
@@ -26,18 +27,24 @@ class _TrendingListWidgetState extends State<TrendingListWidget> {
     scrollController = ScrollController()..addListener(_onScroll);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void _onScroll() {
     if (!scrollController.hasClients || _loading) return;
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       _loading = true;
-      context.read<SocialBloc>().add(SocialTrendingPostLoadMoreEvent());
+      context.read<SocialBloc>().add(SocialGetListPostTrendingEvent());
       _loading = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<SocialBloc, SocialState>(
       builder: (context, state) {
         return state.trendingPosts != null
@@ -74,4 +81,7 @@ class _TrendingListWidgetState extends State<TrendingListWidget> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

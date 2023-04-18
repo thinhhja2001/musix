@@ -81,8 +81,9 @@ class SocialDeletePostEvent extends SocialEvent {
   SocialDeletePostEvent(this.post);
 }
 
-class SocialFollowingPostLoadMoreEvent extends SocialEvent {}
+class SocialLoadUserPostEvent extends SocialEvent {
+  final String username;
+  SocialLoadUserPostEvent(this.username);
+}
 
-class SocialJust4YouPostLoadMoreEvent extends SocialEvent {}
-
-class SocialTrendingPostLoadMoreEvent extends SocialEvent {}
+class SocialProfileBackEvent extends SocialEvent {}

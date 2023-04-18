@@ -17,6 +17,7 @@ class SocialState extends Equatable {
   final bool? isModifyingPost;
   final int? modifyingPostStatus;
   final int? deletePostStatus;
+  final List<Post>? userPosts;
 
   const SocialState({
     this.justForYouPosts,
@@ -30,6 +31,7 @@ class SocialState extends Equatable {
     this.isModifyingPost,
     this.modifyingPostStatus,
     this.deletePostStatus,
+    this.userPosts,
   });
 
   SocialState copyWith({
@@ -44,6 +46,7 @@ class SocialState extends Equatable {
     bool? isModifyingPost,
     int? Function()? modifyingPostStatus,
     int? Function()? deletePostStatus,
+    List<Post>? Function()? userPosts,
   }) =>
       SocialState(
         justForYouPosts: justForYouPosts ?? this.justForYouPosts,
@@ -65,6 +68,7 @@ class SocialState extends Equatable {
         deletePostStatus: deletePostStatus != null
             ? deletePostStatus()
             : this.deletePostStatus,
+        userPosts: userPosts != null ? userPosts() : this.userPosts,
       );
 
   @override
@@ -80,6 +84,7 @@ class SocialState extends Equatable {
         isModifyingPost,
         modifyingPostStatus,
         deletePostStatus,
+        userPosts,
       ];
   @override
   bool? get stringify => false;
