@@ -21,6 +21,8 @@ Future<void> bootstrap() async {
     debugLogger.error(details.exceptionAsString(), details.stack);
   };
   Bloc.observer = AppObserver();
+  await HiveUtils.initHive();
+  await HiveUtils.openBox();
   //Need to use await here to avoid facing the GetIt plugin error like https://stackoverflow.com/questions/61131822/flutter-getit-plugin-no-type-xxx-is-registered-inside-getit
   await configAudioService();
   await registerDependency();

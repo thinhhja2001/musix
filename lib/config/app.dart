@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:musix/domain_auth/utils/model/auth_storage.dart';
 
 import '../domain_song/services/musix_audio_handler.dart';
+import '../routing/routing_path.dart';
 import '../utils/utils.dart';
 import 'app_view.dart';
 import 'exporter.dart';
@@ -15,16 +18,36 @@ class MusixApp extends StatefulWidget {
 }
 
 class _MusixAppState extends State<MusixApp> {
+  AuthStorage? authStorage;
+  @override
+  void initState() {
+    _getAuthStorage();
+    super.initState();
+  }
+
+  void _getAuthStorage() {
+    authStorage = HiveUtils.readAuthStorage();
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           lazy: false,
-          create: (context) => AuthBloc(
-            initialState: AuthState(),
-            authRepo: getIt.get<AuthRepo>(),
-          ),
+          create: (context) {
+            return AuthBloc(
+              initialState: AuthState(),
+              authRepo: getIt.get<AuthRepo>(),
+            )..add(AuthAutoLoginEvent(
+                authStorage?.token ?? "", authStorage?.username ?? ""));
+          },
         ),
         BlocProvider(
           lazy: false,
@@ -207,7 +230,19 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
       ],
-      child: const MusixAppView(),
+      child: BlocBuilder<AuthBloc, AuthState>(buildWhen: (prev, curr) {
+        return curr.jwtToken != null &&
+            curr.jwtToken != "" &&
+            prev.jwtToken != curr.jwtToken;
+      }, builder: (context, state) {
+        if (state.jwtToken != null && state.jwtToken != "") {
+          return const MusixAppView(
+            path: RoutingPath.home,
+          );
+        } else {
+          return const MusixAppView();
+        }
+      }),
     );
   }
 }

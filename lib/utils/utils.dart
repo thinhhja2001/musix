@@ -1,6 +1,7 @@
 export 'constant/asset_path.dart';
 export 'constant/date_periods.dart';
 export 'constant/distinct_constant.dart';
+export 'constant/hive_box_constant.dart';
 export 'constant/status_path.dart';
 export 'debug/app_observer.dart';
 export 'debug/logger.dart';
@@ -8,4 +9,5 @@ export 'enum/enum_music_type.dart';
 export 'enum/enum_status.dart';
 export 'enum/error_data.dart';
 export 'functions/function_utils.dart';
+export 'functions/hive_utils.dart';
 export 'functions/update_map_status.dart';

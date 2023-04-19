@@ -15,7 +15,7 @@ class SocialSearchBloc extends Bloc<SocialSearchEvent, SocialSearchState> {
     required this.postRepo,
   }) : super(initialState) {
     authBloc.stream.listen((state) {
-      if (state.jwtToken != null) {
+      if (state.jwtToken != null && state.jwtToken != "") {
         token = state.jwtToken!;
         socialMapper = SocialMapper(token);
       }
@@ -27,8 +27,8 @@ class SocialSearchBloc extends Bloc<SocialSearchEvent, SocialSearchState> {
   final AuthBloc authBloc;
   final ProfileRepo profileRepo;
   final PostRepo postRepo;
-  late final String token;
-  late final SocialMapper socialMapper;
+  String token = "";
+  late SocialMapper socialMapper;
 
   //----------------------------------------------------------------------------
   @override

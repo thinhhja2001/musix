@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/utils/utils.dart';
 
 import '../../../../config/exporter.dart';
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/color.dart';
 import '../../../../theme/text_style.dart';
-import '../../../../utils/constant/asset_path.dart';
-import '../../../entities/event/auth_event.dart';
 import '../../../payload/request/login_request.dart';
 import '../../widgets/custom_button_widget.dart';
 import '../../widgets/custom_error_box.dart';
@@ -26,12 +24,8 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(listener: (context, state) {
+    return BlocListener<AuthBloc, AuthState>(listener: (context, state) async {
       if (state.loginStatus == 200) {
-        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-          context.read<ProfileBloc>().add(const GetProfileEvent());
-          context.read<UserMusicBloc>().add(const GetUserMusicEvent());
-        });
         Navigator.pushNamedAndRemoveUntil(
             context, RoutingPath.home, (Route<dynamic> route) => false);
       }

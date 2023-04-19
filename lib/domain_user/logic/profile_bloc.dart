@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../utils/utils.dart';
 
 import '../../domain_auth/logic/auth_bloc.dart';
+import '../../utils/utils.dart';
 import '../entities/entities.dart';
 import '../repo/profile_repo.dart';
 import '../utils/convert_model_entity.dart';
@@ -17,7 +17,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
       debugPrint('AuthBloc Print: $authState');
-      if (authState.userId != null && authState.jwtToken != null) {
+      if (authState.userId != null &&
+          authState.jwtToken != null &&
+          authState.jwtToken != "") {
         token = authState.jwtToken!;
       }
     });
@@ -29,7 +31,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
   final AuthBloc authBloc;
   final ProfileRepo profileRepo;
-  late String token;
+  String token = "";
 
   //----------------------------------------------------------------------------
   @override

@@ -177,7 +177,6 @@ class _SearchSocialScreenState extends State<SearchSocialScreen>
                                 borderRadius: BorderRadius.circular(10),
                                 color: ColorTheme.primary,
                               ),
-                              isScrollable: true,
                               tabs: _buildTab()),
                         );
                       } else {

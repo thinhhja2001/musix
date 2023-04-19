@@ -33,3 +33,13 @@ class AuthResetPasswordEvent extends AuthEvent {
 class AuthResetPasswordScreenBackEvent extends AuthEvent {}
 
 class AuthResetCurrentRequestPasswordStateEvent extends AuthEvent {}
+
+class AuthAutoLoginEvent implements AuthEvent {
+  final String token;
+  final String username;
+  const AuthAutoLoginEvent(this.token, this.username);
+}
+
+class AuthLogoutEvent implements AuthEvent {
+  const AuthLogoutEvent();
+}
