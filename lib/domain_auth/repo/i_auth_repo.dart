@@ -4,6 +4,8 @@ import '../payload/request/reset_password_request.dart';
 
 abstract class IAuthRepo<T> {
   Future<T> login(LoginRequest request);
+  Future<T> authenticate(String token);
+  Future<bool> logout(String token);
   Future<T> register(RegisterRequest request);
   Future<T> resendVerificationEmail(String username);
   Future<T> requestResetOtp(String email);

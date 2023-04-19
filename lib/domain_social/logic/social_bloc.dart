@@ -20,7 +20,9 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     required this.postRepo,
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
-      if (authState.username != null && authState.jwtToken != null) {
+      if (authState.username != null &&
+          authState.jwtToken != null &&
+          authState.jwtToken != "") {
         testToken = authState.jwtToken!;
         socialMapper = SocialMapper(testToken);
       }
@@ -54,8 +56,8 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
   int _followingPostCurrentPage = 0;
   int _just4YouPostCurrentPage = 0;
   int _trendingPostCurrentPage = 0;
-  late final String testToken;
-  late final SocialMapper socialMapper;
+  String testToken = "";
+  late SocialMapper socialMapper;
   FutureOr<void> _handleGetCommentsByPostId(
       SocialGetCommentsByPostIdEvent event, Emitter<SocialState> emit) async {
     List<CommentModel> commentModels =

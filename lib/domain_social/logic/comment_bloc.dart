@@ -15,7 +15,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     required this.commentRepo,
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
-      if (authState.username != null && authState.jwtToken != null) {
+      if (authState.username != null &&
+          authState.jwtToken != null &&
+          authState.jwtToken != "") {
         token = authState.jwtToken!;
         socialMapper = SocialMapper(token);
       }
@@ -31,8 +33,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   }
   final AuthBloc authBloc;
   final CommentRepo commentRepo;
-  late final String token;
-  late final SocialMapper socialMapper;
+  String token = "";
+  late SocialMapper socialMapper;
 
   //----------------------------------------------------------------------------
   @override

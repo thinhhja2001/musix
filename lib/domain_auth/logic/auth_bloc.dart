@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import '../repo/auth_repo.dart';
+import 'package:musix/utils/utils.dart';
+
 import '../../domain_user/entities/entities.dart';
 import '../../domain_user/models/user_info/user_model.dart';
-
 import '../../domain_user/utils/convert_model_entity.dart';
 import '../entities/event/auth_event.dart';
 import '../entities/state/auth_state.dart';
+import '../repo/auth_repo.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
@@ -23,13 +24,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthResetPasswordScreenBackEvent>(_handleResetPasswordBackEvent);
     on<AuthResetCurrentRequestPasswordStateEvent>(
         _handleResetCurrentRequestPasswordStateEvent);
+    on<AuthAutoLoginEvent>(_handleAuthentication);
+    on<AuthLogoutEvent>(_handleLogout);
   }
   final AuthRepo authRepo;
   FutureOr<void> _handleLoginEvent(AuthLoginEvent event, Emitter emit) async {
     emit(state.copyWith(isLoginLoading: true));
     final response = await authRepo.login(event.request);
     emit(state.copyWith(isLoginLoading: false));
-
+    var authStorage = HiveUtils.readAuthStorage();
+    if (authStorage != null) {
+      authStorage.username = response.data?["user"]["username"];
+      authStorage.token = response.data?["token"]["token"];
+    } else {
+      authStorage = await HiveUtils.createAuthStorage(
+          response.data?["token"]["token"], response.data?["user"]["username"]);
+    }
     emit(
       state.copyWith(
         loginMsg: response.msg,
@@ -39,6 +49,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         username: response.data?["user"]["username"],
       ),
     );
+  }
+
+  FutureOr<void> _handleLogout(AuthLogoutEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(
+        jwtToken: "",
+        userId: "",
+        username: "",
+      ),
+    );
+    final response = await authRepo.logout(state.jwtToken!);
+    if (response) {
+      var authStorage = HiveUtils.readAuthStorage();
+      authStorage?.username = "";
+      authStorage?.token = "";
+    }
+  }
+
+  FutureOr<void> _handleAuthentication(
+      AuthAutoLoginEvent event, Emitter emit) async {
+    if (event.username == "" || event.token == "") return;
+    emit(state.copyWith(isLoginLoading: true));
+    try {
+      final response = await authRepo.authenticate(event.token);
+      emit(state.copyWith(isLoginLoading: false));
+      emit(
+        state.copyWith(
+          loginMsg: response.msg,
+          loginStatus: response.status,
+          jwtToken: response.data?["token"]["token"],
+          userId: response.data?["user"]["id"],
+          username: response.data?["user"]["username"],
+        ),
+      );
+    } on ResponseException catch (e) {
+      emit(state.copyWith(
+        loginMsg: e.message,
+        loginStatus: e.statusCode,
+      ));
+    }
   }
 
   FutureOr<void> _handleRegisterEvent(

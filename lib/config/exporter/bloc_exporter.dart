@@ -7,6 +7,7 @@ export 'package:musix/domain_playlist/logic/playlist_bloc.dart';
 export 'package:musix/domain_playlist/logic/playlists_bloc.dart';
 export 'package:musix/domain_social/logic/comment_bloc.dart';
 export 'package:musix/domain_social/logic/social_bloc.dart';
+export 'package:musix/domain_social/logic/social_search_bloc.dart';
 export 'package:musix/domain_song/logic/song_bloc.dart';
 export 'package:musix/domain_song/logic/songs_bloc.dart';
 export 'package:musix/domain_user/logic/own_playlist_bloc.dart';

@@ -1,16 +1,15 @@
-import '../payload/request/reset_password_request.dart';
-import '../payload/response/resend_email_response.dart';
-import '../payload/request/register_request.dart';
 import '../payload/request/login_request.dart';
+import '../payload/request/register_request.dart';
+import '../payload/request/reset_password_request.dart';
 import '../payload/response/i_response.dart';
 import '../payload/response/login_response.dart';
 import '../payload/response/register_response.dart';
+import '../payload/response/request_reset_response.dart';
+import '../payload/response/resend_email_response.dart';
 import '../payload/response/reset_response.dart';
-import 'i_auth_repo.dart';
 import '../services/auth_service.dart';
 import '../services/i_auth_service.dart';
-
-import '../payload/response/request_reset_response.dart';
+import 'i_auth_repo.dart';
 
 class AuthRepo implements IAuthRepo<IResponse> {
   IAuthService authService = AuthService();
@@ -21,6 +20,12 @@ class AuthRepo implements IAuthRepo<IResponse> {
         status: response['status'],
         msg: response['msg'],
         data: response['data']);
+  }
+
+  @override
+  Future<bool> logout(String token) async {
+    final response = await authService.logout(token);
+    return response;
   }
 
   @override
@@ -54,6 +59,15 @@ class AuthRepo implements IAuthRepo<IResponse> {
   Future<ResetResponse> resetPassword(ResetPasswordRequest request) async {
     final response = await authService.resetPassword(request);
     return ResetResponse(
+        status: response['status'],
+        msg: response['msg'],
+        data: response['data']);
+  }
+
+  @override
+  Future<LoginResponse> authenticate(String token) async {
+    final response = await authService.authenticate(token);
+    return LoginResponse(
         status: response['status'],
         msg: response['msg'],
         data: response['data']);

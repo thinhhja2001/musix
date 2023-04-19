@@ -15,7 +15,9 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     required this.userMusicRepo,
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
-      if (authState.username != null && authState.jwtToken != null) {
+      if (authState.username != null &&
+          authState.jwtToken != null &&
+          authState.jwtToken != "") {
         token = authState.jwtToken!;
       }
     });
@@ -35,7 +37,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
   }
   final AuthBloc authBloc;
   final UserMusicRepo userMusicRepo;
-  late final String token;
+  String token = "";
 
   //----------------------------------------------------------------------------
   @override

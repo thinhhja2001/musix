@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../routing/routing_path.dart';
 
 import '../../../config/exporter.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../domain_song/views/widgets.dart';
+import '../../../routing/routing_path.dart';
 import '../../../theme/theme.dart';
 import 'widgets.dart';
 
@@ -118,7 +118,13 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<AuthBloc>().add(const AuthLogoutEvent());
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RoutingPath.signIn,
+                              (Route<dynamic> route) => false);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white.withOpacity(0.14),
                         ),
