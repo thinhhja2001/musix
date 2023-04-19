@@ -71,11 +71,18 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: NetworkImage(
-                                user!.profile!.avatarUrl ?? defaultAvatarUrl,
+                            GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                RoutingPath.profileSocial,
+                                arguments: user,
+                              ),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: NetworkImage(
+                                  user!.profile!.avatarUrl ?? defaultAvatarUrl,
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -86,11 +93,18 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  user.username ?? "",
-                                  style: TextStyleTheme.ts18.copyWith(
-                                      color: ColorTheme.white,
-                                      fontWeight: FontWeight.w600),
+                                GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    RoutingPath.profileSocial,
+                                    arguments: user,
+                                  ),
+                                  child: Text(
+                                    user.username ?? "",
+                                    style: TextStyleTheme.ts18.copyWith(
+                                        color: ColorTheme.white,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                                 Text(
                                   readTimestamp(widget.post.dateCreated!),

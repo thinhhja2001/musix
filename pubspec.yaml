@@ -58,6 +58,7 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.3
   build_runner: ^2.3.3
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:

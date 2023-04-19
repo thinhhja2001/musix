@@ -7,6 +7,7 @@ import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_global/views/search_screen/widgets.dart';
 import 'package:musix/domain_user/entities/entities.dart';
 import 'package:musix/global/widgets/widgets.dart';
+import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/theme.dart';
 import 'package:musix/utils/utils.dart';
 
@@ -327,7 +328,9 @@ class _SearchSocialScreenState extends State<SearchSocialScreen>
                                       "Anonymous",
                                   padding: 0,
                                   onCardPress: () {
-                                    // TODO navigate to profile screen
+                                    Navigator.of(context).pushNamed(
+                                        RoutingPath.profileSocial,
+                                        arguments: users[index]);
                                   },
                                   isShowAdditionButton: false,
                                 );

@@ -13,10 +13,10 @@ class FollowingListWidget extends StatefulWidget {
   State<FollowingListWidget> createState() => _FollowingListWidgetState();
 }
 
-class _FollowingListWidgetState extends State<FollowingListWidget> {
+class _FollowingListWidgetState extends State<FollowingListWidget>
+    with AutomaticKeepAliveClientMixin {
   late ScrollController scrollController;
   bool _loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -30,13 +30,14 @@ class _FollowingListWidgetState extends State<FollowingListWidget> {
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       _loading = true;
-      context.read<SocialBloc>().add(SocialFollowingPostLoadMoreEvent());
+      context.read<SocialBloc>().add(SocialGetListPostFollowingEvent());
       _loading = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<SocialBloc, SocialState>(
       builder: (context, state) {
         return state.followingPosts != null
@@ -74,4 +75,7 @@ class _FollowingListWidgetState extends State<FollowingListWidget> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
