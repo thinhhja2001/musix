@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import '../domain_auth/views/screens/email_verification_screen/email_verification_screen.dart';
-import '../domain_auth/views/screens/reset_password_screen/reset_password_screen.dart';
-import '../domain_social/views/screens/create_new_post_screen.dart';
-import '../domain_social/views/screens/modify_post_screen.dart';
-import '../domain_social/views/screens/view_comment_screen.dart';
+import 'package:musix/domain_social/views/screen.dart';
 
 import '../domain_artist/views/screens.dart';
+import '../domain_auth/views/screens/email_verification_screen/email_verification_screen.dart';
+import '../domain_auth/views/screens/reset_password_screen/reset_password_screen.dart';
 import '../domain_auth/views/screens/sign_in_screen/sign_in_screen.dart';
 import '../domain_auth/views/screens/sign_up_screen/sign_up_screen.dart';
 import '../domain_global/views/screens.dart';
@@ -123,6 +121,11 @@ Route<dynamic> routeController(RouteSettings settings) {
         builder: (context) =>
             const SearchScreen(searchScreenType: SearchScreenType.video),
         // builder: (context) => const HomeScreen(),
+      );
+    case RoutingPath.searchSocial:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const SearchSocialScreen(),
       );
     case RoutingPath.viewComment:
       return MaterialPageRoute(

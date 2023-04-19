@@ -2,17 +2,17 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../config/exporter/bloc_exporter.dart';
-import '../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
-import '../../entities/event/social_event.dart';
-import '../widgets/posts/list_widget/following_list_widget.dart';
-import '../widgets/posts/list_widget/trending_list_widget.dart';
-import '../../../theme/theme.dart';
+import 'package:musix/routing/routing_path.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../config/exporter/bloc_exporter.dart';
+import '../../../domain_auth/views/screens/email_verification_screen/utils/function.dart';
+import '../../../theme/theme.dart';
 import '../../entities/state/social_state.dart';
 import '../widgets/posts/create_post_widget/create_post_widget.dart';
+import '../widgets/posts/list_widget/following_list_widget.dart';
 import '../widgets/posts/list_widget/just_for_you_list_widget.dart';
+import '../widgets/posts/list_widget/trending_list_widget.dart';
 
 class SocialScreen extends StatelessWidget {
   const SocialScreen({super.key});
@@ -65,7 +65,10 @@ class SocialScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(RoutingPath.searchSocial);
+                      },
                       icon: const Icon(
                         Icons.search,
                         color: ColorTheme.white,

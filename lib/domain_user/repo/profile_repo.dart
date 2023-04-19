@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
-import '../../global/repo/initial_repo.dart';
 
+import '../../global/repo/initial_repo.dart';
 import '../../utils/enum/error_data.dart';
 import '../models/models.dart';
 
@@ -143,6 +143,28 @@ class ProfileRepo extends InitialRepo {
         ),
       );
       return ProfileResponseModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<ProfilesResponseModel> searchProfile(
+      String token, String query) async {
+    const url = "/profile/search";
+    var data = {
+      "fullName": query,
+    };
+    try {
+      var response = await dio.get(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        data: data,
+      );
+      return ProfilesResponseModel.fromJson(response.data['data']);
     } on DioError catch (e) {
       throw ResponseException(
           statusCode: e.response?.statusCode,

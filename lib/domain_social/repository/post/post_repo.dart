@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+
+import '../../../global/repo/initial_repo.dart';
 import '../../models/post/post_model.dart';
 import '../../models/post/request/post_registry_model.dart';
 import '../../models/post/response/post_response_model.dart';
 import 'i_post_repo.dart';
-import '../../../global/repo/initial_repo.dart';
 
 class PostRepo extends InitialRepo
     implements IPostRepo<PostResponseModel, PostModel> {
@@ -39,6 +40,28 @@ class PostRepo extends InitialRepo
     var response = await dio.get(_baseUrl,
         queryParameters: {
           "username": username,
+          "page": page,
+          "size": size,
+        },
+        options: Options(headers: headerApplicationJson(token: token)));
+    if (response.statusCode != 200) return List<PostModel>.empty();
+    return List<PostModel>.from(
+      response.data['data']['posts'].map(
+        (post) => PostModel.fromJson(post),
+      ),
+    );
+  }
+
+  @override
+  Future<List<PostModel>> getPostsByQuery({
+    required String query,
+    required int page,
+    required int size,
+    required String token,
+  }) async {
+    var response = await dio.get("$_baseUrl/by-content",
+        queryParameters: {
+          "query": query,
           "page": page,
           "size": size,
         },

@@ -193,6 +193,19 @@ class _MusixAppState extends State<MusixApp> {
             commentRepo: getIt.get<CommentRepo>(),
           ),
         ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => SocialSearchBloc(
+            initialState: SocialSearchState(
+              status: {
+                SocialSearchStatusKey.global.name: Status.idle,
+              },
+            ),
+            profileRepo: getIt.get<ProfileRepo>(),
+            postRepo: getIt.get<PostRepo>(),
+            authBloc: context.read<AuthBloc>(),
+          ),
+        ),
       ],
       child: const MusixAppView(),
     );

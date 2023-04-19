@@ -22,6 +22,15 @@ User convertUserModelToUser(UserModel userModel) {
   );
 }
 
+List<User> convertListUserModelToListUser(List<UserModel> userModels) {
+  var users = <User>[];
+  for (UserModel userModel in userModels) {
+    var user = convertUserModelToUser(userModel);
+    users.add(user);
+  }
+  return users;
+}
+
 Profile convertProfileModelToProfile(ProfileModel profileModel) {
   return Profile(
     fullName: profileModel.fullName,

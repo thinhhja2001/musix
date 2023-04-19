@@ -6,11 +6,13 @@ class SearchBarWidget extends StatefulWidget {
   final String hintText;
   final List<String?> recommends;
   final Function(String)? onTextChange;
+  final VoidCallback? onClear;
   const SearchBarWidget({
     Key? key,
     required this.hintText,
     required this.recommends,
     this.onTextChange,
+    this.onClear,
   }) : super(key: key);
 
   @override
@@ -83,6 +85,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                     ),
                     IconButton(
                         onPressed: () {
+                          widget.onClear?.call();
                           _searchController.clear();
                         },
                         icon: const Icon(

@@ -1,0 +1,4 @@
+enum SocialSearchStatusKey {
+  global,
+  posts,
+}

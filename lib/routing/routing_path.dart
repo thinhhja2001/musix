@@ -19,6 +19,7 @@ class RoutingPath {
   // Search
   static const String searchSong = '$home/searchSong';
   static const String searchVideo = '$home/searchVideo';
+  static const String searchSocial = '$home/searchSocial';
 
   // Album - Topic - Playlist
   static const String hubInfo = '$home/hubInfo';
