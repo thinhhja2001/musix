@@ -28,6 +28,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UploadAvatarProfileEvent>(_uploadAvatar);
     on<ChangePasswordProfileEvent>(_changePassword);
     on<FollowUserProfileEvent>(_followUser);
+    on<ProfileResetEvent>(_profileResetEvent);
   }
   final AuthBloc authBloc;
   final ProfileRepo profileRepo;
@@ -61,7 +62,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ], status: [
           Status.success,
         ]),
-        user: convertUserModelToUser(userModel.user!),
+        user: () => convertUserModelToUser(userModel.user!),
       ));
     } on ResponseException catch (e) {
       emit(state.copyWith(
@@ -122,7 +123,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ], status: [
           Status.success,
         ]),
-        user: convertUserModelToUser(userModel.user!),
+        user: () => convertUserModelToUser(userModel.user!),
       ));
     } on ResponseException catch (e) {
       emit(state.copyWith(
@@ -190,7 +191,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ], status: [
           Status.success,
         ]),
-        user: convertUserModelToUser(userModel.user!),
+        user: () => convertUserModelToUser(userModel.user!),
       ));
     } on ResponseException catch (e) {
       emit(state.copyWith(
@@ -311,7 +312,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ], status: [
           Status.success,
         ]),
-        user: convertUserModelToUser(userModel.user!),
+        user: () => convertUserModelToUser(userModel.user!),
       ));
     } on ResponseException catch (e) {
       emit(state.copyWith(
@@ -345,5 +346,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         Status.idle,
       ]),
     ));
+  }
+
+  FutureOr<void> _profileResetEvent(
+      ProfileResetEvent event, Emitter<ProfileState> emit) {
+    emit(
+      state.copyWith(
+        status: {
+          ProfileStatusKey.global.name: Status.idle,
+        },
+        user: () => null,
+      ),
+    );
   }
 }

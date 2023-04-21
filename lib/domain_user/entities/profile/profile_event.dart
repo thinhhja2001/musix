@@ -36,3 +36,5 @@ class FollowUserProfileEvent implements ProfileEvent {
 
   const FollowUserProfileEvent(this.followUserId);
 }
+
+class ProfileResetEvent implements ProfileEvent {}

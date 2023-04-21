@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import '../post/post.dart';
 
 class SocialState extends Equatable {
@@ -35,9 +33,9 @@ class SocialState extends Equatable {
   });
 
   SocialState copyWith({
-    List<Post>? justForYouPosts,
-    List<Post>? trendingPosts,
-    List<Post>? followingPosts,
+    List<Post>? Function()? justForYouPosts,
+    List<Post>? Function()? trendingPosts,
+    List<Post>? Function()? followingPosts,
     Post? currentPost,
     File? Function()? createPostThumbnail,
     File? Function()? sourceData,
@@ -49,9 +47,12 @@ class SocialState extends Equatable {
     List<Post>? Function()? userPosts,
   }) =>
       SocialState(
-        justForYouPosts: justForYouPosts ?? this.justForYouPosts,
-        trendingPosts: trendingPosts ?? this.trendingPosts,
-        followingPosts: followingPosts ?? this.followingPosts,
+        justForYouPosts:
+            justForYouPosts != null ? justForYouPosts() : this.justForYouPosts,
+        trendingPosts:
+            trendingPosts != null ? trendingPosts() : this.trendingPosts,
+        followingPosts:
+            followingPosts != null ? followingPosts() : this.followingPosts,
         currentPost: currentPost ?? this.currentPost,
         createPostThumbnail: createPostThumbnail != null
             ? createPostThumbnail()

@@ -168,7 +168,7 @@ class PostRepo extends InitialRepo
   @override
   Future<List<PostModel>> getFollowingPost(String token) async {
     var response = await dio.get(
-      "$_baseUrl/posts/following",
+      "$_baseUrl/following",
       options: Options(
         headers: headerApplicationJson(token: token),
       ),

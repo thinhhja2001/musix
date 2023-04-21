@@ -25,7 +25,7 @@ class ProfileSocialScreen extends StatefulWidget {
 
 class _ProfileSocialScreenState extends State<ProfileSocialScreen> {
   late ScrollController scrollController;
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   bool _loading = false;
   @override
@@ -49,21 +49,6 @@ class _ProfileSocialScreenState extends State<ProfileSocialScreen> {
     }
   }
 
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() {});
-    _refreshController.loadComplete();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,8 +67,6 @@ class _ProfileSocialScreenState extends State<ProfileSocialScreen> {
       backgroundColor: ColorTheme.backgroundDarker,
       body: ri.RefreshIndicator(
         onRefresh: () async {
-          Future.delayed(Duration(seconds: 3));
-          print("calling setstate");
           setState(() {});
         },
         backgroundColor: ColorTheme.background,
@@ -132,12 +115,6 @@ class _ProfileSocialScreenState extends State<ProfileSocialScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          "Never lose hope \nAdditional profile information",
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyleTheme.ts16.copyWith(color: Colors.white),
-                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -148,18 +125,20 @@ class _ProfileSocialScreenState extends State<ProfileSocialScreen> {
                       ? SliverList(
                           delegate: SliverChildBuilderDelegate(
                               (context, index) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: PostCardWidget(
-                                      post: state.userPosts!.elementAt(index),
-                                    ),
-                                  ),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: PostCardWidget(
+                                    post: state.userPosts!.elementAt(index),
+                                  )),
                               childCount: state.userPosts?.length),
                         )
-                      : SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                              (context, index) =>
-                                  const PostShimmerLoadingWidget(),
-                              childCount: 2),
+                      : SliverToBoxAdapter(
+                          child: Center(
+                              child: Text(
+                            "No post found",
+                            style: TextStyleTheme.ts14.copyWith(
+                              color: Colors.white,
+                            ),
+                          )),
                         )
                 ],
               ),

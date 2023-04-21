@@ -60,21 +60,6 @@ class FollowInformationWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                Column(
-                  children: [
-                    Text(
-                      '46K',
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      "Likes",
-                      style: TextStyleTheme.ts12
-                          .copyWith(color: const Color(0xff86878B)),
-                    )
-                  ],
-                ),
               ],
             );
           }
