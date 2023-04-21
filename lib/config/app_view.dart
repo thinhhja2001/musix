@@ -4,13 +4,17 @@ import '../routing/routing.dart';
 import '../routing/routing_path.dart';
 
 class MusixAppView extends StatelessWidget {
-  const MusixAppView({Key? key}) : super(key: key);
+  final String path;
+  const MusixAppView({
+    Key? key,
+    this.path = RoutingPath.signIn,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutingPath.signIn,
+      initialRoute: path,
       onGenerateRoute: routeController,
     );
   }

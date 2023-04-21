@@ -14,6 +14,12 @@ abstract class IPostRepo<T, E> {
     required int size,
     required String token,
   });
+  Future<List<E>> getPostsByQuery({
+    required String query,
+    required int page,
+    required int size,
+    required String token,
+  });
   Future<T> createNewPost(PostRegistryModel postRegistryModel, String token);
   Future<T> modifyPost({
     required String postId,
@@ -22,4 +28,5 @@ abstract class IPostRepo<T, E> {
   });
   Future<T> likeOrDislikePost(String postId, String token);
   Future<T> deletePost(String postId, String token);
+  Future<List<E>> getFollowingPost(String token);
 }
