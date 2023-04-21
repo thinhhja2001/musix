@@ -18,14 +18,15 @@ class HiveUtils {
   }
 
   static FutureOr<void> openBox() async {
-    await Hive.openBox<AuthStorage>(HiveBoxConstant.authStorageBox);
+    var authBox =
+        await Hive.openBox<AuthStorage>(HiveBoxConstant.authStorageBox);
   }
 
   static AuthStorage? readAuthStorage() {
     final authBox = Hive.box<AuthStorage>(HiveBoxConstant.authStorageBox);
     final authStorage = authBox.get(HiveBoxConstant.authStorageData);
-
     if (authStorage == null) {
+      authBox.put(HiveBoxConstant.authStorageData, AuthStorage());
       return null;
     } else {
       return authStorage;
@@ -35,8 +36,14 @@ class HiveUtils {
   static Future<AuthStorage> createAuthStorage(
       String token, String username) async {
     final authBox = Hive.box<AuthStorage>(HiveBoxConstant.authStorageBox);
-    await authBox.put(HiveBoxConstant.authStorageData,
-        AuthStorage(token: token, username: username));
-    return authBox.get(HiveBoxConstant.authStorageData)!;
+    final authStorage = authBox.get(HiveBoxConstant.authStorageData)!;
+    authStorage.token = token;
+    authStorage.username = username;
+    return authStorage;
+  }
+
+  static Future<void> deleteAuthStorage() async {
+    final authBox = Hive.box<AuthStorage>(HiveBoxConstant.authStorageBox);
+    await authBox.delete(HiveBoxConstant.authStorageData);
   }
 }

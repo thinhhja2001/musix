@@ -26,8 +26,5 @@ class AuthStorage with HiveObjectMixin {
   }) {
     _token = token;
     _username = username;
-    if (token != "" || username != "") {
-      save();
-    }
   }
 }
