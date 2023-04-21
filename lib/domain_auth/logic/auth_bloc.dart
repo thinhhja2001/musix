@@ -61,9 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
     final response = await authRepo.logout(state.jwtToken!);
     if (response) {
-      var authStorage = HiveUtils.readAuthStorage();
-      authStorage?.username = "";
-      authStorage?.token = "";
+      HiveUtils.deleteAuthStorage();
     }
   }
 
