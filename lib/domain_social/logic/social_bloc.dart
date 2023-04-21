@@ -49,7 +49,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
   final AuthBloc authBloc;
   final PostRepo postRepo;
   final int _countPerPage = 2;
-  final int _countUserPostPerPage = 4;
   int _userPostCurrentPage = 0;
   int _followingPostCurrentPage = 0;
   int _just4YouPostCurrentPage = 0;
@@ -207,6 +206,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
       List<Post> followingPosts = List.empty(growable: true);
       List<Post> justForYouPosts = List.empty(growable: true);
       List<Post> trendingPosts = List.empty(growable: true);
+      List<Post> userPosts = List.empty(growable: true);
       for (var post in state.followingPosts!) {
         followingPosts.add(post);
       }
@@ -220,11 +220,13 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
       followingPosts.remove(event.post);
       justForYouPosts.remove(event.post);
       trendingPosts.remove(event.post);
-
+      userPosts.remove(event.post);
       emit(state.copyWith(
-          followingPosts: followingPosts,
-          trendingPosts: trendingPosts,
-          justForYouPosts: justForYouPosts));
+        followingPosts: followingPosts,
+        trendingPosts: trendingPosts,
+        justForYouPosts: justForYouPosts,
+        userPosts: () => userPosts,
+      ));
     }
     emit(state.copyWith(deletePostStatus: () => null));
   }
@@ -234,7 +236,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     final postsModel = await postRepo.getPostsByUsername(
         username: event.username,
         page: _userPostCurrentPage++,
-        size: _countUserPostPerPage,
+        size: _countPerPage,
         token: testToken);
     if (postsModel.isNotEmpty) {
       final posts = await socialMapper.listPostsFromListPostsModel(postsModel);
