@@ -106,7 +106,9 @@ class CommentCardWidget extends StatelessWidget {
                       ],
                     ],
                   ),
-                  if (!isRely && isShowReply) ...[
+                  if (!isRely &&
+                      isShowReply &&
+                      comment.replies?.isNotEmpty == true) ...[
                     TextButton(
                       onPressed: () {
                         context
