@@ -10,3 +10,5 @@ class PlaylistGetInfoEvent implements PlaylistEvent {
 class PlaylistBackInfoEvent implements PlaylistEvent {
   const PlaylistBackInfoEvent();
 }
+
+class PlaylistResetEvent implements PlaylistEvent {}

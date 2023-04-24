@@ -15,6 +15,7 @@ class PlaylistsBloc extends Bloc<PlaylistsEvent, PlaylistsState> {
     on<GetPlaylistsEvent>(_getPlaylists);
     on<RemovePlaylistEvent>(_removePlaylist);
     on<BackPlaylistsEvent>(_backPlaylist);
+    on<PlaylistsResetEvent>(_resetPlaylist);
   }
 
   final PlaylistRepo playlistRepo;
@@ -169,6 +170,15 @@ class PlaylistsBloc extends Bloc<PlaylistsEvent, PlaylistsState> {
           Status.idle,
         ],
       ),
+    ));
+  }
+
+  FutureOr<void> _resetPlaylist(
+      PlaylistsResetEvent event, Emitter<PlaylistsState> emit) {
+    emit(PlaylistsState(
+      status: {
+        PlaylistsStatusKey.global.name: Status.idle,
+      },
     ));
   }
 }

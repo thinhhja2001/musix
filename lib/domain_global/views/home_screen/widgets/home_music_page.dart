@@ -10,8 +10,19 @@ import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
 import '../widgets.dart';
 
-class HomeMusicPage extends StatelessWidget {
+class HomeMusicPage extends StatefulWidget {
   const HomeMusicPage({Key? key}) : super(key: key);
+
+  @override
+  State<HomeMusicPage> createState() => _HomeMusicPageState();
+}
+
+class _HomeMusicPageState extends State<HomeMusicPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeMusicBloc>().add(const HomeMusicGetEvent());
+  }
 
   @override
   Widget build(BuildContext context) {

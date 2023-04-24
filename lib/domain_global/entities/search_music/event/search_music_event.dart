@@ -22,3 +22,5 @@ class SearchMusicPlaylistLoadMoreEvent implements SearchMusicEvent {
 class SearchMusicVideoLoadMoreEvent implements SearchMusicEvent {}
 
 class SearchMusicChangeToVideoEvent implements SearchMusicEvent {}
+
+class SearchMusicResetEvent implements SearchMusicEvent {}

@@ -19,3 +19,5 @@ class RemoveSongEvent implements SongsEvent {
 class BackSongsEvent implements SongsEvent {
   const BackSongsEvent();
 }
+
+class SongsResetEvent implements SongsEvent {}

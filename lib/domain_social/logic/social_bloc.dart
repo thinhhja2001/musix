@@ -267,9 +267,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     _just4YouPostCurrentPage = 0;
     _trendingPostCurrentPage = 0;
     followingPosts = List.empty(growable: true);
-    emit(state.copyWith(
-        followingPosts: () => null,
-        trendingPosts: () => null,
-        justForYouPosts: () => null));
+    emit(const SocialState());
   }
 }

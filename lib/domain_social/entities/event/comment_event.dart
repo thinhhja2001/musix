@@ -58,3 +58,5 @@ class GetRelyCommentsEvent implements CommentEvent {
     required this.comment,
   });
 }
+
+class ResetCommentsEvent implements CommentEvent {}

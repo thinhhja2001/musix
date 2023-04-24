@@ -350,13 +350,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   FutureOr<void> _profileResetEvent(
       ProfileResetEvent event, Emitter<ProfileState> emit) {
-    emit(
-      state.copyWith(
-        status: {
-          ProfileStatusKey.global.name: Status.idle,
-        },
-        user: () => null,
-      ),
-    );
+    emit(ProfileState(
+      status: {
+        ProfileStatusKey.global.name: Status.idle,
+      },
+    ));
   }
 }

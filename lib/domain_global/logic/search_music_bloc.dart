@@ -20,6 +20,7 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
     on<SearchMusicArtistLoadMoreEvent>(_loadMoreArtist);
     on<SearchMusicChangeToVideoEvent>(_changeToVideoSearch);
     on<SearchMusicVideoLoadMoreEvent>(_loadMoreVideo);
+    on<SearchMusicResetEvent>(_searchMusicResetEvent);
   }
 
   final SearchMusicRepo repo;
@@ -485,6 +486,15 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
         },
         currentPage: updateCurrentPage(
             source: state.currentPage, keys: [MusicType.video], pages: [0])));
+  }
+
+  FutureOr<void> _searchMusicResetEvent(
+      SearchMusicResetEvent event, Emitter<SearchMusicState> emit) {
+    emit(SearchMusicState(
+      status: {
+        SearchMusicStatusKey.global.key: Status.idle,
+      },
+    ));
   }
 }
 

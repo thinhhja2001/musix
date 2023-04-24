@@ -10,3 +10,5 @@ class ArtistGetInfoEvent implements ArtistEvent {
 class ArtistBackInfoEvent implements ArtistEvent {
   const ArtistBackInfoEvent();
 }
+
+class ArtistResetEvent implements ArtistEvent {}

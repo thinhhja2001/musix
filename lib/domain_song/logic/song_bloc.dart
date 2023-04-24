@@ -30,6 +30,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     on<SongPlayPreviousSongEvent>(_playPreviousSong);
     on<SongChangeShuffleModeEvent>(_changeShuffleMode);
     on<SongStartPlayingSectionEvent>(_startPlayingSection);
+    on<SongResetEvent>(_resetEvent);
     _settingUpDurationStream();
     _setSongEndEvent();
   }
@@ -239,5 +240,13 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   FutureOr<void> _changeShuffleMode(
       SongChangeShuffleModeEvent event, Emitter emit) async {
     emit(state.copyWith(isShuffle: !state.isShuffle));
+  }
+
+  FutureOr<void> _resetEvent(SongResetEvent event, Emitter<SongState> emit) {
+    emit(SongState(
+      status: {
+        SongStatusKey.global.key: Status.idle,
+      },
+    ));
   }
 }

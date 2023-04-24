@@ -19,3 +19,5 @@ class RemoveArtistEvent implements ArtistsEvent {
 class BackArtistsEvent implements ArtistsEvent {
   const BackArtistsEvent();
 }
+
+class ArtistsResetEvent implements ArtistsEvent {}

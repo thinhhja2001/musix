@@ -30,6 +30,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     on<DeleteCommentEvent>(_deleteComment);
     on<RelyCommentEvent>(_relyComment);
     on<GetRelyCommentsEvent>(_getRelyComments);
+    on<ResetCommentsEvent>(_resetCommentsEvent);
   }
   final AuthBloc authBloc;
   final CommentRepo commentRepo;
@@ -518,5 +519,14 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         ]),
       ),
     );
+  }
+
+  FutureOr<void> _resetCommentsEvent(
+      ResetCommentsEvent event, Emitter<CommentState> emit) {
+    emit(CommentState(
+      status: {
+        CommentStatusKey.global.name: Status.idle,
+      },
+    ));
   }
 }

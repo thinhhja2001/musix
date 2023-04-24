@@ -15,6 +15,7 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
     on<GetSongsEvent>(_getSongs);
     on<RemoveSongEvent>(_removeSong);
     on<BackSongsEvent>(_backSong);
+    on<SongsResetEvent>(_resetSongs);
   }
 
   final SongInfoRepositoryImpl songRepo;
@@ -167,6 +168,14 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
           Status.idle,
         ],
       ),
+    ));
+  }
+
+  FutureOr<void> _resetSongs(SongsResetEvent event, Emitter<SongsState> emit) {
+    emit(SongsState(
+      status: {
+        SongStatusKey.global.key: Status.idle,
+      },
     ));
   }
 }
