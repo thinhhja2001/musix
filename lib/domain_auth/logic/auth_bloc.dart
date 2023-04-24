@@ -52,17 +52,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _handleLogout(AuthLogoutEvent event, Emitter emit) async {
-    emit(
-      state.copyWith(
-        jwtToken: "",
-        userId: "",
-        username: "",
-      ),
-    );
     final response = await authRepo.logout(state.jwtToken!);
     if (response) {
       HiveUtils.deleteAuthStorage();
     }
+    emit(AuthState());
   }
 
   FutureOr<void> _handleAuthentication(

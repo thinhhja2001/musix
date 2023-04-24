@@ -37,10 +37,10 @@ class ProfileModel {
 
   factory ProfileModel.fromJson(Map<String, dynamic> map) {
     return ProfileModel(
-      fullName: map['fullName'] as String,
-      birthday: map['birthday'] as String,
+      fullName: map['fullName'] as String? ?? "Anonymous",
+      birthday: map['birthday'] as String? ?? "01/01/2001",
       avatarUri: map['avatarUri'] != null ? map['avatarUri'] as String : null,
-      phoneNumber: map['phoneNumber'] as String,
+      phoneNumber: map['phoneNumber'] as String? ?? "012345678",
     );
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../config/exporter.dart';
@@ -121,8 +119,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(const AuthLogoutEvent());
-                          SystemNavigator.pop(animated: true);
+                          _clearBloc(context);
+                          // context.read<AuthBloc>().add(const AuthLogoutEvent());
+                          // SystemNavigator.pop(animated: true);
                           Navigator.pushNamedAndRemoveUntil(
                               context,
                               RoutingPath.signIn,
@@ -337,6 +336,18 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _clearBloc(BuildContext context) {
+  context.read<ProfileBloc>().add(ProfileResetEvent());
+  context.read<UserMusicBloc>().add(ResetUserMusicEvent());
+  context.read<SearchMusicBloc>().add(SearchMusicResetEvent());
+  context.read<SocialSearchBloc>().add(ResetSearchEvent());
+  context.read<OwnPlaylistBloc>().add(ResetOwnPlaylistEvent());
+  context.read<SocialBloc>().add(SocialResetEvent());
+  context.read<CommentBloc>().add(ResetCommentsEvent());
+  context.read<SongBloc>().add(SongResetEvent());
+  context.read<AuthBloc>().add(const AuthLogoutEvent());
 }
 
 class LibraryButtonWidget extends StatelessWidget {
