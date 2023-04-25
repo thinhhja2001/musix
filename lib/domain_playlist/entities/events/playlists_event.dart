@@ -19,3 +19,5 @@ class RemovePlaylistEvent implements PlaylistsEvent {
 class BackPlaylistsEvent implements PlaylistsEvent {
   const BackPlaylistsEvent();
 }
+
+class PlaylistsResetEvent implements PlaylistsEvent {}

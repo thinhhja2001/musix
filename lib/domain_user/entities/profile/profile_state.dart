@@ -16,12 +16,12 @@ class ProfileState extends Equatable {
 
   ProfileState copyWith({
     Map<String, Status>? status,
-    User? user,
+    User? Function()? user,
     ResponseException? error,
   }) {
     return ProfileState(
       status: status ?? this.status,
-      user: user ?? this.user,
+      user: user != null ? user() : this.user,
       error: error,
     );
   }

@@ -103,56 +103,62 @@ class SignInScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CustomInputFieldWidget(
-                                textInputType: TextInputType.text,
-                                label: signInTextPath.username,
-                                controller: _usernameController,
-                                validation: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return signInTextPath.emptyUsername;
-                                  }
-                                  return null;
-                                },
-                              ),
-                              CustomInputFieldWidget(
-                                textInputType: TextInputType.visiblePassword,
-                                label: signInTextPath.password,
-                                controller: _passwordController,
-                                validation: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return signInTextPath.emptyPassword;
-                                  }
-                                  return null;
-                                },
-                              ),
-                              (state.loginStatus != 200 &&
-                                      state.loginStatus != null)
-                                  ? CustomErrorBox(
-                                      message:
-                                          state.loginMsg ?? "Unknown Error",
-                                    )
-                                  : Container(),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(context,
-                                            RoutingPath.requestForgetOtp);
-                                      },
-                                      child: Text(
-                                        signInTextPath.forgetPassword,
-                                        style: TextStyleTheme.ts15.copyWith(
-                                          color: ColorTheme.primary,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ))
+                                  CustomInputFieldWidget(
+                                    textInputType: TextInputType.text,
+                                    label: signInTextPath.username,
+                                    controller: _usernameController,
+                                    validation: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return signInTextPath.emptyUsername;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  CustomInputFieldWidget(
+                                    textInputType:
+                                        TextInputType.visiblePassword,
+                                    label: signInTextPath.password,
+                                    controller: _passwordController,
+                                    validation: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return signInTextPath.emptyPassword;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  (state.loginStatus != 200 &&
+                                          state.loginStatus != null)
+                                      ? CustomErrorBox(
+                                          message:
+                                              state.loginMsg ?? "Unknown Error",
+                                        )
+                                      : Container(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pushNamed(context,
+                                                RoutingPath.requestForgetOtp);
+                                          },
+                                          child: Text(
+                                            signInTextPath.forgetPassword,
+                                            style: TextStyleTheme.ts15.copyWith(
+                                              color: ColorTheme.primary,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ))
+                                    ],
+                                  ),
                                 ],
                               ),
-                              const Spacer(),
-                              Expanded(
-                                  child: Column(
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   CustomButtonWidget(
                                     onPress: state.isLoginLoading == true
@@ -202,7 +208,7 @@ class SignInScreen extends StatelessWidget {
                                     ],
                                   )
                                 ],
-                              ))
+                              )
                             ],
                           ),
                         ),

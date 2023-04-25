@@ -54,3 +54,5 @@ class SongPlayNextSongEvent implements SongEvent {}
 class SongPlayPreviousSongEvent implements SongEvent {}
 
 class SongChangeShuffleModeEvent implements SongEvent {}
+
+class SongResetEvent implements SongEvent {}

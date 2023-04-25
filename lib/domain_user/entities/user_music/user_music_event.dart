@@ -149,3 +149,5 @@ class RemoveSongOwnPlaylistEvent implements UserMusicEvent {
     required this.artistNames,
   });
 }
+
+class ResetUserMusicEvent implements UserMusicEvent {}

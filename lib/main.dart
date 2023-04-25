@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 
 import 'config/app.dart';
@@ -28,7 +29,7 @@ Future<void> bootstrap() async {
   await registerDependency();
   runZonedGuarded(
     () => runApp(
-      const MusixApp(),
+      Phoenix(child: const MusixApp()),
     ),
     (error, stackTrace) {
       debugLogger.error("ERROR: ${error.toString()}\n${stackTrace.toString()}",

@@ -20,6 +20,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     on<VideoGetVideoShortEvent>(_getVideoShortEvent);
     on<VideoGetVideoDetailEvent>(_getVideoDetailEvent);
     on<VideoBackEvent>(_back);
+    on<VideoResetEvent>(_resetEvent);
   }
   final VideoRepositoryImpl videoRepositoryImpl;
   late VideoPlayerController videoPlayerController;
@@ -82,5 +83,11 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         isVideoLoaded: false,
       ),
     );
+  }
+
+  FutureOr<void> _resetEvent(VideoResetEvent event, Emitter<VideoState> emit) {
+    emit(VideoState(
+      status: {VideoStatusKey.global.key: Status.idle},
+    ));
   }
 }

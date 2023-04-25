@@ -14,3 +14,5 @@ class SearchMorePostEvent implements SocialSearchEvent {
 class ClearSearchEvent implements SocialSearchEvent {
   const ClearSearchEvent();
 }
+
+class ResetSearchEvent implements SocialSearchEvent {}

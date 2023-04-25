@@ -15,6 +15,7 @@ class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
     required this.hubRepo,
   }) : super(initialState) {
     on<HomeMusicGetEvent>(_getHomeMusic);
+    on<HomeMusicResetEvent>(_homeMusicResetEvent);
   }
 
   final HomeMusicRepo homeMusicRepo;
@@ -111,5 +112,14 @@ class HomeMusicBloc extends Bloc<HomeMusicEvent, HomeMusicState> {
     //         ),
     //       ),
     //     ));
+  }
+
+  FutureOr<void> _homeMusicResetEvent(
+      HomeMusicResetEvent event, Emitter<HomeMusicState> emit) {
+    emit(HomeMusicState(
+      status: {
+        HomeMusicStatusKey.global.key: Status.idle,
+      },
+    ));
   }
 }

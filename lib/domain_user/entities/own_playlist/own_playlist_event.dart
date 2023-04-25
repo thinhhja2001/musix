@@ -24,3 +24,5 @@ class RemoveSongInOwnPlaylistEvent implements OwnPlaylistEvent {
   final String id;
   const RemoveSongInOwnPlaylistEvent(this.id);
 }
+
+class ResetOwnPlaylistEvent implements OwnPlaylistEvent {}

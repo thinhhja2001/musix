@@ -23,6 +23,7 @@ class SocialSearchBloc extends Bloc<SocialSearchEvent, SocialSearchState> {
     on<SearchAllSocialEvent>(_searchSocial);
     on<SearchMorePostEvent>(_searchPostMore);
     on<ClearSearchEvent>(_clearSearch);
+    on<ResetSearchEvent>(_resetSearch);
   }
   final AuthBloc authBloc;
   final ProfileRepo profileRepo;
@@ -172,5 +173,14 @@ class SocialSearchBloc extends Bloc<SocialSearchEvent, SocialSearchState> {
         values: const SocialSearchValue(posts: [], users: []),
       ),
     );
+  }
+
+  FutureOr<void> _resetSearch(
+      ResetSearchEvent event, Emitter<SocialSearchState> emit) {
+    emit(SocialSearchState(
+      status: {
+        SocialSearchStatusKey.global.name: Status.idle,
+      },
+    ));
   }
 }

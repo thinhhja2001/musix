@@ -29,6 +29,8 @@ class SocialGetListPostFollowingEvent extends SocialEvent {
   SocialGetListPostFollowingEvent();
 }
 
+class SocialFollowingPostLoadMoreEvent extends SocialEvent {}
+
 class SocialAddPostThumbnailEvent extends SocialEvent {
   File? thumbnail;
   SocialAddPostThumbnailEvent(this.thumbnail);
@@ -87,3 +89,5 @@ class SocialLoadUserPostEvent extends SocialEvent {
 }
 
 class SocialProfileBackEvent extends SocialEvent {}
+
+class SocialResetEvent extends SocialEvent {}

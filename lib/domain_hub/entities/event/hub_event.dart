@@ -10,3 +10,5 @@ class HubGetInfoEvent implements HubEvent {
 class HubBackInfoEvent implements HubEvent {
   const HubBackInfoEvent();
 }
+
+class HubResetEvent implements HubEvent {}

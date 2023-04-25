@@ -119,7 +119,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          context.read<AuthBloc>().add(const AuthLogoutEvent());
+                          _clearBloc(context);
+                          // context.read<AuthBloc>().add(const AuthLogoutEvent());
+                          // SystemNavigator.pop(animated: true);
                           Navigator.pushNamedAndRemoveUntil(
                               context,
                               RoutingPath.signIn,
@@ -334,6 +336,18 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _clearBloc(BuildContext context) {
+  context.read<ProfileBloc>().add(ProfileResetEvent());
+  context.read<UserMusicBloc>().add(ResetUserMusicEvent());
+  context.read<SearchMusicBloc>().add(SearchMusicResetEvent());
+  context.read<SocialSearchBloc>().add(ResetSearchEvent());
+  context.read<OwnPlaylistBloc>().add(ResetOwnPlaylistEvent());
+  context.read<SocialBloc>().add(SocialResetEvent());
+  context.read<CommentBloc>().add(ResetCommentsEvent());
+  context.read<SongBloc>().add(SongResetEvent());
+  context.read<AuthBloc>().add(const AuthLogoutEvent());
 }
 
 class LibraryButtonWidget extends StatelessWidget {

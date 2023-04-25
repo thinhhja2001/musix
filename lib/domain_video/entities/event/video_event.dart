@@ -13,3 +13,5 @@ class VideoGetVideoDetailEvent implements VideoEvent {
 }
 
 class VideoBackEvent implements VideoEvent {}
+
+class VideoResetEvent implements VideoEvent {}

@@ -15,6 +15,7 @@ class OwnPlaylistBloc extends Bloc<OwnPlaylistEvent, OwnPlaylistState> {
     on<GetOwnPlaylistEvent>(_getOwnPlaylist);
     on<UpdateOwnPlaylistEvent>(_updateOwnPlaylist);
     on<RemoveSongInOwnPlaylistEvent>(_removeSongOwnPlaylist);
+    on<ResetOwnPlaylistEvent>(_resetOwnPlaylist);
   }
 
   final SongInfoRepositoryImpl songRepo;
@@ -149,5 +150,14 @@ class OwnPlaylistBloc extends Bloc<OwnPlaylistEvent, OwnPlaylistState> {
             ],
           ),
         )));
+  }
+
+  FutureOr<void> _resetOwnPlaylist(
+      ResetOwnPlaylistEvent event, Emitter<OwnPlaylistState> emit) {
+    emit(OwnPlaylistState(
+      status: {
+        OwnPlaylistStatusKey.global.name: Status.idle,
+      },
+    ));
   }
 }

@@ -14,6 +14,7 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
   }) : super(initialState) {
     on<ArtistGetInfoEvent>(_getInfo);
     on<ArtistBackInfoEvent>(_backInfo);
+    on<ArtistResetEvent>(_resetEvent);
   }
 
   final ArtistRepo artistRepo;
@@ -112,6 +113,15 @@ class ArtistBloc extends Bloc<ArtistEvent, ArtistState> {
           Status.idle,
         ],
       ),
+    ));
+  }
+
+  FutureOr<void> _resetEvent(
+      ArtistResetEvent event, Emitter<ArtistState> emit) {
+    emit(ArtistState(
+      status: {
+        ArtistStatusKey.global.key: Status.idle,
+      },
     ));
   }
 }

@@ -14,6 +14,7 @@ class HubBloc extends Bloc<HubEvent, HubState> {
   }) : super(initialState) {
     on<HubGetInfoEvent>(_getInfo);
     on<HubBackInfoEvent>(_backInfo);
+    on<HubResetEvent>(_resetEvent);
   }
 
   final HubRepo hubRepo;
@@ -108,6 +109,14 @@ class HubBloc extends Bloc<HubEvent, HubState> {
           Status.idle,
         ],
       ),
+    ));
+  }
+
+  FutureOr<void> _resetEvent(HubResetEvent event, Emitter<HubState> emit) {
+    emit(HubState(
+      status: {
+        HubStatusKey.global.key: Status.idle,
+      },
     ));
   }
 }

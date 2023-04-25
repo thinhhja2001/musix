@@ -21,32 +21,36 @@ class CreatePostBarWidget extends StatelessWidget {
         return state.user;
       },
       builder: (context, currentUser) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(RoutingPath.createNewPost);
-          },
-          child: Row(
-            children: [
-              CircleAvatar(
+        return Row(
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.of(context)
+                  .pushNamed(RoutingPath.profileSocial, arguments: currentUser),
+              child: CircleAvatar(
                 backgroundImage: NetworkImage(
                     currentUser!.profile!.avatarUrl ?? defaultAvatarUrl),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(RoutingPath.createNewPost);
+                  },
                   child: Text("Any masterpiece you wanna share?",
                       style: TextStyleTheme.ts18.copyWith(
                         color: ColorTheme.white,
                       )),
                 ),
               ),
-              SvgPicture.asset(
-                "assets/images/images/music.svg",
-                color: ColorTheme.primary,
-                height: 30,
-              )
-            ],
-          ),
+            ),
+            SvgPicture.asset(
+              "assets/images/images/music.svg",
+              color: ColorTheme.primary,
+              height: 30,
+            )
+          ],
         );
       },
     );

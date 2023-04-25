@@ -34,6 +34,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     on<UploadSongOwnPlaylistEvent>(_uploadSongOwnPlaylist);
     on<RemoveSongOwnPlaylistEvent>(_removeSongOwnPlaylist);
     on<RemoveOwnPlaylistEvent>(_removeOwnPlaylist);
+    on<ResetUserMusicEvent>(_resetEvent);
   }
   final AuthBloc authBloc;
   final UserMusicRepo userMusicRepo;
@@ -887,6 +888,15 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       ], status: [
         Status.idle,
       ]),
+    ));
+  }
+
+  FutureOr<void> _resetEvent(
+      ResetUserMusicEvent event, Emitter<UserMusicState> emit) {
+    emit(UserMusicState(
+      status: {
+        UserMusicStatusKey.global.name: Status.idle,
+      },
     ));
   }
 }
