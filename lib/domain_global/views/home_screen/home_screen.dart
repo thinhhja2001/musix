@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../domain_song/views/widgets.dart';
 
 import '../../../domain_social/views/screens/social_screen.dart';
+import '../../../domain_song/views/widgets.dart';
 import '../../../domain_user/views/screens.dart';
 import '../../../domain_video/views/screens/video_short_list_page_widget.dart';
 import '../../../global/widgets/widgets.dart';
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: ColorTheme.background,
       persistentFooterButtons: [CurrentSongPlayerWidget()],
+      persistentFooterAlignment: AlignmentDirectional.bottomEnd,
       bottomNavigationBar: CustomBottomBarWidget(
         items: bottomNavigationItems(context),
         index: indexBottomNavigation,
