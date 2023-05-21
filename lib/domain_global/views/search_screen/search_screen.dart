@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../../domain_video/views/widgets/video_short_list_widget.dart';
 
 import '../../../config/exporter.dart';
 import '../../../domain_artist/views/widgets.dart';
 import '../../../domain_hub/entities/entities.dart';
 import '../../../domain_playlist/views/widgets.dart';
 import '../../../domain_song/views/widgets.dart';
+import '../../../domain_video/views/widgets/video_short_list_widget.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/utils.dart';
 import '../../entities/entities.dart';
@@ -32,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen>
   late TabController _tabController;
   GlobalKey key = GlobalKey();
   Timer? searchOnStoppedTyping;
+  String? searchText;
   List<Widget> _buildTab() {
     switch (widget.searchScreenType) {
       case SearchScreenType.song:
@@ -149,20 +150,23 @@ class _SearchScreenState extends State<SearchScreen>
     return [Container()];
   }
 
-  _onChangeHandler(value) {
-    const duration = Duration(milliseconds: 800);
-    if (searchOnStoppedTyping != null) {
-      setState(() => searchOnStoppedTyping?.cancel());
-    }
-    setState(
-        () => searchOnStoppedTyping = Timer(duration, () => search(value)));
-  }
+  // _onChangeHandler(value) {
+  //   const duration = Duration(milliseconds: 800);
+  //   if (searchOnStoppedTyping != null) {
+  //     setState(() => searchOnStoppedTyping?.cancel());
+  //   }
+  //   setState(
+  //       () => searchOnStoppedTyping = Timer(duration, () => search(value)));
+  // }
 
   search(value) {
     if (value == null || value == '') return;
     key.currentContext
         ?.read<SearchMusicBloc>()
         .add(SearchMusicQueryEvent(value));
+    key.currentContext
+        ?.read<UserRecordBloc>()
+        .add(SaveUserSearchRecordEvent(value));
   }
 
   @override
@@ -215,10 +219,19 @@ class _SearchScreenState extends State<SearchScreen>
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SearchBarWidget(
-                    hintText: r'What do you want to hear?',
-                    recommends: const [],
-                    onTextChange: _onChangeHandler,
+                  child: BlocSelector<UserRecordBloc, UserRecordState,
+                      List<String>>(
+                    selector: (state) {
+                      return state.record?.searchRecord ?? [];
+                    },
+                    builder: (context, recommend) {
+                      return SearchBarWidget(
+                        hintText: r'What do you want to hear?',
+                        recommends: recommend,
+                        onTextChange: (value) => searchText = value,
+                        onSearch: () => search(searchText),
+                      );
+                    },
                   ),
                 ),
                 const SliverPadding(

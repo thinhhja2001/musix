@@ -18,6 +18,7 @@ class SlashHomeScreen extends StatelessWidget {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<ProfileBloc>().add(const GetProfileEvent());
       context.read<UserMusicBloc>().add(const GetUserMusicEvent());
+      context.read<UserRecordBloc>().add(const GetUserRecordEvent());
     });
     return EasySplashScreen(
       logo: SvgPicture.asset(

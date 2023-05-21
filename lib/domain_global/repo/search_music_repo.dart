@@ -1,15 +1,17 @@
 import 'dart:async';
 
-import '../../global/repo/initial_repo.dart';
+import 'package:flutter/rendering.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
+import '../../global/repo/initial_repo.dart';
+import '../../utils/utils.dart';
 import '../models/model.dart';
 
 class SearchMusicRepo extends InitialRepo {
   FutureOr<SearchAllModel> searchAll(String q) async {
     final response = await (await apiZingMP3).searchMusicByQuery(q);
-    // debugPrint('All=========================');
-    // printJson(response);
+    debugPrint('All=========================');
+    printJson(response);
     return SearchAllModel.fromJson(response);
   }
 
