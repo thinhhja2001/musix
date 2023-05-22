@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../config/exporter.dart';
@@ -27,6 +28,8 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     on<DeleteUserSearchRecordEvent>(_deleteUserSearchRecord);
     on<SaveUserSongRecordEvent>(_saveUserSongRecord);
     on<DeleteUserSongRecordEvent>(_deleteUserSongRecord);
+    on<SearchHistoryEvent>(_searchHistory);
+    on<SearchRecentSongEvent>(_searchRecentSong);
   }
 
   final AuthBloc authBloc;
@@ -62,7 +65,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
 
       await userMusicRepo.saveSearchRecord(token: token, search: event.search);
       searchRecord?.add(event.search);
-      userRecord?.copyWith(
+      userRecord = userRecord?.copyWith(
         searchRecord: searchRecord,
       );
 
@@ -118,6 +121,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
 
       bool result = await userMusicRepo.deleteSearchRecord(
           token: token, search: event.search, isDeleteAll: event.isDeleteAll);
+      debugPrint('$result - ${event.isDeleteAll}');
       if (result) {
         if (event.isDeleteAll) {
           searchRecord = [];
@@ -126,7 +130,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
         }
       }
 
-      userRecord?.copyWith(
+      userRecord = userRecord?.copyWith(
         searchRecord: searchRecord,
       );
 
@@ -165,6 +169,18 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     ));
   }
 
+  FutureOr<void> _searchHistory(
+      SearchHistoryEvent event, Emitter<UserRecordState> emit) async {
+    if (event.search == state.record?.searchHistory) {
+      return;
+    }
+    var userRecord = state.record;
+    userRecord = userRecord?.copyWith(searchHistory: event.search);
+    emit(
+      state.copyWith(record: userRecord),
+    );
+  }
+
   FutureOr<void> _saveUserSongRecord(
       SaveUserSongRecordEvent event, Emitter<UserRecordState> emit) async {
     var userRecord = state.record;
@@ -186,7 +202,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
 
       var songRecord = userRecord?.songRecord;
       songRecord?[event.search.encodeId!] = event.search;
-      userRecord?.copyWith(
+      userRecord = userRecord?.copyWith(
         songRecord: songRecord,
       );
 
@@ -252,7 +268,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
         }
       }
 
-      userRecord?.copyWith(
+      userRecord = userRecord?.copyWith(
         songRecord: songRecord,
       );
 
@@ -289,6 +305,18 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
         Status.idle,
       ]),
     ));
+  }
+
+  FutureOr<void> _searchRecentSong(
+      SearchRecentSongEvent event, Emitter<UserRecordState> emit) async {
+    if (event.search == state.record?.searchSong) {
+      return;
+    }
+    var userRecord = state.record;
+    userRecord = userRecord?.copyWith(searchSong: event.search);
+    emit(
+      state.copyWith(record: userRecord),
+    );
   }
 
   FutureOr<void> _getUserRecord(

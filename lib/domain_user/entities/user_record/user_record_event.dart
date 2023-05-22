@@ -29,3 +29,13 @@ class DeleteUserSongRecordEvent implements UserRecordEvent {
   final bool isDeleteAll;
   const DeleteUserSongRecordEvent({this.search, this.isDeleteAll = false});
 }
+
+class SearchHistoryEvent implements UserRecordEvent {
+  final String search;
+  const SearchHistoryEvent(this.search);
+}
+
+class SearchRecentSongEvent implements UserRecordEvent {
+  final String search;
+  const SearchRecentSongEvent(this.search);
+}

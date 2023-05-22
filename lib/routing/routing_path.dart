@@ -15,6 +15,8 @@ class RoutingPath {
   static const String editProfile = '$profile/edit';
   static const String ownPlaylists = '$profile/ownPlaylists';
   static const String ownPlaylist = '$profile/ownPlaylist';
+  static const String searchRecord = '$profile/searchRecord';
+  static const String songRecord = '$profile/songRecord';
 
   // Search
   static const String searchSong = '$home/searchSong';
