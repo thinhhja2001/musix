@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain_hub/utils/convert_section/convert_section.dart';
 
 import '../../domain_hub/entities/entities.dart';
+import '../../domain_hub/utils/convert_section/convert_section.dart';
 import '../../utils/utils.dart';
 import '../entities/entities.dart';
 import '../repo/repo.dart';
@@ -38,9 +38,9 @@ class SearchMusicBloc extends Bloc<SearchMusicEvent, SearchMusicState> {
   FutureOr<void> _searchAllByQuery(
       SearchMusicQueryEvent event, Emitter<SearchMusicState> emit) async {
     try {
-      if (state.query == event.query) {
-        return;
-      }
+      // if (state.query == event.query) {
+      //   return;
+      // }
       emit(
         state.copyWith(
           status: updateMapStatus(

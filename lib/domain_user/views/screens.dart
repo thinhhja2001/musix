@@ -4,3 +4,5 @@ export 'edit_profile_screen/edit_profile_screen.dart';
 export 'own_playlist_screen/own_playlist_screen.dart';
 export 'own_playlists_screen/own_playlists_screen.dart';
 export 'profile_screen/profile_screen.dart';
+export 'record_screen/search_record_screen.dart';
+export 'record_screen/song_record_screen.dart';

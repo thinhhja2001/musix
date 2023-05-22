@@ -105,6 +105,16 @@ Route<dynamic> routeController(RouteSettings settings) {
         settings: settings,
         builder: (context) => const OwnPlaylistScreen(),
       );
+    case RoutingPath.searchRecord:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const SearchRecordScreen(),
+      );
+    case RoutingPath.songRecord:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => const SongRecordScreen(),
+      );
     case RoutingPath.videoDetailPage:
       return MaterialPageRoute(
           settings: settings,

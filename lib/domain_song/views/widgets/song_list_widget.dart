@@ -1,12 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter.dart';
 
 import '../../../domain_hub/entities/entities.dart';
 import '../../../global/widgets/rotated_text_widget.dart';
 import '../../../theme/theme.dart';
-import '../../entities/entities.dart';
-import '../../logic/song_bloc.dart';
 import '../widgets.dart';
 
 enum SongArrange {
@@ -141,6 +140,9 @@ class _SongInfoWidgetState extends State<SongInfoWidget> {
                         type: SongType.cardInfo,
                         song: widget.sectionSong.items![index],
                         onPress: () async {
+                          context.read<UserRecordBloc>().add(
+                              SaveUserSongRecordEvent(
+                                  widget.sectionSong.items![index]));
                           context.read<SongBloc>().add(SongSetListSongInfoEvent(
                                 widget.sectionSong.items ?? [],
                               ));
@@ -191,6 +193,8 @@ class _SongInfoWidgetState extends State<SongInfoWidget> {
                   type: SongType.cardInfo,
                   song: widget.sectionSong.items![index],
                   onPress: () async {
+                    context.read<UserRecordBloc>().add(SaveUserSongRecordEvent(
+                        widget.sectionSong.items![index]));
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
                           widget.sectionSong.items ?? [],
                         ));
@@ -244,6 +248,8 @@ class SongCarouselWidget extends StatelessWidget {
                   size: 160,
                   song: sectionSong.items![index],
                   onPress: () async {
+                    context.read<UserRecordBloc>().add(
+                        SaveUserSongRecordEvent(sectionSong.items![index]));
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
                           sectionSong.items ?? [],
                         ));
@@ -295,6 +301,8 @@ class SongCarouselWidget extends StatelessWidget {
                   size: 160,
                   song: sectionSong.items![index],
                   onPress: () async {
+                    context.read<UserRecordBloc>().add(
+                        SaveUserSongRecordEvent(sectionSong.items![index]));
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
                           sectionSong.items ?? [],
                         ));

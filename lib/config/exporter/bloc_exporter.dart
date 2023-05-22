@@ -13,4 +13,5 @@ export 'package:musix/domain_song/logic/songs_bloc.dart';
 export 'package:musix/domain_user/logic/own_playlist_bloc.dart';
 export 'package:musix/domain_user/logic/profile_bloc.dart';
 export 'package:musix/domain_user/logic/user_music_bloc.dart';
+export 'package:musix/domain_user/logic/user_record_bloc.dart';
 export 'package:musix/domain_video/logic/video_bloc.dart';

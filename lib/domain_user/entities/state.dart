@@ -7,3 +7,6 @@ export 'profile/profile_state.dart';
 export 'user_music/user_music_event.dart';
 export 'user_music/user_music_key.dart';
 export 'user_music/user_music_state.dart';
+export 'user_record/user_record_event.dart';
+export 'user_record/user_record_key.dart';
+export 'user_record/user_record_state.dart';

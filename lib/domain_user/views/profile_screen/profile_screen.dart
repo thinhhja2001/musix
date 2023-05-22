@@ -313,6 +313,28 @@ class ProfileScreen extends StatelessWidget {
                                 .pushNamed(RoutingPath.ownPlaylists);
                           },
                         ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        LibraryButtonWidget(
+                          title: 'Search History',
+                          icon: MdiIcons.cardSearch,
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RoutingPath.searchRecord);
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        LibraryButtonWidget(
+                          title: 'Song Recent',
+                          icon: MdiIcons.bookOpenOutline,
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RoutingPath.songRecord);
+                          },
+                        ),
                       ],
                     ),
                   ),

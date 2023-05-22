@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
-import '../../global/repo/initial_repo.dart';
 
+import '../../global/repo/initial_repo.dart';
 import '../../utils/utils.dart';
 import '../models/models.dart';
 
@@ -382,6 +382,130 @@ class UserMusicRepo extends InitialRepo {
         ),
       );
       return OwnPlaylistsModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<UserRecordModel> getUserRecord({
+    required String token,
+  }) async {
+    try {
+      const url = '/music/record';
+
+      var response = await dio.get(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      return UserRecordModel.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<String> saveSearchRecord({
+    required String token,
+    required String search,
+  }) async {
+    try {
+      const url = '/music/search-song/history';
+      var data = {
+        "search": search,
+      };
+
+      var response = await dio.put(
+        url,
+        data: data,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      return response.data['data']['search'];
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<bool> deleteSearchRecord({
+    required String token,
+    String? search,
+    bool isDeleteAll = false,
+  }) async {
+    try {
+      const url = '/music/search-song/history';
+      var data = {
+        "search": search,
+        "isDeleteAll": isDeleteAll,
+      };
+
+      var response = await dio.delete(
+        url,
+        data: data,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<String> saveSongRecord({
+    required String token,
+    required String search,
+  }) async {
+    try {
+      const url = '/music/recent-song/history';
+      var data = {
+        "search": search,
+      };
+
+      var response = await dio.put(
+        url,
+        data: data,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      return response.data['data']['song'];
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
+  }
+
+  FutureOr<bool> deleteSongRecord({
+    required String token,
+    String? search,
+    bool isDeleteAll = false,
+  }) async {
+    try {
+      const url = '/music/recent-song/history';
+      var data = {
+        "search": search,
+        "isDeleteAll": isDeleteAll,
+      };
+
+      var response = await dio.delete(
+        url,
+        data: data,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      return true;
     } on DioError catch (e) {
       throw ResponseException(
           statusCode: e.response?.statusCode,

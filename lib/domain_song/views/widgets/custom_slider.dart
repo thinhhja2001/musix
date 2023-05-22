@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../theme/color.dart';
 import '../../../theme/text_style.dart';
+import '../../../utils/utils.dart';
 import '../../entities/entities.dart';
 import '../../logic/song_bloc.dart';
 
@@ -29,20 +30,47 @@ class _NonDraggableSlider extends StatelessWidget {
       builder: (context, state) {
         final position = state.position;
         final duration = state.duration;
-        return SliderTheme(
-          data: SliderThemeData(
-            trackShape: _CustomTrackShape(),
-            thumbShape: SliderComponentShape.noThumb,
-            thumbColor: ColorTheme.primary,
-          ),
-          child: Slider(
-            activeColor: ColorTheme.primary,
-            thumbColor: ColorTheme.primary,
-            value: position.inSeconds.toDouble(),
-            min: 0,
-            max: duration.inSeconds.toDouble() + 5,
-            onChanged: (position) {},
-          ),
+        return Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              printDuration(position),
+              style: TextStyleTheme.ts14.copyWith(
+                color: ColorTheme.primary,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              child: SliderTheme(
+                data: SliderThemeData(
+                  trackShape: _CustomTrackShape(),
+                  thumbShape: SliderComponentShape.noThumb,
+                  thumbColor: ColorTheme.primary,
+                ),
+                child: Slider(
+                  activeColor: ColorTheme.primary,
+                  thumbColor: ColorTheme.primary,
+                  value: position.inSeconds.toDouble(),
+                  min: 0,
+                  max: duration.inSeconds.toDouble() + 5,
+                  onChanged: (position) {},
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Text(
+              printDuration(duration),
+              style: TextStyleTheme.ts14.copyWith(
+                color: ColorTheme.white,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         );
       },
     );

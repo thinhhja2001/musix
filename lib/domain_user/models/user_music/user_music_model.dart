@@ -28,17 +28,17 @@ class MusicModel {
   List<UserPlaylistModel>? favoritePlaylists;
   List<UserPlaylistModel>? dislikePlaylist;
   List<OwnPlaylistModel>? ownPlaylists;
-
-  MusicModel(
-      {this.id,
-      this.user,
-      this.favoriteArtists,
-      this.dislikeArtists,
-      this.favoriteSongs,
-      this.dislikeSongs,
-      this.favoritePlaylists,
-      this.dislikePlaylist,
-      this.ownPlaylists});
+  MusicModel({
+    this.id,
+    this.user,
+    this.favoriteArtists,
+    this.dislikeArtists,
+    this.favoriteSongs,
+    this.dislikeSongs,
+    this.favoritePlaylists,
+    this.dislikePlaylist,
+    this.ownPlaylists,
+  });
 
   MusicModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

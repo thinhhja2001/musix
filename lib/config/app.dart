@@ -229,6 +229,19 @@ class _MusixAppState extends State<MusixApp> {
             authBloc: context.read<AuthBloc>(),
           ),
         ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => UserRecordBloc(
+            initialState: UserRecordState(
+              status: {
+                UserRecordStatusKey.global.name: Status.idle,
+              },
+            ),
+            userMusicRepo: getIt.get<UserMusicRepo>(),
+            songRepo: getIt.get<SongInfoRepositoryImpl>(),
+            authBloc: context.read<AuthBloc>(),
+          ),
+        ),
       ],
       child: BlocBuilder<AuthBloc, AuthState>(buildWhen: (prev, curr) {
         return curr.jwtToken != null &&
