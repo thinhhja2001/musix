@@ -328,8 +328,8 @@ class ProfileScreen extends StatelessWidget {
                           height: 24,
                         ),
                         LibraryButtonWidget(
-                          title: 'Song History',
-                          icon: MdiIcons.cardSearch,
+                          title: 'Song Recent',
+                          icon: MdiIcons.bookOpenOutline,
                           onTap: () {
                             Navigator.of(context)
                                 .pushNamed(RoutingPath.songRecord);
