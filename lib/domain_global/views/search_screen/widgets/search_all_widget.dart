@@ -59,14 +59,15 @@ class SearchAllWidget extends StatelessWidget {
                         return SongCardInfoWidget(
                           song: convertSongInfoFromAllSearching(item),
                           onPress: () async {
+                            context.read<SongBloc>().add(
+                                SongSetListSongInfoEvent(
+                                    [convertSongInfoFromAllSearching(item)]));
+                            // Since we are not playing a playlist but just a single song,
+                            // we will set it a playlist with one song
+                            // So that we will play the song at the index of 0
                             context
                                 .read<SongBloc>()
-                                .add(SongSetListSongInfoEvent(
-                                  songs,
-                                ));
-                            context.read<SongBloc>().add(
-                                SongStartPlayingSectionEvent(songs.indexOf(
-                                    convertSongInfoFromAllSearching(item))));
+                                .add(SongStartPlayingSectionEvent(0));
                           },
                           index: index,
                           isShowType: true,

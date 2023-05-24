@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:musix/domain_song/repository/recommendations/song_recommendation_repo.dart';
 import '../services/play_next_pre_handller.dart';
 
 import '../../utils/utils.dart';
@@ -38,6 +40,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   final SongSourceRepositoryImpl songSourceRepositoryImpl;
   final MusixAudioHandler musixAudioHandler;
   final PlayNextPreHandler _playNextPreHandler = PlayNextPreHandler([]);
+  final int recommendSongCount = 10;
   //----------------------------------------------------------------------------
   @override
   void onError(Object error, StackTrace stackTrace) {
@@ -160,15 +163,21 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   }
 
   //----------------------------------------------------------------------------
-  FutureOr<void> _setSongEndEvent() {
-    musixAudioHandler.player.playerStateStream.listen((event) {
+  FutureOr<void> _setSongEndEvent() async {
+    musixAudioHandler.player.playerStateStream.listen((event) async {
       if (event.processingState == ProcessingState.completed) {
         switch (state.loopMode) {
           case LoopMode.one:
             add(SongGetSourceEvent(state.songInfo?.encodeId ?? ""));
             break;
           case LoopMode.off:
-            if (_playNextPreHandler.isPlayedAllPlaylist()) {
+            final recommendIds = await SongRecommendationRepo()
+                .recommendNextSong(
+                    state.songInfo!.encodeId!, recommendSongCount);
+            recommendIds.remove(state.songInfo!.encodeId);
+            if (_playNextPreHandler.isPlayedAllPlaylist() ||
+                (_playNextPreHandler.listSongInfo.length == 1 &&
+                    recommendIds.isEmpty)) {
               add(SongPauseEvent());
             } else {
               add(SongPlayNextSongEvent());
@@ -210,17 +219,31 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   //----------------------------------------------------------------------------
   FutureOr<void> _playNextSong(
       SongPlayNextSongEvent event, Emitter emit) async {
-    if (_playNextPreHandler.listSongInfo.isEmpty ||
-        _playNextPreHandler.isPlayedAllPlaylist() &&
-            state.loopMode != LoopMode.all) {
+    if (_playNextPreHandler.listSongInfo.length == 1) {
+      // Only recommend next song if there is no playlist is currently playing, meaning listSongInfo.length == 1
+      List<String> nextSongRecommendation = await SongRecommendationRepo()
+          .recommendNextSong(state.songInfo!.encodeId!, recommendSongCount);
+      if (nextSongRecommendation.isEmpty) {
+        /// If there is no recommend song, just seek the duration the the end
+        add(SongOnSeekEvent(state.duration - const Duration(seconds: 5)));
+        return;
+      }
+      // Play random song from the recommended song ids
+      final nextSongEncodeId = nextSongRecommendation
+          .elementAt(Random().nextInt(nextSongRecommendation.length));
+      add(SongGetInfoEvent(nextSongEncodeId));
+      add(SongGetSourceEvent(nextSongEncodeId));
+      add(SongPlayEvent());
+    } else if (_playNextPreHandler.isPlayedAllPlaylist() &&
+        state.loopMode != LoopMode.all) {
       add(SongOnSeekEvent(state.duration - const Duration(seconds: 5)));
       return;
+    } else {
+      SongInfo songInfo = _playNextPreHandler.getNextSong(state.isShuffle);
+      add(SongGetInfoEvent(songInfo.encodeId!));
+      add(SongGetSourceEvent(songInfo.encodeId!));
+      add(SongPlayEvent());
     }
-
-    SongInfo songInfo = _playNextPreHandler.getNextSong(state.isShuffle);
-    add(SongGetInfoEvent(songInfo.encodeId!));
-    add(SongGetSourceEvent(songInfo.encodeId!));
-    add(SongPlayEvent());
   }
 
   //----------------------------------------------------------------------------
