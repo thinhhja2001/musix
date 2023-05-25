@@ -8,7 +8,9 @@ class RecommendationService extends InitialRepo
   @override
   Future<Map<String, dynamic>> generateRecommendPlaylist(
       List<String> encodeIds) async {
-    throw UnimplementedError();
+    final url = "$databaseUrl/generated_recommend_playlist";
+    var response = await dio.get(url, data: {"song_ids": encodeIds});
+    return response.data;
   }
 
   @override

@@ -16,7 +16,8 @@ void main() async {
   GetIt.I.registerFactoryAsync<ZingMP3APIV2>(() => ZingMP3APIV2.createAsync());
 
   final recommendationRepo = SongRecommendationRepo();
-  print(await recommendationRepo.recommendNextSong("ZW6WUAEC", 5));
+  print('getting information');
+  print(await recommendationRepo.generateRecommendPlaylist(["Z6UBADAF"]));
   // final recommendationService = RecommendationService();
   // printJson(await recommendationService.recommendNextSong("ZW6WUAEC", 5));
 }

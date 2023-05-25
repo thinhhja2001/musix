@@ -5,9 +5,13 @@ import 'package:musix/domain_song/services/recommendations/recommendation_servic
 class SongRecommendationRepo extends IRecommendationRepo {
   IRecommendationService recommendService = RecommendationService();
   @override
-  Future<List<String>> generateRecommendPlaylist(List<String> encodeIds) {
-    // TODO: implement generateRecommendPlaylist
-    throw UnimplementedError();
+  Future<List<String>> generateRecommendPlaylist(List<String> encodeIds) async {
+    final response =
+        await recommendService.generateRecommendPlaylist(encodeIds);
+    if (response['data'] == null) {
+      return List.empty();
+    }
+    return (response['data'] as List).map((e) => e as String).toList();
   }
 
   @override
