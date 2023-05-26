@@ -463,12 +463,12 @@ class UserMusicRepo extends InitialRepo {
 
   FutureOr<String> saveSongRecord({
     required String token,
-    required String search,
+    required String songId,
   }) async {
     try {
       const url = '/music/recent-song/history';
       var data = {
-        "search": search,
+        "songId": songId,
       };
 
       var response = await dio.put(

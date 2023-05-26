@@ -20,8 +20,8 @@ class DeleteUserSearchRecordEvent implements UserRecordEvent {
 }
 
 class SaveUserSongRecordEvent implements UserRecordEvent {
-  final SongInfo search;
-  const SaveUserSongRecordEvent(this.search);
+  final SongInfo songInfo;
+  const SaveUserSongRecordEvent(this.songInfo);
 }
 
 class DeleteUserSongRecordEvent implements UserRecordEvent {
