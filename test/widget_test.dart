@@ -8,20 +8,18 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
-import 'package:musix/domain_social/models/post/request/post_registry_model.dart';
-import 'package:musix/domain_social/repository/post/post_repo.dart';
+import 'package:musix/domain_song/repository/recommendations/song_recommendation_repo.dart';
+import 'package:musix/domain_song/services/recommendations/recommendation_service.dart';
 import 'package:zing_mp3_api/zing_mp3_api.dart';
 
 void main() async {
   GetIt.I.registerFactoryAsync<ZingMP3APIV2>(() => ZingMP3APIV2.createAsync());
 
-  PostRepo repo = PostRepo();
-  // var response = await repo.modifyPost(
-  //     postId: "642c487cca1b275728d79a3c",
-  //     postRegistryModel: PostRegistryModel(content: "modify from flutter"),
-  //     token:
-  //         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA");
-  // printJson(response.toJson());
+  final recommendationRepo = SongRecommendationRepo();
+  print('getting information');
+  print(await recommendationRepo.generateRecommendPlaylist(["Z6UBADAF"]));
+  // final recommendationService = RecommendationService();
+  // printJson(await recommendationService.recommendNextSong("ZW6WUAEC", 5));
 }
 
 void printJson(Map<String, dynamic>? json) {

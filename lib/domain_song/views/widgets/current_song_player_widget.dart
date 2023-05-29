@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:palette_generator/palette_generator.dart';
 
+import '../../../config/exporter.dart';
 import '../../../theme/theme.dart';
-import '../../../utils/functions/function_utils.dart';
 import '../../entities/entities.dart';
-import '../../logic/song_bloc.dart';
 import '../../utils/widget_util/text_scroll_widget.dart';
 import '../screens.dart';
 import '../widgets.dart';
@@ -48,10 +46,20 @@ class CurrentSongPlayerWidget extends StatelessWidget {
                 context.read<SongBloc>().add(
                       SongPlayPreviousSongEvent(),
                     );
+                Future.delayed(const Duration(seconds: 1), () {
+                  context
+                      .read<UserRecordBloc>()
+                      .add(SaveUserSongRecordEvent(songInfo));
+                });
               } else {
                 context.read<SongBloc>().add(
                       SongPlayNextSongEvent(),
                     );
+                Future.delayed(const Duration(seconds: 1), () {
+                  context
+                      .read<UserRecordBloc>()
+                      .add(SaveUserSongRecordEvent(songInfo));
+                });
               }
               return Future.value(false);
             },
@@ -59,38 +67,25 @@ class CurrentSongPlayerWidget extends StatelessWidget {
               height: 132,
               child: Stack(
                 children: [
-                  FutureBuilder<PaletteGenerator>(
-                      future:
-                          updatePaletteGenerator(currentSong.thumbnailM ?? ""),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Material(
-                              color: snapshot.data!.dominantColor!.color,
-                              child: const SizedBox.expand(),
-                            ),
-                          );
-                          // return Container(
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(50),
-                          //     boxShadow: [
-                          //       BoxShadow(
-                          //         color: snapshot.data!.dominantColor!.color,
-                          //         blurRadius: 10,
-                          //       ),
-                          //     ],
-                          //   ),
-                          // );
-                        }
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: const Material(
-                            color: Colors.black,
-                            child: SizedBox.expand(),
-                          ),
-                        );
-                      }),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: const Material(
+                      color: ColorTheme.backgroundDarker,
+                      child: SizedBox.expand(),
+                    ),
+                  )
+                  // return Container(
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(50),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: snapshot.data!.dominantColor!.color,
+                  //         blurRadius: 10,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // );
+                  ,
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

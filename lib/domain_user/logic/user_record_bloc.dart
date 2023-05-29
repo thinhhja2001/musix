@@ -186,7 +186,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     var userRecord = state.record;
     if (userRecord != null &&
         userRecord.songRecord != null &&
-        userRecord.songRecord!.containsKey(event.search.encodeId)) {
+        userRecord.songRecord!.containsKey(event.songInfo.encodeId)) {
       return;
     }
     try {
@@ -200,8 +200,10 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
         ),
       );
 
+      await userMusicRepo.saveSongRecord(
+          token: token, songId: event.songInfo.encodeId!);
       var songRecord = userRecord?.songRecord;
-      songRecord?[event.search.encodeId!] = event.search;
+      songRecord?[event.songInfo.encodeId!] = event.songInfo;
       userRecord = userRecord?.copyWith(
         songRecord: songRecord,
       );
