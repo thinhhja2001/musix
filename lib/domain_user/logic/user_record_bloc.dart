@@ -15,6 +15,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     required this.authBloc,
     required this.userMusicRepo,
     required this.songRepo,
+    required this.recommendRepo,
   }) : super(initialState) {
     authBloc.stream.listen((authState) {
       if (authState.username != null &&
@@ -30,11 +31,13 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     on<DeleteUserSongRecordEvent>(_deleteUserSongRecord);
     on<SearchHistoryEvent>(_searchHistory);
     on<SearchRecentSongEvent>(_searchRecentSong);
+    on<RecommendPlaylistEvent>(_recommendPlaylist);
   }
 
   final AuthBloc authBloc;
   final UserMusicRepo userMusicRepo;
   final SongInfoRepositoryImpl songRepo;
+  final SongRecommendationRepo recommendRepo;
   String token = "";
 
   //----------------------------------------------------------------------------
@@ -376,5 +379,71 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
         Status.idle,
       ]),
     ));
+
+    add(const RecommendPlaylistEvent());
+  }
+
+  FutureOr<void> _recommendPlaylist(
+      RecommendPlaylistEvent event, Emitter<UserRecordState> emit) async {
+    var songs = state.record?.songRecord?.keys.toList();
+    if (songs == null || songs.isEmpty) return;
+    debugPrint('$songs');
+    var record = state.record;
+    try {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserRecordStatusKey.recommend.name,
+          ], status: [
+            Status.loading,
+          ]),
+        ),
+      );
+
+      var recommendResponse =
+          await recommendRepo.generateRecommendPlaylist(songs);
+      var recommends = <SongInfo>[];
+      for (String id in recommendResponse) {
+        final response = await songRepo.getInfo(id);
+        final song = convertSongInfoModel(response);
+        if (song != null) recommends.add(song);
+      }
+      record = record?.copyWith(
+        recommendSongs: recommends,
+      );
+
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserRecordStatusKey.recommend.name,
+          ], status: [
+            Status.success,
+          ]),
+          record: record,
+        ),
+      );
+    } on ResponseException catch (e) {
+      emit(state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          UserRecordStatusKey.recommend.name,
+        ], status: [
+          Status.error,
+        ]),
+        error: e,
+      ));
+
+      addError(
+          Exception("UserRecordBloc _recommendPlaylist error ${e.toString()}"),
+          StackTrace.current);
+    }
+    emit(
+      state.copyWith(
+        status: updateMapStatus(source: state.status, keys: [
+          UserRecordStatusKey.recommend.name,
+        ], status: [
+          Status.idle,
+        ]),
+      ),
+    );
   }
 }
