@@ -7,7 +7,9 @@ import 'package:musix/domain_social/entities/comment/comment.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
 import 'package:musix/domain_social/entities/utils/social_mapper.dart';
 import 'package:musix/domain_social/models/comment/comment_model.dart';
+import 'package:musix/domain_social/models/copyright_checker/copyright_checker_request_model.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
+import 'package:musix/domain_social/repository/copyright_checker/copyright_checker_repo.dart';
 
 const testTokenConst =
     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA";
@@ -138,10 +140,19 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
   FutureOr<void> _handleCreatePostEvent(
       SocialCreatePostEvent event, Emitter<SocialState> emit) async {
     emit(state.copyWith(isCreatingPost: true));
-    final response =
-        await postRepo.createNewPost(event.postRegistryModel, token);
-    add(SocialUpdateCreatePostStatus(response.status));
-    emit(state.copyWith(isCreatingPost: false));
+    final copyrightCheckerResponse = await CopyrightCheckerRepo()
+        .checkCopyright(
+            CopyrightCheckerRequestModel(event.postRegistryModel.file!));
+    bool copyrightCheck = copyrightCheckerResponse.result;
+    if (copyrightCheck) {
+      final response =
+          await postRepo.createNewPost(event.postRegistryModel, token);
+      add(SocialUpdateCreatePostStatus(response.status));
+      emit(state.copyWith(isCreatingPost: false));
+    } else {
+      add(SocialUpdateCreatePostStatus(100));
+      emit(state.copyWith(isCreatingPost: false));
+    }
   }
 
   FutureOr<void> _handleRemovePostThumbnailEvent(

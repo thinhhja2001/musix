@@ -1,5 +1,3 @@
-import '../post_model.dart';
-
 // Post or posts should be null
 class PostResponseModel {
   PostResponseModel({

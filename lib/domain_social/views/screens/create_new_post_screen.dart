@@ -34,6 +34,9 @@ class CreateNewPostScreen extends StatelessWidget {
           child: Form(
             key: formKey,
             child: BlocListener<SocialBloc, SocialState>(
+              listenWhen: (prev, current) {
+                return prev.createPostStatus != current.createPostStatus;
+              },
               listener: (ctx, state) {
                 if (state.createPostStatus == 200) {
                   showSnackBar(context,
@@ -41,6 +44,12 @@ class CreateNewPostScreen extends StatelessWidget {
                       contentType: ContentType.success,
                       title: "Success");
                   context.read<SocialBloc>().add(SocialCreatePostBackEvent());
+                }
+                if (state.createPostStatus == 100) {
+                  showSnackBar(context,
+                      content: "Cannot create post due to copyright reason",
+                      contentType: ContentType.failure,
+                      title: "Failed");
                 }
               },
               child: Scaffold(
@@ -54,121 +63,127 @@ class CreateNewPostScreen extends StatelessWidget {
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const SelectThumbnailWidget(),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Content",
-                                    style: TextStyleTheme.ts16
-                                        .copyWith(color: Colors.grey),
-                                  ),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return "Please add caption to your song";
-                                      }
-                                      return null;
-                                    },
-                                    cursorColor: ColorTheme.primary,
-                                    controller: captionController,
-                                    style: TextStyleTheme.ts28
-                                        .copyWith(color: Colors.white),
-                                    maxLines: 2,
-                                    maxLength: 100,
-                                    decoration: InputDecoration(
-                                        focusColor: ColorTheme.primary,
-                                        focusedBorder:
-                                            const UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 2,
-                                                    color: ColorTheme.primary)),
-                                        counterStyle: TextStyleTheme.ts12
-                                            .copyWith(color: Colors.grey),
-                                        hintText: "Caption your song",
-                                        hintStyle: TextStyleTheme.ts28
-                                            .copyWith(color: Colors.grey)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      CustomInputFieldWidget(
-                        validation: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Song name cannot be empty";
-                          }
-                          return null;
-                        },
-                        textInputType: TextInputType.text,
-                        label: "Song name",
-                        maxLength: 50,
-                        controller: songNameController,
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const SelectVideoWidget(),
-                      state.sourceData != null
-                          ? TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: ColorTheme.primary,
-                              ),
-                              onPressed: () {
-                                context
-                                    .read<SocialBloc>()
-                                    .add(SocialRemovePostDataSourceEvent());
-                              },
-                              child: Text(
-                                "Remove video",
-                                style: TextStyleTheme.ts14
-                                    .copyWith(color: ColorTheme.primary),
-                              ))
-                          : Container(),
-                      const Spacer(),
-                      CustomButtonWidget(
-                        onPress: () async {
-                          if (state.sourceData == null) {
-                            showSnackBar(context,
-                                content: "Please provide your video",
-                                title: "Error",
-                                contentType: ContentType.failure);
-                          }
-                          if (state.createPostThumbnail == null) {
-                            showSnackBar(context,
-                                title: 'Error',
-                                contentType: ContentType.failure,
-                                content: "Please provide a thumbnail");
-                          }
-                          if (formKey.currentState!.validate() &&
-                              state.sourceData != null) {
-                            context.read<SocialBloc>().add(
-                                  SocialCreatePostEvent(
-                                    PostRegistryModel(
-                                      content: captionController.text,
-                                      name: songNameController.text,
-                                      file: File(state.sourceData!.path!),
-                                      thumbnail:
-                                          File(state.createPostThumbnail!.path),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const SelectThumbnailWidget(),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Content",
+                                      style: TextStyleTheme.ts16
+                                          .copyWith(color: Colors.grey),
                                     ),
-                                  ),
-                                );
-                          }
-                        },
-                        content: "Upload",
-                        isLoading: state.isCreatingPost,
-                      )
-                    ],
+                                    TextFormField(
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return "Please add caption to your song";
+                                        }
+                                        return null;
+                                      },
+                                      cursorColor: ColorTheme.primary,
+                                      controller: captionController,
+                                      style: TextStyleTheme.ts28
+                                          .copyWith(color: Colors.white),
+                                      maxLines: 2,
+                                      maxLength: 100,
+                                      decoration: InputDecoration(
+                                          focusColor: ColorTheme.primary,
+                                          focusedBorder:
+                                              const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      width: 2,
+                                                      color:
+                                                          ColorTheme.primary)),
+                                          counterStyle: TextStyleTheme.ts12
+                                              .copyWith(color: Colors.grey),
+                                          hintText: "Caption your song",
+                                          hintStyle: TextStyleTheme.ts28
+                                              .copyWith(color: Colors.grey)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        CustomInputFieldWidget(
+                          validation: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return "Song name cannot be empty";
+                            }
+                            return null;
+                          },
+                          textInputType: TextInputType.text,
+                          label: "Song name",
+                          maxLength: 50,
+                          controller: songNameController,
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        const SelectVideoWidget(),
+                        state.sourceData != null
+                            ? TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: ColorTheme.primary,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<SocialBloc>()
+                                      .add(SocialRemovePostDataSourceEvent());
+                                },
+                                child: Text(
+                                  "Remove video",
+                                  style: TextStyleTheme.ts14
+                                      .copyWith(color: ColorTheme.primary),
+                                ))
+                            : Container(),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        // const Spacer(),
+                        CustomButtonWidget(
+                          onPress: () async {
+                            if (state.sourceData == null) {
+                              showSnackBar(context,
+                                  content: "Please provide your video",
+                                  title: "Error",
+                                  contentType: ContentType.failure);
+                            }
+                            if (state.createPostThumbnail == null) {
+                              showSnackBar(context,
+                                  title: 'Error',
+                                  contentType: ContentType.failure,
+                                  content: "Please provide a thumbnail");
+                            }
+                            if (formKey.currentState!.validate() &&
+                                state.sourceData != null) {
+                              context.read<SocialBloc>().add(
+                                    SocialCreatePostEvent(
+                                      PostRegistryModel(
+                                        content: captionController.text,
+                                        name: songNameController.text,
+                                        file: File(state.sourceData!.path!),
+                                        thumbnail: File(
+                                            state.createPostThumbnail!.path),
+                                      ),
+                                    ),
+                                  );
+                            }
+                          },
+                          content: "Upload",
+                          isLoading: state.isCreatingPost,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
