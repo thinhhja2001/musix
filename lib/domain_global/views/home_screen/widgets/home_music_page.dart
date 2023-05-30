@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../routing/routing_path.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../../config/exporter.dart';
+import '../../../../domain_hub/entities/section/section_song.dart';
 import '../../../../domain_hub/views/widgets.dart';
 import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../domain_song/views/widgets.dart';
+import '../../../../routing/routing_path.dart';
 import '../../../../utils/utils.dart';
 import '../../../entities/entities.dart';
 import '../widgets.dart';
@@ -30,7 +32,10 @@ class _HomeMusicPageState extends State<HomeMusicPage> {
       body: BlocBuilder<HomeMusicBloc, HomeMusicState>(
         builder: (context, state) {
           if (state.status?[HomeMusicStatusKey.global.key] == Status.loading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: SpinKitWanderingCubes(
+              color: Colors.white54,
+            ));
           } else {
             final HomeMusic? homeMusic = state.homeMusic;
             if (homeMusic == null) {
@@ -46,6 +51,37 @@ class _HomeMusicPageState extends State<HomeMusicPage> {
                       hintText: r'What do you want to hear?',
                       onTap: () {
                         Navigator.of(context).pushNamed(RoutingPath.searchSong);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    BlocBuilder<UserRecordBloc, UserRecordState>(
+                      builder: (context, state) {
+                        if (state.status?[UserRecordStatusKey.recommend.name] ==
+                            Status.loading) {
+                          return const Center(
+                              child: SpinKitWanderingCubes(
+                            color: Colors.white54,
+                          ));
+                        }
+                        if (state.status?[UserRecordStatusKey.recommend.name] ==
+                            Status.error) {
+                          return const SizedBox.shrink();
+                        }
+                        var recommends = state.record?.recommendSongs;
+                        if (recommends == null || recommends.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return SongListWidget(
+                          sectionSong: SectionSong(
+                            items: recommends,
+                            title: 'Gợi ý',
+                            total: recommends.length,
+                          ),
+                          songArrange: SongArrange.carousel,
+                        );
                       },
                     ),
                     const SizedBox(
