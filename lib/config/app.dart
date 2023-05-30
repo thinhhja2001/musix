@@ -240,6 +240,7 @@ class _MusixAppState extends State<MusixApp> {
             userMusicRepo: getIt.get<UserMusicRepo>(),
             songRepo: getIt.get<SongInfoRepositoryImpl>(),
             authBloc: context.read<AuthBloc>(),
+            recommendRepo: getIt.get<SongRecommendationRepo>(),
           ),
         ),
       ],

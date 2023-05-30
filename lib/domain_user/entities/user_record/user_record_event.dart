@@ -39,3 +39,7 @@ class SearchRecentSongEvent implements UserRecordEvent {
   final String search;
   const SearchRecentSongEvent(this.search);
 }
+
+class RecommendPlaylistEvent implements UserRecordEvent {
+  const RecommendPlaylistEvent();
+}

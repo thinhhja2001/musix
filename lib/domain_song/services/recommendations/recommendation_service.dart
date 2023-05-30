@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:musix/config/exporter/environment_exporter.dart';
 import 'package:musix/domain_song/services/recommendations/i_recommendation_service.dart';
 import 'package:musix/global/repo/initial_repo.dart';
+import 'package:musix/utils/utils.dart';
 
 class RecommendationService extends InitialRepo
     implements IRecommendationService {
@@ -8,9 +10,15 @@ class RecommendationService extends InitialRepo
   @override
   Future<Map<String, dynamic>> generateRecommendPlaylist(
       List<String> encodeIds) async {
-    final url = "$databaseUrl/generated_recommend_playlist";
-    var response = await dio.get(url, data: {"song_ids": encodeIds});
-    return response.data;
+    try {
+      final url = "$databaseUrl/generated_recommend_playlist";
+      var response = await dio.get(url, data: {"song_ids": encodeIds});
+      return response.data;
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data?["msg"] ?? exception);
+    }
   }
 
   @override
