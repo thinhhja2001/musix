@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
+import 'package:musix/domain_auth/logic/auth_bloc.dart';
 
 import '../../../../../domain_user/entities/profile/profile_state.dart';
 import '../../../../../domain_user/logic/profile_bloc.dart';
@@ -17,12 +18,21 @@ class LikeButtonWidget extends StatelessWidget {
     required this.postId,
   });
   final String postId;
+
   @override
   Widget build(BuildContext context) {
+    Future<Post> getPost(String postId) async {
+      final String token = context.read<AuthBloc>().state.jwtToken!;
+
+      final postModel = await PostRepo().getPostById(postId, token);
+      final post = await SocialMapper(token).postFromPostModel(postModel!);
+      return post;
+    }
+
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         return FutureBuilder<Post>(
-            future: _getPost(postId),
+            future: getPost(postId),
             builder: (context, snapshot) {
               return Container(
                 decoration: BoxDecoration(
@@ -92,13 +102,6 @@ class LikeButtonWidget extends StatelessWidget {
             });
       },
     );
-  }
-
-  Future<Post> _getPost(String postId) async {
-    final postModel = await PostRepo().getPostById(postId, testTokenConst);
-    final post =
-        await SocialMapper(testTokenConst).postFromPostModel(postModel!);
-    return post;
   }
 }
 
