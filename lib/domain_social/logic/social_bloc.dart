@@ -11,9 +11,6 @@ import 'package:musix/domain_social/models/copyright_checker/copyright_checker_r
 import 'package:musix/domain_social/models/post/post_model.dart';
 import 'package:musix/domain_social/repository/copyright_checker/copyright_checker_repo.dart';
 
-const testTokenConst =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA";
-
 class SocialBloc extends Bloc<SocialEvent, SocialState> {
   SocialBloc({
     required SocialState initialState,
