@@ -33,7 +33,7 @@ class _CommentFieldWidgetState extends State<CommentFieldWidget> {
       children: [
         BlocSelector<ProfileBloc, ProfileState, String>(
           selector: (state) {
-            return state.user?.profile?.avatarUrl ?? AssetPath.userUnknowImage;
+            return state.user?.profile?.avatarUrl ?? AssetPath.userUnknownImage;
           },
           builder: (context, image) {
             return CircleAvatar(
