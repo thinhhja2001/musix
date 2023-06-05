@@ -10,6 +10,9 @@ import 'package:musix/domain_social/models/comment/comment_model.dart';
 import 'package:musix/domain_social/models/copyright_checker/copyright_checker_request_model.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
 import 'package:musix/domain_social/repository/copyright_checker/copyright_checker_repo.dart';
+import 'package:musix/domain_user/utils/convert_model_entity.dart';
+
+import '../../domain_user/entities/entities.dart';
 
 class SocialBloc extends Bloc<SocialEvent, SocialState> {
   SocialBloc({

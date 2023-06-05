@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
 import 'package:musix/domain_auth/logic/auth_bloc.dart';
+import 'package:musix/domain_social/views/widgets/posts/list_widget/user_liked_post_list_widget.dart';
 
 import '../../../../../domain_user/entities/profile/profile_state.dart';
+import '../../../../../domain_user/entities/user.dart';
 import '../../../../../domain_user/logic/profile_bloc.dart';
 import '../../../../../theme/color.dart';
 import '../../../../entities/event/social_event.dart';
@@ -16,9 +18,12 @@ class LikeButtonWidget extends StatelessWidget {
   const LikeButtonWidget({
     super.key,
     required this.postId,
+    this.isPostDetail = false,
   });
   final String postId;
 
+  /// Whether it is being rendered in PostDetailScreen
+  final bool isPostDetail;
   @override
   Widget build(BuildContext context) {
     Future<Post> getPost(String postId) async {
@@ -34,32 +39,36 @@ class LikeButtonWidget extends StatelessWidget {
         return FutureBuilder<Post>(
             future: getPost(postId),
             builder: (context, snapshot) {
+              final post = snapshot.data;
               return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: ColorTheme.white.withOpacity(.2),
-                ),
+                decoration: isPostDetail
+                    ? null
+                    : BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorTheme.white.withOpacity(.2),
+                      ),
                 child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: snapshot.hasData
+                    child: post != null
                         ? LikeButton(
-                            isLiked:
-                                snapshot.data!.likedBy!.contains(state.user)
-                                    ? true
-                                    : false,
+                            isLiked: isLikedPost(
+                                getUsernameLikedPost(post.likedBy!),
+                                state.user!.username!),
                             onTap: (isLiked) async {
-                              if (snapshot.data!.likedBy == null) {
+                              if (post.likedBy == null) {
                                 return false;
                               }
                               context
                                   .read<SocialBloc>()
                                   .add(SocialLikeOrDislikePostEvent(postId));
-                              if (snapshot.data!.likedBy!
-                                  .contains(state.user)) {
-                                snapshot.data!.likedBy!.remove(state.user);
+                              if (isLikedPost(
+                                  getUsernameLikedPost(post.likedBy!),
+                                  state.user!.username!)) {
+                                post.likedBy!.removeWhere((user) =>
+                                    user.username == state.user!.username!);
                                 return false;
                               } else {
-                                snapshot.data!.likedBy!.add(state.user!);
+                                post.likedBy!.add(state.user!);
                               }
 
                               return true;
@@ -71,10 +80,9 @@ class LikeButtonWidget extends StatelessWidget {
                               dotSecondaryColor: Colors.red,
                             ),
                             likeBuilder: (_) {
-                              if (snapshot.data!.likedBy == null ||
-                                  !snapshot.data!.likedBy!
-                                      .contains(state.user) ||
-                                  snapshot.data!.likedBy!.isEmpty) {
+                              if (post.likedBy == null ||
+                                  !post.likedBy!.contains(state.user) ||
+                                  post.likedBy!.isEmpty) {
                                 return const Icon(
                                   Icons.favorite_outline,
                                   color: Colors.white,
@@ -85,15 +93,38 @@ class LikeButtonWidget extends StatelessWidget {
                                 color: Colors.red,
                               );
                             },
-                            likeCount: snapshot.data!.likedBy?.length ?? 0,
+                            likeCount: post.likedBy?.length ?? 0,
                             countBuilder:
                                 (int? count, bool isLiked, String text) {
                               var color = isLiked ? Colors.red : Colors.white;
                               Widget result;
-                              result = Text(
-                                text,
-                                style: TextStyle(color: color),
-                              );
+                              if (isPostDetail && count != 0) {
+                                result = Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) =>
+                                              UserLikedPostListWidget(
+                                                post: post,
+                                              ));
+                                    },
+                                    child: Text(
+                                      text,
+                                      style: TextStyle(
+                                          color: color,
+                                          decoration: TextDecoration.underline),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                result = Text(
+                                  text,
+                                  style: TextStyle(color: color),
+                                );
+                              }
 
                               return result;
                             })
@@ -102,6 +133,18 @@ class LikeButtonWidget extends StatelessWidget {
             });
       },
     );
+  }
+
+  List<String> getUsernameLikedPost(List<User> users) {
+    List<String> usernames = List.empty(growable: true);
+    for (var user in users) {
+      usernames.add(user.username!);
+    }
+    return usernames;
+  }
+
+  bool isLikedPost(List<String> usersLikedPost, String username) {
+    return usersLikedPost.contains(username);
   }
 }
 

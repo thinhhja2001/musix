@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_social/entities/entities.dart';
 import 'package:musix/domain_social/views/widgets/comments/rely_comment_widget.dart';
+import 'package:musix/routing/routing_path.dart';
 import 'package:musix/utils/utils.dart';
 
 import '../../../../theme/theme.dart';
@@ -28,10 +29,14 @@ class CommentCardWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 12,
-            backgroundImage: CachedNetworkImageProvider(
-              comment.user?.profile?.avatarUrl ?? AssetPath.userUnknowImage,
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, RoutingPath.profileSocial,
+                arguments: comment.user),
+            child: CircleAvatar(
+              radius: 12,
+              backgroundImage: CachedNetworkImageProvider(
+                comment.user?.profile?.avatarUrl ?? AssetPath.userUnknownImage,
+              ),
             ),
           ),
           Expanded(

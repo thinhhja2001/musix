@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../entities/event/social_event.dart';
 import '../../../entities/post/post.dart';
 import '../../../logic/social_bloc.dart';
+import 'interaction_widget/comment_button_widget.dart';
+import 'interaction_widget/interaction_widget.dart';
+import 'interaction_widget/like_button_widget.dart';
+import 'interaction_widget/share_button_widget.dart';
 import 'social_data_player_widget.dart';
 import '../../../../domain_user/utils/constant_utils.dart';
 import '../../../../utils/functions/function_utils.dart';
@@ -11,8 +15,6 @@ import '../../../../domain_user/entities/profile/profile_state.dart';
 import '../../../../domain_user/logic/profile_bloc.dart';
 import '../../../../routing/routing_path.dart';
 import '../../../../theme/theme.dart';
-import 'hashtag_widget.dart';
-import 'interaction_widget/interaction_widget.dart';
 import 'more_list_widget/post_action_widget.dart';
 
 class PostCardWidget extends StatefulWidget {
@@ -142,7 +144,6 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const HashtagWidget(),
                           const Spacer(),
                           InteractionListWidget(post: widget.post),
                         ],

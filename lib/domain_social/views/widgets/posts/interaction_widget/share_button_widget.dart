@@ -8,17 +8,17 @@ import '../../../../entities/post/post.dart';
 
 class ShareButtonWidget extends StatelessWidget {
   final Post post;
-  const ShareButtonWidget({
-    super.key,
-    required this.post,
-  });
+  const ShareButtonWidget(
+      {super.key, required this.post, this.isPostDetail = false});
 
+  /// Whether it is being rendered in PostDetailScreen
+  final bool isPostDetail;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: ColorTheme.white.withOpacity(.2),
+        color: isPostDetail ? null : ColorTheme.white.withOpacity(.2),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),

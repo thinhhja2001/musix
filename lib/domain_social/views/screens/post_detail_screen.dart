@@ -16,6 +16,9 @@ import 'package:musix/utils/functions/function_utils.dart';
 import '../../../config/exporter/bloc_exporter.dart';
 import '../../../config/exporter/state_exporter.dart';
 import '../../entities/utils/social_mapper.dart';
+import '../widgets/posts/interaction_widget/comment_button_widget.dart';
+import '../widgets/posts/interaction_widget/like_button_widget.dart';
+import '../widgets/posts/interaction_widget/share_button_widget.dart';
 
 class PostDetailScreen extends StatelessWidget {
   const PostDetailScreen({super.key, required this.postId});
@@ -158,7 +161,8 @@ class PostDetailScreen extends StatelessWidget {
                                         ),
                                         const Spacer(),
                                         InteractionListWidget(
-                                            post: snapshot.data!),
+                                            post: snapshot.data!,
+                                            isPostDetail: true),
                                       ],
                                     ),
                                   ),
