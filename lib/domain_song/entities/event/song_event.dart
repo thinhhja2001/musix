@@ -44,9 +44,9 @@ class SongSetListSongInfoEvent implements SongEvent {
 }
 
 class SongStartPlayingSectionEvent implements SongEvent {
-  final int? index;
+  final SongInfo? staterSongInfo;
 
-  SongStartPlayingSectionEvent(this.index);
+  SongStartPlayingSectionEvent(this.staterSongInfo);
 }
 
 class SongPlayNextSongEvent implements SongEvent {}

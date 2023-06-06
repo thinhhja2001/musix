@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musix/domain_song/repository/recommendations/song_recommendation_repo.dart';
 import '../services/play_next_pre_handller.dart';
 
 import '../../utils/utils.dart';
@@ -170,29 +169,9 @@ class SongBloc extends Bloc<SongEvent, SongState> {
           case LoopMode.one:
             add(SongGetSourceEvent(state.songInfo?.encodeId ?? ""));
             break;
-          case LoopMode.off:
-            final recommendIds = await SongRecommendationRepo()
-                .recommendNextSong(
-                    state.songInfo!.encodeId!, recommendSongCount);
-            recommendIds.remove(state.songInfo!.encodeId);
-            if (_playNextPreHandler.isPlayedAllPlaylist() ||
-                (_playNextPreHandler.listSongInfo.length == 1 &&
-                    recommendIds.isEmpty)) {
-              add(SongPauseEvent());
-            } else {
-              add(SongPlayNextSongEvent());
-            }
-            break;
-          case LoopMode.all:
-            if (_playNextPreHandler.isPlayedAllPlaylist()) {
-              _playNextPreHandler.resetPlayedSong();
-            }
-            int baseIndex = state.isShuffle
-                ? _playNextPreHandler.getNextIndexOfRandomSong()
-                : 0;
-            add(SongStartPlayingSectionEvent(baseIndex));
-            break;
           default:
+            add(SongPlayNextSongEvent());
+            break;
         }
       }
     });
@@ -207,13 +186,18 @@ class SongBloc extends Bloc<SongEvent, SongState> {
 
   FutureOr<void> _startPlayingSection(
       SongStartPlayingSectionEvent event, Emitter emit) async {
-    int baseIndex = event.index ??
-        (state.isShuffle ? _playNextPreHandler.getNextIndexOfRandomSong() : 0);
-    SongInfo starterSongInfo =
-        _playNextPreHandler.listSongInfo.elementAt(baseIndex);
+    SongInfo starterSongInfo;
+    if (event.staterSongInfo != null) {
+      starterSongInfo = event.staterSongInfo!;
+    } else {
+      starterSongInfo = state.isShuffle
+          ? _playNextPreHandler.getRandomSong()
+          : _playNextPreHandler.listSongInfo.elementAt(0);
+    }
+    _playNextPreHandler.currentSongInfo = starterSongInfo;
+    _playNextPreHandler.playedSongs.add(starterSongInfo);
     add(SongGetInfoEvent(starterSongInfo.encodeId!));
     add(SongGetSourceEvent(starterSongInfo.encodeId!));
-    _playNextPreHandler.playedSong.add(starterSongInfo);
   }
 
   //----------------------------------------------------------------------------
@@ -234,22 +218,23 @@ class SongBloc extends Bloc<SongEvent, SongState> {
       add(SongGetInfoEvent(nextSongEncodeId));
       add(SongGetSourceEvent(nextSongEncodeId));
       add(SongPlayEvent());
-    } else if (_playNextPreHandler.isPlayedAllPlaylist() &&
-        state.loopMode != LoopMode.all) {
-      add(SongOnSeekEvent(state.duration - const Duration(seconds: 5)));
-      return;
     } else {
-      SongInfo songInfo = _playNextPreHandler.getNextSong(state.isShuffle);
-      add(SongGetInfoEvent(songInfo.encodeId!));
-      add(SongGetSourceEvent(songInfo.encodeId!));
-      add(SongPlayEvent());
+      SongInfo? songInfo =
+          _playNextPreHandler.getNextSong(state.isShuffle, state.loopMode);
+      if (songInfo == null) {
+        add(SongOnSeekEvent(state.duration - const Duration(seconds: 5)));
+      } else {
+        add(SongGetInfoEvent(songInfo.encodeId!));
+        add(SongGetSourceEvent(songInfo.encodeId!));
+        add(SongPlayEvent());
+      }
     }
   }
 
   //----------------------------------------------------------------------------
   FutureOr<void> _playPreviousSong(
       SongPlayPreviousSongEvent event, Emitter emit) async {
-    if (_playNextPreHandler.playedSong.length == 1) {
+    if (_playNextPreHandler.playedSongs.length == 1) {
       add(SongOnSeekEvent(Duration.zero));
       return;
     }
