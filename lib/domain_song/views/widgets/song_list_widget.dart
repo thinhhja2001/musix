@@ -146,9 +146,9 @@ class _SongInfoWidgetState extends State<SongInfoWidget> {
                           context.read<SongBloc>().add(SongSetListSongInfoEvent(
                                 widget.sectionSong.items ?? [],
                               ));
-                          context
-                              .read<SongBloc>()
-                              .add(SongStartPlayingSectionEvent(index));
+                          context.read<SongBloc>().add(
+                              SongStartPlayingSectionEvent(
+                                  widget.sectionSong.items?.elementAt(index)));
                         },
                       ),
                     ),
@@ -198,9 +198,8 @@ class _SongInfoWidgetState extends State<SongInfoWidget> {
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
                           widget.sectionSong.items ?? [],
                         ));
-                    context
-                        .read<SongBloc>()
-                        .add(SongStartPlayingSectionEvent(index));
+                    context.read<SongBloc>().add(SongStartPlayingSectionEvent(
+                        widget.sectionSong.items?.elementAt(index)));
                   },
                 ),
               ),
@@ -253,9 +252,8 @@ class SongCarouselWidget extends StatelessWidget {
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
                           sectionSong.items ?? [],
                         ));
-                    context
-                        .read<SongBloc>()
-                        .add(SongStartPlayingSectionEvent(index));
+                    context.read<SongBloc>().add(SongStartPlayingSectionEvent(
+                        sectionSong.items?.elementAt(index)));
                   },
                 ),
               ),
@@ -306,9 +304,8 @@ class SongCarouselWidget extends StatelessWidget {
                     context.read<SongBloc>().add(SongSetListSongInfoEvent(
                           sectionSong.items ?? [],
                         ));
-                    context
-                        .read<SongBloc>()
-                        .add(SongStartPlayingSectionEvent(index));
+                    context.read<SongBloc>().add(SongStartPlayingSectionEvent(
+                        sectionSong.items?.elementAt(index)));
                   },
                 ),
               ),

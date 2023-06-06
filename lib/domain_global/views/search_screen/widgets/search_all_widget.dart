@@ -65,9 +65,9 @@ class SearchAllWidget extends StatelessWidget {
                             // Since we are not playing a playlist but just a single song,
                             // we will set it a playlist with one song
                             // So that we will play the song at the index of 0
-                            context
-                                .read<SongBloc>()
-                                .add(SongStartPlayingSectionEvent(0));
+                            context.read<SongBloc>().add(
+                                SongStartPlayingSectionEvent(
+                                    convertSongInfoFromAllSearching(item)));
                           },
                           index: index,
                           isShowType: true,
