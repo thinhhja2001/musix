@@ -29,32 +29,26 @@ class PlayNextPreHandler {
     int currentIndex = listSongInfo.indexOf(currentSongInfo);
     late SongInfo nextSong;
 
-    if (!playShuffle) {
-      if (currentIndex + 1 >= listSongInfo.length ||
-          playedSongs.length == listSongInfo.length) {
-        switch (loopMode) {
-          case LoopMode.all:
-            resetPlayedSong();
-            nextSong =
-                playShuffle ? getRandomSong() : listSongInfo.elementAt(0);
-            break;
-          default:
-            return null;
-        }
-      } else {
-        nextSong = listSongInfo.elementAt(currentIndex + 1);
+    if (currentIndex + 1 >= listSongInfo.length ||
+        playedSongs.length == listSongInfo.length) {
+      switch (loopMode) {
+        case LoopMode.all:
+          resetPlayedSong();
+          nextSong = playShuffle ? getRandomSong() : listSongInfo.elementAt(0);
+          break;
+        default:
+          return null;
       }
     } else {
-      nextSong = getRandomSong();
+      nextSong = playShuffle
+          ? getRandomSong()
+          : listSongInfo.elementAt(currentIndex + 1);
     }
+
     currentSongInfo = nextSong;
     playedSongs.add(nextSong);
 
     playedSongs = playedSongs.toSet().toList();
-    List<String> playedTitle = List.empty(growable: true);
-    for (var song in playedSongs) {
-      playedTitle.add(song.title!);
-    }
     return nextSong;
   }
 
