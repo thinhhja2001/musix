@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/domain_auth/views/widgets/custom_button_widget.dart';
 import 'package:musix/domain_social/entities/post/post.dart';
+import 'package:musix/domain_user/utils/constant_utils.dart';
 import 'package:musix/routing/routing_path.dart';
 import 'package:musix/theme/color.dart';
 
@@ -19,8 +20,10 @@ class UserLikedPostListWidget extends StatelessWidget {
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: usersLiked?.length,
-        itemBuilder: (context, index) =>
-            UserInfoCardWidget(user: post.likedBy!.elementAt(index)),
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: UserInfoCardWidget(user: post.likedBy!.elementAt(index)),
+        ),
       ),
     );
   }
@@ -41,7 +44,8 @@ class UserInfoCardWidget extends StatelessWidget {
               arguments: user),
           child: Row(children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(user.profile!.avatarUrl!),
+              backgroundImage:
+                  NetworkImage(user.profile!.avatarUrl ?? defaultAvatarUrl),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
