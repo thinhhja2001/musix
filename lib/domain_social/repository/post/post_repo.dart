@@ -182,4 +182,22 @@ class PostRepo extends InitialRepo
       ),
     );
   }
+
+  @override
+  Future<List<PostModel>> getTrendingPosts(
+      {required int page, required int size, required String token}) async {
+    var response = await dio.get("$_baseUrl/trending",
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+        queryParameters: {
+          "page": page,
+          "size": size,
+        });
+    if (response.statusCode != 200) {
+      return List.empty();
+    }
+    return List<PostModel>.from(
+        response.data['data']['posts'].map((post) => PostModel.fromJson(post)));
+  }
 }

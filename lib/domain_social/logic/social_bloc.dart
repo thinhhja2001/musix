@@ -84,7 +84,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostJustForYouEvent(
       SocialGetListPostJustForYouEvent event, Emitter<SocialState> emit) async {
-    //TODO Implemnent get list post of type just for you
     List<PostModel> postsModel = await postRepo.getPosts(
       page: _just4YouPostCurrentPage++,
       size: _countPerPage,
@@ -101,8 +100,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostTrendingEvent(
       SocialGetListPostTrendingEvent event, Emitter<SocialState> emit) async {
-    //TODO Implemnent get list post of type trending
-    List<PostModel> postsModel = await postRepo.getPosts(
+    List<PostModel> postsModel = await postRepo.getTrendingPosts(
       page: _trendingPostCurrentPage++,
       size: _countPerPage,
       token: token,

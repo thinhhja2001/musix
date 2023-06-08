@@ -29,4 +29,6 @@ abstract class IPostRepo<T, E> {
   Future<T> likeOrDislikePost(String postId, String token);
   Future<T> deletePost(String postId, String token);
   Future<List<E>> getFollowingPost(String token);
+  Future<List<E>> getTrendingPosts(
+      {required int page, required int size, required String token});
 }
