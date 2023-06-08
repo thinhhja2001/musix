@@ -28,7 +28,6 @@ class LikeButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<Post> getPost(String postId) async {
       final String token = context.read<AuthBloc>().state.jwtToken!;
-
       final postModel = await PostRepo().getPostById(postId, token);
       final post = await SocialMapper(token).postFromPostModel(postModel!);
       return post;
