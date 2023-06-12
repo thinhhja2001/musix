@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:musix/config/exporter.dart';
+import 'package:musix/domain_social/views/screens/list_follow_screen.dart';
 import 'package:musix/domain_user/utils/convert_model_entity.dart';
+import 'package:musix/routing/routing_path.dart';
 
 import '../../../../domain_user/entities/entities.dart';
 import '../../../../theme/theme.dart';
@@ -35,10 +37,19 @@ class FollowInformationWidget extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text(
-                      '${snapshot.data!.followings?.length}',
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: Colors.white,
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        RoutingPath.listFollowScreen,
+                        arguments: ListFollowScreenArgument(
+                            users: snapshot.data!.followings ?? [],
+                            title: "Followings"),
+                      ),
+                      child: Text(
+                        '${snapshot.data!.followings?.length}',
+                        style: TextStyleTheme.ts14.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Text(
@@ -50,10 +61,19 @@ class FollowInformationWidget extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Text(
-                      '${snapshot.data!.followers?.length}',
-                      style: TextStyleTheme.ts14.copyWith(
-                        color: Colors.white,
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        RoutingPath.listFollowScreen,
+                        arguments: ListFollowScreenArgument(
+                            users: snapshot.data!.followers ?? [],
+                            title: "Followers"),
+                      ),
+                      child: Text(
+                        '${snapshot.data!.followers?.length}',
+                        style: TextStyleTheme.ts14.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Text(

@@ -26,7 +26,7 @@ class ShareButtonWidget extends StatelessWidget {
           onTap: () async {
             final url =
                 await FirebaseDynamicLinkGenerator.generateSharingPostLink(
-                    post.id!);
+                    post);
             await Share.share(
               url.toString(),
             );
