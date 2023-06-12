@@ -46,4 +46,5 @@ class RoutingPath {
   static const String modifyPost = "$social/modifyPost";
   static const String profileSocial = "$social/profile";
   static const String postDetail = "$social/postDetail";
+  static const String listFollowScreen = "$social/listFollowScreen";
 }
