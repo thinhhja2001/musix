@@ -38,17 +38,21 @@ class FollowInformationWidget extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        RoutingPath.listFollowScreen,
-                        arguments: ListFollowScreenArgument(
-                            users: snapshot.data!.followings ?? [],
-                            title: "Followings"),
-                      ),
+                      onTap: snapshot.data!.followings!.isNotEmpty
+                          ? () => Navigator.pushNamed(
+                                context,
+                                RoutingPath.listFollowScreen,
+                                arguments: ListFollowScreenArgument(
+                                    users: snapshot.data!.followings ?? [],
+                                    title: "Followings"),
+                              )
+                          : null,
                       child: Text(
                         '${snapshot.data!.followings?.length}',
                         style: TextStyleTheme.ts14.copyWith(
-                          color: Colors.white,
+                          color: snapshot.data!.followings!.isNotEmpty
+                              ? Colors.white
+                              : Colors.white.withOpacity(.2),
                         ),
                       ),
                     ),
@@ -62,17 +66,21 @@ class FollowInformationWidget extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        RoutingPath.listFollowScreen,
-                        arguments: ListFollowScreenArgument(
-                            users: snapshot.data!.followers ?? [],
-                            title: "Followers"),
-                      ),
+                      onTap: snapshot.data!.followers!.isNotEmpty
+                          ? () => Navigator.pushNamed(
+                                context,
+                                RoutingPath.listFollowScreen,
+                                arguments: ListFollowScreenArgument(
+                                    users: snapshot.data!.followers ?? [],
+                                    title: "Followers"),
+                              )
+                          : null,
                       child: Text(
                         '${snapshot.data!.followers?.length}',
                         style: TextStyleTheme.ts14.copyWith(
-                          color: Colors.white,
+                          color: snapshot.data!.followers!.isNotEmpty
+                              ? Colors.white
+                              : Colors.white.withOpacity(.2),
                         ),
                       ),
                     ),
