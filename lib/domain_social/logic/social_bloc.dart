@@ -10,9 +10,9 @@ import 'package:musix/domain_social/models/comment/comment_model.dart';
 import 'package:musix/domain_social/models/copyright_checker/copyright_checker_request_model.dart';
 import 'package:musix/domain_social/models/post/post_model.dart';
 import 'package:musix/domain_social/repository/copyright_checker/copyright_checker_repo.dart';
+import 'package:musix/domain_user/utils/convert_model_entity.dart';
 
-const testTokenConst =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdDIiLCJpYXQiOjE2Nzk3MzQ4NzQsImV4cCI6MTY4MjMyNjg3NH0.wlz5GF1g4NhUYiWcvDhv5BDovsJgpNCpozu6jNRA2LA";
+import '../../domain_user/entities/entities.dart';
 
 class SocialBloc extends Bloc<SocialEvent, SocialState> {
   SocialBloc({
@@ -84,7 +84,6 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostJustForYouEvent(
       SocialGetListPostJustForYouEvent event, Emitter<SocialState> emit) async {
-    //TODO Implemnent get list post of type just for you
     List<PostModel> postsModel = await postRepo.getPosts(
       page: _just4YouPostCurrentPage++,
       size: _countPerPage,
@@ -101,8 +100,7 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
 
   FutureOr<void> _handleGetListPostTrendingEvent(
       SocialGetListPostTrendingEvent event, Emitter<SocialState> emit) async {
-    //TODO Implemnent get list post of type trending
-    List<PostModel> postsModel = await postRepo.getPosts(
+    List<PostModel> postsModel = await postRepo.getTrendingPosts(
       page: _trendingPostCurrentPage++,
       size: _countPerPage,
       token: token,

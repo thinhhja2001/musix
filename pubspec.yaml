@@ -64,6 +64,9 @@ dependencies:
   pull_to_refresh: ^2.0.0
   restart_app: ^1.1.2
   flutter_phoenix: ^1.1.1
+  firebase_core: ^2.13.1
+  firebase_dynamic_links: ^5.3.2
+  share_plus: ^6.2.0
 
 dev_dependencies:
   flutter_test:

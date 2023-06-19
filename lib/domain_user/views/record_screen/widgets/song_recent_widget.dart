@@ -65,9 +65,8 @@ class SongRecentWidget extends StatelessWidget {
                 context.read<SongBloc>().add(SongSetListSongInfoEvent(
                       songRecord.values.toList(),
                     ));
-                context
-                    .read<SongBloc>()
-                    .add(SongStartPlayingSectionEvent(index));
+                context.read<SongBloc>().add(SongStartPlayingSectionEvent(
+                    songRecord.values.elementAt(index)));
               },
             ),
             trailing: IconButton(

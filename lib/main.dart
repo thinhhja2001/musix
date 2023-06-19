@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
+import 'package:musix/firebase_options.dart';
 
 import 'config/app.dart';
 import 'config/register_dependency.dart';
@@ -25,11 +27,13 @@ Future<void> bootstrap() async {
   await HiveUtils.initHive();
   await HiveUtils.openBox();
   //Need to use await here to avoid facing the GetIt plugin error like https://stackoverflow.com/questions/61131822/flutter-getit-plugin-no-type-xxx-is-registered-inside-getit
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   await configAudioService();
   await registerDependency();
   runZonedGuarded(
     () => runApp(
-      Phoenix(child: const MusixApp()),
+      const MusixApp(),
     ),
     (error, stackTrace) {
       debugLogger.error("ERROR: ${error.toString()}\n${stackTrace.toString()}",

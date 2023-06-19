@@ -30,7 +30,7 @@ class InteractWithUserWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state.user != user) {
+        if (state.user!.username != user.username) {
           return Row(
             children: [
               Expanded(

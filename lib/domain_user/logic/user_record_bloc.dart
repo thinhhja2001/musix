@@ -187,9 +187,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
   FutureOr<void> _saveUserSongRecord(
       SaveUserSongRecordEvent event, Emitter<UserRecordState> emit) async {
     var userRecord = state.record;
-    if (userRecord != null &&
-        userRecord.songRecord != null &&
-        userRecord.songRecord!.containsKey(event.songInfo.encodeId)) {
+    if (userRecord != null && userRecord.songRecord != null) {
       return;
     }
     try {

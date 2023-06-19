@@ -1,12 +1,14 @@
 import 'dart:math';
 
+import 'package:just_audio/just_audio.dart';
+
 import '../entities/entities.dart';
 
 class PlayNextPreHandler {
   List<SongInfo> listSongInfo;
-  List<SongInfo> playedSong = List.empty(growable: true);
+  List<SongInfo> playedSongs = List.empty(growable: true);
   final _random = Random();
-  int currentIndex = 0;
+  late SongInfo currentSongInfo;
   PlayNextPreHandler(this.listSongInfo);
   bool isPlayShuffle = false;
 
@@ -14,44 +16,57 @@ class PlayNextPreHandler {
     this.listSongInfo = listSongInfo;
   }
 
-  // setBaseIndex will be called if user click the song on the playlist screen.
-  void setBaseIndex(int index) {
-    playedSong = List.empty(growable: true);
-    currentIndex = index;
-    playedSong.add(listSongInfo.elementAt(currentIndex));
-  }
-
-  int getNextIndexOfRandomSong() {
+  SongInfo getRandomSong() {
     int index = _random.nextInt(listSongInfo.length);
     SongInfo randomSong = listSongInfo.elementAt(index);
-    if (playedSong.contains(randomSong)) {
-      return getNextIndexOfRandomSong();
+    if (playedSongs.contains(randomSong)) {
+      return getRandomSong();
     }
-    return index;
+    return randomSong;
   }
 
-  SongInfo getNextSong(bool playShuffle) {
-    if (!playShuffle) {
-      currentIndex++;
+  SongInfo? getNextSong(bool playShuffle, LoopMode loopMode) {
+    int currentIndex = listSongInfo.indexOf(currentSongInfo);
+    late SongInfo nextSong;
+
+    if (currentIndex + 1 >= listSongInfo.length ||
+        playedSongs.length == listSongInfo.length) {
+      switch (loopMode) {
+        case LoopMode.all:
+          resetPlayedSong();
+          nextSong = playShuffle ? getRandomSong() : listSongInfo.elementAt(0);
+          break;
+        default:
+          return null;
+      }
     } else {
-      currentIndex = getNextIndexOfRandomSong();
+      nextSong = playShuffle
+          ? getRandomSong()
+          : listSongInfo.elementAt(currentIndex + 1);
     }
 
-    playedSong.add(listSongInfo.elementAt(currentIndex));
-    return listSongInfo.elementAt(currentIndex);
+    currentSongInfo = nextSong;
+    playedSongs.add(nextSong);
+
+    playedSongs = playedSongs.toSet().toList();
+    return nextSong;
   }
 
   SongInfo getPreviousSong() {
-    playedSong.removeLast();
-
-    return playedSong.last;
+    List<String> playedTitle = List.empty(growable: true);
+    for (var song in playedSongs) {
+      playedTitle.add(song.title!);
+    }
+    playedSongs.removeLast();
+    currentSongInfo = playedSongs.last;
+    return playedSongs.last;
   }
 
   void resetPlayedSong() {
-    playedSong = List.empty(growable: true);
+    playedSongs = List.empty(growable: true);
   }
 
   bool isPlayedAllPlaylist() {
-    return playedSong.toSet().toList().length == listSongInfo.length;
+    return playedSongs.toSet().toList().length == listSongInfo.length;
   }
 }

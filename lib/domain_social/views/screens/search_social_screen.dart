@@ -323,7 +323,7 @@ class _SearchSocialScreenState extends State<SearchSocialScreen>
                                 return CustomCardInfoWidget(
                                   index: index,
                                   image: users[index].profile?.avatarUrl ??
-                                      AssetPath.userUnknowImage,
+                                      AssetPath.userUnknownImage,
                                   title: users[index].profile?.fullName ??
                                       "Anonymous",
                                   padding: 0,

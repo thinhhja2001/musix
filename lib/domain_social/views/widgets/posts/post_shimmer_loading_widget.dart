@@ -6,9 +6,11 @@ import '../../../../theme/theme.dart';
 class PostShimmerLoadingWidget extends StatelessWidget {
   const PostShimmerLoadingWidget({
     this.padding,
+    this.height,
     super.key,
   });
   final EdgeInsetsGeometry? padding;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,7 +20,7 @@ class PostShimmerLoadingWidget extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(shape: BoxShape.circle),
             width: double.infinity,
-            height: 150,
+            height: height ?? 150,
             child: Shimmer.fromColors(
                 baseColor: ColorTheme.background,
                 highlightColor: ColorTheme.backgroundDarker,

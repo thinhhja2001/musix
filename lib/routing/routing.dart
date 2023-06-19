@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musix/domain_social/views/screen.dart';
+import 'package:musix/domain_social/views/screens/list_follow_screen.dart';
+import 'package:musix/domain_social/views/screens/post_detail_screen.dart';
 import 'package:musix/domain_user/entities/entities.dart';
 
 import '../domain_artist/views/screens.dart';
@@ -157,6 +159,19 @@ Route<dynamic> routeController(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (context) => ProfileSocialScreen(user: user),
+      );
+    case RoutingPath.postDetail:
+      final postId = settings.arguments as String;
+      return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => PostDetailScreen(postId: postId));
+    case RoutingPath.listFollowScreen:
+      final argument = settings.arguments as ListFollowScreenArgument;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => ListFollowScreen(
+          listFollowScreenArgument: argument,
+        ),
       );
     default:
       return MaterialPageRoute(

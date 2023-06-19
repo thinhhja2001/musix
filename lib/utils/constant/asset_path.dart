@@ -43,6 +43,6 @@ class AssetPath {
 
   static const String placeImage =
       'https://images.unsplash.com/photo-1503248947681-3198a7abfcc9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80';
-  static const String userUnknowImage =
+  static const String userUnknownImage =
       "https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_960_720.png";
 }
