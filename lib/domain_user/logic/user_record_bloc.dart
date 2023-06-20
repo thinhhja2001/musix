@@ -187,9 +187,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
   FutureOr<void> _saveUserSongRecord(
       SaveUserSongRecordEvent event, Emitter<UserRecordState> emit) async {
     var userRecord = state.record;
-    if (userRecord != null && userRecord.songRecord != null) {
-      return;
-    }
+
     try {
       emit(
         state.copyWith(
@@ -200,7 +198,6 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ]),
         ),
       );
-
       await userMusicRepo.saveSongRecord(
           token: token, songId: event.songInfo.encodeId!);
       var songRecord = userRecord?.songRecord;

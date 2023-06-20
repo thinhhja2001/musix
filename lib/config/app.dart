@@ -245,19 +245,22 @@ class _MusixAppState extends State<MusixApp> {
           ),
         ),
       ],
-      child: BlocBuilder<AuthBloc, AuthState>(buildWhen: (prev, curr) {
-        return curr.jwtToken != null &&
-            curr.jwtToken != "" &&
-            prev.jwtToken != curr.jwtToken;
-      }, builder: (context, state) {
-        if (state.jwtToken != null && state.jwtToken != "") {
-          return const MusixAppView(
-            path: RoutingPath.home,
-          );
-        } else {
-          return const MusixAppView();
-        }
-      }),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        buildWhen: (prev, curr) {
+          return curr.jwtToken != null &&
+              curr.jwtToken != "" &&
+              prev.jwtToken != curr.jwtToken;
+        },
+        builder: (context, state) {
+          if (state.jwtToken != null && state.jwtToken != "") {
+            return const MusixAppView(
+              path: RoutingPath.home,
+            );
+          } else {
+            return const MusixAppView();
+          }
+        },
+      ),
     );
   }
 }
