@@ -77,9 +77,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
     } on ResponseException catch (e) {
       emit(state.copyWith(
-        loginMsg: e.message,
-        loginStatus: e.statusCode,
-      ));
+          loginMsg: e.message,
+          loginStatus: e.statusCode,
+          isLoginLoading: false));
     }
   }
 
