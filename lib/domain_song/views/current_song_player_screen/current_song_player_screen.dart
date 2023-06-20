@@ -1,13 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter.dart';
+import 'package:musix/domain_user/views/own_playlists_screen/widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../theme/color.dart';
 import '../../../theme/text_style.dart';
 import '../../../utils/functions/function_utils.dart';
-import '../../entities/entities.dart';
-import '../../logic/song_bloc.dart';
 import '../../models/models.dart';
 import '../../utils/utils.dart';
 import '../widgets.dart';
@@ -44,6 +44,7 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
     return BlocBuilder<SongBloc, SongState>(
       builder: (context, state) {
         final currentSong = state.songInfo;
+        final source = state.songSource;
         return FutureBuilder<PaletteGenerator>(
             future: updatePaletteGenerator(
               currentSong?.thumbnailM ?? "",
@@ -82,24 +83,43 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.white,
-                            ),
+                          BlocBuilder<UserMusicBloc, UserMusicState>(
+                            builder: (context, state) {
+                              List<String> songs =
+                                  state.music?.favoriteSongs ?? [];
+                              final bool isFavorite =
+                                  songs.contains(currentSong.encodeId);
+                              return IconButton(
+                                onPressed: () {
+                                  context
+                                      .read<UserMusicBloc>()
+                                      .add(FavoriteSongEvent(
+                                        id: currentSong.encodeId!,
+                                        title: currentSong.title!,
+                                        artistNames: currentSong.artistsNames!,
+                                        genreNames: currentSong.genreNames,
+                                      ));
+                                },
+                                icon: Icon(
+                                  isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline,
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      SaveSongOwnPlaylistWidget(
+                                        song: currentSong,
+                                      ));
+                            },
                             icon: const Icon(
                               Icons.playlist_add,
-                              color: Colors.white,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.file_download_outlined,
                               color: Colors.white,
                             ),
                           ),
