@@ -375,13 +375,13 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
       ]),
     ));
 
-    add(const RecommendPlaylistEvent());
+    add(RecommendPlaylistEvent(token));
   }
 
   FutureOr<void> _recommendPlaylist(
       RecommendPlaylistEvent event, Emitter<UserRecordState> emit) async {
-    var songs = state.record?.songRecord?.keys.toList();
-    if (songs == null || songs.isEmpty) return;
+    var songs = await UserMusicRepo().getTop10MostListenedSong(token: token);
+    if (songs.isEmpty) return;
     debugPrint('$songs');
     var record = state.record;
     try {

@@ -41,5 +41,6 @@ class SearchRecentSongEvent implements UserRecordEvent {
 }
 
 class RecommendPlaylistEvent implements UserRecordEvent {
-  const RecommendPlaylistEvent();
+  final String token;
+  const RecommendPlaylistEvent(this.token);
 }
