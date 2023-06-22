@@ -32,6 +32,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     on<SearchHistoryEvent>(_searchHistory);
     on<SearchRecentSongEvent>(_searchRecentSong);
     on<RecommendPlaylistEvent>(_recommendPlaylist);
+    on<UserRecordResetEvent>(_userRecordResetEvent);
   }
 
   final AuthBloc authBloc;
@@ -79,7 +80,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ], status: [
             Status.success,
           ]),
-          record: userRecord,
+          record: () => userRecord,
         ),
       );
     } on ResponseException catch (e) {
@@ -144,7 +145,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ], status: [
             Status.success,
           ]),
-          record: userRecord,
+          record: () => userRecord,
         ),
       );
     } on ResponseException catch (e) {
@@ -180,7 +181,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     var userRecord = state.record;
     userRecord = userRecord?.copyWith(searchHistory: event.search);
     emit(
-      state.copyWith(record: userRecord),
+      state.copyWith(record: () => userRecord),
     );
   }
 
@@ -213,7 +214,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ], status: [
             Status.success,
           ]),
-          record: userRecord,
+          record: () => userRecord,
         ),
       );
     } on ResponseException catch (e) {
@@ -279,7 +280,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ], status: [
             Status.success,
           ]),
-          record: userRecord,
+          record: () => userRecord,
         ),
       );
     } on ResponseException catch (e) {
@@ -315,13 +316,14 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
     var userRecord = state.record;
     userRecord = userRecord?.copyWith(searchSong: event.search);
     emit(
-      state.copyWith(record: userRecord),
+      state.copyWith(record: () => userRecord),
     );
   }
 
   FutureOr<void> _getUserRecord(
       GetUserRecordEvent event, Emitter<UserRecordState> emit) async {
     try {
+      print("get user record called");
       emit(
         state.copyWith(
           status: updateMapStatus(source: state.status, keys: [
@@ -350,7 +352,8 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ], status: [
             Status.success,
           ]),
-          record: UserRecord(searchRecord: searchRecord, songRecord: songs),
+          record: () =>
+              UserRecord(searchRecord: searchRecord, songRecord: songs),
         ),
       );
     } on ResponseException catch (e) {
@@ -375,13 +378,13 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
       ]),
     ));
 
-    add(const RecommendPlaylistEvent());
+    add(RecommendPlaylistEvent(token));
   }
 
   FutureOr<void> _recommendPlaylist(
       RecommendPlaylistEvent event, Emitter<UserRecordState> emit) async {
-    var songs = state.record?.songRecord?.keys.toList();
-    if (songs == null || songs.isEmpty) return;
+    var songs = await UserMusicRepo().getTop10MostListenedSong(token: token);
+    if (songs.isEmpty) return;
     debugPrint('$songs');
     var record = state.record;
     try {
@@ -414,7 +417,7 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
           ], status: [
             Status.success,
           ]),
-          record: record,
+          record: () => record,
         ),
       );
     } on ResponseException catch (e) {
@@ -440,5 +443,14 @@ class UserRecordBloc extends Bloc<UserRecordEvent, UserRecordState> {
         ]),
       ),
     );
+  }
+
+  FutureOr<void> _userRecordResetEvent(
+      UserRecordResetEvent event, Emitter<UserRecordState> emit) {
+    emit(UserRecordState(
+      status: {
+        UserRecordStatusKey.global.name: Status.idle,
+      },
+    ));
   }
 }

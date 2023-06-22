@@ -512,4 +512,25 @@ class UserMusicRepo extends InitialRepo {
           message: e.response?.data?["msg"] ?? exception);
     }
   }
+
+  FutureOr<List<String>> getTop10MostListenedSong(
+      {required String token}) async {
+    try {
+      const url = "/music/song-record/top-10";
+      var response = await dio.get(
+        url,
+        options: Options(
+          headers: headerApplicationJson(token: token),
+        ),
+      );
+      List<String> songs = (response.data['data'] as List)
+          .map((item) => item as String)
+          .toList();
+      return songs;
+    } on DioError catch (e) {
+      throw ResponseException(
+          statusCode: e.response?.statusCode,
+          message: e.response?.data["msg"] ?? exception);
+    }
+  }
 }
