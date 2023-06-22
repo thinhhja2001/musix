@@ -44,3 +44,5 @@ class RecommendPlaylistEvent implements UserRecordEvent {
   final String token;
   const RecommendPlaylistEvent(this.token);
 }
+
+class UserRecordResetEvent implements UserRecordEvent {}

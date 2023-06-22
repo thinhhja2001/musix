@@ -32,14 +32,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoginLoading: true));
     final response = await authRepo.login(event.request);
     emit(state.copyWith(isLoginLoading: false));
-    var authStorage = HiveUtils.readAuthStorage();
-    if (authStorage != null) {
-      authStorage.username = response.data?["user"]["username"];
-      authStorage.token = response.data?["token"]["token"];
-    } else {
-      authStorage = await HiveUtils.createAuthStorage(
-          response.data?["token"]["token"], response.data?["user"]["username"]);
+    if (response.status == 200) {
+      var authStorage = HiveUtils.readAuthStorage();
+      if (authStorage != null) {
+        authStorage.username = response.data?["user"]["username"];
+        authStorage.token = response.data?["token"]["token"];
+      } else {
+        authStorage = await HiveUtils.createAuthStorage(
+            response.data?["token"]["token"],
+            response.data?["user"]["username"]);
+      }
     }
+
     emit(
       state.copyWith(
         loginMsg: response.msg,

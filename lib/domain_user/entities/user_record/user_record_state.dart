@@ -17,12 +17,12 @@ class UserRecordState extends Equatable {
   UserRecordState copyWith({
     Map<String, Status>? status,
     ResponseException? error,
-    UserRecord? record,
+    UserRecord? Function()? record,
   }) {
     return UserRecordState(
       status: status ?? this.status,
       error: error ?? this.error,
-      record: record ?? this.record,
+      record: record != null ? record() : this.record,
     );
   }
 

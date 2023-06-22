@@ -15,7 +15,7 @@ class AuthService extends InitialRepo implements IAuthService {
   Future<Map<String, dynamic>> login(LoginRequest request) async {
     final url = "$databaseUrl/auth/login";
     late Response response;
-
+    print("data is ${request.toJson()}");
     response = await dio.post(
       url,
       data: request.toJson(),

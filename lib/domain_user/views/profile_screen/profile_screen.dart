@@ -369,6 +369,7 @@ void _clearBloc(BuildContext context) {
   context.read<SocialBloc>().add(SocialResetEvent());
   context.read<CommentBloc>().add(ResetCommentsEvent());
   context.read<SongBloc>().add(SongResetEvent());
+  context.read<UserRecordBloc>().add(UserRecordResetEvent());
   context.read<AuthBloc>().add(const AuthLogoutEvent());
 }
 

@@ -250,6 +250,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     emit(state.copyWith(isShuffle: !state.isShuffle));
   }
 
+  //----------------------------------------------------------------------------
   FutureOr<void> _resetEvent(SongResetEvent event, Emitter<SongState> emit) {
     emit(SongState(
       status: {
