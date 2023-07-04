@@ -69,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: const [
               HomeMusicPage(),
               SocialScreen(),
-              VideoShortListPageWidget(),
               ProfileScreen(),
             ],
           ),
