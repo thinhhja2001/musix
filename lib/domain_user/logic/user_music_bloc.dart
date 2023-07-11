@@ -309,7 +309,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
-      var artistModels = await userMusicRepo.favoriteArtist(
+      var artistModels = await userMusicRepo.dislikeArtist(
         token: token,
         id: event.id,
         name: event.name,
@@ -442,7 +442,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var gerneNames = event.genreNames?.join(", ");
 
-      var playlistModels = await userMusicRepo.favoritePlaylist(
+      var playlistModels = await userMusicRepo.dislikePlaylist(
         token: token,
         id: event.id,
         title: event.title,

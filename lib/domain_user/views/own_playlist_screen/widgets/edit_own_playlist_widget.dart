@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import '../../../../config/exporter.dart';
 import '../../../../domain_auth/views/widgets/custom_textfield_widget.dart';
+import '../../../../global/widgets/loading_widget.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';
-
-import '../../../../global/widgets/loading_widget.dart';
 
 class EditOwnPlaylistWidget extends StatefulWidget {
   final String id;
@@ -70,7 +70,7 @@ class _EditOwnPlaylistWidgetState extends State<EditOwnPlaylistWidget> {
               children: [
                 Center(
                   child: Text(
-                    'Create New Playlist',
+                    'Edit Own Playlist',
                     style: TextStyleTheme.ts20.copyWith(
                       color: ColorTheme.white,
                       fontWeight: FontWeight.w500,

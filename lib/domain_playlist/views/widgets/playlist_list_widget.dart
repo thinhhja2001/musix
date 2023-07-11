@@ -458,6 +458,7 @@ class PlaylistMasonWidget extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 24,
       crossAxisSpacing: 24,
+      padding: EdgeInsets.zero,
       itemCount: sectionPlaylist.items!.length + 1,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
