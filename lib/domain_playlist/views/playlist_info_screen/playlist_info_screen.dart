@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../config/exporter/bloc_exporter.dart';
-import '../../../config/exporter/state_exporter.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../config/exporter/bloc_exporter.dart';
+import '../../../config/exporter/state_exporter.dart';
 import '../../../domain_song/views/widgets.dart';
 import '../../../domain_song/views/widgets/control_widgets/shuffle_button_widget.dart';
 import '../../../theme/theme.dart';
@@ -39,16 +38,6 @@ class PlaylistInfoScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            splashColor: Colors.white24,
-            tooltip: 'Download',
-            icon: Icon(
-              MdiIcons.download,
-              color: Colors.white.withOpacity(0.8),
-              size: 24,
-            ),
-          ),
           BlocSelector<PlaylistBloc, PlaylistState, Playlist?>(
             selector: (state) {
               return state.playlist;

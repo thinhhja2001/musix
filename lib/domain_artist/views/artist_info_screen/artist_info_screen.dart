@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../config/exporter.dart';
 import '../../../domain_playlist/views/widgets.dart';
@@ -39,18 +38,6 @@ class _ArtistInfoScreenState extends State<ArtistInfoScreen> {
             size: 20,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            splashColor: Colors.white24,
-            tooltip: 'Download',
-            icon: Icon(
-              MdiIcons.download,
-              color: Colors.white.withOpacity(0.8),
-              size: 24,
-            ),
-          ),
-        ],
       ),
       extendBodyBehindAppBar: true,
       body: Stack(

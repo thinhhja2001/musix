@@ -8,7 +8,6 @@ import '../../../../domain_playlist/views/widgets.dart';
 import '../../../../domain_song/views/widgets.dart';
 import '../../../../theme/theme.dart';
 import '../../../../utils/utils.dart';
-import '../../../entities/entities.dart';
 
 class HubInfoScreen extends StatelessWidget {
   const HubInfoScreen({
@@ -35,16 +34,6 @@ class HubInfoScreen extends StatelessWidget {
             size: 20,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-        ],
       ),
       extendBodyBehindAppBar: true,
       body: BlocBuilder<HubBloc, HubState>(
