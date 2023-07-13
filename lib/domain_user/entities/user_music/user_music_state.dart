@@ -21,7 +21,7 @@ class UserMusicState extends Equatable {
   }) {
     return UserMusicState(
         status: status ?? this.status,
-        error: error ?? this.error,
+        error: error,
         music: music ?? this.music);
   }
 

@@ -109,11 +109,12 @@ class ViewPlaylistDetailWidget extends StatelessWidget {
                 icon: isFavorite ? Icons.favorite : Icons.favorite_outline,
                 data: "Like",
                 onPress: () {
-                  context.read<UserMusicBloc>().add(FavoritePlaylistEvent(
+                  context.read<UserMusicBloc>().add(CheckPlaylistEvent(
                         id: playlist.encodeId!,
                         title: playlist.title!,
                         artistNames: playlist.artistsNames!,
                         genreNames: playlist.genres,
+                        isFavorite: true,
                       ));
                 },
               );
@@ -134,11 +135,12 @@ class ViewPlaylistDetailWidget extends StatelessWidget {
                     : Icons.do_not_disturb_alt_outlined,
                 data: "Block",
                 onPress: () {
-                  context.read<UserMusicBloc>().add(DislikePlaylistEvent(
+                  context.read<UserMusicBloc>().add(CheckPlaylistEvent(
                         id: playlist.encodeId!,
                         title: playlist.title!,
                         artistNames: playlist.artistsNames!,
                         genreNames: playlist.genres,
+                        isFavorite: false,
                       ));
                 },
               );
@@ -147,6 +149,57 @@ class ViewPlaylistDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
+          BlocListener<UserMusicBloc, UserMusicState>(
+              child: const SizedBox.shrink(),
+              listenWhen: (prev, curr) =>
+                  prev.status?[UserMusicStatusKey.playlist.name] !=
+                  curr.status?[UserMusicStatusKey.playlist.name],
+              listener: (context, state) {
+                // Call dialog when user favorite the block music
+                if (state.error?.statusCode == 1000) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PopupWarningWidget(
+                          description:
+                              'This playlist is in you block list. Do you want to remove it to favorite list?',
+                          onTap: () {
+                            context
+                                .read<UserMusicBloc>()
+                                .add(FavoritePlaylistEvent(
+                                  id: playlist.encodeId!,
+                                  title: playlist.title!,
+                                  artistNames: playlist.artistsNames!,
+                                  genreNames: playlist.genres,
+                                  isRemoveDislike: true,
+                                ));
+                          },
+                        );
+                      });
+                }
+                // Call dialog when user block the favorite music
+                else if (state.error?.statusCode == 1001) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PopupWarningWidget(
+                          description:
+                              'This playlist is in you favorite list. Do you want to remove it to block list?',
+                          onTap: () {
+                            context
+                                .read<UserMusicBloc>()
+                                .add(DislikePlaylistEvent(
+                                  id: playlist.encodeId!,
+                                  title: playlist.title!,
+                                  artistNames: playlist.artistsNames!,
+                                  genreNames: playlist.genres,
+                                  isRemoveFavorite: true,
+                                ));
+                          },
+                        );
+                      });
+                }
+              }),
         ],
       ),
     );

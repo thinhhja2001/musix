@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_user/views/own_playlists_screen/widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import '../../../global/widgets/widgets.dart';
+import '../../../routing/routing_path.dart';
 import '../../../theme/color.dart';
 import '../../../theme/text_style.dart';
 import '../../../utils/functions/function_utils.dart';
@@ -83,7 +86,36 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          BlocBuilder<UserMusicBloc, UserMusicState>(
+                          BlocConsumer<UserMusicBloc, UserMusicState>(
+                            listenWhen: (prev, curr) =>
+                                prev.status?[UserMusicStatusKey.song.name] !=
+                                curr.status?[UserMusicStatusKey.song.name],
+                            listener: (context, state) {
+                              // Call dialog when user favorite the block music
+                              if (state.error?.statusCode == 1000) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return PopupWarningWidget(
+                                        description:
+                                            'This song is in you block list. Do you want to remove it to favorite list?',
+                                        onTap: () {
+                                          context
+                                              .read<UserMusicBloc>()
+                                              .add(FavoriteSongEvent(
+                                                id: currentSong.encodeId!,
+                                                title: currentSong.title!,
+                                                artistNames:
+                                                    currentSong.artistsNames!,
+                                                genreNames:
+                                                    currentSong.genreNames,
+                                                isRemoveDislike: true,
+                                              ));
+                                        },
+                                      );
+                                    });
+                              }
+                            },
                             builder: (context, state) {
                               List<String> songs =
                                   state.music?.favoriteSongs ?? [];
@@ -93,17 +125,74 @@ class _CurrentSongPlayerWidget extends StatelessWidget {
                                 onPressed: () {
                                   context
                                       .read<UserMusicBloc>()
-                                      .add(FavoriteSongEvent(
+                                      .add(CheckSongEvent(
                                         id: currentSong.encodeId!,
                                         title: currentSong.title!,
                                         artistNames: currentSong.artistsNames!,
                                         genreNames: currentSong.genreNames,
+                                        isFavorite: true,
                                       ));
                                 },
                                 icon: Icon(
                                   isFavorite
                                       ? Icons.favorite
                                       : Icons.favorite_outline,
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
+                          BlocConsumer<UserMusicBloc, UserMusicState>(
+                            listenWhen: (prev, curr) =>
+                                prev.status?[UserMusicStatusKey.song.name] !=
+                                curr.status?[UserMusicStatusKey.song.name],
+                            listener: (context, state) {
+                              // Call dialog when user favorite the block music
+                              if (state.error?.statusCode == 1001) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return PopupWarningWidget(
+                                        description:
+                                            'This song is in you favorite list. Do you want to remove it to block list?',
+                                        onTap: () {
+                                          context
+                                              .read<UserMusicBloc>()
+                                              .add(DislikeSongEvent(
+                                                id: currentSong.encodeId!,
+                                                title: currentSong.title!,
+                                                artistNames:
+                                                    currentSong.artistsNames!,
+                                                genreNames:
+                                                    currentSong.genreNames,
+                                                isRemoveFavorite: true,
+                                              ));
+                                        },
+                                      );
+                                    });
+                              }
+                            },
+                            builder: (context, state) {
+                              List<String> songs =
+                                  state.music?.dislikeSongs ?? [];
+                              final bool isDislike =
+                                  songs.contains(currentSong.encodeId);
+                              return IconButton(
+                                onPressed: () {
+                                  context
+                                      .read<UserMusicBloc>()
+                                      .add(CheckSongEvent(
+                                        id: currentSong.encodeId!,
+                                        title: currentSong.title!,
+                                        artistNames: currentSong.artistsNames!,
+                                        genreNames: currentSong.genreNames,
+                                        isFavorite: false,
+                                      ));
+                                },
+                                icon: Icon(
+                                  isDislike
+                                      ? Icons.do_disturb_on
+                                      : Icons.do_not_disturb_alt_outlined,
                                   color: Colors.white,
                                 ),
                               );
@@ -196,6 +285,11 @@ class _SongInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> artists = song.artistsNames?.split(',') ?? [];
+    bool isMultipleArtist = false;
+    if (artists.length != song.alias?.length) {
+      isMultipleArtist = true;
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -210,8 +304,42 @@ class _SongInformationWidget extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          song.artistsNames ?? "",
+        Text.rich(
+          TextSpan(
+            children: <InlineSpan>[
+              if (artists.isEmpty || isMultipleArtist) ...[
+                TextSpan(
+                  text: song.artistsNames,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      context
+                          .read<ArtistBloc>()
+                          .add(ArtistGetInfoEvent(song.alias!.first));
+                      Navigator.of(context).pushNamed(
+                        RoutingPath.artistInfo,
+                      );
+                    },
+                )
+              ] else
+                ...List.generate(
+                  artists.length,
+                  (index) => TextSpan(
+                      text: artists[index],
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          context
+                              .read<ArtistBloc>()
+                              .add(ArtistGetInfoEvent(song.alias![index]));
+                          Navigator.of(context).pushNamed(
+                            RoutingPath.artistInfo,
+                          );
+                        },
+                      children: index < artists.length - 1
+                          ? const [TextSpan(text: ', ')]
+                          : null),
+                ),
+            ],
+          ),
           style: TextStyleTheme.ts20.copyWith(
             color: ColorTheme.primary,
             fontWeight: FontWeight.w400,

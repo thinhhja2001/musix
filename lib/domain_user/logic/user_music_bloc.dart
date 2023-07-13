@@ -24,8 +24,11 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     on<GetUserMusicEvent>(_getUserMusic);
     on<FavoritePlaylistEvent>(_favoritePlaylist);
     on<FavoriteArtistEvent>(_favoriteArtist);
+    on<CheckSongEvent>(_checkSong);
     on<FavoriteSongEvent>(_favoriteSong);
+    on<CheckPlaylistEvent>(_checkPlaylist);
     on<DislikePlaylistEvent>(_dislikePlaylist);
+    on<CheckArtistEvent>(_checkArtist);
     on<DislikeArtistEvent>(_dislikeArtist);
     on<DislikeSongEvent>(_dislikeSong);
     on<CreateOwnPlaylistEvent>(_createOwnPlaylist);
@@ -104,6 +107,51 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     ));
   }
 
+  FutureOr<void> _checkSong(
+      CheckSongEvent event, Emitter<UserMusicState> emit) {
+    bool isExist = false;
+    if (event.isFavorite) {
+      isExist = state.music?.dislikeSongs?.contains(event.id) ?? false;
+    } else {
+      isExist = state.music?.favoriteSongs?.contains(event.id) ?? false;
+    }
+    if (isExist) {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.song.name,
+          ], status: [
+            Status.error,
+          ]),
+          error: ResponseException(statusCode: event.isFavorite ? 1000 : 1001),
+        ),
+      );
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.song.name,
+          ], status: [
+            Status.idle,
+          ]),
+        ),
+      );
+    } else {
+      if (event.isFavorite) {
+        add(FavoriteSongEvent(
+            id: event.id,
+            title: event.title,
+            artistNames: event.artistNames,
+            genreNames: event.genreNames));
+      } else {
+        add(DislikeSongEvent(
+            id: event.id,
+            title: event.title,
+            artistNames: event.artistNames,
+            genreNames: event.genreNames));
+      }
+    }
+  }
+
   FutureOr<void> _favoriteSong(
       FavoriteSongEvent event, Emitter<UserMusicState> emit) async {
     try {
@@ -116,7 +164,19 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
+
       var gerneNames = event.genreNames?.join(", ");
+
+      var dislikeSongs = state.music?.dislikeSongs;
+      if (event.isRemoveDislike == true) {
+        var dislikeSongModels = await userMusicRepo.dislikeSong(
+            token: token,
+            id: event.id,
+            title: event.title,
+            artistNames: event.artistNames,
+            genreNames: gerneNames);
+        dislikeSongs = convertSongsModelToList(dislikeSongModels);
+      }
 
       var songModels = await userMusicRepo.favoriteSong(
           token: token,
@@ -133,6 +193,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ]),
         music: state.music?.copyWith(
           favoriteSongs: convertSongsModelToList(songModels),
+          dislikeSongs: dislikeSongs,
         ),
       ));
     } on ResponseException catch (e) {
@@ -183,6 +244,17 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var gerneNames = event.genreNames?.join(", ");
 
+      var favoriteSongs = state.music?.favoriteSongs;
+      if (event.isRemoveFavorite == true) {
+        var favoriteSongModels = await userMusicRepo.favoriteSong(
+            token: token,
+            id: event.id,
+            title: event.title,
+            artistNames: event.artistNames,
+            genreNames: gerneNames);
+        favoriteSongs = convertSongsModelToList(favoriteSongModels);
+      }
+
       var songModels = await userMusicRepo.dislikeSong(
           token: token,
           id: event.id,
@@ -198,6 +270,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ]),
         music: state.music?.copyWith(
           dislikeSongs: convertSongsModelToList(songModels),
+          favoriteSongs: favoriteSongs,
         ),
       ));
     } on ResponseException catch (e) {
@@ -234,6 +307,51 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     ));
   }
 
+  FutureOr<void> _checkArtist(
+      CheckArtistEvent event, Emitter<UserMusicState> emit) {
+    bool isExist = false;
+    if (event.isFavorite) {
+      isExist = state.music?.dislikeArtists?.contains(event.alias) ?? false;
+    } else {
+      isExist = state.music?.favoriteArtists?.contains(event.alias) ?? false;
+    }
+    if (isExist) {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.artist.name,
+          ], status: [
+            Status.error,
+          ]),
+          error: ResponseException(statusCode: event.isFavorite ? 1000 : 1001),
+        ),
+      );
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.artist.name,
+          ], status: [
+            Status.idle,
+          ]),
+        ),
+      );
+    } else {
+      if (event.isFavorite) {
+        add(FavoriteArtistEvent(
+          id: event.id,
+          name: event.name,
+          alias: event.alias,
+        ));
+      } else {
+        add(DislikeArtistEvent(
+          id: event.id,
+          name: event.name,
+          alias: event.alias,
+        ));
+      }
+    }
+  }
+
   FutureOr<void> _favoriteArtist(
       FavoriteArtistEvent event, Emitter<UserMusicState> emit) async {
     try {
@@ -246,6 +364,18 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
+
+      var dislikeArtists = state.music?.dislikeArtists;
+      if (event.isRemoveDislike == true) {
+        var dislikeArtistModels = await userMusicRepo.dislikeArtist(
+          token: token,
+          id: event.id,
+          name: event.name,
+          alias: event.alias,
+        );
+        dislikeArtists = convertArtistsModelToList(dislikeArtistModels);
+      }
+
       var artistModels = await userMusicRepo.favoriteArtist(
         token: token,
         id: event.id,
@@ -261,6 +391,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ]),
         music: state.music?.copyWith(
           favoriteArtists: convertArtistsModelToList(artistModels),
+          dislikeArtists: dislikeArtists,
         ),
       ));
     } on ResponseException catch (e) {
@@ -309,6 +440,18 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
           ]),
         ),
       );
+
+      var favoriteArtists = state.music?.favoriteArtists;
+      if (event.isRemoveFavorite == true) {
+        var favoritesArtistModels = await userMusicRepo.favoriteArtist(
+          token: token,
+          id: event.id,
+          name: event.name,
+          alias: event.alias,
+        );
+        favoriteArtists = convertArtistsModelToList(favoritesArtistModels);
+      }
+
       var artistModels = await userMusicRepo.dislikeArtist(
         token: token,
         id: event.id,
@@ -324,6 +467,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ]),
         music: state.music?.copyWith(
           dislikeArtists: convertArtistsModelToList(artistModels),
+          favoriteArtists: favoriteArtists,
         ),
       ));
     } on ResponseException catch (e) {
@@ -360,6 +504,53 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
     ));
   }
 
+  FutureOr<void> _checkPlaylist(
+      CheckPlaylistEvent event, Emitter<UserMusicState> emit) {
+    bool isExist = false;
+    if (event.isFavorite) {
+      isExist = state.music?.dislikePlaylists?.contains(event.id) ?? false;
+    } else {
+      isExist = state.music?.favoritePlaylists?.contains(event.id) ?? false;
+    }
+    if (isExist) {
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.playlist.name,
+          ], status: [
+            Status.error,
+          ]),
+          error: ResponseException(statusCode: event.isFavorite ? 1000 : 1001),
+        ),
+      );
+      emit(
+        state.copyWith(
+          status: updateMapStatus(source: state.status, keys: [
+            UserMusicStatusKey.playlist.name,
+          ], status: [
+            Status.idle,
+          ]),
+        ),
+      );
+    } else {
+      if (event.isFavorite) {
+        add(FavoritePlaylistEvent(
+          id: event.id,
+          title: event.title,
+          artistNames: event.artistNames,
+          genreNames: event.genreNames,
+        ));
+      } else {
+        add(DislikePlaylistEvent(
+          id: event.id,
+          title: event.title,
+          artistNames: event.artistNames,
+          genreNames: event.genreNames,
+        ));
+      }
+    }
+  }
+
   FutureOr<void> _favoritePlaylist(
       FavoritePlaylistEvent event, Emitter<UserMusicState> emit) async {
     try {
@@ -373,6 +564,19 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ),
       );
       var gerneNames = event.genreNames?.join(", ");
+
+      var dislikePlaylists = state.music?.dislikePlaylists;
+      if (event.isRemoveDislike == true) {
+        var dislikePlaylistModels = await userMusicRepo.favoritePlaylist(
+          token: token,
+          id: event.id,
+          title: event.title,
+          artistNames: event.artistNames,
+          genreNames: gerneNames,
+          countSongs: event.countSong,
+        );
+        dislikePlaylists = convertPlaylistsModelToList(dislikePlaylistModels);
+      }
 
       var playlistModels = await userMusicRepo.favoritePlaylist(
         token: token,
@@ -391,6 +595,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ]),
         music: state.music?.copyWith(
           favoritePlaylists: convertPlaylistsModelToList(playlistModels),
+          dislikePlaylists: dislikePlaylists,
         ),
       ));
     } on ResponseException catch (e) {
@@ -442,6 +647,19 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
       );
       var gerneNames = event.genreNames?.join(", ");
 
+      var favoritePlaylists = state.music?.favoritePlaylists;
+      if (event.isRemoveFavorite == true) {
+        var favoritePlaylistModels = await userMusicRepo.favoritePlaylist(
+          token: token,
+          id: event.id,
+          title: event.title,
+          artistNames: event.artistNames,
+          genreNames: gerneNames,
+          countSongs: event.countSong,
+        );
+        favoritePlaylists = convertPlaylistsModelToList(favoritePlaylistModels);
+      }
+
       var playlistModels = await userMusicRepo.dislikePlaylist(
         token: token,
         id: event.id,
@@ -459,6 +677,7 @@ class UserMusicBloc extends Bloc<UserMusicEvent, UserMusicState> {
         ]),
         music: state.music?.copyWith(
           dislikePlaylists: convertPlaylistsModelToList(playlistModels),
+          favoritePlaylists: favoritePlaylists,
         ),
       ));
     } on ResponseException catch (e) {

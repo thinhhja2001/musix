@@ -1,12 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain_user/views/own_playlists_screen/widgets.dart';
-import '../../../theme/color.dart';
 
 import '../../../config/exporter.dart';
+import '../../../domain_user/views/own_playlists_screen/widgets.dart';
 import '../../../global/widgets/widgets.dart';
 import '../../../routing/routing_path.dart';
+import '../../../theme/color.dart';
 import '../../../theme/text_style.dart';
 import '../../../utils/utils.dart';
 import '../../entities/entities.dart';
@@ -114,7 +114,8 @@ class ViewSongDetailWidget extends StatelessWidget {
                 icon: isFavorite ? Icons.favorite : Icons.favorite_outline,
                 data: "Like",
                 onPress: () {
-                  context.read<UserMusicBloc>().add(FavoriteSongEvent(
+                  context.read<UserMusicBloc>().add(CheckSongEvent(
+                        isFavorite: true,
                         id: song.encodeId!,
                         title: song.title!,
                         artistNames: song.artistsNames!,
@@ -153,7 +154,8 @@ class ViewSongDetailWidget extends StatelessWidget {
                     : Icons.do_not_disturb_alt_outlined,
                 data: "Block",
                 onPress: () {
-                  context.read<UserMusicBloc>().add(DislikeSongEvent(
+                  context.read<UserMusicBloc>().add(CheckSongEvent(
+                        isFavorite: false,
                         id: song.encodeId!,
                         title: song.title!,
                         artistNames: song.artistsNames!,
@@ -166,6 +168,53 @@ class ViewSongDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
+          BlocListener<UserMusicBloc, UserMusicState>(
+              child: const SizedBox.shrink(),
+              listenWhen: (prev, curr) =>
+                  prev.status?[UserMusicStatusKey.song.name] !=
+                  curr.status?[UserMusicStatusKey.song.name],
+              listener: (context, state) {
+                // Call dialog when user favorite the block music
+                if (state.error?.statusCode == 1000) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PopupWarningWidget(
+                          description:
+                              'This song is in you block list. Do you want to remove it to favorite list?',
+                          onTap: () {
+                            context.read<UserMusicBloc>().add(FavoriteSongEvent(
+                                  id: song.encodeId!,
+                                  title: song.title!,
+                                  artistNames: song.artistsNames!,
+                                  genreNames: song.genreNames,
+                                  isRemoveDislike: true,
+                                ));
+                          },
+                        );
+                      });
+                }
+                // Call dialog when user block the favorite music
+                else if (state.error?.statusCode == 1001) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PopupWarningWidget(
+                          description:
+                              'This song is in you favorite list. Do you want to remove it to block list?',
+                          onTap: () {
+                            context.read<UserMusicBloc>().add(DislikeSongEvent(
+                                  id: song.encodeId!,
+                                  title: song.title!,
+                                  artistNames: song.artistsNames!,
+                                  genreNames: song.genreNames,
+                                  isRemoveFavorite: true,
+                                ));
+                          },
+                        );
+                      });
+                }
+              }),
         ],
       ),
     );
