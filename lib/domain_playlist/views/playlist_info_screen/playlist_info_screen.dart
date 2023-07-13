@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:musix/global/widgets/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../config/exporter/bloc_exporter.dart';
@@ -44,22 +45,50 @@ class PlaylistInfoScreen extends StatelessWidget {
             },
             builder: (context, playlist) {
               if (playlist != null) {
-                return BlocSelector<UserMusicBloc, UserMusicState, bool>(
-                  selector: (userMusicState) {
-                    List<String> playlists =
-                        userMusicState.music?.favoritePlaylists ?? [];
-                    return playlists.contains(playlist.encodeId);
+                return BlocConsumer<UserMusicBloc, UserMusicState>(
+                  listenWhen: (prev, curr) =>
+                      prev.status?[UserMusicStatusKey.playlist.name] !=
+                      curr.status?[UserMusicStatusKey.playlist.name],
+                  listener: (context, state) {
+                    // Call dialog when user favorite the block music
+                    if (state.error?.statusCode == 1000) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PopupWarningWidget(
+                              description:
+                                  'This playlist is in you block list. Do you want to remove it to favorite list?',
+                              onTap: () {
+                                context
+                                    .read<UserMusicBloc>()
+                                    .add(FavoritePlaylistEvent(
+                                      id: playlist.encodeId!,
+                                      title: playlist.title!,
+                                      artistNames: playlist.artistsNames!,
+                                      genreNames: playlist.genres
+                                          ?.map((e) => e.title!)
+                                          .toList(),
+                                      isRemoveDislike: true,
+                                    ));
+                              },
+                            );
+                          });
+                    }
                   },
-                  builder: (context, isFavorite) {
+                  builder: (context, state) {
+                    List<String> playlists =
+                        state.music?.favoritePlaylists ?? [];
+                    bool isFavorite = playlists.contains(playlist.encodeId);
                     return IconButton(
                       onPressed: () {
-                        context.read<UserMusicBloc>().add(FavoritePlaylistEvent(
+                        context.read<UserMusicBloc>().add(CheckPlaylistEvent(
                               id: playlist.encodeId!,
                               title: playlist.title!,
                               artistNames: playlist.artistsNames!,
                               genreNames: playlist.genres
                                   ?.map((e) => e.title!)
                                   .toList(),
+                              isFavorite: true,
                             ));
                       },
                       splashColor: Colors.red.withOpacity(0.2),
@@ -78,6 +107,82 @@ class PlaylistInfoScreen extends StatelessWidget {
                   child: Icon(
                     Icons.favorite_outline,
                     color: Colors.red.withOpacity(0.8),
+                    size: 24,
+                  ),
+                );
+              }
+            },
+          ),
+          BlocSelector<PlaylistBloc, PlaylistState, Playlist?>(
+            selector: (state) {
+              return state.playlist;
+            },
+            builder: (context, playlist) {
+              if (playlist != null) {
+                return BlocConsumer<UserMusicBloc, UserMusicState>(
+                  listenWhen: (prev, curr) =>
+                      prev.status?[UserMusicStatusKey.playlist.name] !=
+                      curr.status?[UserMusicStatusKey.playlist.name],
+                  listener: (context, state) {
+                    // Call dialog when user favorite the block music
+                    if (state.error?.statusCode == 1001) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PopupWarningWidget(
+                              description:
+                                  'This playlist is in you favorite list. Do you want to remove it to block list?',
+                              onTap: () {
+                                context
+                                    .read<UserMusicBloc>()
+                                    .add(DislikePlaylistEvent(
+                                      id: playlist.encodeId!,
+                                      title: playlist.title!,
+                                      artistNames: playlist.artistsNames!,
+                                      genreNames: playlist.genres
+                                          ?.map((e) => e.title!)
+                                          .toList(),
+                                      isRemoveFavorite: true,
+                                    ));
+                              },
+                            );
+                          });
+                    }
+                  },
+                  builder: (context, state) {
+                    List<String> playlists =
+                        state.music?.dislikePlaylists ?? [];
+                    bool isDislike = playlists.contains(playlist.encodeId);
+                    return IconButton(
+                      onPressed: () {
+                        context.read<UserMusicBloc>().add(CheckPlaylistEvent(
+                              id: playlist.encodeId!,
+                              title: playlist.title!,
+                              artistNames: playlist.artistsNames!,
+                              genreNames: playlist.genres
+                                  ?.map((e) => e.title!)
+                                  .toList(),
+                              isFavorite: false,
+                            ));
+                      },
+                      splashColor: Colors.red.withOpacity(0.2),
+                      tooltip: 'Dislike',
+                      icon: Icon(
+                        isDislike
+                            ? Icons.do_disturb_on
+                            : Icons.do_not_disturb_alt_outlined,
+                        color: Colors.yellow.withOpacity(0.8),
+                        size: 24,
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.do_not_disturb_alt_outlined,
+                    color: Colors.yellow.withOpacity(0.8),
                     size: 24,
                   ),
                 );

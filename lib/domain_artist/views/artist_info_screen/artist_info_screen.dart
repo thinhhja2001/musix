@@ -6,8 +6,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../config/exporter.dart';
 import '../../../domain_playlist/views/widgets.dart';
 import '../../../domain_song/views/widgets.dart';
+import '../../../global/widgets/widgets.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/enum/enum_status.dart';
+import '../../entities/entities.dart';
 
 class ArtistInfoScreen extends StatefulWidget {
   const ArtistInfoScreen({Key? key}) : super(key: key);
@@ -38,6 +40,77 @@ class _ArtistInfoScreenState extends State<ArtistInfoScreen> {
             size: 20,
           ),
         ),
+        actions: [
+          BlocSelector<ArtistBloc, ArtistState, Artist?>(
+            selector: (state) {
+              return state.info;
+            },
+            builder: (context, artist) {
+              if (artist != null) {
+                return BlocConsumer<UserMusicBloc, UserMusicState>(
+                  listenWhen: (prev, curr) =>
+                      prev.status?[UserMusicStatusKey.artist.name] !=
+                      curr.status?[UserMusicStatusKey.artist.name],
+                  listener: (context, state) {
+                    // Call dialog when user favorite the block music
+                    if (state.error?.statusCode == 1001) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PopupWarningWidget(
+                              description:
+                                  'This artist is in you favorite list. Do you want to remove this artist to block list?',
+                              onTap: () {
+                                context
+                                    .read<UserMusicBloc>()
+                                    .add(DislikeArtistEvent(
+                                      id: artist.id!,
+                                      alias: artist.alias!,
+                                      name: artist.name!,
+                                      isRemoveFavorite: true,
+                                    ));
+                              },
+                            );
+                          });
+                    }
+                  },
+                  builder: (context, state) {
+                    List<String> artists = state.music?.dislikeArtists ?? [];
+                    bool isDislike = artists.contains(artist.alias);
+                    return IconButton(
+                      onPressed: () {
+                        context.read<UserMusicBloc>().add(CheckArtistEvent(
+                              id: artist.id!,
+                              alias: artist.alias!,
+                              name: artist.name!,
+                              isFavorite: false,
+                            ));
+                      },
+                      splashColor: Colors.red.withOpacity(0.2),
+                      tooltip: 'Dislike',
+                      icon: Icon(
+                        isDislike
+                            ? Icons.do_disturb_on
+                            : Icons.do_not_disturb_alt_outlined,
+                        color: Colors.red.withOpacity(0.8),
+                        size: 24,
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.do_not_disturb_alt_outlined,
+                    color: Colors.red.withOpacity(0.8),
+                    size: 24,
+                  ),
+                );
+              }
+            },
+          ),
+        ],
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -138,24 +211,51 @@ class _ArtistInfoScreenState extends State<ArtistInfoScreen> {
                                     onPressed: () {
                                       context
                                           .read<UserMusicBloc>()
-                                          .add(FavoriteArtistEvent(
+                                          .add(CheckArtistEvent(
                                             id: info.id!,
                                             name: info.name!,
                                             alias: info.alias!,
+                                            isFavorite: true,
                                           ));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: ColorTheme.primary,
                                     ),
-                                    child: BlocSelector<UserMusicBloc,
-                                        UserMusicState, bool>(
-                                      selector: (userMusicState) {
-                                        List<String> artists = userMusicState
-                                                .music?.favoriteArtists ??
-                                            [];
-                                        return artists.contains(info.alias);
+                                    child: BlocConsumer<UserMusicBloc,
+                                        UserMusicState>(
+                                      listenWhen: (prev, curr) =>
+                                          prev.status?[
+                                              UserMusicStatusKey.artist.name] !=
+                                          curr.status?[
+                                              UserMusicStatusKey.artist.name],
+                                      listener: (context, state) {
+                                        if (state.error?.statusCode == 1000) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return PopupWarningWidget(
+                                                  description:
+                                                      'This artist is in you block list. Do you want to remove this artist to favorite list?',
+                                                  onTap: () {
+                                                    context
+                                                        .read<UserMusicBloc>()
+                                                        .add(
+                                                            FavoriteArtistEvent(
+                                                          id: info.id!,
+                                                          name: info.name!,
+                                                          alias: info.alias!,
+                                                          isRemoveDislike: true,
+                                                        ));
+                                                  },
+                                                );
+                                              });
+                                        }
                                       },
-                                      builder: (context, isFollow) {
+                                      builder: (context, state) {
+                                        List<String> artists =
+                                            state.music?.favoriteArtists ?? [];
+                                        bool isFollow =
+                                            artists.contains(info.alias);
                                         return Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
