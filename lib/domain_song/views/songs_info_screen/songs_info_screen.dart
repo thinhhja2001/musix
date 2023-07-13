@@ -93,7 +93,12 @@ class SongsInfoScreen extends StatelessWidget {
                           onCardPress: () {
                             context
                                 .read<SongBloc>()
-                                .add(SongGetInfoEvent(songs[index].encodeId!));
+                                .add(SongSetListSongInfoEvent(
+                                  songs,
+                                ));
+                            context.read<SongBloc>().add(
+                                SongStartPlayingSectionEvent(
+                                    songs.elementAt(index)));
                             showModalBottomSheet(
                               context: context,
                               builder: (context) =>

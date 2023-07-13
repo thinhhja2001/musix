@@ -209,7 +209,8 @@ class SongBloc extends Bloc<SongEvent, SongState> {
           .recommendNextSong(state.songInfo!.encodeId!, recommendSongCount);
       if (nextSongRecommendation.isEmpty) {
         /// If there is no recommend song, just seek the duration the the end
-        add(SongOnSeekEvent(state.duration - const Duration(seconds: 5)));
+        add(SongOnSeekEvent(state.duration));
+        add(SongPauseEvent());
         return;
       }
       // Play random song from the recommended song ids
@@ -222,7 +223,8 @@ class SongBloc extends Bloc<SongEvent, SongState> {
       SongInfo? songInfo =
           _playNextPreHandler.getNextSong(state.isShuffle, state.loopMode);
       if (songInfo == null) {
-        add(SongOnSeekEvent(state.duration - const Duration(seconds: 5)));
+        add(SongOnSeekEvent(state.duration));
+        add(SongPauseEvent());
       } else {
         add(SongGetInfoEvent(songInfo.encodeId!));
         add(SongGetSourceEvent(songInfo.encodeId!));
