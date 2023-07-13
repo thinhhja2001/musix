@@ -60,10 +60,11 @@ class ViewArtistDetailWidget extends StatelessWidget {
                 icon: isFollow ? Icons.favorite : Icons.favorite_outline,
                 data: "Follow",
                 onPress: () {
-                  context.read<UserMusicBloc>().add(FavoriteArtistEvent(
+                  context.read<UserMusicBloc>().add(CheckArtistEvent(
                         id: artist.id!,
                         name: artist.name!,
                         alias: artist.alias!,
+                        isFavorite: true,
                       ));
                 },
               );
@@ -84,10 +85,11 @@ class ViewArtistDetailWidget extends StatelessWidget {
                     : Icons.do_not_disturb_alt_outlined,
                 data: "Block",
                 onPress: () {
-                  context.read<UserMusicBloc>().add(DislikeArtistEvent(
+                  context.read<UserMusicBloc>().add(CheckArtistEvent(
                         id: artist.id!,
                         name: artist.name!,
                         alias: artist.alias!,
+                        isFavorite: false,
                       ));
                 },
               );
@@ -96,6 +98,55 @@ class ViewArtistDetailWidget extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
+          BlocListener<UserMusicBloc, UserMusicState>(
+              child: const SizedBox.shrink(),
+              listenWhen: (prev, curr) =>
+                  prev.status?[UserMusicStatusKey.artist.name] !=
+                  curr.status?[UserMusicStatusKey.artist.name],
+              listener: (context, state) {
+                // Call dialog when user favorite the block music
+                if (state.error?.statusCode == 1000) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PopupWarningWidget(
+                          description:
+                              'This artist is in you block list. Do you want to remove this artist to favorite list?',
+                          onTap: () {
+                            context
+                                .read<UserMusicBloc>()
+                                .add(FavoriteArtistEvent(
+                                  id: artist.id!,
+                                  name: artist.name!,
+                                  alias: artist.alias!,
+                                  isRemoveDislike: true,
+                                ));
+                          },
+                        );
+                      });
+                }
+                // Call dialog when user block the favorite music
+                else if (state.error?.statusCode == 1001) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PopupWarningWidget(
+                          description:
+                              'This artist is in you favorite list. Do you want to remove this artist to block list?',
+                          onTap: () {
+                            context
+                                .read<UserMusicBloc>()
+                                .add(DislikeArtistEvent(
+                                  id: artist.id!,
+                                  name: artist.name!,
+                                  alias: artist.alias!,
+                                  isRemoveFavorite: true,
+                                ));
+                          },
+                        );
+                      });
+                }
+              }),
         ],
       ),
     );
