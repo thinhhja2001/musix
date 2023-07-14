@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:like_button/like_button.dart';
 import 'package:musix/config/exporter.dart';
 import 'package:musix/domain_social/entities/entities.dart';
 import 'package:musix/domain_social/views/widgets/comments/rely_comment_widget.dart';
@@ -33,7 +34,7 @@ class CommentCardWidget extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, RoutingPath.profileSocial,
                 arguments: comment.user),
             child: CircleAvatar(
-              radius: 12,
+              radius: 25,
               backgroundImage: CachedNetworkImageProvider(
                 comment.user?.profile?.avatarUrl ?? AssetPath.userUnknownImage,
               ),
@@ -41,72 +42,103 @@ class CommentCardWidget extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "${comment.user?.profile?.fullName ?? "Anonymous"} · ${convertMillisecondToDateString(comment.dateCreated ?? DateTime.now().millisecondsSinceEpoch)}",
-                    style: TextStyleTheme.ts14
+                    style: TextStyleTheme.ts18
                         .copyWith(color: ColorTheme.white.withOpacity(.7)),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Text(
                     "${comment.content}",
-                    style: TextStyleTheme.ts14.copyWith(
+                    style: TextStyleTheme.ts20.copyWith(
                       color: ColorTheme.white,
                     ),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          context
-                              .read<CommentBloc>()
-                              .add(LikeCommentEvent(comment.id!, isRely));
-                        },
-                        child: BlocSelector<ProfileBloc, ProfileState, bool>(
-                          selector: (state) {
-                            try {
-                              var user = comment.likedBy?.firstWhere(
-                                  (element) => element.id == state.user?.id);
-                              if (user != null) {
-                                return true;
-                              } else {
+                      BlocBuilder<ProfileBloc, ProfileState>(
+                        builder: (context, state) {
+                          return LikeButton(
+                            isLiked: isLikedComment(
+                                getUserLikedComment(), state.user!.username!),
+                            onTap: (isLiked) async {
+                              if (comment.likedBy == null) return false;
+                              context
+                                  .read<CommentBloc>()
+                                  .add(LikeCommentEvent(comment.id!, isRely));
+                              if (isLikedComment(getUserLikedComment(),
+                                  state.user!.username!)) {
+                                comment.likedBy!.removeWhere((user) =>
+                                    user.username == state.user!.username);
                                 return false;
+                              } else {
+                                comment.likedBy!.add(state.user!);
                               }
-                            } on StateError {
-                              return false;
-                            }
-                          },
-                          builder: (context, isLiked) {
-                            return Icon(
-                              Icons.thumb_up_alt,
-                              color: isLiked
-                                  ? ColorTheme.primary
-                                  : ColorTheme.white,
-                              size: 12,
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Text(
-                          "${comment.likeCount ?? 0}",
-                          style: TextStyleTheme.ts12
-                              .copyWith(color: ColorTheme.white),
-                        ),
+                              return true;
+                            },
+                            circleColor: const CircleColor(
+                                start: ColorTheme.primary,
+                                end: ColorTheme.primary),
+                            bubblesColor: BubblesColor(
+                              dotPrimaryColor:
+                                  ColorTheme.primary.withOpacity(.2),
+                              dotSecondaryColor: ColorTheme.primary,
+                            ),
+                            likeBuilder: (_) {
+                              if (comment.likedBy == null ||
+                                  !comment.likedBy!.contains(state.user) ||
+                                  comment.likedBy!.isEmpty) {
+                                return const Icon(
+                                  Icons.thumb_up_alt,
+                                  color: Colors.white,
+                                );
+                              }
+                              return const Icon(
+                                Icons.thumb_up_alt,
+                                color: ColorTheme.primary,
+                              );
+                            },
+                            likeCount: comment.likeCount,
+                            countBuilder: (likeCount, isLiked, text) => Text(
+                              text,
+                              style: TextStyleTheme.ts20
+                                  .copyWith(color: Colors.white),
+                            ),
+                          );
+                        },
                       ),
                       if (!isRely && isShowReply) ...[
                         const SizedBox(
                           width: 20,
                         ),
-                        const Icon(
-                          Icons.comment_outlined,
-                          size: 12,
-                          color: ColorTheme.white,
+                        GestureDetector(
+                          onTap: () {
+                            context.read<CommentBloc>().add(
+                                GetRelyCommentsEvent(comment: comment.id!));
+                            showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                isScrollControlled: true,
+                                builder: (context) => RelyCommentWidget(
+                                      comment: comment,
+                                    ));
+                          },
+                          child: const Icon(
+                            Icons.comment_outlined,
+                            size: 25,
+                            color: ColorTheme.white,
+                          ),
                         )
                       ],
                     ],
@@ -134,7 +166,7 @@ class CommentCardWidget extends StatelessWidget {
                       ),
                       child: Text(
                         "${comment.replies?.length ?? 0} replies",
-                        style: TextStyleTheme.ts14
+                        style: TextStyleTheme.ts20
                             .copyWith(color: ColorTheme.primary),
                       ),
                     ),
@@ -202,5 +234,17 @@ class CommentCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<String> getUserLikedComment() {
+    List<String> usernames = List.empty(growable: true);
+    for (var userLike in comment.likedBy!) {
+      usernames.add(userLike.username!);
+    }
+    return usernames;
+  }
+
+  bool isLikedComment(List<String> usersLikedComment, String username) {
+    return usersLikedComment.contains(username);
   }
 }

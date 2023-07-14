@@ -105,8 +105,8 @@ class RelyCommentWidget extends StatelessWidget {
                     if (state.relyComments == null ||
                         state.relyComments!.isEmpty) {
                       return Text(
-                        'There is no comments in this post',
-                        style: TextStyleTheme.ts16.copyWith(
+                        'There is no reply in this comment',
+                        style: TextStyleTheme.ts20.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
                         ),
