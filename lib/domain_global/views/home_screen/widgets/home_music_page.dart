@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,10 +22,21 @@ class HomeMusicPage extends StatefulWidget {
 }
 
 class _HomeMusicPageState extends State<HomeMusicPage> {
+  Timer? timer;
   @override
   void initState() {
     super.initState();
     context.read<HomeMusicBloc>().add(const HomeMusicGetEvent());
+    final token = context.read<ProfileBloc>().token;
+    timer = Timer.periodic(const Duration(minutes: 30), (_) {
+      context.read<UserRecordBloc>().add(RecommendPlaylistEvent(token));
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
