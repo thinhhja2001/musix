@@ -15,6 +15,7 @@ import 'package:musix/utils/functions/function_utils.dart';
 
 import '../../../config/exporter/bloc_exporter.dart';
 import '../../../config/exporter/state_exporter.dart';
+import '../../../utils/functions/alert_utils.dart';
 import '../../entities/utils/social_mapper.dart';
 
 class PostDetailScreen extends StatelessWidget {
@@ -211,6 +212,13 @@ class PostDetailScreen extends StatelessWidget {
                               icon: Icons.delete,
                               text: "Delete Post",
                               onTap: () => _buildAlertDialog(context, post),
+                            )
+                          : Container(),
+                      post.user != state.user
+                          ? PostActionWidget(
+                              icon: Icons.report,
+                              text: "Report Post",
+                              onTap: () => {buildReportDialog(context, post)},
                             )
                           : Container(),
                       const PostActionWidget(

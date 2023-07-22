@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:musix/config/exporter/bloc_exporter.dart';
+import 'package:musix/domain_social/models/post/request/report_post_request_model.dart';
+import 'package:musix/domain_social/repository/post/report_post_repo.dart';
+import '../../../../utils/functions/alert_utils.dart';
 import '../../../entities/event/social_event.dart';
 import '../../../entities/post/post.dart';
 import '../../../logic/social_bloc.dart';
-import 'interaction_widget/comment_button_widget.dart';
 import 'interaction_widget/interaction_widget.dart';
-import 'interaction_widget/like_button_widget.dart';
-import 'interaction_widget/share_button_widget.dart';
 import 'social_data_player_widget.dart';
 import '../../../../domain_user/utils/constant_utils.dart';
 import '../../../../utils/functions/function_utils.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../../domain_user/entities/profile/profile_state.dart';
 import '../../../../domain_user/logic/profile_bloc.dart';
@@ -193,6 +195,13 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                               icon: Icons.delete,
                               text: "Delete Post",
                               onTap: () => _buildAlertDialog(context, post),
+                            )
+                          : Container(),
+                      post.user != state.user
+                          ? PostActionWidget(
+                              icon: Icons.report,
+                              text: "Report Post",
+                              onTap: () => {buildReportDialog(context, post)},
                             )
                           : Container(),
                       const PostActionWidget(
