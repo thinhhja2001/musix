@@ -145,7 +145,19 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
     if (copyrightCheck) {
       final response =
           await postRepo.createNewPost(event.postRegistryModel, token);
+
       add(SocialUpdateCreatePostStatus(response.status));
+      if (response.status == 200) {
+        PostModel postModel = response.post!;
+        Post post = await socialMapper.postFromPostModel(postModel);
+        emit(
+          state.copyWith(
+            trendingPosts: () => [post, ...?state.trendingPosts],
+            justForYouPosts: () => [post, ...?state.justForYouPosts],
+            followingPosts: () => [post, ...?state.followingPosts],
+          ),
+        );
+      }
       emit(state.copyWith(isCreatingPost: false));
     } else {
       add(SocialUpdateCreatePostStatus(100));
